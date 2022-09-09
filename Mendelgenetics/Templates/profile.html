@@ -1,0 +1,1356 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .login-form .form-group input {
+    height: 50px;
+    border: 1px solid rgba(97, 90, 191, 0.2);
+    background: #ffffff;
+    padding: 0 75px;
+}
+
+
+</style>
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
+
+    <!--============= Cart Section Ends Here =============-->
+
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section style-2">
+        <div class="container">
+        
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+    <!--============= Hero Section Ends Here =============-->
+
+        <div id="cover-spin"></div>
+
+    <!--============= Dashboard Section Starts Here =============-->
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+        <div class="container">
+            <div class="row justify-content-center">
+               
+
+                {%  include  'sidebar.html' %}
+
+
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="header">
+                                    <h4 class="title">Personal Details</h4>
+                                    <span class="edit"  aria-hidden="true" data-toggle="modal" data-target="#edit_persnol_detail" onclick="change_state('{{user_obj.country}}','{{user_obj.state}}','{{user_obj.city}}')"><i class="flaticon-edit" id=""></i></span>
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Name</div>
+                                        <div class="info-value">{{ user_obj.name}}</div>
+                                    </li>
+
+                                    {% if user_obj.mobile_no %}
+                                    <li>
+                                        <div class="info-name">Mobile</div>
+                                        <div class="info-value">{{user_obj.mobile_no}}</div>
+                                    </li>
+
+                                    {% else %}
+                                      <li>
+                                        <div class="info-name">Mobile</div>
+                                        <div class="info-value">----</div>
+                                    </li>   
+                                    {% endif %}
+                                      {% if user_obj.Landline_number %} 
+
+                                     <li>
+                                        <div class="info-name">Landline No</div>
+                                        <div class="info-value">{{user_obj.Landline_number}}</div>
+                                    </li>
+
+                                    {% else %}
+                                        <li>
+                                            <div class="info-name">Landline No</div>
+                                        <div class="info-value">----</div>
+                                    </li>
+
+                                    {% endif %}
+
+                                     {% if user_obj.country %}
+                                     <li>
+                                        <div class="info-name">CIF No</div>
+                                        <div class="info-value">{{user_obj.CIF_number|default_if_none:''}}</div>
+                                    </li>
+                                    {% else %}
+                                        <li>
+                                            <div class="info-name">CIF No</div>
+                                            <div class="info-value">----</div>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if user_obj.country %} 
+                                    <li>
+                                        <div class="info-name">Country</div>
+                                        <div class="info-value">{{user_obj.country}}</div>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <div class="info-name">Country</div>
+                                        <div class="info-value">----</div>
+                                    </li>
+                                    {% endif %}
+
+                                    {% if user_obj.state %}
+
+                                    <li>
+                                        <div class="info-name">Region</div>
+                                        <div class="info-value">{{user_obj.state}}</div>
+                                    </li>
+
+                                    {% else %}
+                                    
+                                    <li>
+                                        <div class="info-name">Region</div>
+                                        <div class="info-value">----</div>
+                                    </li>
+
+                                    {% endif %}
+
+
+                                    {% if user_obj.city %}
+                                    
+                                    <li>
+                                        <div class="info-name">City</div>
+                                        <div class="info-value">{{user_obj.city}}</div>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <div class="info-name">City</div>
+                                        <div class="info-value">----</div>
+                                    </li>
+                                    {% endif %}
+
+                                    {% if user_obj.zipcode %}
+                                     <li>
+                                        <div class="info-name">Zipcode</div>
+                                        <div class="info-value">{{user_obj.zipcode}}</div>
+                                    </li>
+                                    {% else %}
+                                      <li>
+                                        <div class="info-name">Zipcode</div>
+                                        <div class="info-value">----</div>
+                                    </li>
+                                    {% endif %}
+
+                                    {% if user_obj.address_line1 %}
+
+                                    <li>
+                                        <div class="info-name">Address</div>
+                                        <div class="info-value">{{user_obj.address_line1}}</div>
+                                    </li>
+                                    
+                                    {% else %}
+                                    <li>
+                                        <div class="info-name">Address</div>
+                                        <div class="info-value">----</div>
+                                    </li>
+                                    {%endif%}
+
+
+
+
+                                    {% comment %} {% if user_obj.is_individual  %}
+                                    <li>
+                                        <div class="info-name">User Type</div>
+                                        <div class="info-value">Individual</div>
+                                    </li> 
+                                    {% else %}
+                                    <li>
+                                        <div class="info-name">User Type</div>
+                                        <div class="info-value">Corporate</div>
+                                    </li>
+                                    {% endif %} {% endcomment %}
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="header">
+                                    <h4 class="title">Account Settings</h4>
+                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Language</div>
+                                        <div class="info-value">English (United States)</div>
+                                    </li>
+                                    <li>
+                                        <div class="info-name">Time Zone</div>
+                                        <div class="info-value">(GMT-06:00) Central America</div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="header">
+                                    
+                                    <h4 class="title">Change Email</h4>
+                                    <span class="edit"  aria-hidden="true" data-toggle="modal" data-target="#change_email_modal"><i class="flaticon-edit" id=""></i></span>
+                                    
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Email</div>
+                                        <div class="info-value">{{user_obj.email}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="dash-pro-item dashboard-widget">
+                                <div class="header">
+                                    <h4 class="title">Change Password</h4>
+                                     <span class="edit"  aria-hidden="true" data-toggle="modal" data-target="#reset_password_modal"><i class="flaticon-edit" id=""></i> </span>
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Password</div>
+                                        <div class="info-value">xxxxxxxxxxxxxxxx</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+<!-- Modal persnol detail start -->
+
+<div class="modal fade" id="edit_persnol_detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 640px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 520px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+
+         
+           
+
+            <div class="login-form">
+                
+                <div class="row" style="margin-bottom: -1rem;">
+                   
+                    <div class="form-group mb-30 col-md-6">
+                        <label for="login-email"><i class="far fa-user"></i></label>
+                        <input type="text" id="nameinput" value="{{user_obj.name}}" placeholder="Full Name">
+                    </div>
+                  
+
+                  
+                    <div class="form-group mb-30 col-md-6">
+                        <label for="login-email"><i class="fa fa-mobile"></i></label>
+                        <input type="text" id="mobileinput" value="{{user_obj.mobile_no|default_if_none:''}}" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  maxlength="12" placeholder="Mobile(Optional)">
+                    </div>
+                </div>
+                  <span id="nameinputerror" style="color: red;"></span>
+                  <span id="mobileinputerrror" style="color: red;padding-left: 312px;"></span>
+
+
+
+                
+                
+                <div class="row" style="margin-bottom: -1rem;">
+                    
+                    <div class="form-group mb-30 col-md-6">
+                        <label for="login-email"><i class="far fa-user"></i></label>
+                        {% if user_obj.CIF_number %}
+                            <input type="text" id="cifnumber" value="{{user_obj.CIF_number}}" placeholder="CIF No" maxlength="9">
+                        {% else %}
+                            <input type="text" id="cifnumber" value="" placeholder="CIF No" maxlength="9">
+                        {% endif %}
+                    
+                    </div>
+                    
+                   
+                    <div class="form-group mb-30 col-md-6">
+                        <label for="login-email"><i class="fa fa-phone"></i></label>
+
+                        {% if user_obj.Landline_number %}
+                            <input type="text" id="landilne" value="{{user_obj.Landline_number}}" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12" placeholder="Landline No">
+                        {% else %}
+                             <input type="text" id="landilne" value="" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 70px;" maxlength="12" placeholder="Landline">
+                        {% endif %}
+                        </div>
+                </div>
+                <span id="cifnumbererror" style="color: red;"></span>
+                <span id="landilneerror" style="color: red;margin-left: 310px;"></span>
+                
+                
+               
+                <div class="row" style="margin-bottom: -1rem;">
+                    <div class="form-group mb-30 col-md-6" >
+                        <label for="login-email"><i class="fa fa-flag"></i></label>
+                        <select name="" id="selected_country_id" onchange="get_sates_of_country()" value=""  style="padding-left: 72px;">
+                           
+                            {% if user_obj.country == false or user_obj.country == "----" %}
+                                {% comment %} <option value="">Select Country</option> {% endcomment %}
+                            {% else %}
+                                <option value="{{user_obj.country}}">{{user_obj.country}}</option>
+                            {% endif %}    
+                                
+                            {% for country in countru_obj %}
+                                <option value="{{country.id}}" {% if country.id == 205 %} selected {% endif %}>{{country.name}}</option>
+                                {% comment %} <option value="{{country.id}}"  >{{country.name}}</option> {% endcomment %}
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                
+
+               
+                    <div class="form-group mb-30 col-md-6">
+                        <label for="login-email"><i class="fa fa-map-marker"></i></label>
+                        <select name="cars" id="selected_state_id" onchange="get_city_of_state()" style="border-radius:5px; padding-left: 72px;">
+
+                            
+                                
+                                <option value="">Select Region</option>
+                            
+                        </select>
+                    </div>
+                </div>   
+                
+                <span id="selected_country_id_error" style="color: red;"></span>
+                <span id="selected_state_id_error" style="color: red; margin-left: 315px; border-radius: 5px;"></span>
+        
+
+                <div class="row" style="">
+                   
+                    <div class="form-group mb-30 col-md-6">
+                        <label for="login-email"><i class="fa fa-map-marker"></i></label>
+                        <select name="cars" id="selected_city_id" style="border-radius:5px; padding-left: 72px;">
+                            
+                                <option value="">Select City</option>
+                            
+
+                        </select>
+                    </div>
+                
+                    
+                    <div class="form-group mb-30 col-md-6">
+                       
+                        <label for="login-email"><i class="fas fa-map-pin"></i></label>
+                        {% if user_obj.zipcode %}
+                            <input type="text" id="zipcode" value="{{user_obj.zipcode}}" placeholder="Zipcode" maxlength="6">
+                        {% else %}
+                            <input type="text" id="zipcode" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 70px;" value="" placeholder="Zipcode" maxlength="6">
+                        {% endif %}
+                    </div>
+                </div> 
+                
+                
+                <span id="selected_city_id_error" style="color: red;"></span>
+                <span id="zipcodeerror" style="color: red;margin-left: 314px;"></span>
+
+
+                
+                    
+                    <div class="row" style="margin-bottom: -1rem;">
+                        <div class="form-group mb-30 col-md-12">
+                            <label for="login-email"><i class='fa fa-address-card' style=""></i></label>
+                            <input type="text" id="addressinput" style="width: 603px; margin-left: -2px;" value="{{user_obj.address_line1}}" placeholder="Address">
+                        </div>
+                    </div>
+                    <span id="addressinputerror" style="color: red;"></span>
+
+
+                {% comment %} <div class="form-group">
+                    <label for="login-pass"><i class="fas fa-lock"></i></label>
+                    <input type="password" id="login-pass" placeholder="Password">
+                    <span class="pass-type"><i class="fas fa-eye"></i></span>
+                </div> {% endcomment %}
+
+
+
+                <div style="width: 100%;">
+                    <center>
+                        <div class="row" style="width: fit-content;">
+                            <div class="col-md-6" >
+                                <div class="form-group mb-0">
+                                    <button type="button" id="edit_profile_modal" style="width: 100px;padding-left: 30px;font-size: 16px;height: 45px;"  class="custom-button" >Save</button>
+                                </div>
+                            </div>
+                            {% comment %} <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    <button type="button"   data-dismiss="modal" class="custom-button" style="width: 100px;padding-left: 10px;padding-right: 10px; font-size: 16px;height: 45px;">Close</button>
+                                </div> 
+                            </div> {% endcomment %}
+                        </div>  
+                    </center>
+                </div>                        
+            </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- personal detail modal end here -->
+
+
+{% comment %} change email modal here {% endcomment %}
+
+<div class="modal fade" id="change_email_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 361px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <div class="login-form" id="send_otp_for_change_email">
+                           
+                <span id="changeemailerror" style="color: red;"></span>
+                <div class="form-group mb-30">
+                    <p>Send otp to register email</p>
+                    <label for="login-email"><i class="far fa-envelope" style="margin-top: 45px;"></i></label>
+                    <input type="text" id="change_eamil" value="{{user_obj.email}}" disabled placeholder="Email Address">
+                </div>
+
+                <div style="width: 100%;">
+                    <center>
+
+                        <div class="row" style="width: fit-content;">
+                            <div class="col-md-6" style="margin-right: 10px;">
+                                <div class="form-group mb-0"  >
+                                    <button type="button" onclick="change_email_otp()" class="custom-button" style="width: 120px;padding-left: 10px;padding-right: 10px; font-size: 16px;height: 45px;">Send OTP</button>
+                                </div>
+                            </div>        
+                        </div>
+                </div>    
+        
+            </div>
+
+
+
+            <div class="login-form" id="enter_otp_for_change_email">
+               
+                <div class="card p-2 text-center" style="border:none">
+                    <p>Please Enter the one time password
+                    <br> Code has been sent to your registered email </p> 
+                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                        <input class="m-2 text-center form-control rounded" type="text" id="otp1" maxlength="1" /> 
+                        <input class="m-2 text-center form-control rounded" type="text" id="otp2" maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" type="text" id="otp3" maxlength="1" /> 
+                        <input class="m-2 text-center form-control rounded" type="text" id="otp4" maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" type="text" id="otp5" maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" type="text" id="otp6" maxlength="1" />
+                    </div>
+                        <div class="mt-4"> 
+                    </div>
+                </div>
+
+                <div id="myspan" style="margin-left: 155px;">
+                    <p style="font-size:16px; margin-top: 10px; margin-left: 156px;" id=""></p> 
+                </div>
+                <div id="btnotpagain">
+                    <button  type="button" id="" onclick="change_email_otp()" style="border: none; background-color: white; color:#4A66Ad; margin-left:172px;width: 114px;height: 21px;height: 21px;margin-top: 10px;">Resend OTP</button>
+                </div>
+
+                    <div class="form-group mb-30">
+                        <button type="button" id="verify_otp_for_change_email" class="custom-button" style="width: 130px;height: 45px;padding-left: 5px;padding-right:5px ;">Verify OTP</button>
+                    </div>
+                                  
+            </div> 
+            
+            
+            <div class="login-form" id="add_new_email">
+
+                
+                <div class="login-form">
+                    <span id="add_new_emailerror" style="color: red;"></span>
+                    <div class="form-group mb-30">
+                        <label for="login-email"><i class="far fa-envelope"></i></label>
+                        <input type="text" id="new_email"  placeholder="New Email Address">
+                    </div>
+                   <div class="form-group mb-30">
+                    <button type="button" onclick="add_new_email_function()" class="btn btn-primary" style="width:130px;border-radius: 30px;background-color: #683df5;">Save</button>
+                </div>
+
+                </div>
+
+            
+            </div>      
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{% comment %} change email modal end here {% endcomment %}
+
+<div class="modal fade" id="reset_password_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 361px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <div class="login-form" id="">
+               
+               
+                <div class="form-group mb-30">
+                    
+                    <label for="login-email"><i class="fas fa-lock"></i></label>
+                    <input type="password" id="current_password"  placeholder="Current Password">
+                    <span class="pass-type"><i class="fas fa-eye" id='tgl_old_password'></i></span>
+                    <span id="current_password_error" style="color: red;"></span>
+
+                </div>
+
+             
+                <div class="form-group mb-30">
+                    <label for="login-email"><i class="fas fa-lock"></i></label>
+                    <input type="password" id="new_password" placeholder="New Password">
+                    <span class="pass-type"><i class="fas fa-eye" id='tgl_new_password'></i></span>
+                    <span id="new_password_error" style="color: red;"></span>
+                </div>
+
+               
+                <div class="form-group mb-30">
+                    <label for="login-email"><i class="fas fa-lock"></i></label>
+                    <input type="password" id="confirm_password"  placeholder="Confirm Password">
+                    <span class="pass-type"><i class="fas fa-eye" id='tgl_confirm_password'></i></span>
+                    <span id="confirm_password_error" style="color: red;"></span>
+                </div>
+
+        
+            </div>
+            <div style="width: 100%;">
+                <center>
+                    <div class="row" style="width: fit-content;">
+                        <div class="col-md-6" style="margin-right: 10px;">
+                            <div class="form-group mb-0"  >
+                                <button type="button" id="" onclick="reset_pswd_using_old_pswd()"  class="custom-button" style="width: 100px;padding-left: 30px;font-size: 16px;height: 45px;">Save</button>
+                            </div>
+                        </div>
+                        {% comment %} <div class="col-md-6s">
+                            <div class="form-group mb-0" style=""> 
+                                <button type="button"    data-dismiss="modal" style="width: 100px;padding-left: 25px;font-size: 16px;height: 45px;" class="custom-button">Close</button>
+                            </div> 
+                        </div> {% endcomment %}
+                    </div> 
+                </center>
+            </div>
+
+  
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+{% comment %} reset password modal start  {% endcomment %}
+
+
+
+
+
+{% comment %} reset password mdoal end {% endcomment %}
+
+    <!--============= Dashboard Section Ends Here =============-->
+
+
+    <!--============= Footer Section Starts Here =============-->
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+
+
+
+<script>
+    function change_state(country_id,state_id,city_id)
+    {
+        country_id = (country_id != 'None') ? country_id : '205';
+        
+        $('#selected_country_id').val(country_id);
+
+        $.ajax({
+            type:"POST",
+            url:"/change_state/",
+            data:{
+                'country_id':country_id,
+                'state':state_id,
+                'city':city_id
+            },
+            success: function(response)
+            {
+                
+                if(response.status =='1')
+                {
+                    
+                    $("#selected_state_id").empty();
+                    response.subcategory.forEach(function(value) 
+                    {
+                        if (state_id == value.name)
+                        {
+                            $('#selected_state_id').append($('<option>',
+                            {
+                                value: value.id,
+                                text: value.name,
+                                selected: true,
+                            }));
+                        }
+                        else
+                        {
+                                $('#selected_state_id').append($('<option>',
+                                {
+                                value: value.id,
+                                text: value.name
+                            }));
+                        }
+                    });
+                     $('#selected_state_id').append($('<option>',{value: 'Other',text: 'Other'}));
+                    
+                   $("#selected_city_id").empty();
+                    response.citycategory.forEach(function(value) 
+                    {
+                        if (city_id == value.name)
+                        {
+                            $('#selected_city_id').append($('<option>',
+                            {
+                                value: value.id,
+                                text: value.name,
+                                selected: true,
+                            }));
+                        }
+                        else
+                        {
+                                $('#selected_city_id').append($('<option>',
+                                {
+                                value: value.id,
+                                text: value.name
+                            }));
+                        }
+                    });
+                     $('#selected_city_id').append($('<option>',{value: 'Other',text: 'Other'}));
+                    
+                }
+                
+            }
+        });
+    }
+</script>
+
+<script>
+        var seconds;
+        var countdownTimer;
+        function secondPassed() {
+
+            var minutes = Math.round((seconds - 30) / 60);
+            var remainingSeconds = seconds % 60;
+            if (remainingSeconds < 10) {
+                remainingSeconds = '0' + remainingSeconds;
+            }
+            $('#btnotpagain').hide()
+            $('#myspan').html('Resend OTP In ' + minutes + ':' + remainingSeconds);  
+
+            if (seconds == 0) {
+                clearInterval(countdownTimer);
+                $('#myspan').html("Did Not Receive OTP ?"); 
+                $('#btnotpagain').show()
+            }
+            else {
+                seconds--;
+                }
+            }
+            function runOtpSend() {
+                seconds = 30;
+                countdownTimer = setInterval('secondPassed()', 1000);
+            }
+    </script>
+
+
+
+ <script type="text/javascript">
+                document.addEventListener("DOMContentLoaded", function (event) {
+                    function OTPInput() {
+                        const inputs = document.querySelectorAll('#otp > *[id]');
+                        for (let i = 0; i < inputs.length; i++) {
+                            inputs[i].addEventListener('keydown', function (event) {
+                                if (event.key === "Backspace") {
+
+                                    inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus();
+                                }
+                                else {
+                                    if (i === inputs.length - 1 && inputs[i].value !== '') {
+                                        console.log('keypresed')
+                                        return true;
+                                    }
+                                    else if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)) {
+                                        console.log('else if key pressed')
+                                        inputs[i].value = event.key;
+                                        if (i !== inputs.length - 1)
+                                            inputs[i + 1].focus();
+                                        event.preventDefault();
+                                    }
+                                    else if (event.keyCode > 64 && event.keyCode < 91) {
+                                        console.log('in last if')
+                                        inputs[i].value = String.fromCharCode(event.keyCode);
+                                        if (i !== inputs.length - 1)
+                                            inputs[i + 1].focus();
+                                        event.preventDefault();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    OTPInput();
+                });
+
+    </script> 
+    
+    {% comment %} for eye button to show password {% endcomment %}
+    <script>
+
+      
+
+      $("#tgl_old_password").click(function(){
+        if( $('#current_password').attr('type') == "password"){   
+            $("#current_password").attr('type', 'text')
+            $("#tgl_old_password").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#current_password").attr('type', 'password')
+            $("#tgl_old_password").attr('class' , 'fas fa-eye')
+        }
+      })
+
+
+        $("#tgl_new_password").click(function(){
+        if( $('#new_password').attr('type') == "password"){   
+            $("#new_password").attr('type', 'text')
+            $("#tgl_new_password").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#new_password").attr('type', 'password')
+            $("#tgl_new_password").attr('class' , 'fas fa-eye')
+        }
+      })
+
+       $("#tgl_confirm_password").click(function(){
+        if( $('#confirm_password').attr('type') == "password"){   
+            $("#confirm_password").attr('type', 'text')
+            $("#tgl_confirm_password").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#confirm_password").attr('type', 'password')
+            $("#tgl_confirm_password").attr('class' , 'fas fa-eye')
+        }
+      })
+
+  
+    </script>
+  <script>
+
+    $("#enter_otp_for_change_email").hide()
+    $("#add_new_email").hide()
+    $("#cover-spin").hide()
+
+    
+
+
+    $("#nameinput").keyup(function(){
+        $("#nameinput").css("border", "1px solid #eee");
+        $("#nameinputerror").html("");
+    })
+
+    $("#mobileinput").keyup(function(){
+        $("#mobileinput").css("border", "1px solid #eee");
+        $("#mobileinputerrror").html("");
+    })
+
+     $("#addressinput").keyup(function(){
+        $("#addressinput").css("border", "1px solid #eee");
+        $("#addressinputerror").html("");
+    })
+
+    $("#addressinput").keyup(function(){
+        $("#addressinput").css("border", "1px solid #eee");
+        $("#addressinputerror").html("");
+    })
+
+
+    $("#cifnumber").keyup(function(){
+        $("#cifnumber").css("border", "1px solid #eee");
+        $("#cifnumbererror").html("");
+    })
+
+    $("#landilne").keyup(function(){
+        $("#landilne").css("border", "1px solid #eee");
+        $("#landilneerror").html("");
+    })
+    
+
+    $("#zipcode").keyup(function(){
+        $("#zipcode").css("border", "1px solid #eee");
+        $("#zipcodeerror").html("");
+    })
+
+    $("#selected_country_id").click(function(){
+        $("#selected_country_id").css("border", "1px solid #eee");
+        $("#selected_country_id_error").html("");
+    })
+
+    $("#selected_state_id").click(function(){
+        $("#selected_state_id").css("border", "1px solid #eee");
+        $("#selected_state_id_error").html("");
+    })
+
+    $("#selected_city_id").click(function(){
+        $("#selected_city_id").css("border", "1px solid #eee");
+        $("#selected_city_id_error").html("");
+    })
+
+  
+
+
+$("#edit_profile_modal").click(function(){
+
+
+    var user_id = $("#user_id").val()
+    var name  = $("#nameinput").val()
+    var mobile = $("#mobileinput").val()
+    var address = $("#addressinput").val()
+    var email = $("#emailinput").val()
+    var user_type = $("#usertype").val()
+
+    var zipcode = $("#zipcode").val()
+
+    var country = $("#selected_country_id option:selected").text()
+    var state = $("#selected_state_id option:selected").text()
+    var city = $("#selected_city_id option:selected").text()
+
+    var CIF_number = $("#cifnumber").val()
+    var landline = $("#landilne").val()
+   
+    console.log(country)
+
+    
+   if (name == ''){
+        $("#nameinput").css('border','1px solid #f37777');
+        $("#nameinput").focus();
+        $("#nameinputerror").html('Enter Full Name ');   
+   }
+   else if((mobile != '') && (mobile.length <= 8 )){
+    
+            $("#mobileinput").css('border','1px solid #f37777');
+            $("#mobileinput").focus();
+            $("#mobileinputerrror").html('Enter valid Mobile Number ');   
+
+   }
+
+   else if(CIF_number == ''){
+        $("#cifnumber").css('border','1px solid #f37777');
+        $("#cifnumber").focus();
+        $("#cifnumbererror").html('Enter CIF Number ');   
+   }
+
+    else if(CIF_number.length <= 8){
+        $("#cifnumber").css('border','1px solid #f37777');
+        $("#cifnumber").focus();
+        $("#cifnumbererror").html('Enter Valid CIF Number ');   
+   }
+   
+    else if(landline == ''){
+    
+        
+        $("#landilne").css('border','1px solid #f37777');
+        $("#landilne").focus();
+        $("#landilneerror").html('Enter Landline Number ');          
+   }
+
+   else if(landline.length <= 8 ){
+        
+        $("#landilne").css('border','1px solid #f37777');
+        $("#landilne").focus();
+        $("#landilneerror").html('Enter Valid Landline Number ');          
+   }
+
+  
+
+   else if(country == 'Select Country'){
+        $("#selected_country_id").css('border','1px solid #f37777');
+        $("#selected_country_id").focus();
+        $("#selected_country_id_error").html('Select Country '); 
+
+   }
+
+    else if(state == 'Select Region'){
+        $("#selected_state_id").css('border','1px solid #f37777');
+        $("#selected_state_id").focus();
+        $("#selected_state_id_error").html('Select Region'); 
+
+   }
+    else if(city == 'Select City'){
+        $("#selected_city_id").css('border','1px solid #f37777');
+        $("#selected_city_id").focus();
+        $("#selected_city_id_error").html('Select City '); 
+
+   }
+
+
+    /* if (landline.match("^[0-9]\d{2,4}-\d{6,8}$")){
+        alert('helllo')
+        
+    } */
+  
+    else if(zipcode == ''){
+        $("#zipcode").css('border','1px solid #f37777');
+        $("#zipcode").focus();
+        $("#zipcodeerror").html('Enter Zipcode');   
+   }
+
+   else if(address == ''){
+        $("#addressinput").css('border','1px solid #f37777');
+        $("#addressinput").focus();
+        $("#addressinputerror").html('Enter Address ');   
+   }
+   
+   
+   else{
+        $("#cover-spin").hide()
+       $.ajax({
+          
+           method : "POST",
+           url : "{% url 'edit_user_proifle_page' %}",
+           contentType : "application/json",
+           data : JSON.stringify({
+               "userid": user_id,
+               "name": name,
+               "mobile":mobile,
+               "address":address,
+               "country":country,
+               "state":state,
+               "city":city,
+               "CIF_number":CIF_number,
+               "landline":landline,
+               "zipcode":zipcode
+
+           }),
+           success : function(Response){
+               if(Response['status']== "1"){
+                   $("#cover-spin").hide()
+                   console.log(Response)
+                   swal({
+                       icon : "success",
+                       text : "Profile Updated Successfully",
+                       closeOnClickOutside : false
+                   }).then(function(){
+                       location.reload()
+                   })
+               }
+               else if(Response['status'] == "0"){
+                   $("#cover-spin").hide()
+                   swal({
+                       icon : "error",
+                       text : "Something Went Wrong",
+                       closeOnClickOutside : false
+                       
+                   })
+               }
+           }
+       })
+   }
+})
+
+function change_email_otp(){
+    runOtpSend()
+    email = $("#change_eamil").val()
+    user_id = $("#user_id").val() 
+  
+
+
+    /* $("#cover-spin").show() */
+
+    $.ajax({
+        method : "POST",
+        url : "{% url 'change_user_email_otp' %}",
+        contentType : "application/json",
+        data : JSON.stringify({
+           "user_id":user_id,
+           "email":email
+        }),
+        success: function(Response){
+            if (Response  ['status'] == '1'){
+                
+                /*$("#cover-spin").hide() */
+
+                $("#send_otp_for_change_email").hide()
+                $("#enter_otp_for_change_email").show()
+                console.log(Response)
+                window.genrated_otp = (Response['email_otp'])
+        
+            }
+            else if(Response ['status'] == '0'){
+                $("#cover-spin").hide()
+                alert('something went wrong')
+                console.log(Response)
+            }
+        }
+    })
+}
+$("#verify_otp_for_change_email").click(function(){
+   otp1 = $("#otp1").val()
+   otp2 = $("#otp2").val()
+   otp3 = $("#otp3").val()
+   otp4 = $("#otp4").val()
+   otp5 = $("#otp5").val()
+   otp6 = $("#otp6").val()
+   console.log(otp1,otp2,otp3,otp4,otp5,otp6)
+   var user_entered_otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6
+
+    if (genrated_otp == user_entered_otp){
+       swal({
+           icon : "success",
+           text : "OTP Verified Successfully",
+           closeOnClickOutside  : false
+       }).then(function(){
+            $("#send_otp_for_change_email").hide()
+            $("#enter_otp_for_change_email").hide()
+            $("#add_new_email").show()
+       })
+   }
+   
+    else {
+       swal({
+           icon : "error",
+           text : "OTP Does Not Match",
+           closeOnClickOutside  : false
+       })
+   }
+   
+})
+
+$("#new_email").keyup(function(){
+    $("#new_email").css("border", "1px solid #eee");
+    $("#add_new_emailerror").html("");
+})
+
+function add_new_email_function(){
+    var user_id = $("#user_id").val() 
+    var old_email = $("#change_eamil").val()
+    var new_email = $("#new_email").val()
+    var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+    
+    if (new_email == ''){
+        $("#new_email").css('border','1px solid #f37777');
+        $("#new_email").focus();
+        $("#add_new_emailerror").html('Enter New Email Address ');  
+    }
+    else if (!emailfilter.test(new_email)){
+        $("#new_email").css('border','1px solid #f37777');
+        $("#new_email").focus();
+        $("#add_new_emailerror").html('Enter Valid Email Address ');  
+    }
+    else{
+        $("#cover-spin").hide()
+        $.ajax({
+            method : "POST",
+            url : "{% url 'add_users_new_email_address' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+                "user_id"   : user_id,
+                "old_email" : old_email,
+                "new_email" : new_email
+            }),
+            success : function(Response){
+                if (Response['status'] == '1'){
+                    $("#cover-spin").hide()
+                    console.log(Response)
+                    swal({
+                        icon : "success",
+                        text : "Email Address Changed Successfully",
+                        closeOnClickOutside : false
+                    }).then(function(){
+                        location.reload()
+                    }) 
+                }
+                else if(Response['status'] == '0'){
+                    console.log(Response)
+                    $("#cover-spin").hide()
+                    swal({
+                        icon : "error",
+                        text : "Email Already Exists",
+                        closeOnClickOutside : false
+                    })
+                }
+            }
+        })
+    }
+
+}
+
+$("#current_password").keyup(function(){
+    $("#current_password").css("border", "1px solid #eee");
+    $("#current_password_error").html("");
+})
+
+
+$("#new_password").keyup(function(){
+    $("#new_password").css("border", "1px solid #eee");
+    $("#new_password_error").html("");
+})
+
+$("#confirm_password").keyup(function(){
+    $("#confirm_password").css("border", "1px solid #eee");
+    $("#confirm_password_error").html("");
+})
+
+function reset_pswd_using_old_pswd(){
+    
+    var user_id = $("#user_id").val() 
+    var old_password = $("#current_password").val() 
+    var new_password = $("#new_password").val() 
+    var confirm_password = $("#confirm_password").val() 
+
+    console.log(user_id,old_password,new_password,confirm_password)
+
+
+    if (old_password == ''){
+        $("#current_password").css('border','1px solid #f37777');
+        $("#current_password").focus();
+        $("#current_password_error").html("Enter current password ")
+    }
+
+    
+    else if (new_password == ''){
+        $("#new_password").css('border','1px solid #f37777');
+        $("#new_password").focus();
+        $("#new_password_error").html('Enter new password ')
+    }
+
+    else if (old_password == new_password){
+        $("#new_password").css('border','1px solid #f37777');
+        $("#new_password").focus();
+        $("#new_password_error").html('Current password and new password should not be same ')
+    }
+
+    else if (new_password.length <= 7){
+        $("#new_password").css('border','1px solid #f37777');
+        $("#new_password").focus();
+        $("#new_password_error").html('Min password length is 8 Char')
+    }
+    
+    else if (confirm_password == ''){
+        $("#confirm_password").css('border','1px solid #f37777');
+        $("#confirm_password").focus();
+        $("#confirm_password_error").html('Enter confirm password ')
+    }
+
+    else if (confirm_password != new_password){
+        $("#confirm_password").css('border','1px solid #f37777');
+        $("#confirm_password").focus();
+        $("#confirm_password_error").html('Password does not match ')
+    }
+    
+  else{
+      $("#cover-spin").hide()
+      $.ajax({
+          method : "POST",
+          url : "{% url 'reset_current_password' %}",
+          contentType : "application/json",
+          data : JSON.stringify({
+              "user_id" : user_id,
+              "old_password" : old_password,
+              "new_password" : new_password
+          }),
+          success : function(Response){
+            if (Response['status'] == '1'){
+                  $("#cover-spin").hide()
+                  console.log(Response)
+                  swal({
+                      icon : "success",
+                      text : "Reset Password Successfully",
+                      closeOnClickOutside : false
+                  }).then(function(){
+                      location.reload()
+                  })
+              }
+
+            else if (Response['status'] == '0'){
+                  $("#cover-spin").hide()
+                  console.log(Response)
+                  swal({
+                      icon : "error",
+                      text : "Incorrect Current Password ",
+                      closeOnClickOutside : false
+                  })
+              }
+          }
+      })
+  }
+
+
+}
+
+ $(document).ready(function(){
+        
+      $("#profile_setting").addClass('active')
+      $("#poste_test").removeClass('active')
+    })
+
+</script>  
+
+<script>
+
+    var country_id = $("#selected_country_id").val()
+    var state_id = $("#selected_state_id").val()
+    var city_id = $("#selected_city_id").val()
+
+
+
+    function get_sates_of_country(){
+        var country_id = $("#selected_country_id").val()
+        console.log(country_id)
+
+        $.ajax({
+            method:"POST",
+            url : "{% url 'get_state_of_country' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+               "country_id" : country_id 
+            }),
+            success : function (response){
+                if (response['status'] == '1'){
+                    $('#selected_state_id').empty();
+                    $('#selected_state_id').append($('<option>').val('').text('Select Region'));
+        
+                    response.state_obj.forEach(element => {
+                    $('#selected_state_id').append($('<option>').val(element.id).text(element.name));
+                        });
+                    $('#selected_state_id').append($('<option>').val('Other').text('Other'));                   
+
+                }
+                else{
+                    $('#selected_state_id').empty();
+                    $('#selected_state_id').append($('<option>').val('').text('Select Region'));
+                    $('#selected_state_id').append($('<option>').val('Other').text('Other'));
+                }
+
+            }
+        })
+        
+    }
+
+
+
+    var country_id = $("#selected_country_id").val()
+        console.log(country_id)
+
+        $.ajax({
+            method:"POST",
+            url : "{% url 'get_state_of_country' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+               "country_id" : country_id 
+            }),
+            success : function (response){
+                if (response['status'] == '1'){
+                    $('#selected_state_id').empty();
+                    $('#selected_state_id').append($('<option>').val('').text('Select Region'));
+        
+                    response.state_obj.forEach(element => {
+                    $('#selected_state_id').append($('<option>').val(element.id).text(element.name));
+                        });
+                    $('#selected_state_id').append($('<option>').val('Other').text('Other'));                   
+
+                }
+                else{
+                    $('#selected_state_id').empty();
+                    $('#selected_state_id').append($('<option>').val('').text('Select Region'));
+                    $('#selected_state_id').append($('<option>').val('Other').text('Other'));
+                }
+
+            }
+        })
+</script>
+
+
+<script>
+    function get_city_of_state(){
+        var state_id = $("#selected_state_id").val()
+        console.log(state_id)
+
+        $.ajax({
+            method:"POST",
+            url : "{% url 'get_city_of_state' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+               "state_id" : state_id 
+            }),
+            success : function (response){
+                if (response['status'] == '1'){
+                    console.log(response['city_obj'])
+                    $('#selected_city_id').empty();
+                    $('#selected_city_id').append($('<option>').val('').text('Select City'));
+        
+                    response.city_obj.forEach(element => {
+                    $('#selected_city_id').append($('<option>').val(element.id).text(element.name));
+                        });
+                    $('#selected_city_id').append($('<option>').val('Other').text('Other'));   
+                            
+                }
+                 else{
+                    $('#selected_city_id').empty();
+                    $('#selected_city_id').append($('<option>').val('').text('Select Region'));
+                    $('#selected_city_id').append($('<option>').val('Other').text('Other'));
+                    }
+
+            }
+        })
+        
+    }
+</script>
+<script>
+    $( document ).ready(function() {
+    //alert( "ready!" );
+    $("#selected_country_id Option:selected").text();
+});
+</script>
+
+  
+{% endblock%}
+

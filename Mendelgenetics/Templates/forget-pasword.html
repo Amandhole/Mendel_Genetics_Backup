@@ -1,0 +1,551 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <div class="cart-sidebar-area">
+        <div class="top-content">
+            <a href="index.html" class="logo">
+                <img src="{% static 'assets/images/logo/logo2.png' %}" alt="logo">
+            </a>
+            <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="bottom-content">
+            <div class="cart-products">
+                <h4 class="title">Shopping cart</h4>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop01.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Color Pencil</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop02.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Water Pot</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop03.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Art Paper</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop04.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Stop Watch</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop05.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Comics Book</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="btn-wrapper text-center">
+                    <a href="#0" class="custom-button"><span>Checkout</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--============= Cart Section Ends Here =============-->
+
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section">
+        
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+    <!--============= Hero Section Ends Here =============-->
+
+
+    <!--============= Account Section Starts Here =============-->
+    <section class="account-section padding-bottom" id="email_send_div">
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440">
+
+                <div class="left-side" >
+                    <div class="section-header" style="margin-bottom: 50px;">
+                         
+                        <h3 class="title">Forgot Password ?</h3>
+                        <p>You can verify your account here.</p>
+                    </div>
+                    
+                     <div class="row" style="justify-content: center;">
+                        
+                    
+                    </div>
+
+                    <div class="login-form" >
+                        <span id="email_id_eroor" style="color: red;margin-left: 110px;"></span>
+                        <div class="form-group mb-30">
+                            <label for="login-email"><i class="far fa-envelope" style="margin-left: 100px;"></i></label>
+                            <input type="text" oninput="enter_email_forgot_password()" id="email_id" placeholder="Email Address" style="width: 450px;">
+                        </div>
+                        
+                        <div class="form-group mb-0">
+                            <button type="button" onclick="send_email_forget_pass()" class="custom-button">Next</button>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">ALREADY HAVE AN ACCOUNT ?</h3>
+                        <p>LOG IN HERE </p>
+                        <a href="{% url 'login_page' %}" class="custom-button transparent">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="account-section padding-bottom" id="otp_verify_div">
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440" style="height: ;">
+
+                <div class="left-side" >
+                    <div class="section-header" style="margin-bottom: 50px;">
+                        <button type="button" onclick="back_button()"  style="width: 50px;height: 40px; margin-top: -68px; margin-left: -652px; background-color: #5A4BCC;" class="btn btn-primary">
+                            <i class="fas fa-long-arrow-alt-left" style="margin-top: -11px; font-size: 30px; margin-left: -4px;"></i>
+                        </button>
+                
+                        <h3 class="title">Forgot Password ?</h3>
+                        <p>You can verify your account here.</p>
+                    </div>
+                    
+                     <div class="row" style="justify-content: center;">
+                        
+                    
+                    </div>
+
+                    <div >
+                        <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                            <input class="m-2 text-center form-control rounded" type="text" id="o1" maxlength="1" />
+                            <input class="m-2 text-center form-control rounded" type="text" id="o2" maxlength="1" /> 
+                            <input class="m-2 text-center form-control rounded" type="text" id="o3" maxlength="1" /> 
+                            <input class="m-2 text-center form-control rounded" type="text" id="o4" maxlength="1" /> 
+                            <input class="m-2 text-center form-control rounded" type="text" id="o5" maxlength="1" /> 
+                            <input class="m-2 text-center form-control rounded" type="text" id="o6" maxlength="1" /> 
+                        </div>
+            
+                        <div id="myspan" style="margin-left: 265px;">
+                            <p style="font-size:16px; margin-top: 10px; margin-left: 156px;" id=""></p> 
+                        </div>
+                        <div id="btnotpagain">
+                            <button  type="button" id="" onclick="send_email_forget_pass()" style="border: none; background-color: white; color:#4A66Ad; margin-left:285px;width: 114px;height: 21px;height: 21px;margin-top: 10px;">Resend OTP</button>
+                        </div>
+
+
+                        <div class="form-group mb-0">
+                            <button type="button" onclick="verify_otp()" class="custom-button" style="margin-top: 10px;margin-left: 240px;">Verify OTP</a></button>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">ALREADY HAVE AN ACCOUNT ?</h3>
+                        <p>LOG IN HERE </p>
+                        <a href="{% url 'login_page' %}" class="custom-button transparent">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+
+
+    <section class="account-section padding-bottom" id="createpassword">
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440">
+
+                <div class="left-side" >
+                    <div class="section-header" style="margin-bottom: 50px;">
+                        <button type="button" onclick="previous_button()" style="width: 50px;height: 40px; margin-top: -68px; margin-left: -652px; background-color: #5A4BCC;" class="btn btn-primary">
+                            <i class="fas fa-long-arrow-alt-left" style="margin-top: -11px; font-size: 30px; margin-left: -4px;"></i>
+                        </button>
+                         
+                        <h3 class="title">Forgot Password ?</h3>
+                        <p>You can verify your account here.</p>
+                    </div>
+                    
+                     <div class="row" style="justify-content: center;">
+                        
+                    
+                    </div>
+
+                  
+                    <div class="login-form">
+                        <span id="new_password_error" style="color: red;margin-left: 110px;" > </span>
+                        <div class="form-group">
+                            <label for="login-pass"><i class="fas fa-lock" style="margin-left: 100px;"></i></label>
+                            <input type="password" id="newpassword" placeholder="Enter New Password" style="width: 450px;">
+                            <span class="pass-type"><i class="fas fa-eye" id="tglPassword" style="margin-right: 100px;"></i></span>
+                          
+                        </div>
+
+                        <span id="confirm_password_error" style="color: red;margin-left: 110px;"> </span>
+                        <div class="form-group">
+                            <label for="login-pass"><i class="fas fa-lock" style="margin-left:100px;"></i></label>
+                            <input type="password" id="confirm_password" placeholder="Confirm New Password" style="width:450px;">
+                            <span class="pass-type"><i class="fas fa-eye" id="toggleconPassword" style="margin-right: 100px;"></i></span>
+                           
+                        </div>
+                       
+                        
+
+    
+                        <div class="form-group mb-0">
+                            <button type="button" onclick="change_password()" class="custom-button">Change password</button>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">ALREADY HAVE AN ACCOUNT ?</h3>
+                        <p>LOG IN HERE </p>
+                        <a href="{% url 'login_page' %}" class="custom-button transparent">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% comment %} jascript code {% endcomment %}
+ <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+
+
+
+ <script>
+        var seconds;
+        var countdownTimer;
+        function secondPassed() {
+
+            var minutes = Math.round((seconds - 30) / 60);
+            var remainingSeconds = seconds % 60;
+            if (remainingSeconds < 10) {
+                remainingSeconds = '0' + remainingSeconds;
+            }
+            $('#btnotpagain').hide()
+            $('#myspan').html('Resend OTP In ' + minutes + ':' + remainingSeconds);  
+
+            if (seconds == 0) {
+                clearInterval(countdownTimer);
+                $('#myspan').html("Did Not Recive OTP ?"); 
+                $('#btnotpagain').show()
+            }
+            else {
+                seconds--;
+                }
+            }
+            function runOtpSend() {
+                seconds = 30;
+                countdownTimer = setInterval('secondPassed()', 1000);
+            }
+    </script>
+      
+ <script type="text/javascript">
+                document.addEventListener("DOMContentLoaded", function (event) {
+                    function OTPInput() {
+                        const inputs = document.querySelectorAll('#otp > *[id]');
+                        for (let i = 0; i < inputs.length; i++) {
+                            inputs[i].addEventListener('keydown', function (event) {
+                                if (event.key === "Backspace") {
+
+                                    inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus();
+                                }
+                                else {
+                                    if (i === inputs.length - 1 && inputs[i].value !== '') {
+                                        console.log('keypresed')
+                                        return true;
+                                    }
+                                    else if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)) {
+                                        console.log('else if key pressed')
+                                        inputs[i].value = event.key;
+                                        if (i !== inputs.length - 1)
+                                            inputs[i + 1].focus();
+                                        event.preventDefault();
+                                    }
+                                    else if (event.keyCode > 64 && event.keyCode < 91) {
+                                        console.log('in last if')
+                                        inputs[i].value = String.fromCharCode(event.keyCode);
+                                        if (i !== inputs.length - 1)
+                                            inputs[i + 1].focus();
+                                        event.preventDefault();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    OTPInput();
+                });
+
+    </script>     
+
+<script>
+     
+        
+       $("#tglPassword").click(function(){
+        if( $('#newpassword').attr('type') == "password"){   
+            $("#newpassword").attr('type', 'text')
+            $("#tglPassword").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#newpassword").attr('type', 'password')
+            $("#tglPassword").attr('class' , 'fas fa-eye')
+        }
+      })
+
+         $("#toggleconPassword").click(function(){
+        if( $('#confirm_password').attr('type') == "password"){   
+            $("#confirm_password").attr('type', 'text')
+            $("#toggleconPassword").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#confirm_password").attr('type', 'password')
+            $("#toggleconPassword").attr('class' , 'fas fa-eye')
+        }
+      })  
+
+</script>    
+<script>  
+    
+    $("#otp_verify_div").hide()
+    $("#createpassword").hide()
+    
+       
+    $("#newpassword").keyup(function () {
+        $("#newpassword").css("border", "1px solid #eee");
+        $("#new_password_error").html("");
+    });
+         
+    $("#confirm_password").keyup(function () {
+        console.log('hello')
+        $("#confirm_password").css("border", "1px solid #eee");
+        $("#confirm_password_error").html("");
+    });
+
+             
+  
+    function enter_email_forgot_password(){      
+        $("#email_id").keyup(function () {
+        $("#email_id").css("border", "1px solid #eee");
+        $("#email_id_eroor").html("");
+      });
+       
+    }
+    
+
+    function send_email_forget_pass(){
+        runOtpSend();
+        $("#btnotpagain").hide()
+        var email = $("#email_id").val()
+        var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        
+         
+        if (email == ''){
+            $("#email_id_eroor").html("Enter Email Address *")
+            $("#email_id").css('border','1px solid #f37777');
+            $("#email_id").focus();
+           }
+        else if (!emailfilter.test(email)){
+            $("#email_id_eroor").html("Enter Valid Email Address *")
+            $("#email_id").css('border','1px solid #f37777');
+            $("#email_id").focus();
+        }
+        else{
+            $.ajax({
+                method : "POST",
+                url : "{% url 'forget_password' %}",
+                contentType : "application/json",
+                data : JSON.stringify({
+                     "email_id" : email
+                }),
+                success : function (response){
+                    if (response ['status'] == "1"){
+                        console.log(response)
+
+                        window.get_otp = (response ['email_otp'])
+
+                    
+                            $("#email_send_div").hide()
+                            $("#createpassword").hide()
+                            $("#otp_verify_div").show()
+
+                    }
+                    else if (response ['status'] == '0'){
+                        console.log(response)
+                        swal({
+                            icon : "error",
+                            text: "Email Not Exists",
+                            closeOnClickOutside: false
+                        })
+
+                    }
+                }                
+            })
+        }    
+    }
+
+
+
+function verify_otp(){
+    
+        var otp1 = $("#o1").val()
+        var o2 = $("#o2").val()
+        var otp3 = $("#o3").val()
+        var otp4 = $("#o4").val()
+        var otp5 = $("#o5").val()
+        var otp6 = $("#o6").val()
+    
+        enterd_otp  =  otp1 + o2 + otp3 + otp4 + otp5 + otp6
+
+        if (enterd_otp == ''){
+                swal({
+                icon : "error",
+                text : "Enter valid OTP",
+                closeOnClickOutside: false
+            })
+        }
+        
+        else if (get_otp == enterd_otp){
+
+            swal({
+                icon:"success",
+                text : "OTP match succesfully",
+                closeOnClickOutside :false
+            }).then(function(){
+                 $("#email_send_div").hide()
+                 $("#otp_verify_div").hide()
+                 $("#createpassword").show()
+            })
+
+        }
+        else{   
+            swal({
+                icon:"error",
+                text : "OTP Does Not Match",
+                closeOnClickOutside :false
+            })
+        }
+        
+}
+
+function change_password(){
+    
+    var new_passwrod = $("#newpassword").val()
+    var confirm_password = $("#confirm_password").val()
+    var email =  $("#email_id").val()
+
+    if (new_passwrod == ''){
+        $("#newpassword").css("border", "1px solid #f37777");
+        $("#newpassword").focus();
+        $("#new_password_error").html("Enter password");
+    }
+
+    else if (new_passwrod.length  <= "7" ){
+        $("#newpassword").css("border", "1px solid #f37777");
+        $("#newpassword").focus();
+        $("#new_password_error").html("Min length atlest 8 *");
+    }
+    else if (confirm_password == ''){
+        $("#confirm_password").css("border", "1px solid #f37777");
+        $("#confirm_password").focus();
+        $("#confirm_password_error").html("Enter password");
+    }
+
+    
+    else if (new_passwrod != confirm_password){
+        $("#confirm_password").css("border", "1px solid #f37777");
+        $("#confirm_password").focus();
+        $("#confirm_password_error").html("Password Does Not Match");
+    }
+    
+
+    else {
+        $.ajax({
+            method : "POSTT",
+            url : "{% url 'reset_password' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+                "email" : email,
+                "password": new_passwrod
+            }),
+            success : function(response){
+                if (response ['status'] == "1"){
+                    swal({
+                        icon : "success",
+                        text : "Password Change Succesfully",
+                        closeOnClickOutside: false
+                    }).then(function(){
+                        location.href = "{% url 'login_page' %}"
+                    })
+                 
+                }
+                else if(response ['status'] == "0" ){
+                    swal({
+                        icon:"error",
+                        text: "Email Does Not Exists",
+                        closeOnClickOutside:false
+                    })
+                } 
+
+            }
+        })
+    }
+}
+
+function back_button(){
+    clearInterval(countdownTimer);
+    clearInterval(seconds);
+    $("#email_send_div").show()
+    $("#otp_verify_div").hide()
+    $("#createpassword").hide()
+   
+}
+function previous_button(){
+    $("#email_send_div").hide()
+    $("#otp_verify_div").show()
+    $("#createpassword").hide()
+}
+</script>
+
+
+
+{%  endblock %}
+
+   
+
+    <!--============= Account Section Ends Here =============-->
+
+
+    <!--============= Footer Section Starts Here =============-->
+    

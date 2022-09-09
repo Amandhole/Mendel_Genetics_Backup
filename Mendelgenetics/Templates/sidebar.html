@@ -1,0 +1,348 @@
+{% load static %}
+<style>
+    .btn-secondary.focus, .btn-secondary:focus {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: none;
+    box-shadow: none;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #693FF5;
+    border-color: #693FF5;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #473093;
+    border-color: #693FF5;
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="col-sm-10 col-md-7 col-lg-4">
+        <input type="hidden" value="{{user_obj.id}}" id="user_id">
+                    <div class="dashboard-widget mb-30 mb-lg-0 sticky-menu">
+                        <div class="user">
+                            <div class="thumb-area">
+
+                                {% if user_obj.user_image %}
+                                    <div class="thumb">
+                                        <img src="{{user_obj.user_image.url}}" alt="user">
+                                    </div>
+                                {% else %} 
+                                
+                                    <div class="thumb">
+                                        <img src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user">
+                                    </div>
+                                {% endif %}    
+                                
+                                <label for="profile-pic" class="profile-pic-edit"><i class="flaticon-pencil"></i></label>
+                                <input type="file" id="profile-pic" class="d-none file-upload">
+                                
+                            </div>
+                            <div class="content">
+                                <h5 class="title">{{user_obj.name}}</h5>
+                                <span class="username">{{user_obj.email}}</span>
+                            </div>
+                        </div>
+
+                        <ul class="dashboard-menu"> 
+
+                            {% if user_obj.is_individual %}
+                            <li>
+                                <a href="{% url 'user_profile_page' %}" class="" id="profile_setting"><i class="flaticon-settings"></i>Profile Setting</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'add_test_by_user' %}" class="" id="poste_test"><i class="flaticon-settings"></i>Post Test</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i> Posted Test</a>
+                            </li>
+
+                            <li>
+                                <a  id="logout"  style="cursor:pointer ;" ><i class="fa-solid fa-share-from-square"></i>Logout</a>
+                            </li>
+                             {% comment %} <li> 
+                                <a href="winning-bids.html"><i class="flaticon-best-seller" id="current_order"></i>Current Order</a>
+                            </li> {% endcomment %}
+
+                            {% comment %}  for auction site option to corporate {% endcomment %}
+                            
+                            
+                            
+                            {% elif user_obj.is_corporate %}
+
+                            <div class="row" style="justify-content: center;">
+                                <button type="button" class="" id="change_btn_auction" style=" font-size:15px; height: 39px; margin-bottom: 1rem;width: 80px;border-bottom-right-radius: 0%;border-top-right-radius: 0%;padding-left: 9px;" >Auction</button>
+                                <button type="button" class="" id="change_btn_bidding" style="font-size:15px; height: 39px; margin-bottom: 1rem; width: 80px;border-top-left-radius: 0%;border-bottom-left-radius: 0%;padding-left: 8px;" >Bidding</button>
+                            </div>
+
+                                <input type="hidden" id="auc_bid_status_id" disabled value="{{user_obj.auc_bid_status}}">
+                                {% if user_obj.auc_bid_status %}
+                                    <li>
+                                        <a href="{% url 'user_profile_page' %}" class="" id="profile_setting"><i class="flaticon-settings"></i>Profile Setting</a>
+                                    </li>
+
+
+                                    <li> 
+                                        <a href="{% url 'All_test_list_exclude_current_user' %}" class="" id="all_auctions"><i class="flaticon-auction"></i>Tests</a>
+                                    </li>
+                                    
+
+                                    <li>
+                                        <a  id="logout"  style="cursor:pointer ;" ><i class="fa-solid fa-share-from-square"></i>Logout</a>
+                                    </li>
+                                {% else %}
+
+
+                                    <li>
+                                        <a href="{% url 'user_profile_page' %}" class="" id="profile_setting"><i class="flaticon-settings"></i>Profile Setting</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'add_test_by_user' %}" class="" id="poste_test"><i class="fa-brands fa-telegram"></i>Post Test</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i> Posted Test</a>
+                                    </li>
+
+                                    
+                                    {% comment %} <i class="fa fa-sign-out" aria-hidden="true"></i> {% endcomment %}
+                                    <li>
+                                        <a  id="logout"  style="cursor:pointer ;" ><i class="fa-solid fa-share-from-square"></i>Logout</a>
+                                    </li>
+
+                                    {% comment %} <li> 
+                                        <a href="winning-bids.html"><i class="flaticon-best-seller" id="current_order"></i>Current Order</a>
+                                    </li> {% endcomment %}
+                                {% endif %}    
+                                        
+                                                
+                            {% comment %} 
+                            <li>
+                                <a href="notifications.html"><i class="flaticon-alarm"></i>My Alerts</a>
+                            </li>
+                            <li>
+                                <a href="my-favorites.html"><i class="flaticon-star"></i>My Favorites</a>
+                            </li>
+                            <li>
+                                <a href="referral.html"><i class="flaticon-shake-hand"></i>Referrals</a>
+                            </li> {% endcomment %}
+                            {% endif %} 
+
+
+
+
+
+                             {% comment %}  for Bidding site option to corporate {% endcomment %}
+                        </ul>
+                    </div>
+                </div>
+
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+
+
+<script>
+    $("#change_btn_auction").click(function(){
+        var btn_value = 0;
+
+
+        $.ajax({
+            method :"POST",
+            url : "{% url 'bid_auction_status_toggle' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+                "tgl_btn_value":btn_value
+            }),
+            success : function(response){
+                if (response['status'] == '1'){
+                    console.log(response)
+                    location.href="{% url 'user_profile_page' %}"
+                    
+                }
+                else{
+                    console.log(response)
+                    swal({
+                        icon:'error',
+                        text : "Something Went Wrong",
+                        closeOnClickOutside : false
+                    })
+                }
+
+            }
+        })
+    })
+</script>
+
+
+
+<script>
+    $("#change_btn_bidding").click(function(){
+
+
+        var btn_value = 1;
+
+        $.ajax({
+            method :"POST",
+            url : "{% url 'bid_auction_status_toggle' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+                "tgl_btn_value":btn_value
+            }),
+            success : function(response){
+                if (response['status'] == '1'){
+                    console.log(response)
+                    location.href="{% url 'user_profile_page' %}"
+                
+                }
+                else{
+                    console.log(response)
+                    swal({
+                        icon:'error',
+                        text : 'Something Went Wrong',
+                        closeOnClickOutside : false
+                    })
+
+                }
+
+            }
+        })
+
+
+    })
+
+    $(document).ready(function(){
+        var status = $("#auc_bid_status_id").val()
+        if (status == "True"){
+            console.log('btn status true')
+            $("#change_btn_bidding").attr("class","btn btn-info")
+            $("#change_btn_auction").attr("class","btn btn-secondary")
+        }
+        if (status == "False"){
+            console.log(' btn status false')
+            $("#change_btn_auction").attr("class","btn btn-info")
+            $("#change_btn_bidding").attr("class","btn btn-secondary")
+        }
+
+        })
+</script>
+<script>
+    $(document).ready(function() {
+
+    
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+            reader.onload = function (e) {
+                $('.profile-pic').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+    $(".file-upload").on('change', function(){
+        readURL(this);
+    });
+    
+    $(".flaticon-pencil").on('click', function() {
+       $(".file-upload").click();
+    });
+});
+
+
+
+
+{% comment %} $("#profile-pic").on('',function(){
+    var user_id = $("#user_id").val()
+    alert(user_id)
+}) {% endcomment %}
+
+$("#profile-pic").on('change',function(){
+    
+  var form = $("#form_data")[0];
+  var data_item = new FormData(form);
+
+
+  var user_id = $("#user_id").val()
+  data_item.append("profile-pic",document.getElementById("profile-pic").files[0])
+  
+  
+  $.ajax({
+    method : "POST",
+    url : "{% url 'edit_user_profile_image' %}",
+    enctype : "mutipart/form_data",
+    processData : false,
+    contentType : false,
+    cache : false,
+    data :data_item,
+    success : function(response){
+       
+        if (response['status'] == "1"){
+            console.log(response)
+
+            location.reload()
+
+        }
+        
+        else{
+            console.log(response)
+        
+            swal({
+                icon:"error",
+                text:"Something Went Wrong",
+                closeOnClickOutside:false
+            })
+        
+        }
+
+    
+    }
+
+});
+})
+
+
+$("#logout").click(function(){
+    
+        swal({
+            icon:"warning",
+            text:"Are you sure to logout ?",
+            buttons: ["No", "Yes"],
+            dangerMode: true,
+            closeOnClickOutside:false
+            
+                    
+        }).then((willUpdate) => {
+            if(willUpdate) {
+            $.ajax({
+            method : "POST",
+            url : "{% url 'userlogout' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+            }),
+            success : function(response){
+               location.href="{% url 'login_page' %}" 
+               
+            }
+        })
+    }
+
+        })
+        
+        
+
+})
+
+</script>
+        

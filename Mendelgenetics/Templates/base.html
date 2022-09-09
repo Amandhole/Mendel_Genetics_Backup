@@ -1,0 +1,654 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" id="pageHTML">
+
+
+<!-- Mirrored from pixner.net/sbidu/main/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:27:40 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Mendel - Home</title>
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+</head>
+<style type="text/css">
+    body{
+        top: 0px !important;
+    }
+    .goog-te-banner-frame.skiptranslate, .goog-logo-link {
+        display: none!important;
+    } 
+    /* .goog-te-combo{
+        width: 30px;
+    } */
+    
+    #google_translate_element select{
+        background:#f6edfd;
+        color:#383ffa;
+        border: none;
+        border-radius:3px;
+        padding:6px 8px;
+        height: 30px;
+    }
+    
+    /*google translate link | logo */
+    .goog-logo-link{
+        display:none!important;
+    }
+    .goog-te-gadget{
+        color:transparent!important;
+    }
+    
+    /* google translate banner-frame */
+    
+    .goog-te-banner-frame,.goog-te-banner{
+        display:none !important;
+    }
+    
+    #goog-gt-tt, .goog-te-balloon-frame{display: none !important;}
+    .goog-text-highlight { background: none !important; box-shadow: none !important;}
+    #menu {
+  /*background: #343434;*/
+  color: #eee;
+  height: 35px;
+  /*border-bottom: 4px solid #eeeded*/
+}
+
+#menu ul,
+#menu li {
+  margin: 0 0;
+  padding: 0 0;
+  list-style: none
+}
+
+#menu ul {
+  height: 35px
+}
+
+#menu li {
+  /*float: left;*/
+  /*display: inline;*/
+  position: relative;
+  /*font: bold 12px Arial;*/
+  /*text-shadow: 0 -1px 0 #000;*/
+  /*border-right: 1px solid #444;*/
+  /*border-left: 1px solid #111;*/
+  /*text-transform: uppercase;*/
+}
+
+#menu li:first-child {
+  border-left: none
+}
+
+#menu a {
+  display: block;
+  line-height: 35px;
+  padding: 0 14px;
+  text-decoration: none;
+  color: #eee;
+}
+
+#menu li:hover > a,
+#menu li a:hover {
+  background: #002947;
+}
+
+#menu input {
+  display: none;
+  margin: 0 0;
+  padding: 0 0;
+  width: 80px;
+  height: 35px;
+  opacity: 0;
+  cursor: pointer
+}
+
+#menu label {
+  font: bold 30px Arial;
+  display: none;
+  width: 35px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center
+}
+
+#menu label span {
+  font-size: 12px;
+  position: absolute;
+  left: 35px
+}
+
+#menu ul.menus {
+  height: auto;
+  width: 290px;
+  background: #002947;;
+  position: absolute;
+  z-index: 99;
+  display: none;
+  border: 0;
+}
+
+#menu ul.menus li {
+  display: block;
+  width: 100%;
+  font: 12px Arial;
+  text-transform: none;
+}
+
+#menu li:hover ul.menus {
+  display: block
+}
+
+#menu a.home {
+  background: #c00;
+}
+
+#menu a.prett {
+  padding: 0 27px 0 14px
+}
+
+#menu a.prett::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-width: 6px 5px;
+  border-style: solid;
+  border-color: #eee transparent transparent transparent;
+  position: absolute;
+  top: 15px;
+  right: 9px
+}
+
+#menu ul.menus a:hover {
+  background: #333;
+}
+
+#menu ul.menus .submenu {
+  display: none;
+  position: absolute;
+  left: 180px;
+  background: #111;
+  top: 0;
+  width: 180px;
+}
+
+#menu ul.menus .submenu li {
+  background: #111;
+}
+
+#menu ul.menus .has-submenu:hover .submenu {
+  display: block;
+}
+
+</style>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="overlayer" id="overlayer">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+
+    <!--============= Header Section Starts Here =============-->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-wrapper">
+                    <ul class="customer-support">
+                        <li>
+                            <a href="#0" class="mr-3"><i class="fas fa-phone-alt"></i><span class="ml-2 d-none d-sm-inline-block">Customer Support</span></a>
+                        </li>
+                        <li>
+                            <!-- <i class="fas fa-globe"></i> -->
+                            <div style="height: 30px !important;" id="google_translate_element"></div>
+                            <!-- <select name="language" class="select-bar">
+                                <option value="en">En</option>
+                                <option value="Bn">Bn</option>
+                                <option value="Rs">Rs</option>
+                                <option value="Us">Us</option>
+                                <option value="Pk">Pk</option>
+                                <option value="Arg">Arg</option>
+                            </select> -->
+                        </li>
+                    </ul>
+                    <ul class="cart-button-area">
+                        <li>
+                            <a href="#0" class="cart-button"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                        </li>  
+                                              
+                        {% if user_obj.id  %}
+
+                            
+                            <li>
+                                {% comment %} <a href="" class="user-button"><i class="flaticon-user"></i></a> {% endcomment %}
+                                <a class="user-button"><i class="flaticon-user"></i></a>
+                                <span style="color: white;">{{user_obj.name}}</span>
+                            </li>                            
+
+                        {% else %}
+
+
+                            <li>
+                                <a href="{% url 'login_page' %}" class="user-button"><i class="flaticon-user"></i></a>
+                            </li>
+
+
+                        {% endif %}  
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="logo">
+                        <a href="{% url 'landing_page' %}">
+                            <img src="{% static 'assets/images/logo/logo.png' %}" alt="logo">
+                        </a>
+                    </div>
+                    <ul class="menu ml-auto">
+                        <li>
+                            <a href="{% url 'landing_page' %}">Home</a>
+                            
+                        </li>
+                        <li>
+                            <a href="#">Categories</a>
+                        </li>
+                        <li>
+                            <a href="">Corporate Area</a>
+                        </li>
+                        <li>
+                            <a href="">Individual Area</a>
+                        </li>
+                     <!--    <li>
+                            <a href="#0">Pages</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="#0">Product</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="product.html">Product Page 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="product-2.html">Product Page 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="product-details.html">Product Details</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#0">My Account</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="sign-up.html">Sign Up</a>
+                                        </li>
+                                        <li>
+                                            <a href="sign-in.html">Sign In</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#0">Dashboard</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="dashboard.html">Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="profile.html">Personal Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="my-bid.html">My Bids</a>
+                                        </li>
+                                        <li>
+                                            <a href="winning-bids.html">Winning Bids</a>
+                                        </li>
+                                        <li>
+                                            <a href="notifications.html">My Alert</a>
+                                        </li>
+                                        <li>
+                                            <a href="my-favorites.html">My Favorites</a>
+                                        </li>
+                                        <li>
+                                            <a href="referral.html">Referrals</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="about.html">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="faqs.html">Faqs</a>
+                                </li>
+                                <li>
+                                    <a href="error.html">404 Error</a>
+                                </li>
+                            </ul>
+                        </li> -->
+                        
+                    </ul>
+                    <form class="search-form">
+                        <input type="text" placeholder="Search for brand, model....">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    <div class="search-bar d-md-none">
+                        <a href="#0"><i class="fas fa-search"></i></a>
+                    </div>
+                    <div class="header-bar d-lg-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <div class="cart-sidebar-area">
+        <div class="top-content">
+            
+            <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="bottom-content">
+            <div class="cart-products">
+                
+                
+                <ul id="menu" style="color: white;">
+                    
+                        <li><a class='prett' href='#' title='Menu'>About Us</a>
+      <ul class='menus'>
+        
+        <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
+        <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
+        <li><a href='#' title='Dropdown 3'>Management Team</a></li>
+        <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
+        <li><a href='#' title='Dropdown 3'>Quality</a></li>
+      </ul>
+    </li>
+
+                        <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
+      <ul class='menus'>
+        
+        <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
+        <li><a href='#' title='Dropdown 3'>Liquid Biopsy</a></li>
+        <li><a href='#' title='Dropdown 3'>Molecular Oncology</a></li>
+        <li><a href='#' title='Dropdown 3'>NGS Panels</a></li>
+        <li><a href='#' title='Dropdown 3'>Exome</a></li>
+      </ul>
+    </li>
+
+                
+                    <li><a href="" style="color: #fff;">Precision Medicine</a></li>
+                    <li><a href="" style="color: #fff;">Genetic Counselling</a></li>
+                    <li><a href="" style="color: #fff;">Ordering a test</a></li>
+                    <li><a href="" style="color: #fff;">News and Events</a></li>
+                    <li><a href="" style="color: #fff;">Contact</a></li>
+                </ul>
+                
+                
+                
+                
+                <!-- <div class="btn-wrapper text-center">
+                    <a href="#0" class="custom-button"><span>Checkout</span></a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!--============= Cart Section Ends Here =============-->
+
+
+    <!--============= Banner Section Starts Here =============-->
+  
+ 
+        
+        
+        {% block content %}
+
+
+
+        {% endblock %}
+        
+    <!--============= Client Section Ends Here =============-->
+
+
+    <!--============= Footer Section Starts Here =============-->
+    <footer class="bg_img padding-top oh" data-background="{% static 'assets/images/footer/footer-bg.jpg' %}">
+        <div class="footer-top-shape">
+            <img src="{% static 'assets/css/img/footer-top-shape.png' %}" alt="css">
+        </div>
+        <div class="anime-wrapper">
+            <div class="anime-1 plus-anime">
+                <img src="{% static 'assets/images/footer/p1.png' %}" alt="footer">
+            </div>
+            <div class="anime-2 plus-anime">
+                <img src="{% static 'assets/images/footer/p2.png' %}" alt="footer">
+            </div>
+            <div class="anime-3 plus-anime">
+                <img src="{% static 'assets/images/footer/p3.png' %}" alt="footer">
+            </div>
+            <div class="anime-5 zigzag">
+                <img src="{% static 'assets/images/footer/c2.png' %}" alt="footer">
+            </div>
+            <div class="anime-6 zigzag">
+                <img src="{% static 'assets/images/footer/c3.png' %}" alt="footer">
+            </div>
+            <div class="anime-7 zigzag">
+                <img src="{% static 'assets/images/footer/c4.png' %}" alt="footer">
+            </div>
+        </div>
+        <div class="newslater-wrapper">
+            <div class="container">
+                <div class="newslater-area">
+                    <div class="newslater-thumb">
+                        <img src="{% static 'assets/images/footer/newslater.png' %}" alt="footer">
+                    </div>
+                    <div class="newslater-content">
+                        <div class="section-header left-style mb-low">
+                            <h5 class="cate">Counselling</h5>
+                            <h3 class="title">Genetics Specialist</h3>
+
+                            <p>Monday to Fridays between 9:00 and 16:00</p>
+                        </div>
+                        <form class="subscribe-form">
+                            <input type="text" placeholder="Enter Your Email" name="email">
+                            <button type="submit" class="custom-button">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-top padding-bottom padding-top">
+            <div class="container">
+                <div class="row mb--60">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="footer-widget widget-links">
+                            <h5 class="title">Auction Categories</h5>
+                            <ul class="links-list">
+                                <li>
+                                    <a href="#0">Genome Sequencing</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Liquid Biopsy</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Molecular Oncology</a>
+                                </li>
+                                <li>
+                                    <a href="#0">NGS Panels</a>
+                                </li>
+                                    </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="footer-widget widget-links">
+                            <h5 class="title">About Us</h5>
+                            <ul class="links-list">
+                                <li>
+                                    <a href="#0">About Mendel Genetics</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Mission, Vision and Values</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Management Team</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Quality</a>
+                                </li>
+                            
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="footer-widget widget-links">
+                            <h5 class="title">We're Here to Help</h5>
+                            <ul class="links-list">
+                                <li>
+                                    <a href="#0">Your Account</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Safe and Secure</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Shipping Information</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Contact Us</a>
+                                </li>
+                                <li>
+                                    <a href="#0">Help & FAQ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="footer-widget widget-follow">
+                            <h5 class="title">Follow Us</h5>
+                            <ul class="links-list">
+                                <li>
+                                    <a href="#0"><i class="fas fa-phone-alt"></i>(646) 663-4575</a>
+                                </li>
+                                <li>
+                                    <a href="#0"><i class="fas fa-blender-phone"></i>(646) 968-0608</a>
+                                </li>
+                                <li>
+                                    <a href="#0"><i class="fas fa-envelope-open-text"></i><span class="__cf_email__" data-cfemail="0e666b627e4e6b6069617a666b636b206d6163">[email&#160;protected]</span></a>
+                                </li>
+                                <li>
+                                    <a href="#0"><i class="fas fa-location-arrow"></i>1201 Broadway Suite</a>
+                                </li>
+                            </ul>
+                            <ul class="social-icons">
+                                <li>
+                                    <a href="#0" class="active"><i class="fab fa-facebook-f"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#0"><i class="fab fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#0"><i class="fab fa-instagram"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#0"><i class="fab fa-linkedin-in"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="copyright-area">
+                    <div class="footer-bottom-wrapper">
+                        {% comment %} <div class="logo">
+                            <a href="index.html"><img src="{% static 'assets/images/logo/footer-logo.png' %}" alt="logo"></a>
+                        </div> {% endcomment %}
+                        <ul class="gateway-area">
+                            <li>
+                                <a href="#0"><img src="{% static 'assets/images/footer/paypal.png' %}" alt="footer"></a>
+                            </li>
+                            <li>
+                                <a href="#0"><img src="{% static 'assets/images/footer/visa.png' %}" alt="footer"></a>
+                            </li>
+                            <li>
+                                <a href="#0"><img src="{% static 'assets/images/footer/discover.png' %}" alt="footer"></a>
+                            </li>
+                            <li>
+                                <a href="#0"><img src="{% static 'assets/images/footer/mastercard.png' %}" alt="footer"></a>
+                            </li>
+                        </ul>
+                        <div class="copyright"><p>&copy; Copyright 2022 |  By <a href="#0">Techquadra</a></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--============= Footer Section Ends Here =============-->
+
+
+
+    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/modernizr-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/js/wow.min.js' %}"></script>
+    <script src="{% static 'assets/js/waypoints.js' %}"></script>
+    <script src="{% static 'assets/js/nice-select.js' %}"></script>
+    <script src="{% static 'assets/js/counterup.min.js' %}"></script>
+    <script src="{% static 'assets/js/owl.min.js' %}"></script>
+    <script src="{% static 'assets/js/magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets/js/yscountdown.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({includedLanguages :'en,es', }, 'google_translate_element');
+        }
+        $( document ).ready(function() {
+            // setTimeout(() => {
+            //     if ($(".goog-te-combo option:selected").text() != 'Select Language')
+            //     {
+            //         document.getElementById('pageHTML').style.marginTop = "-40px";
+            //     }
+            //     else
+            //     {
+            //         document.getElementById('pageHTML').style.marginTop = "0px";
+            //     }
+            // }, 1000);
+        });
+
+        // $("body").on("change", "#google_translate_element select", function (e) {
+        //     document.getElementById('pageHTML').style.marginTop = "-40px";
+        // });
+    </script>
+</body>
+
+
+<!-- Mirrored from pixner.net/sbidu/main/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:29:07 GMT -->
+</html>

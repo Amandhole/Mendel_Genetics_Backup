@@ -1,0 +1,479 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from pixner.net/sbidu/main/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:34:06 GMT -->
+
+<style type="text/css">
+
+    .purchasing-table tbody tr {
+        font-size: 14px;
+        color: #171d1c;
+        font-weight: 500;
+    }
+
+</style>
+<body>
+    <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
+    <!--============= ScrollToTop Section Starts Here =============-->
+    {% comment %} <div class="overlayer" id="overlayer">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div> {% endcomment %}
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= Header Section Starts Here =============-->
+    
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <div class="cart-sidebar-area">
+        <div class="top-content">
+
+            <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="bottom-content">
+            <div class="cart-products">
+
+
+                <ul id="menu" style="color: white;">
+
+                    <li><a class='prett' href='#' title='Menu'>About Us</a>
+                      <ul class='menus'>
+
+                        <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
+                        <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
+                        <li><a href='#' title='Dropdown 3'>Management Team</a></li>
+                        <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
+                        <li><a href='#' title='Dropdown 3'>Quality</a></li>
+                    </ul>
+                </li>
+
+                <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
+                  <ul class='menus'>
+
+                    <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
+                    <li><a href='#' title='Dropdown 3'>Liquid Biopsy</a></li>
+                    <li><a href='#' title='Dropdown 3'>Molecular Oncology</a></li>
+                    <li><a href='#' title='Dropdown 3'>NGS Panels</a></li>
+                    <li><a href='#' title='Dropdown 3'>Exome</a></li>
+                </ul>
+            </li>
+
+
+            <li><a href="" style="color: #fff;">Precision Medicine</a></li>
+            <li><a href="" style="color: #fff;">Genetic Counselling</a></li>
+            <li><a href="" style="color: #fff;">Ordering a test</a></li>
+            <li><a href="" style="color: #fff;">News and Events</a></li>
+            <li><a href="" style="color: #fff;">Contact</a></li>
+        </ul>
+            </div>
+        </div>
+    </div>
+    <!--============= Cart Section Ends Here =============-->
+
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section style-2 pb-lg-400">
+
+        <div class="bg_img hero-bg bottom_center" data-background="{%  static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+
+
+
+    <!--============= Dashboard Section Starts Here =============-->
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+        <div class="container">
+            <div class="row justify-content-center">
+                
+
+                {%  include  'sidebar.html' %}
+                <div class="col-lg-8">
+
+                    <div class="dashboard-widget">
+                        <h5 class="title mb-15" style="margin-bottom: 20px;">Bid Details</h5>
+                        <div class="dashboard-purchasing-tabs">
+                           <!--  <ul class="nav-tabs nav">
+                                <li>
+                                    <a href="#current" class="active" data-toggle="tab">Active</a>
+                                </li>
+                                <li>
+                                    <a href="#pending" data-toggle="tab">Pending</a>
+                                </li>
+                                <li>
+                                    <a href="#history" data-toggle="tab">Expired</a>
+                                </li>
+                                <li>
+                                    <a href="#history" data-toggle="tab">Completed</a>
+                                </li>
+                            </ul> -->
+                            <div class="tab-content" style="overflow-y: scroll; height: 500px;">
+                                <div class="tab-pane show active fade" id="current">
+                                    <div class="ex chagene-box" style="height: 245px; margin-bottom: 20px;
+                                    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                    background: #8e67aa 0% 0% no-repeat padding-box;
+                                    border-radius: 8px;
+                                    box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                    opacity: 1;
+                                    padding: 30px; border: 1px solid #80808052;
+                                    margin-top: 0px; padding-top: 15px;">
+                                    <div class="row">
+
+                                      <div class="col-md-9">
+
+                                          <div class="rate-sec" style="margin-bottom:20px;">
+                                          <!-- <p>Rate Offered</p> -->
+                                          <span><img style="width:25px; position: absolute;" src="{%  static 'assets/images/dashboard/user.png' %}" alt="user"></span>
+                                          <h6 style="margin-top: 0px; margin-top: 0px;font-size: 14px;color: #fff;margin-left: 34px; "> User Name</h6>
+
+                                      </div>
+                                          
+                                        <div class="rate-sec">
+                                          <!-- <p>Rate Offered</p> -->
+                                          <h6 style="margin-top: 0px;font-size: 18px;color: #fff; "> Title</h6>
+
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                    <div class="trans-sec">
+                                      <span class="bid-amount" style="float:right; color: #37406f; font-weight:600; font-size: 20px; color: #fff;">$230</span>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-12" style="margin-top: 18px; color: #fff; margin-bottom: 5px;">
+
+                                  <h6 style="font-size: 15px; color: #fff; font-weight:400;">At this time  only accepts bidders from the United States, Canada and Mexico on Vehicles and Heavy Industrial Equipment. The Bid Now button will appear on auctions where you are qualified to place a bid.</h6>
+                              </div>
+
+                              <br>  
+                              <div class="col-md-8" style="margin-top: 15px;">
+                                  <h6 style="font-size: 15px; font-weight: 400; color: #fff;">18 Aug 2022</h6>
+                              </div>
+
+                              <div class="col-md-3">
+                                <div class="profile-sec" style="display: inline-flex;">
+                                  <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+                                  <div style="padding-top: 10px;">
+                                        <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 0px; margin-right: 0px;">
+                                          <i class="fa fa-long-arrow-alt-left"></i>
+                                        </button>
+                                    </div>
+                                  
+                                    <div style="padding-top: 10px;">
+                                        <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                            <i class="flaticon-edit" data-toggle="modal" data-target="#exampleModal"></i> </button>
+                                        </div>
+                                        <div style="padding-top: 10px;">
+                                            <a href="#">
+                                                <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                    <i class="fa fa-trash"></i></button>
+                                                    
+                                                </a> 
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <h5 class="title mb-15" style="margin-bottom: 30px;margin-top: 30px;">Recent Bids</h5>
+
+                            <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
+                            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                            background: #ffff 0% 0% no-repeat padding-box;
+                            border-radius: 8px;
+                            box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                            opacity: 1;
+                            padding: 30px; border: 1px solid #80808052;
+                            margin-top: 0px; padding-top: 15px;">
+                            <div class="row">
+
+                              <div class="col-md-9">
+                                <div class="rate-sec">
+                                  <!-- <p>Rate Offered</p> -->
+                                  <h6 style="margin-top: 0px;font-size: 18px; "> Title</h6>
+
+                              </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="trans-sec">
+                              <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f     ;">$230</span>
+                          </div>
+                      </div>
+
+                      <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                          <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6>
+                      </div>
+
+                      <br>  
+                      <div class="col-md-9" style="margin-top: 15px;">
+                          <h6 style="font-size: 15px; font-weight: 400; ">18 Aug 2022</h6>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="profile-sec" style="display: inline-flex;">
+                          <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+                        
+                            <div style="padding-top: 10px;">
+                                <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                    <i class='fas fa-thumbs-up'></i> </button>
+                                </div>
+                                <div style="padding-top: 10px;">
+                                    <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                         <i class='fas fa-thumbs-down'></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                            <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
+                            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                            background: #ffff 0% 0% no-repeat padding-box;
+                            border-radius: 8px;
+                            box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                            opacity: 1;
+                            padding: 30px; border: 1px solid #80808052;
+                            margin-top: 0px; padding-top: 15px;">
+                            <div class="row">
+
+                              <div class="col-md-9">
+                                <div class="rate-sec">
+                                  <!-- <p>Rate Offered</p> -->
+                                  <h6 style="margin-top: 0px;font-size: 18px; "> Title</h6>
+
+                              </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="trans-sec">
+                              <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f     ;">$230</span>
+                          </div>
+                      </div>
+
+                      <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                          <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6>
+                      </div>
+
+                      <br>  
+                      <div class="col-md-9" style="margin-top: 15px;">
+                          <h6 style="font-size: 15px; font-weight: 400; ">18 Aug 2022</h6>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="profile-sec" style="display: inline-flex;">
+                          <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+                        
+                            <div style="padding-top: 10px;">
+                                <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                    <i class='fas fa-thumbs-up'></i> </button>
+                                </div>
+                                <div style="padding-top: 10px;">
+                                    <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                         <i class='fas fa-thumbs-down'></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                            <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
+                            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                            background: #ffff 0% 0% no-repeat padding-box;
+                            border-radius: 8px;
+                            box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                            opacity: 1;
+                            padding: 30px; border: 1px solid #80808052;
+                            margin-top: 0px; padding-top: 15px;">
+                            <div class="row">
+
+                              <div class="col-md-9">
+                                <div class="rate-sec">
+                                  <!-- <p>Rate Offered</p> -->
+                                  <h6 style="margin-top: 0px;font-size: 18px; "> Title</h6>
+
+                              </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="trans-sec">
+                              <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f     ;">$230</span>
+                          </div>
+                      </div>
+
+                      <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                          <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6>
+                      </div>
+
+                      <br>  
+                      <div class="col-md-9" style="margin-top: 15px;">
+                          <h6 style="font-size: 15px; font-weight: 400; ">18 Aug 2022</h6>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="profile-sec" style="display: inline-flex;">
+                          <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+                        
+                            <div style="padding-top: 10px;">
+                                <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                    <i class='fas fa-thumbs-up'></i> </button>
+                                </div>
+                                <div style="padding-top: 10px;">
+                                    <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                         <i class='fas fa-thumbs-down'></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+        </div>
+        <div class="tab-pane show fade" id="pending">
+           <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
+           background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+           background: #ffff 0% 0% no-repeat padding-box;
+           border-radius: 8px;
+           box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+           opacity: 1;
+           padding: 30px; border: 1px solid #80808052;
+           margin-top: 0px; padding-top: 15px;">
+           <div class="row">
+
+
+              <div class="col-md-9">
+                <div class="rate-sec">
+                  <!-- <p>Rate Offered</p> -->
+                  <h6 style="margin-top: 0px;font-size: 18px; "> Title</h6>
+                  
+              </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="trans-sec">
+              <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f     ;">$230</span>
+          </div>
+      </div>
+
+      <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+          <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6>
+      </div>
+
+      <br>  
+      <div class="col-md-8" style="margin-top: 15px;">
+          <h6 style="font-size: 15px; font-weight: 400; ">18 Aug 2022</h6>
+      </div>
+
+      <div class="col-md-3">
+        <div class="profile-sec" style="display: inline-flex;">
+          <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+          <div style="padding-top: 10px;">
+            <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                <i class="flaticon-auction"></i></button>
+            </div>
+            <div style="padding-top: 10px;">
+                <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                    <i class="flaticon-edit" data-toggle="modal" data-target="#exampleModal"></i> </button>
+                </div>
+                <div style="padding-top: 10px;">
+                    <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                        <i class="fa fa-trash-o"></i> </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="tab-pane show fade" id="history">
+  <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
+  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  background: #ffff 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+  opacity: 1;
+  padding: 30px; border: 1px solid #80808052;
+  margin-top: 0px; padding-top: 15px;">
+  <div class="row">
+
+
+      <div class="col-md-9">
+
+        <div class="rate-sec">
+          <!-- <p>Rate Offered</p> -->
+          <h6 style="margin-top: 0px;font-size: 18px; "> Title</h6>
+
+      </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="trans-sec">
+      <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f     ;">$230</span>
+  </div>
+</div>
+
+<div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+  <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6>
+</div>
+
+<br>  
+<div class="col-md-8" style="margin-top: 15px;">
+  <h6 style="font-size: 15px; font-weight: 400; ">18 Aug 2022</h6>
+</div>
+
+<div class="col-md-3">
+    <div class="profile-sec" style="display: inline-flex;">
+      <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+      <div style="padding-top: 10px;">
+        <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+            <i class="flaticon-auction"></i></button>
+        </div>
+        <div style="padding-top: 10px;">
+            <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                <i class="flaticon-edit" data-toggle="modal" data-target="#exampleModal"></i> </button>
+            </div>
+            <div style="padding-top: 10px;">
+                <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                    <i class="fa fa-trash-o"></i> </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!--============= Dashboard Section Ends Here =============-->
+
+{% comment %}  {% endcomment %}
+
+
+{% endblock %}

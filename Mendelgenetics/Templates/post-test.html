@@ -1,0 +1,946 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<!-- Mirrored from pixner.net/sbidu/main/profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:34:10 GMT -->
+
+
+
+<style type="text/css">
+    #menu {
+  /*background: #343434;*/
+  color: #eee;
+  height: 35px;
+  /*border-bottom: 4px solid #eeeded*/
+}
+
+#menu ul,
+#menu li {
+  margin: 0 0;
+  padding: 0 0;
+  list-style: none
+}
+
+#menu ul {
+  height: 35px
+}
+
+#menu li {
+  /*float: left;*/
+  /*display: inline;*/
+  position: relative;
+  /*font: bold 12px Arial;*/
+  /*text-shadow: 0 -1px 0 #000;*/
+  /*border-right: 1px solid #444;*/
+  /*border-left: 1px solid #111;*/
+  /*text-transform: uppercase;*/
+}
+
+#menu li:first-child {
+  border-left: none
+}
+
+#menu a {
+  display: block;
+  line-height: 35px;
+  padding: 0 14px;
+  text-decoration: none;
+  color: #eee;
+}
+
+#menu li:hover > a,
+#menu li a:hover {
+  background: #002947;
+}
+
+#menu input {
+  display: none;
+  margin: 0 0;
+  padding: 0 0;
+  width: 80px;
+  height: 35px;
+  opacity: 0;
+  cursor: pointer
+}
+
+#menu label {
+  font: bold 30px Arial;
+  display: none;
+  width: 35px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center
+}
+
+#menu label span {
+  font-size: 12px;
+  position: absolute;
+  left: 35px
+}
+
+#menu ul.menus {
+  height: auto;
+  width: 290px;
+  background: #002947;;
+  position: absolute;
+  z-index: 99;
+  display: none;
+  border: 0;
+}
+
+#menu ul.menus li {
+  display: block;
+  width: 100%;
+  font: 12px Arial;
+  text-transform: none;
+}
+
+#menu li:hover ul.menus {
+  display: block
+}
+
+#menu a.home {
+  background: #c00;
+}
+
+#menu a.prett {
+  padding: 0 27px 0 14px
+}
+
+#menu a.prett::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-width: 6px 5px;
+  border-style: solid;
+  border-color: #eee transparent transparent transparent;
+  position: absolute;
+  top: 15px;
+  right: 9px
+}
+
+#menu ul.menus a:hover {
+  background: #333;
+}
+
+#menu ul.menus .submenu {
+  display: none;
+  position: absolute;
+  left: 180px;
+  background: #111;
+  top: 0;
+  width: 180px;
+}
+
+#menu ul.menus .submenu li {
+  background: #111;
+}
+
+#menu ul.menus .has-submenu:hover .submenu {
+  display: block;
+}
+.login-form .form-group input {
+  padding: 0px 15px !important;
+}
+
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+<body>
+   <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
+    <!--============= ScrollToTop Section Starts Here =============-->
+    {% comment %} <div class="overlayer" id="overlayer">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div> {% endcomment %}
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+
+
+    <!--============= Header Section Starts Here =============-->
+
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <div class="cart-sidebar-area">
+        <div class="top-content">
+            
+            <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="bottom-content">
+            <div class="cart-products">
+                
+                
+                <ul id="menu" style="color: white;">
+                    
+                        <li><a class='prett' href='#' title='Menu'>About Us</a>
+      <ul class='menus'>
+        
+        <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
+        <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
+        <li><a href='#' title='Dropdown 3'>Management Team</a></li>
+        <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
+        <li><a href='#' title='Dropdown 3'>Quality</a></li>
+      </ul>
+    </li>
+
+                        <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
+      <ul class='menus'>
+        
+        <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
+        <li><a href='#' title='Dropdown 3'>Liquid Biopsy</a></li>
+        <li><a href='#' title='Dropdown 3'>Molecular Oncology</a></li>
+        <li><a href='#' title='Dropdown 3'>NGS Panels</a></li>
+        <li><a href='#' title='Dropdown 3'>Exome</a></li>
+      </ul>
+    </li>
+
+                
+                    <li><a href="" style="color: #fff;">Precision Medicine</a></li>
+                    <li><a href="" style="color: #fff;">Genetic Counselling</a></li>
+                    <li><a href="" style="color: #fff;">Ordering a test</a></li>
+                    <li><a href="" style="color: #fff;">News and Events</a></li>
+                    <li><a href="" style="color: #fff;">Contact</a></li>
+                </ul>
+                
+                
+                
+                
+                <!-- <div class="btn-wrapper text-center">
+                    <a href="#0" class="custom-button"><span>Checkout</span></a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!--============= Cart Section Ends Here =============-->
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section style-2">
+        <div class="container">
+        
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+    <!--============= Hero Section Ends Here =============-->
+
+
+    <!--============= Dashboard Section Starts Here =============-->
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+        <div class="container">
+            <div class="row justify-content-center">
+
+              {%  include  'sidebar.html' %}
+                
+                
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="dash-pro-item mb-30 dashboard-widget" style="width:900px;">
+                                <div class="header">
+                                    {% comment %} <h4 class="title">Post Test</h4> {% endcomment %}
+                                    
+                                </div>
+
+
+                         
+                        <div class="login-form">
+
+                        
+
+                        <div style="margin-top: 25px;">
+                          <h6>Prescriber Data</h6>
+                                  <hr>
+                        </div>
+
+
+                         
+                        <div class="row">
+
+                            <div class="form-group  col-md-6">
+                                <input type="text" id="drname" placeholder="Doctor Name" style="padding-left: 20px;">
+                                <span id="drname_error" style="color: red;margin-left: 15PX;"></span>
+                              </div>
+
+                            <div class="form-group  col-md-6">
+                               <label for="datepicker"><i class="fa fa-calendar" style="margin-left: 315px;"></i></label>
+                              <input type="text" id="datepicker" placeholder="MM-DD-YY" style="padding-left: 20px;">
+                              
+                              <span id="datepicker_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+                          
+                            <div class="form-group  col-md-12">
+                              <input type="text" id="centre" placeholder="Center"  style="padding-left:20px;">
+                              <span id="centre_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+                        </div>
+
+                      
+                        <div style="margin-top: 25px;">
+                          <h6>Delivery Of Result</h6>
+                              <hr>
+                        </div>
+
+                        <div class="row">
+                          
+                           <div class="form-group  col-md-6">
+                              <input type="text"  id="email" placeholder="Email" style="padding-left: 20px;">
+                              <span id="email_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+
+                            <div class="form-group  col-md-6">                              
+                              <input type="text" id="otherway" placeholder="Other way" style="padding-left: 20px;">
+                              <span id="otherway_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+                          
+
+                        </div>
+
+
+                        <div class="row">
+                          
+                           <div class="form-group  col-md-6">
+                              <input type="text"  id="contact_person_name" placeholder="Contact Person (Full Name)" maxlength="40" style="padding-left: 20px;">
+                              <span id="contact_person_name_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+
+                        </div>
+
+
+                        
+                        <div style="margin-top: 25px;">
+                          <h6>Test Requested</h6>
+                                <hr>
+                        </div>
+
+                        <div class="form-group ">
+                            <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
+                            <span id="testrequested_error" style="color: red;margin-left: 15PX;"></span>
+                          </div>
+                        
+
+                           
+                        <div style="margin-top: 25px;">
+                          <h6>Background and data of interest</h6>
+                            <hr>
+                        </div>
+
+                          <div class="form-group ">                             
+                            <textarea name="" id="backgrounddata" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
+                            <span id="backgrounddata_error" style="color: red;margin-left: 15PX;"></span>
+                          </div>  
+
+
+                          <div style="margin-top: 25px;">
+                          <h6>Sample type</h6>
+                            <hr>
+                          </div>
+
+                        <div class="form-group">
+                    
+                          
+                          <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 35px;">
+	                           
+                              <div class="col-md-3">
+                                  <label for="#checkbox1" style="margin-top: -4px;"><input type="radio" id="checkbox1" placeholder=""  checked="checked"  name="radiobutton" value="EDTA Blood" style="width: 15px; height: 15px;">&emsp;EDTA Blood</label>
+                              </div>
+
+	                            <div class="col-md-2">
+                                  <label for="#checkbox2" style="margin-top: -4px;"><input type="radio" id="checkbox2" placeholder=""  name="radiobutton" value="Swab" style="width: 15px; height: 15px;">&emsp;Swab</label>
+                              </div>
+                               <div class="col-md-2">
+                                  <label for="#checkbox3" style="margin-top: -4px;"><input type="radio" id="checkbox3" placeholder=""  name="radiobutton" value="Paraffin" style="width: 15px; height: 15px;">&emsp;Paraffin</label>
+                              </div>
+                               <div class="col-md-2">
+                                  <label onclick="showTextBox('id_text_box_show', 'checkbox4')" for="#checkbox4" style="margin-top: -4px;"><input type="radio" name="radiobutton"  value="" id="checkbox4" placeholder="" style="width: 15px; height: 15px;">&emsp;Other</label>
+                              </div>                       
+                              <div class="col-md-3" style="margin-top: 0px;">
+                                  <input style="display: none;" type="text" id="id_text_box_show" name="text_field" placeholder="" style="padding-left: 20px;">
+                                  <span id="id_text_box_show_error" style="color: red;margin-left: 15PX;"></span>
+                                </div>
+
+
+                            </div>
+                        
+                        </div>
+
+
+
+
+                        <div style="margin-top: 60px;">
+                              <h6>Patient detail(Optional)</h6>
+                              <hr>
+                        </div>
+                        
+
+                        <div class="row">
+                           
+                          
+                          <div class="form-group  col-md-5">
+                            <input type="text" id="firstname" placeholder="First Name" style="padding-left: 20px;">
+                            <span id="firstname_error" style="color: red;margin-left: 15PX;"></span>  
+                          </div>
+                          
+
+                           <div class="form-group  col-md-5">
+                              <input type="text" id="lastname" placeholder="Last Name" style="padding-left: 20px;">
+                              <span id="lastname_error" style="color: red;margin-left: 15PX;"></span>
+                          </div>
+
+                          <div class="form-group  col-md-2">
+                              <input type="text" id="patientage" placeholder="Age" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 11px;" maxlength="3">
+                            <span id="patientage_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+
+                          
+                        </div>
+
+
+
+                        <div class="row" col>
+
+                           <div class="form-group  col-md-3">
+                              <input type="text" id="patientrace" placeholder="Race" style="padding-left: 20px;">
+                              <span id="patientrace_error" style="color: red;margin-left: 15PX;"></span>
+                          </div>
+                          
+
+                          <div class="form-group  col-md-3">
+
+                              <select name="" id="selectgender" style=" border: 1px solid rgba(97, 90, 191, 0.2); border-radius:5px ;">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                              </select>     
+                              <span id="selectgender_error" style="color: red;margin-left: 15PX;"></span>
+                              
+                          </div>
+
+                          <div class="form-group  col-md-3">
+
+                              <input type="text" id="patientweight" placeholder="Weight" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 20px;border-right: none;" maxlength="6">
+                              <label style="margin-left:97px;">
+                                <select name="" id="weight_unit" style="border-bottom-right-radius:5px ;border-top-right-radius:5px;width: 70px;">
+                                  <option value="KG">kg</option>
+                                  <option value="LB">lb</option>
+                              </select></label>
+                              <span id="patientweight_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+
+                          <div class="form-group  col-md-3">
+                              
+                              <input type="text" id="patientheight"  placeholder="Height" style="padding-left: 20px;border-right: none;"oninput="this.value = this.value.replace(/[^0-9.']/g, '').replace(/(\..*)\./g, '$1');" maxlength="4">
+                              <label style="margin-left: 102px;">
+                                <select name="" id="height_unit" style="border-bottom-right-radius:5px ;border-top-right-radius:5px;width: 70px;">
+                                  <option value="Ft">ft</option>
+                                  <option value="CM">cm</option>
+                               </select>
+                              </label>
+                              <span id="patientheight_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+
+                        </div>
+                        <hr>
+ 
+                      
+
+                        
+                        
+                        
+                        {% comment %} <span id="test_title_error" style="color: red;margin-left: 15PX;"></span>    
+                        <div class="form-group  col-md-12" style="margin-bottom: 0rem;">
+                            <!-- <label for="login-email"><i class="far fa-envelope"></i></label> -->
+                            <input style="padding:0 18px;" type="text" id="test_title" placeholder="Test Title">
+                        </div>
+
+                        <span id="test_description_error" style="color: red;margin-left: 15PX;"></span>   
+                        <div class="form-group col-md-12" style="margin-bottom: 0rem;">
+                            <textarea style="padding:15px 18px; height: 65px; resize: auto !important;" type="text" id="test_description" placeholder="Test Description"></textarea> 
+                        </div>
+
+                        <span id="get_date_error" style="color: red;margin-left: 16PX;"></span> 
+                        <span id="charges_error" style="color: red;margin-left:260PX;"></span> 
+                       
+                        <div class="row">
+                            
+                            <div class="form-group  col-md-6" style="margin-bottom: 0rem;">
+                               <label for="login-email"><i class="fa fa-calendar" style="margin-left: 200px;"></i></label>
+                                <input style="padding:0 18px; margin-left: 15px;" type="text" id="get_date" placeholder="MM/DD/YYYY">
+                            </div>
+
+                     
+                            <div class="form-group  col-md-6" style="margin-bottom: 0rem;">
+                               
+                                <input style="padding:0 18px; margin-left: -21px;" type="text" id="charges"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" maxlength="8" placeholder="Charges">
+                            </div>
+                        </div>    
+
+
+                            <span id="address_error" style="color: red;margin-left: 15PX;"></span>  
+
+                            <div class="form-group  col-md-12" style="margin-bottom: 0rem;">
+                                <textarea style="padding:15px 18px; height: 48px; resize: auto !important;" type="text" id="address" placeholder="Address "></textarea> 
+                            </div>  
+
+                            <span id="near_location_error" style="color: red;margin-left: 15PX;"></span>  
+                            <div class="form-group  col-md-12" style="margin-bottom: 0rem;">
+                                <input style="padding:0 18px;" type="text" id="near_location" placeholder="Nearby Location"> 
+                            </div>  {% endcomment %}
+                        
+                        
+                         <span id="post_test_by_user_error" style="color: red;margin-left: 15PX;"></span>  
+                        <div class="form-group mb-0 ">
+                            <button type="button" style="height:45px;width: 130px; padding-left: 5px;padding-right: 5px;" class="custom-button" id="post_test_by_user" >Post Test</button>
+                        </div>
+                    </form>
+                                
+                            </div>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="header">
+                                    <h4 class="title">Account Settings</h4>
+                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Language</div>
+                                        <div class="info-value">English (United States)</div>
+                                    </li>
+                                    <li>
+                                        <div class="info-name">Time Zone</div>
+                                        <div class="info-value">(GMT-06:00) Central America</div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div> -->
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 361px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+                    <div class="login-form">
+                        <div class="form-group mb-30">
+                            <label for="login-email"><i class="far fa-envelope"></i></label>
+                            <input type="text" id="login-email" placeholder="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-pass"><i class="fas fa-lock"></i></label>
+                            <input type="password" id="login-pass" placeholder="Password">
+                            <span class="pass-type"><i class="fas fa-eye"></i></span>
+                        </div>
+                        <div class="row" style="justify-content:center;">
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                            <button type="submit" class="custom-button" style="font-size: 15px;">Save Changes</button>
+                        </div>
+                            </div>
+                            <div class="col-md-5">
+                               <div class="form-group mb-0">
+                            <button type="submit" class="custom-button">Close</button>
+                        </div> 
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+    <!--============= Dashboard Section Ends Here =============-->
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      function showTextBox(text_id, check_id)
+      {
+          if($('#'+check_id).prop('checked') == true)
+          {
+            $('#'+text_id).show();
+            
+            $('#'+text_id).css('margin-top', '-30px');
+          }
+          else
+          {
+            $('#'+text_id).hide();
+          }
+      }
+      
+      $("#checkbox3").click(function(){
+        $("#id_text_box_show").hide()
+        $("#id_text_box_show_error").hide()
+
+      })
+      $("#checkbox2").click(function(){
+        $("#id_text_box_show").hide()
+        $("#id_text_box_show_error").hide()
+      })
+      $("#checkbox1").click(function(){
+        $("#id_text_box_show").hide()
+        $("#id_text_box_show_error").hide()
+      })
+
+        $("#firstname").keyup(function () {
+          $("#firstname").css("border", "1px solid #eee");
+          $("#firstname_error").html("");
+        });
+
+        
+        $("#lastname").keyup(function () {
+          $("#lastname").css("border", "1px solid #eee");
+          $("#lastname_error").html("");
+        });
+
+         $("#patientage").keyup(function () {
+          $("#patientage").css("border", "1px solid #eee");
+          $("#patientage_error").html("");
+        });
+
+         $("#patientrace").keyup(function () {
+          $("#patientrace").css("border", "1px solid #eee");
+          $("#patientrace_error").html("");
+        });
+
+         $("#selectgender").click(function () {
+          $("#selectgender").css("border", "1px solid #eee");
+          $("#selectgender_error").html("");
+        });
+
+         $("#patientweight").keyup(function () {
+          $("#patientweight").css("border", "1px solid #eee");
+          $("#patientweight_error").html("");
+        });
+
+         $("#patientheight").keyup(function () {
+          $("#patientheight").css("border", "1px solid #eee");
+          $("#patientheight_error").html("");
+        });
+
+         $("#drname").keyup(function () {
+          $("#drname").css("border", "1px solid #eee");
+          $("#drname_error").html("");
+        });
+
+        $("#datepicker").click(function () {
+          $("#datepicker").css("border", "1px solid #eee");
+          $("#datepicker_error").html("");
+        })
+
+         $("#centre").keyup(function () {
+          $("#centre").css("border", "1px solid #eee");
+          $("#centre_error").html("");
+        });
+
+         $("#email").keyup(function () {
+          $("#email").css("border", "1px solid #eee");
+          $("#email_error").html("");
+        });
+
+         $("#otherway").keyup(function () {
+          $("#otherway").css("border", "1px solid #eee");
+          $("#otherway_error").html("");
+        });
+
+         $("#testrequested").keyup(function () {
+          $("#testrequested").css("border", "1px solid #eee");
+          $("#testrequested_error").html("");
+        });
+
+         $("#backgrounddata").keyup(function () {
+          $("#backgrounddata").css("border", "1px solid #eee");
+          $("#backgrounddata_error").html("");
+        });
+
+
+          $("#id_text_box_show").keyup(function () {
+          $("#id_text_box_show").css("border", "1px solid #eee");
+          $("#id_text_box_show_error").html("");
+        });
+
+          $("#contact_person_name").keyup(function () {
+          $("#contact_person_name").css("border", "1px solid #eee");
+          $("#contact_person_name_error").html("");
+        });
+
+
+    
+
+
+        $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy' , changeMonth: true, changeYear: true,}).val();
+        
+
+
+	      {% comment %} $( "#datepicker" ).datepicker({dateFormat: "mm-dd-yy",	duration: "fast"}); {% endcomment %}
+
+
+       
+          {% comment %} $("#datepicker").datepicker({ 
+            autoclose: true, 
+            todayHighlight: true
+            }).datepicker('update', new Date());
+            
+       {% endcomment %}
+
+
+
+
+        $("#post_test_by_user").click(function(){
+            
+            
+           
+            
+            var dr_name = $("#drname").val()
+            var datepicker = $("#datepicker").val()
+            var center = $("#centre").val()
+            var Email = $("#email").val()
+            var other_way = $("#otherway").val()
+            var contact_person = $("#contact_person_name").val()
+            var test_requested = $("#testrequested").val()
+            var background_data = $("#backgrounddata").val()
+            var patient_test = $("input[name='radiobutton']:checked").val();
+            
+            var othtest = $("#id_text_box_show").val()
+
+            var user_id = $("#user_id").val()
+            var first_name = $("#firstname").val()
+            var last_name = $("#lastname").val()
+            var patient_age = Number($("#patientage").val())
+            var patient_race = $("#patientrace").val()
+            var select_gender  = $("#selectgender").val()
+            var patient_weight = Number($("#patientweight").val())
+            var patient_height = Number($("#patientheight").val())
+            var weight_unit = $("#weight_unit").val()
+            var height_unit = $("#height_unit").val()
+
+
+            if( patient_test){
+              test = patient_test
+    
+            }
+            else if (othtest){
+              test = othtest
+            
+            }
+            else{
+              test = othtest
+            }
+     
+
+            var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
+         /* console.log(first_name,last_name,patient_age,patient_race,select_gender,
+          patient_weight,patient_height,dr_name,Email,other_way,test_requested,background_data,center) */
+
+    
+          
+           /*if (first_name ==''){
+                $("#firstname").css("border", "1px solid #f37777");
+                $("#firstname").focus();
+                $("#firstname_error").html("Enter First Name ");
+            }
+            
+            else if (last_name ==''){
+                $("#lastname").css("border", "1px solid #f37777");
+                $("#lastname").focus();
+                $("#lastname_error").html("Enter Last Name");
+            }
+
+            
+            else if (patient_age ==''){
+                $("#patientage").css("border", "1px solid #f37777");
+                $("#patientage").focus();
+                $("#patientage_error").html("Enter Age ");
+            }
+
+
+            else if (patient_race ==''){
+                $("#patientrace").css("border", "1px solid #f37777");
+                $("#patientrace").focus();
+                $("#patientrace_error").html("Enter Race ");
+            }
+
+            else if (select_gender ==''){
+                $("#selectgender").css("border", "1px solid #f37777");
+                $("#selectgender").focus();
+                $("#selectgender_error").html("Select Gender");
+            }
+
+            else if (patient_weight ==''){
+                $("#patientweight").css("border", "1px solid #f37777");
+                $("#patientweight").focus();
+                $("#patientweight_error").html("Enter Weight");
+            }
+
+            else if (patient_height ==''){
+                $("#patientheight").css("border", "1px solid #f37777");
+                $("#patientheight").focus();
+                $("#patientheight_error").html("Enter Height");
+            } */
+
+            if (dr_name ==''){
+                $("#drname").css("border", "1px solid #f37777");
+                $("#drname").focus();
+                $("#drname_error").html("Enter Doctor Name");
+            }
+
+            else if (datepicker ==''){
+                $("#datepicker").css("border", "1px solid #f37777");
+                $("#datepicker").focus();
+                $("#datepicker_error").html("Select Date");
+            }
+
+            else if (center ==''){
+                $("#centre").css("border", "1px solid #f37777");
+                $("#centre").focus();
+                $("#centre_error").html("Enter Centre");
+            }
+
+
+         
+            else if (Email ==''){
+                $("#email").css("border", "1px solid #f37777");
+                $("#email").focus();
+                $("#email_error").html("Enter Email");
+            }
+
+
+            else if (!emailfilter.test(Email)) {
+
+              $("#email").css("border", "1px solid #f37777");
+              $("#email").focus();
+              $("#email_error").html("Enter Valid Email  ");
+              }
+
+            /*  
+            else if (other_way ==''){
+                $("#otherway").css("border", "1px solid #f37777");
+                $("#otherway").focus();
+                $("#otherway_error").html("Enter Other Way");
+            }
+            */
+            else if (contact_person == ''){
+              $("#contact_person_name").css("border", "1px solid #f37777");
+              $("#contact_person_name").focus();
+              $("#contact_person_name_error").html("Enter Contact Person Name");
+            }            
+            
+
+            else if (test_requested ==''){
+                $("#testrequested").css("border", "1px solid #f37777");
+                $("#testrequested").focus();
+                $("#testrequested_error").html("Enter Test Requested");
+            }
+             else if (background_data ==''){
+                $("#backgrounddata").css("border", "1px solid #f37777");
+                $("#backgrounddata").focus();
+                $("#backgrounddata_error").html("Enter Background Data");
+            }
+
+            else if ($("#checkbox4").prop('checked') == true && test == ''){
+
+                  $("#id_text_box_show").css("border", "1px solid #f37777");
+                  $("#id_text_box_show").focus();
+                  $("#id_text_box_show_error").html(" Please Enter Test");
+            }
+
+            
+
+            else{
+              $.ajax({
+                method : "POST",
+                url : "{% url 'add_test_by_user' %}",
+                contentType : "application/json",
+                data : JSON.stringify({
+                  "user_id":user_id,
+                  "first_name":first_name,
+                  "last_name": last_name,
+                  "patient_age":patient_age,
+                  "patient_race":patient_race,
+                  "select_gender":select_gender,
+                  "patient_weight":patient_weight,
+                  "patient_height":patient_height,
+                  "dr_name":dr_name,
+                  "datepicker":datepicker,
+                  "center":center,
+                  "Email":Email,
+                  "other_way":other_way,
+                  "contact_person":contact_person,
+                  "test_requested":test_requested,
+                  "background_data":background_data,
+                  "patient_test":test,
+                  "weight_unit":weight_unit,
+                  "height_unit":height_unit
+
+
+                }),
+                success : function (response){
+                  if (response['status'] == '1'){
+                    console.log(response)
+                    swal({
+                      icon:"success",
+                      text: "Test Posted Successfully",
+                      closeOnClickOutside : false
+                    }).then(function(){
+                      location.href="{% url 'test_added_by_user_list' %}"
+                    })
+
+                  }
+                  else if (response['status'] == '0'){
+                    console.log(response)
+                    swal({
+                      icon:"error",
+                      text:"Something Went Wrong",
+                      closeOnClickOutside : false
+                    })
+                  }
+
+                }
+              })
+            }
+        })
+    </script>
+   
+<script>
+
+    $(document).ready(function(){
+        
+      $("#profile_setting").removeClass('active')
+      $("#poste_test").addClass('active')
+    })
+
+
+</script>
+    
+   {% endblock %}
+
+
+   

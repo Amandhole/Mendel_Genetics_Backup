@@ -1,0 +1,680 @@
+    {% extends "base.html" %}
+    {% load static %}
+    {%  block content %}
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <style>
+        .form-group {
+    margin-bottom: 0rem;
+}
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999999;
+} 
+    </style>
+    <div class="cart-sidebar-area">
+        <div class="top-content">
+            <a href="index.html" class="logo">
+                <img src="{% static 'assets/images/logo/logo2.png' %}" alt="logo">
+            </a>
+            <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="bottom-content">
+            <div class="cart-products">
+                <h4 class="title">Shopping cart</h4>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop01.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Color Pencil</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop02.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Water Pot</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop03.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Art Paper</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop04.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Stop Watch</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="single-product-item">
+                    <div class="thumb">
+                        <a href="#0"><img src="{% static 'assets/images/shop/shop05.jpg' %}" alt="shop"></a>
+                    </div>
+                    <div class="content">
+                        <h4 class="title"><a href="#0">Comics Book</a></h4>
+                        <div class="price"><span class="pprice">$80.00</span> <del class="dprice">$120.00</del></div>
+                        <a href="#" class="remove-cart">Remove</a>
+                    </div>
+                </div>
+                <div class="btn-wrapper text-center">
+                    <a href="#0" class="custom-button"><span>Checkout</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--============= Cart Section Ends Here =============-->
+
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <a href="#0">Pages</a>
+                </li>
+                <li>
+                    <span>Sign Up</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+    <!--============= Hero Section Ends Here =============-->
+{% comment %} 
+     <div id="loading" style="margin-left:34rem ;margin-top: 23rem;">
+        <img src="{% static 'assets/images/loader/VAyR.gif' %}" alt="shop">
+     </div> {% endcomment %}
+
+    <!--============= Account Section Starts Here =============-->
+    <section class="account-section padding-bottom" id="signupsection">
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440">
+                <div class="left-side">
+                    <div class="section-header" style="margin-bottom: 10px;">
+                        <h2 class="title">SIGN UP</h2>
+                        <p>We're happy you're here!</p>
+                    </div>
+                    <div class="row" style="justify-content: center;">
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input"  type="radio" onclick="corporate_function()" name="radiobutton" value="Corporate" id="corporate"  checked="checked" style="width:26px;">
+                                <label class="form-check-label" for="flexRadioDefault1"> Corporate</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" onclick="induvidual_function()" type="radio" name="radiobutton" value="Individual" id="individual" style="width:26px;" >
+                                <label class="form-check-label" for="flexRadioDefault1"> Individual </label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="login-form">
+                        
+                        <div class="form-group">
+                            <label for="login-email"><i class="far fa-user" style="margin-left: 100px;"></i></label>
+                            <input type="text" id="name" placeholder="Hospital Name" style="width: 450px;">                           
+                        </div>
+                         <span id="name_error" style="color: red; margin-left: 110px;"></span>
+                       
+                        
+                        <div class="form-group mb-30">
+                            <label for="login-email"><i style="margin-left: 100px;" class="far fa-envelope"></i></label>
+                            <input type="text" id="email_id" placeholder="Email Address" style="width: 450px;">
+                            
+                        </div>
+                        <span id="email_error" style="color: red; margin-left: 110px;"></span>
+                        <span id="mobileno_error" style="color: red;margin-left: 110PX;"></span>
+                        {% comment %} <div class="form-group mb-30">
+                            <label for="login-email"><i style="margin-left: 100px;" class="fa fa-mobile" aria-hidden="true"></i></label>
+                            <input type="text" style="width: 450px;" id="mobile_no" placeholder="Mobile Number"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" maxlength="10" minlength="10">
+                            
+                        </div>
+
+                        <span id="address_error" style="color: red;margin-left: 110px;"></span>
+                        <div class="form-group mb-30">
+                            <label for="login-email"><i style="margin-left: 100px;" class="fa fa-map-marker" aria-hidden="true"></i></label>
+                            <input type="text" style="width: 450px;" id="address" placeholder="Address">
+                          
+                        </div> {% endcomment %}
+
+                         
+                        <div class="form-group mb-30">
+                            <label for="login-pass"><i style="margin-left: 100px;" class="fas fa-lock"></i></label>
+                            <input type="password" style="width: 450px;" id="password" placeholder="Password">
+                            <span class="pass-type"><i style="margin-right: 100px;" class="fas fa-eye" id="tglPassword"></i></span>
+                           
+                        </div>
+                        <span id="password_error" style="color: red;margin-left: 110px;"></span>
+
+                        
+                        <div class="form-group mb-30" style="margin-bottom: 0rem;">
+                            <label for="login-pass"><i style="margin-left: 100px;" class="fas fa-lock"></i></label>
+                            <input type="password" style="width: 450px;" id="confirm_password" placeholder="Confirm Password">
+                            <span class="pass-type"><i style="margin-right: 100px;" class="fas fa-eye" id="toggleconPassword"></i></span>
+                           
+                        </div>
+                        <span id="confirm_password_error" style="color: red;margin-left: 110px;"></span>
+
+                        <div class="form-group checkgroup " style="margin-bottom: 1rem !important; margin-left: 100px;" >
+                            <input style="margin-left: 100px;" type="checkbox"  name="terms" id="check"><a target="_blank" href="https://www.iubenda.com/en/help/2859-terms-and-conditions-when-are-they-needed" style="margin-left: 18px;">Accept terms and conditions</a>
+                            <span id="check_error" style="color: red;margin-left: 110px;"></span>
+                        </div>
+
+                        <div class="form-group mb-0" >
+                            <button type="button" onclick="genrate_otp_for_varification()" class="custom-button">SIGN UP</button>                                
+                        </div>
+                                           
+                    </div>
+
+                    
+                    {% comment %} <div class="or" style="margin-top: 30px;">
+                        <span>Or</span>
+                    </div>
+                         <ul class="login-with"> 
+                        <li  >
+                            <a href="#0" style=""><i class="fab fa-facebook"></i>Log in with Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#0" style=""><i class="fab fa-google-plus"></i>Log in with Google</a>
+                        </li>
+                    </ul> {% endcomment %}
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">ALREADY HAVE AN ACCOUNT?</h3>
+                        <p>Log in and go to your Dashboard.</p>
+                        <a href="{% url 'login_page' %}" class="custom-button transparent">LOG IN</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--============= Account Section Ends Here =============-->
+     
+    <!--============= OTP Section Starts Here =============-->
+    <section class="account-section padding-bottom" id="OTPsection">
+       
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440">
+                <div class="left-side">
+                    <div class="section-header" style="margin-bottom: 15px;">
+                        <button type="button" onclick="back_button()" style="width: 50px;height:40px ; margin-top: -68px; margin-left: -652px; background-color: #5A4BCC;" class="btn btn-primary">
+                            <i class="fa fa-long-arrow-alt-left" style="margin-top: -11px; font-size: 30px; margin-left: -4px;"></i>
+                        </button>
+                        <h2 class="title">OTP Verification</h2>    
+                    </div>
+                    
+                    <div class="row" style="justify-content: center;">
+                    
+    
+                    <div class="card p-2 text-center" style="border:none">
+                        <h6>Please enter the one time password <br> to verify your account</h6>
+            <div> 
+                <span>A code has been sent to your email address </span>
+            </div>
+            
+            <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                <input class="m-2 text-center form-control rounded" type="text" id="otp1" maxlength="1" /> 
+                <input class="m-2 text-center form-control rounded" type="text" id="otp2" maxlength="1" />
+                <input class="m-2 text-center form-control rounded" type="text" id="otp3" maxlength="1" /> 
+                <input class="m-2 text-center form-control rounded" type="text" id="otp4" maxlength="1" />
+                <input class="m-2 text-center form-control rounded" type="text" id="otp5" maxlength="1" />
+                <input class="m-2 text-center form-control rounded" type="text" id="otp6" maxlength="1" />
+            </div>
+            <div class="mt-4"> 
+            </div>
+        </div>
+       
+
+       
+
+        <div class="form-group mb-0">
+             <div id="myspan" style="margin-left: 58px;">
+                  <p style="font-size:16px; margin-top: 10px; margin-left: 156px;" id=""></p> 
+            </div>
+            <div id="btnotpagain">
+                <button  id="" onclick="genrate_otp_for_varification()" style="border: none; background-color: white; color:#4A66Ad; margin-left:80px;width: 114px;height: 21px;height: 21px;">Resend OTP</button>
+            </div>
+              
+            <button type="button" onclick="Create_Account()" class="custom-button" style="margin-left:35px;margin-top: 6px;">Verify OTP</button>
+            </div>
+                        
+        </div>
+                    
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">NEW HERE?</h3>
+                        <p>Sign up and create your Account</p>
+                        <a href="{% url 'user_signup' %}" class="custom-button transparent">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!--============= OTP Section eEnd Here =============-->
+    
+    <!--============= Footer Section Starts Here =============-->
+    
+    <!--============= Footer Section Ends Here =============-->
+
+   
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    
+    <script>
+        $("#loading").hide()
+
+        $('#OTPsection').hide()
+      
+
+
+        $("#toggleconPassword").click(function(){
+        if( $('#confirm_password').attr('type') == "password"){   
+            $("#confirm_password").attr('type', 'text')
+            $("#toggleconPassword").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#confirm_password").attr('type', 'password')
+            $("#toggleconPassword").attr('class' , 'fas fa-eye')
+        }
+      })   
+
+        $("#tglPassword").click(function(){
+        if( $('#password').attr('type') == "password"){   
+            $("#password").attr('type', 'text')
+            $("#tglPassword").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#password").attr('type', 'password')
+            $("#tglPassword").attr('class' , 'fas fa-eye')
+        }
+      })
+      
+
+      //for confirm password
+        
+
+    
+    </script>
+    <script>
+        var seconds;
+        var countdownTimer;
+        function secondPassed() {
+
+            var minutes = Math.round((seconds - 30) / 60);
+            var remainingSeconds = seconds % 60;
+            if (remainingSeconds < 10) {
+                remainingSeconds = '0' + remainingSeconds;
+            }
+            $('#btnotpagain').hide()
+            $('#myspan').html('Resend OTP In ' + minutes + ':' + remainingSeconds);  
+
+            if (seconds == 0) {
+                clearInterval(countdownTimer);
+                $('#myspan').html("Did Not Receive OTP ?"); 
+                $('#btnotpagain').show()
+            }
+            else {
+                seconds--;
+                }
+            }
+            function runOtpSend() {
+                seconds = 30;
+                countdownTimer = setInterval('secondPassed()', 1000);
+            }
+    </script>
+
+         <script type="text/javascript">
+                document.addEventListener("DOMContentLoaded", function (event) {
+                    function OTPInput() {
+                        const inputs = document.querySelectorAll('#otp > *[id]');
+                        for (let i = 0; i < inputs.length; i++) {
+                            inputs[i].addEventListener('keydown', function (event) {
+                                if (event.key === "Backspace") {
+
+                                    inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus();
+                                }
+                                else {
+                                    if (i === inputs.length - 1 && inputs[i].value !== '') {
+                                        console.log('keypresed')
+                                        return true;
+                                    }
+                                    else if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)) {
+                                        console.log('else if key pressed')
+                                        inputs[i].value = event.key;
+                                        if (i !== inputs.length - 1)
+                                            inputs[i + 1].focus();
+                                        event.preventDefault();
+                                    }
+                                    else if (event.keyCode > 64 && event.keyCode < 91) {
+                                        console.log('in last if')
+                                        inputs[i].value = String.fromCharCode(event.keyCode);
+                                        if (i !== inputs.length - 1)
+                                            inputs[i + 1].focus();
+                                        event.preventDefault();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    OTPInput();
+                });
+
+    </script>
+
+    <script>
+        
+        
+      $("#name").keyup(function () {
+        $("#name").css("border", "1px solid #eee");
+        $("#name_error").html("");
+      });
+
+
+      $("#mobile_no").keyup(function () {
+        $("#mobile_no").css("border", "1px solid #eee");
+        $("#mobileno_error").html("");
+      });
+
+      $("#email_id").keyup(function () {
+        $("#email_id").css("border", "1px solid #eee");
+        $("#email_error").html("");
+      });
+
+      $("#address").keyup(function () {
+        $("#address").css("border", "1px solid #eee");
+        $("#address_error").html("");
+      });
+
+      $("#password").keyup(function () {
+        $("#password").css("border", "1px solid #eee");
+        $("#password_error").html("");
+      });
+
+      $("#confirm_password").keyup(function () {
+        $("#confirm_password").css("border", "1px solid #eee");
+        $("#confirm_password_error").html("");
+      });
+         
+
+      $("#check").click(function(){
+          $("#check_error").hide()
+      })
+
+      function genrate_otp_for_varification() {
+        runOtpSend();  
+        window.name = $("#name").val();
+        window.mobile_no = $("#mobile_no").val();
+        window.passwordd = $("#password").val();
+        window.confirm_password = $("#confirm_password").val();
+        window.user_type = $("input[name='radiobutton']:checked").val();
+        window.email_id = $("#email_id").val();
+        window.address = $("#address").val();
+        window.emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+          
+          
+        console.log(name,passwordd,confirm_password,user_type,email_id,)
+
+        if (name == "") {
+          
+          $("#name").css("border", "1px solid #f37777");
+          $("#name").focus();
+          $("#name_error").html("Enter Full Name ");
+        } 
+
+        else if (email_id == "") {
+
+          $("#email_id").css("border", "1px solid #f37777");
+          $("#email_id").focus();
+          $("#email_error").html("Enter Email Address");
+        } 
+        else if (!emailfilter.test(email_id)) {
+
+          $("#email_id").css("border", "1px solid #f37777");
+          $("#email_id").focus();
+          $("#email_error").html("Enter Valid Email Address ");
+        }
+
+       /* else if (mobile_no == "") {
+
+          $("#mobile_no").css("border", "1px solid #f37777");
+          $("#mobile_no").focus();
+          $("#mobileno_error").html("Enter Mobile Number ");
+        } 
+        
+        else if (address == "") {
+
+          $("#address").css("border", "1px solid #f37777");
+          $("#address").focus();
+          $("#address_error").html("Enter Address ");
+        } */
+        
+       
+        else if (passwordd == "") {
+  
+
+          $("#password").css("border", "1px solid #f37777");
+          $("#password").focus();
+          $("#password_error").html("Enter Password ");
+        }
+        else if (passwordd.length <= 7) {
+          
+          $("#password").css("border", "1px solid #f37777");
+          $("#password").focus();
+          $("#password_error").html("Min Password Length Is 8 Char");
+        } 
+        else if (confirm_password == "") {
+       
+          $("#confirm_password").css("border", "1px solid #f37777");
+          $("#confirm_password").focus();
+          $("#confirm_password_error").html("Enter Confirm Password ");
+        }
+        else if (passwordd != confirm_password) {
+
+          $("#confirm_password").css("border", "1px solid #f37777");
+          $("#confirm_password").focus();
+          $("#confirm_password_error").html("Password Does Not Match ");
+        } 
+
+        else if($("#check").prop('checked') == false){
+            console.log('please checked')
+            $("#check").css("border", "1px solid #f37777");
+            $("#check").focus();
+            $("#check_error").html("Please accept terms and conditions");
+        }
+      
+        else {
+          $("#loading").show()
+          $.ajax({
+            method : "POST",
+            url : "{% url 'send_otp_for_signup_verification' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+              "email_id" : email_id,
+              "mobile_no": mobile_no
+            }),
+            success : function (response) {
+              
+              if (response ['status'] == "1"){
+
+                $("#loading").hide()
+                
+                
+                console.log(response)
+                window.genrated_otp = (response['Email_OTP'])
+                console.log('genrated otp',genrated_otp)
+                
+                $('#signupsection').hide()  
+                $('#OTPsection').show()
+              }
+
+              
+              else if(response['status'] == "0"){
+                console.log(response)
+               
+                $("#loading").hide()
+                swal({
+                  icon : "error",
+                  text : "Email already exists",
+                  closeOnClickOutside : false
+                })
+              }
+               else if(response['status'] == "2"){
+                console.log(response)
+                $("#loading").hide()
+
+                swal({
+                  icon : "error",
+                  text : "Mobile No Already Exists",
+                  closeOnClickOutside : false
+                })
+              }
+            }
+          })
+
+        }
+          
+      }
+
+  
+      function Create_Account() {
+          var otp1 = $("#otp1").val()
+          var otp2 = $("#otp2").val()
+          var otp3 = $("#otp3").val()
+          var otp4 = $("#otp4").val()
+          var otp5 = $("#otp5").val()
+          var otp6 = $("#otp6").val()
+        
+          
+          var user_enter_otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6
+          console.log('user enter otp',user_enter_otp)
+         
+            if (genrated_otp == user_enter_otp){
+            
+              $.ajax({
+
+                method: "POST",
+                url  : "{% url 'user_signup' %}",
+                contentType: "application/json",
+                data: JSON.stringify({
+                "name" : name,
+                //"mobile_no" : mobile_no,
+                "email_id" : email_id,
+                //"address"  : address,
+                "password" : passwordd,
+                "user_type" : user_type,
+              }),
+              success: function (response) {
+
+                if (response["status"] == "1") {
+                  console.log(response);
+                  
+
+                   $("#cover-spin").hide()
+
+                  //swal({
+                    //icon: "success",
+                    //text: "OTP Verified And Account Created Successfully!",
+                    //closeOnClickOutside: false,
+                  //}).then(function () { 
+                    $.ajax({
+                      method:"POST",
+                      url :"{% url 'login_page' %}",
+                      contentType:"application/json",
+                      data:JSON.stringify({
+                          "email_id":email_id,
+                          "password":passwordd,
+                          "user_type":user_type
+                      }), 
+                      success: function (response){
+                          if (response ["status"] == '1'){
+                              location.href="{% url 'user_profile_page' %}"
+                          }
+
+                          else if (response ["status"] == '2'){
+                              location.href="{% url 'user_profile_page' %}"
+                          }
+                          else if (response['status'] == '0'){
+                              console.log(response['msg'])
+                          }
+                      }
+
+                  })
+                  //});
+                } 
+
+                else if (response["status"] == "0") {
+                    $("#cover-spin").hide()
+
+                  swal({
+                    icon: "error",
+                    text: "Email Already Registered",
+                    closeOnClickOutside: false,
+                   });
+                  } 
+                
+                }
+             });
+
+            
+            }
+
+          else {
+            swal({
+                icon : "error",
+                text : "OTP Not Match",
+                closeOnClickOutside : false  
+            })
+          }
+        }
+    
+    function induvidual_function(){
+        $("#name").attr('placeholder', 'Full Name')
+    }
+
+    function corporate_function(){
+        $("#name").attr('placeholder', 'Hospital Name')
+
+    }
+    function back_button(){
+        
+        $('#OTPsection').hide()
+        $('#signupsection').show()  
+      
+    }
+  
+    </script>
+    </script>
+    {% endblock %}
+
+
+<!-- Mirrored from pixner.net/sbidu/main/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:34:06 GMT -->

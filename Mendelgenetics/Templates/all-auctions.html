@@ -1,0 +1,790 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from pixner.net/sbidu/main/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:34:06 GMT -->
+
+<style type="text/css">
+    
+    .purchasing-table tbody tr {
+    font-size: 14px;
+    color: #171d1c;
+    font-weight: 500;
+}
+
+</style>
+<body>
+    <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
+    <!--============= ScrollToTop Section Starts Here =============-->
+    {% comment %} <div class="overlayer" id="overlayer">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay">
+    </div> {% endcomment %}
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+<!--============= Header Section Starts Here =============-->
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    <div class="cart-sidebar-area">
+        <div class="top-content">
+            
+            <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="bottom-content">
+            <div class="cart-products">
+                
+                
+                <ul id="menu" style="color: white;">
+                    
+                        <li><a class='prett' href='#' title='Menu'>About Us</a>
+      <ul class='menus'>
+        
+        <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
+        <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
+        <li><a href='#' title='Dropdown 3'>Management Team</a></li>
+        <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
+        <li><a href='#' title='Dropdown 3'>Quality</a></li>
+      </ul>
+    </li>
+
+                        <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
+      <ul class='menus'>
+        
+        <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
+        <li><a href='#' title='Dropdown 3'>Liquid Biopsy</a></li>
+        <li><a href='#' title='Dropdown 3'>Molecular Oncology</a></li>
+        <li><a href='#' title='Dropdown 3'>NGS Panels</a></li>
+        <li><a href='#' title='Dropdown 3'>Exome</a></li>
+      </ul>
+    </li>
+
+                
+                    <li><a href="" style="color: #fff;">Precision Medicine</a></li>
+                    <li><a href="" style="color: #fff;">Genetic Counselling</a></li>
+                    <li><a href="" style="color: #fff;">Ordering a test</a></li>
+                    <li><a href="" style="color: #fff;">News and Events</a></li>
+                    <li><a href="" style="color: #fff;">Contact</a></li>
+                </ul>
+                
+                
+                
+                
+                <!-- <div class="btn-wrapper text-center">
+                    <a href="#0" class="custom-button"><span>Checkout</span></a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!--============= Cart Section Ends Here =============-->
+
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section style-2 pb-lg-400">
+        
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+
+
+
+    <!--============= Dashboard Section Starts Here =============-->
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                {%  include  'sidebar.html' %}
+                
+                <div class="col-lg-8">
+                    
+                    <div class="dashboard-widget">
+                        <h5 class="title mb-15" style="margin-bottom: 20px;"></h5>
+                        <div class="dashboard-purchasing-tabs">
+                            <ul class="nav-tabs nav">
+                                <li>
+                                    <a href="#" class="active" data-toggle="tab" id="" style="margin-left: 290px;" >Auctions</a>
+                                </li>
+                               
+                                {% comment %} <li>
+                                    <a href="" data-toggle="tab" id="expire_div_button" >Expired</a>
+                                </li>
+                                <li>
+                                    <a href="" id="confirm_div_button" data-toggle="tab">Confirmed</a>
+                                </li>
+                                 {% endcomment %}
+                            </ul>
+
+                            
+                        <div id="active_div" >
+                        <div class="tab-content" style="overflow-y: scroll; max-height: 580px;">
+
+                            {% for test in test_obj %}
+                                <div class="tab-pane show active fade" id="current">
+                                <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+                                    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                    background: #ffff 0% 0% no-repeat padding-box;
+                                    border-radius: 8px;
+                                    box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                    opacity: 1;
+                                    padding: 30px; border: 1px solid #80808052;
+                                    margin-top: 0px; padding-top: 15px;">
+                                  
+                                    <div class="row">
+                                        <div class="col-md-9">
+
+
+                                             <div class="rate-sec">
+                                                <h6 style="margin-top: 0px;font-size: 18px; ">@{{test.fk_user.name}}</h6><br>
+                                            </div>
+
+                                            <div class="rate-sec">
+                                          <!-- <p>Rate Offered</p> -->
+                                                    <h6 style="margin-top: 0px;font-size: 18px; ">{{test.patient_test}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="trans-sec">
+                                                <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f;">{{test.charges}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                            {% comment %} <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
+                                            <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested|slice:":100"}}...</h6> 
+                                        </div>
+
+                                        <br>  
+                                        <div class="col-md-8" style="margin-top: 15px;">
+                                            <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'m-d-Y'}}</h6>
+                                        </div>
+
+                                        <div class="col-md-3" style="margin-left:50px ;">
+                                            <div class="profile-sec" style="display: inline-flex;">
+                                              <!-- <img style="width:30px;" src="/static/website/{% static 'assets/images/profile-ico.png"> -->
+                                            
+                                           
+
+                                            {% comment %} <div style="padding-top: 10px;">
+                                                <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>  
+                                           </div> {% endcomment %}
+
+                                        
+                                           {% if test.my_bid %}
+                                
+                                                <div style="padding-top: 10px;">
+                                                        <span id=""></span>
+                                                        <button type="button"  data-toggle="modal"  data-target="#edit_bid_test" onclick="edit_bid_test('{{test.my_bid_obj.id}}','{{test.my_bid_obj.bid_Price}}','{{test.my_bid_obj.expect_result_date|date:'m-d-Y'}}','{{test.my_bid_obj.checkbox}}')" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                            <i class="flaticon-edit" ></i>
+                                                        </button>
+                
+                                                </div>
+                                                
+                                            
+                                            {% else %}
+
+                                                <div style="padding-top: 10px;">
+                                                    <span id="test_id"></span>
+                                                    <button type="button" data-toggle="modal" data-target="#bid_test"  onclick="get_test_id({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                        <i class="flaticon-auction" ></i>
+                                                    </button>
+                                                    {% comment %} <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">1</span> {% endcomment %}
+                                                
+                                                </div> 
+                                            {% endif %}
+                                            
+
+
+                                            <div style="padding-top: 10px;">
+                                                
+                                                <button type="button" data-toggle="modal" data-target="#view_all_information_about_test" onclick="view_all_information_about_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'m-d-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+
+                                                    <i class="fa fa-eye" ></i> 
+                                                </button>   
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% endfor %}
+                        
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>    
+    </section>
+    <!--============= Dashboard Section Ends Here =============-->
+
+
+    <!--============= Footer Section Starts Here =============-->
+
+<!--  show user test modal  start here -->
+
+<div class="modal fade" id="view_all_information_about_test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 930px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 370px;">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 370px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <input type="hidden" id="test_id">
+
+        <div class="modal-body">
+
+                                   
+            <div class="login-form">
+                
+                <div>
+                   <h6>Patient detail</h6>
+                   <hr>
+                </div>
+
+                <div class="row">
+                           
+                          
+                    <div class="form-group  col-md-3">
+                        <h7 style="color: black;">Name :</h7>
+                        <span id="name"></span>
+                    </div>
+
+                    <div class="form-group  col-md-3">
+                        <h7 style="color: black;">Age :</h7>
+                        <span id="age"></span>
+                    </div>
+
+                    <div class="form-group  col-md-3">
+                        <h7 style="color: black;">Race :</h7>
+                        <span id="race"></span>
+                    </div>
+
+                    <div class="form-group  col-md-3">
+                        <h7 style="color: black;">gender :</h7>
+                        <span id="gender"></span>
+                    </div>
+                </div>    
+
+
+                <div class="row">
+                           
+
+                    <div class="form-group  col-md-3" style="margin-left: -26px;">
+                        <h7 style="color: black;">Weight :</h7>
+                        <span id="weight"> kg</span>
+                    </div>
+
+                    <div class="form-group  col-md-3" style="margin-left: 38px;">
+                        <h7 style="color: black;">Height :</h7>
+                        <span id="height"></span>
+                    </div>
+
+
+                </div>
+                    
+                <div style="margin-top: 25px;">
+                   <h6>Prescribe Data</h6>
+                   <hr>
+                </div>
+
+                <div class="row" style="margin-left: -35px;">
+                           
+
+                    <div class="form-group  col-md-4" style="margin-left: -14px;">
+                        <h7 style="color: black;">Doctor Name :</h7>
+                        <span id="dr_name"></span>
+                    </div>
+
+
+                    <div class="form-group  col-md-4" style="margin-left: -80px;">
+                        <h7 style="color: black;">Sample Type :</h7>
+                        <span id="patient_test"></span>
+                    </div>
+
+                    <div class="form-group  col-md-4" style="margin-left: -75px;">
+                        <h7 style="color: black;">Date :</h7>
+                        <span id="sampledate"></span>
+                    </div>
+
+                    
+                </div>
+
+                <div class="row" style="margin-left: -30px;">
+                    <div class="form-group  col-md-3">
+                        <h7 style="color: black;">Centre :</h7>
+                        <span id="centre"></span>
+                    </div>
+
+                </div>
+                 
+
+              
+
+
+                <div style="margin-top: 25px;">
+                   <h6>Delivery Result</h6>
+                   <hr>
+                </div>
+
+
+                <div class="row" style="margin-left:-20px ;">
+                           
+
+                    <div class="form-group  col-md-4" style="margin-left: -px;">
+                        <h7 style="color: black;">Email :</h7>
+                        <span id="email"></span>
+                    </div>
+
+                    <div class="form-group  col-md-4" style="margin-left: -44px;">
+                        <h7 style="color: black;">Other Way :</h7>
+                        <span id="otherway"></span>
+                    </div>
+
+                </div>
+
+
+                <div style="margin-top: 25px;">
+                   <h6>Test Requested</h6>
+                   <hr>
+                </div>
+
+
+                <div class="row">
+                           
+
+                    <div class="form-group  col-md-12" style="margin-left: -14px;">
+                        <h7 style="color: black;"> </h7>
+                        <span id="test_requested"></span>
+                    </div>
+
+
+                </div>
+
+                
+                <div style="margin-top: 25px;">
+                   <h6>Background Data Of Interest </h6>
+                   <hr>
+                </div>
+
+                <div class="row">
+                           
+
+                    <div class="form-group  col-md-12" style="margin-left: -14px;">
+                        <h7 style="color: black;"> </h7>
+                        <span id="background_data_intrest"></span>
+                    </div>
+
+                </div> 
+                
+                
+
+
+            </div>
+
+
+
+                                  
+            </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--  show user test modal  end here -->
+
+
+
+
+
+
+
+
+
+
+<!-- bid test modal  start start here -->
+
+<div class="modal fade" id="bid_test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 490px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 400px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <input type="hidden" id="test_id">
+
+        <div class="modal-body">
+
+                                   
+            <div class="login-form">
+                
+                <div>
+                   <h6 style="text-align: center;">Add bid</h6>
+                   <hr>
+                </div>
+
+
+                {% comment %} <div class="row"> {% endcomment %}
+                <input type="hidden" id="test_idd">
+                          
+                    <div class="form-group">
+                        <input type="text" id="bid_price" placeholder="Bid Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 20px;" maxlength="5">
+                        <span id="bid_price_error" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <span >Upload Result Date</span>
+                        <label for="datepicker"><i class="fa fa-calendar" style="margin-left: 380px;margin-top: 25PX;"></i></label>
+                        <input type="text" id="datepicker" placeholder="MM-DD-YY" readonly style="padding-left: 20px;">
+                        <span id="datepicker_error" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                    <div class="form-group ">
+                        <input type="checkbox" id="checkbox"  value="terms and conditons" style="height: 20px;width: 25px;">
+                        <a href="https://www.lipsum.com/" target="_blank">Accept Terms & Conditions</a>
+                        <br>
+                        <span id="terms_and_conditions" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                          
+                {% comment %} </div> {% endcomment %}
+                    
+            
+
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+                    <div class="col-md-6" >
+                        <div class="form-group mb-0">
+                            <button type="button" id="" onclick="bid_on_test()" class="custom-button"  style="font-size: 15px;">Bid Test</button>
+                        </div> 
+                    </div>
+                </div>                        
+            </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- bid test modal  start start here -->
+
+
+
+
+
+
+
+<!-- edit bid test modal  start start here -->
+
+<div class="modal fade" id="edit_bid_test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 490px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 400px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <input type="hidden" id="test_id">
+
+        <div class="modal-body">
+
+                                   
+            <div class="login-form">
+                
+                <div>
+                   <h6 style="text-align: center;">Edit bid</h6>
+                   <hr>
+                </div>
+
+
+                {% comment %} <div class="row"> {% endcomment %}
+                <input type="hidden" id="bid_id">
+                          
+                    <div class="form-group">
+                        <input type="text" id="edit_bid_price" placeholder="Bid Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 20px;" maxlength="5">
+                        <span id="edit_bid_price_error" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <span >Upload Result Date</span>
+                        <label for="edit_datepicker"><i class="fa fa-calendar" style="margin-left: 380px;margin-top: 20px;"></i></label>
+                        <input type="text" id="edit_datepicker" placeholder="MM-DD-YY" readonly style="padding-left: 20px;">
+                        <span id="edit_datepicker_error" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                    <div class="form-group ">
+                        <input type="checkbox" id="edit_checkbox"  value="terms and conditons" style="height: 25px;width: 25px;">
+                        <a href="https://www.lipsum.com/" target="_blank">Accept Terms & Conditions</a>
+                        <br>
+                        <span id="edit_terms_and_conditions" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                          
+                {% comment %} </div> {% endcomment %}
+                    
+            
+
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+                    <div class="col-md-6" >
+                        <div class="form-group mb-0">
+                            <button type="button" id="" onclick="edit_bid_on_test()" class="custom-button"  style="font-size: 16px;width: 130px; height: 45px; padding-left: 5px;padding-right: 5px;">Edit Bid</button>
+                        </div> 
+                    </div>
+                </div>                        
+            </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--edit bid test end here -->
+
+
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+
+<script>
+        $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true, }).val();
+        
+    
+    $(document).ready(function(){
+        
+      $("#profile_setting").removeClass('active')
+      $("#all_auctions").addClass('active')
+    })
+
+
+    function view_all_information_about_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,Centre,
+    Email,other_way,test_requested,background_data,patient_test){
+        
+        console.log(id,patient_first_name)
+
+        $("#name").html(patient_first_name + patient_last_name)
+        $("#age").html(patient_age)
+        $("#race").html(patient_race)
+        $("#gender").html(patient_gender)
+        $("#weight").html(patient_weight)
+        $("#height").html(patient_height)
+        $("#dr_name").html(doctor_name)
+        $("#centre").html(Centre)
+        $("#email").html(Email)
+        $("#otherway").html(other_way)
+        $("#test_requested").html(test_requested)
+        $("#background_data_intrest").html(background_data)
+        $("#patient_test").html(patient_test)
+        $("#sampledate").html(date)
+
+
+    }
+
+
+    $("#bid_price").keyup(function(){
+        $("#bid_price").css("border","1px solid #eee")
+        $("#bid_price_error").html("");
+
+    })
+
+    $("#datepicker").click(function(){
+        $("#datepicker").css("border","1px solid #eee")
+        $("#datepicker_error").html("");
+
+    })
+    $("#checkbox").click(function(){
+     $("#terms_and_conditions").html("");
+    })
+
+
+    function get_test_id(id){
+    $("#test_idd").val(id)
+    console.log(id)
+    }
+
+    function bid_on_test(){
+        
+        var user_id = $("#user_id").val()
+        var test_id = $("#test_idd").val()
+        var bidprice = $("#bid_price").val()
+        var expect_result = $("#datepicker").val()
+        var checkbox = $("#checkbox").val()
+        
+
+        console.log(user_id,test_id,bidprice,expect_result,checkbox)
+        if (bidprice ==''){
+                $("#bid_price").css("border", "1px solid #f37777");
+                $("#bid_price").focus();
+                $("#bid_price_error").html("Enter Bid Price");
+            }
+
+        else if (expect_result ==''){
+            $("#datepicker").css("border", "1px solid #f37777");
+            $("#datepicker").focus();
+            $("#datepicker_error").html("Select Expected Date Of Upload Result");
+            }    
+        else if ( $("#checkbox").prop('checked') == false){
+            $("#terms_and_conditions").html("Please Accept Terms and Conditions");
+            }
+
+        
+        else{
+            $.ajax({
+                method:"POST",
+                url:"{% url 'User_bids_on_other_users_test' %}",
+                contentType:"application/JSON",
+                data:JSON.stringify({
+                    "user_id":user_id,
+                    "test_id":test_id,
+                    "bidprice":bidprice,
+                    "expect_result":expect_result,
+                    "checkbox":checkbox
+                    
+                }),
+                success:function(respnse){
+                    if(respnse['status']=='1'){
+                        console.log(respnse)
+                        location.reload()
+                      /*  swal({
+                            icon:"success",
+                            text:"Bid Done Successfully",
+                            closeOnClickOutside:false
+                        }).then(function(){
+                            location.reload()
+                        }) */
+                    }
+                    else if(respnse['status'] =='0'){
+                        console.log(respnse)
+                        swal({
+                            icon:"error",
+                            text:"Something Went Wrong",
+                            closeOnClickOutside:false
+
+                        })
+                    }
+                }
+            })
+        }
+
+        
+    }
+
+$('#edit_datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true, }).val();
+
+
+    function edit_bid_test(id,bid_Price,expect_result_date,checkbox){
+        
+        console.log(id,bid_Price,expect_result_date,checkbox)
+        $("#bid_id").val(id)
+        $('#edit_bid_price').val(bid_Price)
+        $('#edit_datepicker').val(expect_result_date)
+    
+
+    }
+
+
+$("#edit_bid_price").keyup(function(){
+        $("#edit_bid_price").css("border","1px solid #eee")
+        $("#edit_bid_price_error").html("");
+
+    })    
+
+$("#edit_datepicker").click(function(){
+        $("#edit_datepicker").css("border","1px solid #eee")
+        $("#edit_datepicker_error").html("");
+
+    }) 
+
+$("#edit_checkbox").click(function(){
+     $("#edit_terms_and_conditions").html("");
+})
+function edit_bid_on_test(){
+    
+    var bid_id = $("#bid_id").val()
+    var bid_price = $("#edit_bid_price").val()
+    var expect_result_date = $("#edit_datepicker").val()
+
+    console.log(bid_id)
+    console.log(bid_price)
+    console.log(expect_result_date)
+
+
+    if (bid_price ==''){
+        $("#edit_bid_price").css("border", "1px solid #f37777");
+        $("#bid_price").focus();
+        $("#edit_bid_price_error").html("Enter Bid Price");
+        }    
+    else if (expect_result_date ==''){
+        $("#edit_datepicker").css("border", "1px solid #f37777");
+        $("#edit_datepicker").focus();
+        $("#edit_datepicker_error").html("Select Expected Date Of Upload Result");
+        }            
+    else if ( $("#edit_checkbox").prop('checked') == false){
+            $("#edit_terms_and_conditions").html("Please Accept Terms and Conditions");
+            }
+    else{
+        $.ajax({
+            method:"POST",
+            url : "{% url 'User_edit_bids_on_other_users_test' %}",
+            contentType:"application/JSON",
+            data:JSON.stringify({
+                "bid_id":bid_id,
+                "bid_price":bid_price,
+                "expect_result_date":expect_result_date
+
+            }),success:function(response){
+                if (response['status']=='1'){
+                    console.log(response)
+                     location.reload()
+                    /* comment %} swal({
+                        icon:"success",
+                        text:"Bid Updated Successfully",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                       
+                    }) */
+                }
+                else if (response['status']=='0'){
+                    console.log(response)
+                    swal({
+                        icon:"error",
+                        text:"Something Went Wrong",
+                        closeOnClickOutside:false
+                    })
+                }
+            }
+        })
+    }    
+
+}
+</script>
+
+
+
+{% endblock %}
