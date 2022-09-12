@@ -17,7 +17,7 @@ from datetime import datetime
 from django.views.decorators.cache import cache_control
 
 from django.template.loader import get_template, render_to_string
-
+import csv
 
 # Create your views here.
 # send message to number extends
@@ -91,6 +91,7 @@ def user_signup(request):
 def user_login(request):
     session_id = request.session.get('user_id')
     try:
+        
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
 
@@ -139,9 +140,12 @@ def user_login(request):
                 print(data)
                 return JsonResponse(data)
         else:
-            print('request not post')
-            return render(request, 'login.html', {"session_id": session_id})
-
+            session_id = request.session.get('user_id')
+            if session_id:  
+                return redirect('user_profile_page')
+            else:
+                print('request not post')
+                return render(request, 'login.html', {"session_id": session_id})
     except:
         send_data = {"status": "0", "msg": "Invalid credential",
                      "error": str(traceback.format_exc())}
@@ -169,7 +173,7 @@ def send_otp_for_signup_verification(request):
         # mobile_no = data['mobile_no']
 
         if UserMaster.objects.filter(email=email).exists():
-            send_data = {'status': "0", 'msg': "Email Already Exists"}
+            send_data = {'status': "2", 'msg': "Email Already Exists"}
         # elif UserMaster.objects.filter(mobile_no=mobile_no).exists():
             # send_data = {'status': "2", 'msg': "Mobile Already Exists"}
         else:
@@ -325,7 +329,7 @@ def get_state_of_country(request):
         data = json.loads(request.body.decode('utf-8'))
         country_id = data['country_id']
         print(country_id)
-        print('11111111111111111111111111111111111111111111111111111111111111111111111111')    
+            
         if request.method == "POST":
     
             state_obj = StateMaster.objects.filter(country_id=country_id)
@@ -828,24 +832,35 @@ def Show_state(request):
 
 # for storing data in csv file
 
-'''fieldnames = ['id', 'name', 'state_id']
+fieldnames = ['id', 'sortname', 'name', 'phonecode']
 
 
-rows = list(CityMaster.objects.all().values())
+# rows = list(CityMaster.objects.all().values())
 
-with open(f'{settings.BASE_DIR}/city.csv', 'w', encoding='UTF8', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=fieldnames)
-    writer.writeheader()
-    writer.writerows(rows)
+# with open(f'{settings.BASE_DIR}/city.csv', 'w', encoding='UTF8', newline='') as f:
+#     writer = csv.DictWriter(f, fieldnames=fieldnames)
+#     writer.writeheader()
+#     writer.writerows(rows)
 
-print(settings.BASE_DIR)
-with open(f'{settings.BASE_DIR}/city.csv', 'r') as f:
-    csvreader = csv.reader(f)
-    header = next(csvreader)
-    for row in csvreader:
-       CityMaster.objects.create(
-           id=row[0], name=row[1], state_id=row[2])
-    print('done')'''
+
+
+# this code for add csv data to database file
+# def add_css_data_coutnry_state_city(request):
+#     print(settings.BASE_DIR)
+#     with open(f'{settings.BASE_DIR}/city.csv', 'r') as f:
+#         csvreader = csv.reader(f)
+#         header = next(csvreader)
+#         for row in csvreader:
+#             CityMaster.objects.create(
+#                 id=row[0], name=row[1], state_id=row[2])
+#             print('done')
+#             # return HttpResponse('data added succesfully')
+#             print('data added succesfully')
+#         return HttpResponse('data added succesfully')    
+
+
+
+
 
 
 @csrf_exempt

@@ -826,21 +826,33 @@
 
 
          
-            else if (Email ==''){
+            else if ((Email =='') && (other_way =='')){
+
+              if ((!emailfilter.test(Email)) && (Email != '')) {
+                
+                $("#email").css("border", "1px solid #f37777");
+                $("#email").focus();
+                $("#email_error").html("Enter Valid Email  ");
+                }
+                else{
+                
+
                 $("#email").css("border", "1px solid #f37777");
                 $("#email").focus();
                 $("#email_error").html("Enter Email");
             }
+          }
 
 
-            else if (!emailfilter.test(Email)) {
+
+           else if ((!emailfilter.test(Email)) && (Email != '')){
+              alert('hello')
 
               $("#email").css("border", "1px solid #f37777");
               $("#email").focus();
               $("#email_error").html("Enter Valid Email  ");
-              }
-
-            /*  
+              } 
+            /*
             else if (other_way ==''){
                 $("#otherway").css("border", "1px solid #f37777");
                 $("#otherway").focus();
