@@ -273,7 +273,8 @@
                               
                               <span id="datepicker_error" style="color: red;margin-left: 15PX;"></span>
                             </div>
-                          
+
+                       
                             <div class="form-group  col-md-12">
                               <input type="text" id="centre" placeholder="Center"  style="padding-left:20px;">
                               <span id="centre_error" style="color: red;margin-left: 15PX;"></span>
@@ -695,31 +696,23 @@
     
 
 
-        $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy' , changeMonth: true, changeYear: true,}).val();
-        
+        $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy' , changeMonth: true, changeYear: true, todayHighlight: true}).val();
+        $('#datepicker').attr('readonly', true);
+
+        $('.ui-datepicker').addClass('notranslate');
 
 
-	      {% comment %} $( "#datepicker" ).datepicker({dateFormat: "mm-dd-yy",	duration: "fast"}); {% endcomment %}
-
-
-       
-          {% comment %} $("#datepicker").datepicker({ 
-            autoclose: true, 
-            todayHighlight: true
-            }).datepicker('update', new Date());
-            
-       {% endcomment %}
 
 
 
 
         $("#post_test_by_user").click(function(){
-            
-            
-           
+             
+          
             
             var dr_name = $("#drname").val()
             var datepicker = $("#datepicker").val()
+            
             var center = $("#centre").val()
             var Email = $("#email").val()
             var other_way = $("#otherway").val()
@@ -826,21 +819,31 @@
 
 
          
-            else if (Email ==''){
+            else if ((Email =='') && (other_way =='')){
+
+              if ((!emailfilter.test(Email)) && (Email != '')) {
+                
+                $("#email").css("border", "1px solid #f37777");
+                $("#email").focus();
+                $("#email_error").html("Enter Valid Email  ");
+                }
+                else{
+                
+
                 $("#email").css("border", "1px solid #f37777");
                 $("#email").focus();
                 $("#email_error").html("Enter Email");
             }
+          }
 
 
-            else if (!emailfilter.test(Email)) {
 
+           else if ((!emailfilter.test(Email)) && (Email != '')){
               $("#email").css("border", "1px solid #f37777");
               $("#email").focus();
               $("#email_error").html("Enter Valid Email  ");
-              }
-
-            /*  
+              } 
+            /*
             else if (other_way ==''){
                 $("#otherway").css("border", "1px solid #f37777");
                 $("#otherway").focus();

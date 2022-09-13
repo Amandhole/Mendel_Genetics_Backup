@@ -538,7 +538,7 @@
               }
 
               
-              else if(response['status'] == "0"){
+              else if(response['status'] == "2"){
                 console.log(response)
                
                 $("#loading").hide()
@@ -548,13 +548,13 @@
                   closeOnClickOutside : false
                 })
               }
-               else if(response['status'] == "2"){
+               else if(response['status'] == "0"){
                 console.log(response)
                 $("#loading").hide()
 
                 swal({
                   icon : "error",
-                  text : "Mobile No Already Exists",
+                  text : "Something Went Wrong",
                   closeOnClickOutside : false
                 })
               }
