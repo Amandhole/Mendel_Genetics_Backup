@@ -148,12 +148,6 @@
 
 
 
-
-
-
-
-
-
                                 <h5 class="title mb-15" style="margin-bottom: 30px;margin-top: 30px;">Recent Bids</h5>
                                 {% if bid_obj %}    
                                 {% for bid_obj in bid_obj %}
@@ -190,12 +184,13 @@
                                             <h6 style="font-size: 15px; font-weight: 400; ">{{bid_obj.expect_result_date|date:'m-d-Y'}}</h6>
                                         </div>
 
-                                        <div class="col-md-2">
+                                        {% if test_obj.status == "Active" %}
+                                        <div class="col-md-2" style="margin-top: 20px;">
                                             <div class="profile-sec" style="display: inline-flex;">
                                                 <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
 
                         
-                                                {% comment %} <div style="padding-top: 10px;">
+                                                <div style="padding-top: 10px;">
                                                     <button type="button" onclick="approve_user_bid('{{test_obj.id}}','{{bid_obj.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
                                                         <i class="fas fa-thumbs-up"></i>
                                                     </button>
@@ -205,9 +200,12 @@
                                                     <button type="button" onclick="reject_the_user_bid({{bid_obj.id}})" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                         <i class="fas fa-thumbs-down"></i>
                                                     </button>
-                                                </div> {% endcomment %}
+                                                </div> 
                                             </div>
                                         </div>
+                                        {% endif %}
+
+                                        
                                     </div>
                                     
                                 </div>

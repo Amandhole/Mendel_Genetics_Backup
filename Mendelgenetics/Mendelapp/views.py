@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from html2text import pad_tables_in_text
 from numpy import append
+from requests import request
 from .models import *
 import json
 from django.http import HttpResponse, JsonResponse
@@ -325,7 +326,7 @@ def bid_auction_status_toggle(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def get_state_of_country(request):
-    if 1 == 1:
+    try:
         data = json.loads(request.body.decode('utf-8'))
         country_id = data['country_id']
         print(country_id)
@@ -333,18 +334,18 @@ def get_state_of_country(request):
         if request.method == "POST":
     
             state_obj = StateMaster.objects.filter(country_id=country_id)
-            print('2222222222222222222222222222222222222222222222222222222222222222222222')
+        
             
 
             send_data = {'status': "1", 'msg': "Got States Of Country", "state_obj": list(state_obj.values())}  # json object not serilizable
 
         else:
-            print('333333333333333333333333333333333333333333333333333333333333333333333333')
+            
             send_data = {'status': "0", 'msg': "Request Is Not Post"}
-    else:
-        print('444444444444444444444444444444444444444444444444444444444444444444444444444444')
+    except:
+        
         send_data = {'status': "0", 'msg': "Something Went Wrong","error": traceback(traceback.format_exc())}
-    print('555555555555555555555555555555555555555555555555555555555555555555555555555555')    
+  
     return JsonResponse(send_data)
 
 
@@ -374,7 +375,7 @@ def get_city_of_state(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_user_profile_image(request):
-    if 1 == 1:
+    try:
         if request.method == "POST":
             user_id = request.session.get('user_id')
             profile_pic = request.FILES.get('profile-pic')
@@ -384,8 +385,7 @@ def edit_user_profile_image(request):
                 user_obj.user_image = profile_pic
                 user_obj.save()
 
-                print('ttttttttttttttttttttttttttttttttttttttttttttttttttt',
-                      user_id, profile_pic)
+                # print('ttttttttttt', user_id, profile_pic)
                 send_data = {'status': '1',
                              'msg': 'Profile Picture updated successfully'}
             else:
@@ -393,7 +393,7 @@ def edit_user_profile_image(request):
 
         else:
             send_data = {'status': '0', 'msg': 'Request is not post'}
-    else:
+    except:
         send_data = {'status': '0', 'msg': 'Something went wrong',
                      'error': traceback.format_exc()}
     return JsonResponse(send_data)
@@ -1024,3 +1024,34 @@ def Reject_bid_on_users_test(request):
         send_data = {"msg": "Something went wrong",
                      "status": "0", "error": traceback.format_exc()}
     return JsonResponse(send_data)
+
+
+def my_bids_on_other_users_test(request):
+    if 1 == 1:
+        session_id = request.session.get('user_id')
+        if session_id:
+            if UserMaster.objects.filter(id=session_id).exists():
+                user_obj = UserMaster.objects.get(id=session_id)
+
+                print('my session id is',session_id)
+                my_active_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Pending')
+
+                my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
+
+                # for i in my_active_bid:
+                #     print(i)
+                # print('my approved bid',my_approved_bid)
+                # print('my active bid',my_active_bid)
+                context = {            
+                    "user_obj": user_obj,
+                    'my_active_bid':my_active_bid,
+                    'my_approved_bid': my_approved_bid
+                    
+                    }
+                return render(request,'my-bids.html',context)                
+        else:            
+            return redirect('landing_page')                        
+    else:
+        print(traceback.format_exc())
+        return redirect('landing_page')
+        
