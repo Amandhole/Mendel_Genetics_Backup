@@ -631,21 +631,28 @@
             new google.translate.TranslateElement({includedLanguages :'en,es', }, 'google_translate_element');
         }
         $( document ).ready(function() {
-            // setTimeout(() => {
-            //     if ($(".goog-te-combo option:selected").text() != 'Select Language')
-            //     {
-            //         document.getElementById('pageHTML').style.marginTop = "-40px";
-            //     }
-            //     else
-            //     {
-            //         document.getElementById('pageHTML').style.marginTop = "0px";
-            //     }
-            // }, 1000);
+            setTimeout(() => {
+                if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
+                {
+                    $('.save_button_text').html('GUARDAR');
+                }
+                else
+                {
+                    $('.save_button_text').html('SAVE');
+                }
+            }, 1000);
         });
 
-        // $("body").on("change", "#google_translate_element select", function (e) {
-        //     document.getElementById('pageHTML').style.marginTop = "-40px";
-        // });
+        $("body").on("change", "#google_translate_element select", function (e) {
+            if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
+            {
+                $('.save_button_text').html('GUARDAR');
+            }
+            else
+            {
+                $('.save_button_text').html('SAVE');
+            }
+        });
     </script>
 </body>
 
