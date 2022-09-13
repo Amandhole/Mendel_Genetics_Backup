@@ -150,6 +150,8 @@ def user_login(request):
     except:
         send_data = {"status": "0", "msg": "Invalid credential",
                      "error": str(traceback.format_exc())}
+
+        print(traceback.format_exc())             
         return redirect('landing_page')
     return JsonResponse(send_data)
 

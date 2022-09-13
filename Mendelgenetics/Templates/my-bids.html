@@ -169,18 +169,22 @@
 
                                                 </div><br>
 
-                                                <div class="col-md-9" style="margin-top: 15px;">
+
+                                                
+                                                <div class="col-md-8" style="margin-top: 15px;">
+                                                    <h6 style="font-size: 16px;">Bid Price</h6>
+                                                    <h6 style="font-size: 16px;">€ {{test.bid_Price}}</h6>
+                                                </div>
+
+
+
+                                                <div class="col-md-8" style="margin-top: 15px;">
                                                     <h6 style="font-size: 16px;">Expected Result Date</h6>
                                                     <h6 style="font-size: 15px; font-weight: 400; ">{{ test.expect_result_date|date:'m-d-Y'}}</h6>
                                                 </div>
 
                                               
 
-                                                <div class="col-md-3" style="margin-top: 15px;">
-                                                    <h6 style="font-size: 16px;">Bid Price</h6>
-                                                    <h6 style="font-size: 16px;">€ {{test.bid_Price}}</h6>
-
-                                                </div>
 
                                                 <div class="col-md-3">
                                                     <div class="profile-sec" style="display: inline-flex;">
@@ -199,16 +203,16 @@
                                             
                                                         
                                                         <div style="padding-top: 10px;">
-                                                
-                                                            <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'m-d-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-
-                                                                <i class="flaticon-edit" ></i> 
-                                                            </button>   
+                                                            <span id=""></span>
+                                                            <button type="button"  data-toggle="modal"  data-target="#edit_bid_test" onclick="edit_bid_test('{{test.id}}','{{test.bid_Price}}','{{test.expect_result_date|date:'m-d-Y'}}','{{test.checkbox}}')" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                                <i class="flaticon-edit" ></i>
+                                                            </button>
+                
                                                         </div>
 
 
 
-                                                        <div style="padding-top: 10px;">
+                                                        <div style="padding-top: 10px; margin-left: 5px;">
                                                             
                                                             <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                                 <i class="fa fa-trash"></i>
@@ -307,12 +311,15 @@
 
 <!-- Edit test modal  start start here -->
 
-<div class="modal fade" id="edit_posted_test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="max-width: 930px !important;">
+
+<!-- edit bid test modal  start start here -->
+
+<div class="modal fade" id="edit_bid_test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 490px !important;">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-        <button type="button" class="close" data-dismiss="modal" id="closebtn" aria-label="Close" style="margin-left: 750px;">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 400px;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -324,212 +331,56 @@
                                    
             <div class="login-form">
                 
-                
-
-                    <div style="margin-top: 25px;">
-                        <h6>Prescriber Data</h6>
-                        <hr>
-                    </div>
-
-
-                    <div class="row">
-
-                        <div class="form-group  col-md-6">
-                            <input type="text" id="drname" placeholder="Doctor Name" style="padding-left: 20px;">
-                            <span id="drname_modal_error" style="color: red;margin-left: 15PX;"></span>
-                        </div>
-
-                        <div class="form-group  col-md-6">
-                            <label for="datepicker"><i class="fa fa-calendar" style="margin-left: 370px;"></i></label>
-                            <input type="text" id="datepicker" readonly placeholder="M/DD/YY" style="padding-left: 20px;" class="">
-
-                            <span id="datepicker_modal_error" style="color: red;margin-left: 15PX;"></span>
-                        </div> 
-
-                        
-                          
-                        <div class="form-group  col-md-12">
-                            <input type="text" id="centre" placeholder="Center" style="padding-left:20px;">
-                            <span id="centre_modal_error" style="color: red;margin-left: 15PX;"></span>
-                        </div>
-                    </div>
-                        
-                    <div style="margin-top: 25px;">
-                        <h6>Delivery Of Result</h6>
-                        <hr>
-                    </div>
-
-                    <div class="row">
-                          
-                        <div class="form-group  col-md-6">
-                            <input type="text" id="email" placeholder="Email" style="padding-left: 20px;">
-                            <span id="email_modal_error" style="color: red;margin-left: 15PX;"></span>
-                        </div>
-
-                        <div class="form-group  col-md-6">                              
-                            <input type="text" id="otherway" placeholder="Other way" style="padding-left: 20px;">
-                            <span id="otherway_modal_error" style="color: red;margin-left: 15PX;"></span>
-                        </div>
-                          
-                    </div>
-                    <div class="row">
-                          
-                        <div class="form-group  col-md-6">
-                            <input type="text" id="contact_person_name" placeholder="Contact Person (Full Name)" style="padding-left: 20px;">
-                            <span id="contact_person_name_error" style="color: red;margin-left: 15PX;"></span>
-                        </div>
-                          
-                    </div>
-
-                    <div style="margin-top: 25px;">
-                        <h6>Test Requested</h6>
-                        <hr>
-                    </div>
-
-                    <div class="form-group ">
-                        <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
-                        <span id="testrequested_modal_error" style="color: red;margin-left: 15PX;"></span>
-                    </div>
-
-
-                    <div style="margin-top: 25px;">
-                        <h6>Background and data of interest</h6>
-                        <hr>
-                    </div>
-
-                    <div class="form-group ">                             
-                        <textarea name="" id="backgrounddata" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
-                        <span id="backgrounddata_modal_error" style="color: red;margin-left: 15PX;"></span>
-                    </div>
-                    
-                    
-                    <div style="margin-top: 25px;">
-                        <h6>Sample type</h6>
-                        <hr>
-                    </div>
-
-                    <div class="form-group">
-                    
-                          
-                        <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 35px;">
-	                           
-                              <div class="col-md-3">
-                                  <label for="#checkbox1" style="margin-top: -4px;"><input type="radio" id="checkbox1" placeholder="" checked="checked" name="radiobutton" value="EDTA Blood" style="width: 15px; height: 15px;"> EDTA Blood</label>
-                              </div>
-
-	                            <div class="col-md-2">
-                                  <label for="#checkbox2" style="margin-top: -4px;"><input type="radio" id="checkbox2" placeholder="" name="radiobutton" value="Swab" style="width: 15px; height: 15px;"> Swab</label>
-                              </div>
-                               <div class="col-md-2">
-                                  <label for="#checkbox3" style="margin-top: -4px;"><input type="radio" id="checkbox3" placeholder="" name="radiobutton" value="Paraffin" style="width: 15px; height: 15px;"> Paraffin</label>
-                              </div>
-                               <div class="col-md-2">
-                                  <label onclick="showTextBox('id_text_box_show', 'checkbox4')" for="#checkbox4" style="margin-top: -4px;"><input type="radio" name="radiobutton" value="" id="checkbox4" placeholder="" style="width: 15px; height: 15px;"> Other</label>
-                              </div>                       
-                              <div class="col-md-3" style="margin-top: 0px;">
-                                  <input style="display: none;padding: 5px;" type="text" id="id_text_box_show" name="text_field" placeholder="">
-                                  <span id="id_text_box_show_error" style="color: red;margin-left: 15PX;"></span>
-                                </div>
-
-                        </div> 
-                        
-                    </div>
-
-
-                <div style="margin-top: 60px;">
-                   <h6>Patient detail(Optional)</h6>
+                <div>
+                   <h6 style="text-align: center;">Edit bid</h6>
                    <hr>
                 </div>
 
-                <div class="row">
-                           
+
+                
+                <input type="hidden" id="bid_id">
                           
-                    <div class="form-group  col-md-5">
-                        <input type="text" id="firstname" placeholder="First Name" style="padding-left: 20px;">
-                        <span id="firstname_modal_error" style="color: red;margin-left: 15PX;"></span>  
-                    </div>
-                            
-
-                    <div class="form-group  col-md-5">
-                        <input type="text" id="lastname" placeholder="Last Name" style="padding-left: 20px;">
-                        <span id="lastname_modal_error" style="color: red;margin-left: 15PX;"></span>
+                    <div class="form-group">
+                        <input type="text" id="edit_bid_price" placeholder="Bid Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 20px;" maxlength="5">
+                        <span id="edit_bid_price_error" style="color: red;margin-left: 15PX;"></span>
                     </div>
 
-                    <div class="form-group  col-md-2">
-                        <input type="text" id="patientage" placeholder="Age" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 11px;" maxlength="3">
-                        <span id="patientage_modal_error" style="color: red;margin-left: 15PX;"></span>
+                    <div class="form-group">
+                        <span >Upload Result Date</span>
+                        <label for="edit_datepicker"><i class="fa fa-calendar" style="margin-left: 380px;margin-top: 20px;"></i></label>
+                        <input type="text" id="edit_datepicker" placeholder="MM-DD-YY"  style="padding-left: 20px;">
+                        <span id="edit_datepicker_error" style="color: red;margin-left: 15PX;"></span>
+                    </div>
+
+                    <div class="form-group ">
+                        <input type="checkbox" id="edit_checkbox"  value="terms and conditons" style="height: 25px;width: 25px;">
+                        <a href="https://www.lipsum.com/" target="_blank">Accept Terms & Conditions</a>
+                        <br>
+                        <span id="edit_terms_and_conditions" style="color: red;margin-left: 15PX;"></span>
                     </div>
 
                           
-                </div>
-
-                <div class="row" col="">
-
-                    <div class="form-group  col-md-3">
-                        <input type="text" id="patientrace" placeholder="Race" style="padding-left: 20px;">
-                        <span id="patientrace_modal_error" style="color: red;margin-left: 15PX;"></span>
-                    </div>
-                          
-
-                    <div class="form-group  col-md-3">
-
-                        <select name="" id="selectgender" style=" border: 1px solid rgba(97, 90, 191, 0.2); border-radius:5px ;">
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>     
-                        <span id="selectgender_modal_error" style="color: red;margin-left: 15PX;"></span>
-                              
-                    </div>
-
-                    <div class="form-group  col-md-3">
-                              
-                              <input type="text" id="patientweight" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Weight" style="padding-left: 20px;border-right: none ;" maxlength="4">
-                              <label style="margin-left:112px;">
-                                <select name="" id="weight_unit" style="border-bottom-right-radius:5px ;border-top-right-radius:5px;width: 70px;">
-                                 
-                                  <option value="KG">Kg</option>
-                                  <option value="LB">Lb</option>
-                                </select></label>
-                              <span id="patientweight_modal_error" style="color: red;margin-left: 15PX;"></span>
-                    </div>
-
-                    <div class="form-group  col-md-3">
-                        
-                        <input type="text" id="patientheight" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Height" style="padding-left: 20px;border-right: none;" maxlength="4">
-                        <label style="margin-left:114px;">
-                                <select name="" id="height_unit" style="border-bottom-right-radius:5px ;border-top-right-radius:5px;width: 70px;">
-                                  <option value="Ft">Ft</option>
-                                  <option value="CM">cm</option>
-                                </select></label>
-                        <span id="patientheight_modal_error" style="color: red;margin-left: 15PX;"></span>
-                        </div>
-
-                    </div>
-                    <hr>
+                
+                    
             
-                <div style="width: 100%;">
-                    <center>
-                        <div class="row" style="width: fit-content;">
-                            <div class="col-md-6" style="">
-                                <div class="form-group mb-0"  >
-                                    <button type="button" id="" style="width: 100px;height: 45px; padding-right: 10px;padding-left: 10px;" onclick="edit_posted_test_save_button()" class="custom-button">Save</button>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {% comment %} <button type="button"  id="closebtn" style="width: 100px;height: 45px; padding-right: 10px;padding-left: 10px;"  data-dismiss="modal" class="custom-button">Close</button> {% endcomment %}
-                                </div> 
-                            </div>
-                        </div>   
-                    </center>     
-                </div>
+
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+                    <div class="col-md-6" >
+                        <div class="form-group mb-0">
+                            <button type="button" id="" onclick="edit_bid_on_test()" class="custom-button"  style="font-size: 16px;width: 130px; height: 45px; padding-left: 5px;padding-right: 5px;">Edit Bid</button>
+                        </div> 
+                    </div>
+                </div>                        
+            </div>
       </div>
 
     </div>
   </div>
 </div>
+
+<!--edit bid test end here -->
+               
+
 
 <!-- Edit test modal end here -->
 
@@ -634,343 +485,97 @@
     }
 
 
-    $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true,changeYear: true }).val();
-
-    function edit_posted_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,centre,Email,other_way,test_requested,background_data,patient_test,weight_unit,height_unit,Contact_person_name){
-             
-        $("#test_id").val(id)
-        $("#firstname").val(patient_first_name)
-        $("#lastname").val(patient_last_name)
-        $("#patientage").val(patient_age)
-        $("#patientrace").val(patient_race)
-        $("#selectgender").val(patient_gender)
-        $("#patientweight").val(patient_weight)
-        $("#patientheight").val(patient_height)
-        $("#drname").val(doctor_name)
-        $("#datepicker").val(date)
-        $("#centre").val(centre)
-        $("#email").val(Email)
-        $("#otherway").val(other_way)
-        $("#testrequested").val(test_requested)
-        $("#backgrounddata").val(background_data)
-        $("#weight_unit").val(weight_unit)
-        $("#height_unit").val(height_unit)
-        $("#contact_person_name").val(Contact_person_name)
-
-        
-        console.log(patientheight)
-        
-        var test = patient_test
-        console.log(test)
-
-        
-        if ( test == "EDTA Blood"){
-            $("#checkbox1").prop('checked','checked')
-
-        }
-        else if(test == "Swab"){
-            $("#checkbox2").prop('checked','checked')
-
-        }
-
-        else if(test == "Paraffin"){
-            $("#checkbox3").prop('checked','checked')
-        }
-        else{
-            $("#checkbox4").prop('checked','checked')
-
-            $("#id_text_box_show").show()
-            $("#id_text_box_show").val(test)
-        }
-
-    }
-
-    $("#checkbox3").click(function(){
-        $("#id_text_box_show").hide()
-        $("#id_text_box_show_error").hide()
-
-      })
-      $("#checkbox2").click(function(){
-        $("#id_text_box_show").hide()
-        $("#id_text_box_show_error").hide()
-      })
-      $("#checkbox1").click(function(){
-        $("#id_text_box_show").hide()
-        $("#id_text_box_show_error").hide()
-      })
+    $('#edit_datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true,todayHighlight:true, }).val();
+    $('.ui-datepicker').addClass('notranslate');
+    $('#datepicker').attr('readonly', true);
 
 
 
 
 
-      $("#firstname").keyup(function () {
-          $("#firstname").css("border", "1px solid #eee");
-          $("#firstname_modal_error").html("");
-        });
 
-        
-        $("#lastname").keyup(function () {
-          $("#lastname").css("border", "1px solid #eee");
-          $("#lastname_modal_error").html("");
-        });
+    function edit_bid_test(id,bid_Price,expect_result_date,checkbox){
 
-         $("#patientage").keyup(function () {
-          $("#patientage").css("border", "1px solid #eee");
-          $("#patientage_modal_error").html("");
-        });
-
-         $("#patientrace").keyup(function () {
-          $("#patientrace").css("border", "1px solid #eee");
-          $("#patientrace_modal_error").html("");
-        });
-
-         $("#selectgender").click(function () {
-          $("#selectgender").css("border", "1px solid #eee");
-          $("#selectgender_modal_error").html("");
-        });
-
-         $("#patientweight").keyup(function () {
-          $("#patientweight").css("border", "1px solid #eee");
-          $("#patientweight_modal_error").html("");
-        });
-
-         $("#patientheight").keyup(function () {
-          $("#patientheight").css("border", "1px solid #eee");
-          $("#patientheight_modal_error").html("");
-        });
-
-         $("#drname").keyup(function () {
-          $("#drname").css("border", "1px solid #eee");
-          $("#drname_modal_error").html("");
-        });
-
-        $("#datepicker").click(function () {
-          $("#datepicker").css("border", "1px solid #eee");
-          $("#datepicker_modal_error").html("");
-        })
-
-         $("#centre").keyup(function () {
-          $("#centre").css("border", "1px solid #eee");
-          $("#centre_modal_error").html("");
-        });
-
-         $("#email").keyup(function () {
-          $("#email").css("border", "1px solid #eee");
-          $("#email_modal_error").html("");
-        });
-
-         $("#otherway").keyup(function () {
-          $("#otherway").css("border", "1px solid #eee");
-          $("#otherway_modal_error").html("");
-        });
-
-         $("#testrequested").keyup(function () {
-          $("#testrequested").css("border", "1px solid #eee");
-          $("#testrequested_modal_error").html("");
-        });
-
-         $("#backgrounddata").keyup(function () {
-          $("#backgrounddata").css("border", "1px solid #eee");
-          $("#backgrounddata_modal_error").html("");
-        });
+        $("#bid_id").val(id)
+        $('#edit_bid_price').val(bid_Price)
+        $('#edit_datepicker').val(expect_result_date)
     
-          $("#id_text_box_show").keyup(function () {
-          $("#id_text_box_show").css("border", "1px solid #eee");
-          $("#id_text_box_show_error").html("");
-        });
-
-          $("#contact_person_name").keyup(function () {
-          $("#contact_person_name").css("border", "1px solid #eee");
-          $("#contact_person_name_error").html("");
-        });
-
-    function edit_posted_test_save_button(){
-      
-
-      var test_id = $("#test_id").val()
-      var firstname =  $("#firstname").val()
-      var lastname =  $("#lastname").val()  
-      var patientage =  $("#patientage").val()
-      var patientrace =  $("#patientrace").val()
-      var selectgender =  $("#selectgender").val()
-      var patientweight =  $("#patientweight").val()
-      var patientheight =  $("#patientheight").val()
-      var drname =  $("#drname").val()      
-      var datepicker =  $("#datepicker").val()
-      var centre =  $("#centre").val()  
-      var email =  $("#email").val()
-      var otherway =  $("#otherway").val()
-      var testrequested =  $("#testrequested").val()
-      var backgrounddata =  $("#backgrounddata").val()
-      var patient_test = $("input[name='radiobutton']:checked").val();
-      var other_test = $("#id_text_box_show").val()
-
-      var weight_unit = $("#weight_unit").val()
-      var height_unit = $("#height_unit").val()
-      var contact_pereson =$("#contact_person_name").val()
-      
-           
-      if( patient_test){
-        test = patient_test
-        }
-      else{
-        test = other_test   
-        }
-
-      /*if (firstname == ''){
-        $("#firstname").css('border','1px solid #f37777');
-        $("#firstname").focus();
-        $("#firstname_modal_error").html('Enter First Name ')   
-      } 
-
-      else if (lastname == ''){
-        $("#lastname").css('border','1px solid #f37777');
-        $("#lastname").focus();
-        $("#lastname_modal_error").html('Enter Last Name ')   
-      }
-
-      else if (patientage == ''){
-        $("#patientage").css('border','1px solid #f37777');
-        $("#patientage").focus();
-        $("#patientage_modal_error").html('Enter Age')   
-      }
-
-       else if (patientrace == ''){
-        $("#patientrace").css('border','1px solid #f37777');
-        $("#patientrace").focus();
-        $("#patientrace_modal_error").html('Enter Race ')   
-      }
-
-
-       else if (selectgender == ''){
-        $("#selectgender").css('border','1px solid #f37777');
-        $("#selectgender").focus();
-        $("#selectgender_modal_error").html('Select Gender')   
-      }
-        else if (patientweight == ''){
-        $("#patientweight").css('border','1px solid #f37777');
-        $("#patientweight").focus();
-        $("#patientweight_modal_error").html('Enter Weight')   
-      }
-
-         else if ( patientheight== ''){
-        $("#patientheight").css('border','1px solid #f37777');
-        $("#patientheight").focus();
-        $("#patientheight_modal_error").html('Enter Height')   
-      }*/
-
-        if (drname == ''){
-        $("#drname").css('border','1px solid #f37777');
-        $("#drname").focus();
-        $("#drname_modal_error").html('Enter Doctor Name')   
-      }
-
-         else if (datepicker == ''){
-        $("#datepicker").css('border','1px solid #f37777');
-        $("#datepicker").focus();
-        $("#datepicker_modal_error").html('Select Date')   
-      }
-
-        else if (centre == ''){
-        $("#centre").css('border','1px solid #f37777');
-        $("#centre").focus();
-        $("#centre_modal_error").html('Enter Centre')   
-      }
-
-        else if (email == ''){
-        $("#email").css('border','1px solid #f37777');
-        $("#email").focus();
-        $("#email_modal_error").html('Enter Email')   
-      }
-
-       /* else if (otherway == ''){
-        $("#otherway").css('border','1px solid #f37777');
-        $("#otherway").focus();
-        $("#otherway_modal_error").html('Enter other ways')   
-      }*/
-      else if (contact_pereson == ''){
-        $("#contact_person_name").css('border','1px solid #f37777');
-        $("#contact_person_name").focus();
-        $("#contact_person_name_error").html('Enter Contact Person Name') 
-      }
-
-
-      else if (testrequested == ''){
-        $("#testrequested").css('border','1px solid #f37777');
-        $("#testrequested").focus();
-        $("#testrequested_modal_error").html('Enter Description')   
-      }
-
-         else if (backgrounddata == ''){
-        $("#backgrounddata").css('border','1px solid #f37777');
-        $("#backgrounddata").focus();
-        $("#backgrounddata_modal_error").html('Enter Background Data')   
-      }
-
-
-        
-        else if ($("#checkbox4").prop('checked') == true && test == ''){
-
-                $("#id_text_box_show").css("border", "1px solid #f37777");
-                $("#id_text_box_show").focus();
-                $("#id_text_box_show_error").html("Enter Test");
-            }
-      
-
-
-      else {
-      $.ajax({
-          method:"POST",
-          url : "{% url 'posted_test_edit_by_user' %}",
-          contentType:"application/json",
-          data:JSON.stringify({
-            "test_id":test_id,
-            "firstname":firstname,
-            "lastname":lastname,
-            "patientage":patientage,
-            "patientrace":patientrace,
-            "selectgender":selectgender,
-            "patientweight":patientweight,
-            "patientheight":patientheight,
-            "drname":drname,
-            "datepicker":datepicker,
-            "centre":centre,
-            "email":email,
-            "otherway":otherway,
-            "contact_pereson":contact_pereson,
-            "testrequested":testrequested,
-            "backgrounddata":backgrounddata,
-            "patienttest":test,
-            "weight_unit":weight_unit,
-            "height_unit":height_unit
-
-          }),
-         success:function(response){
-            if(response['status']=='1'){
-                console.log(response)
-                swal({
-                    icon:"success",
-                    text:"Test Updated Successfully",
-                    closeOnClickOutside:false
-                }).then(function(){
-                    location.reload()
-                })
-             }
-            else if(response['status']=='0') {
-                console.log(response)
-                swal({
-                    icon:"error",
-                    text:"Something Went Wrong",
-                    closeOnClickOutside:false
-                })
-            }
-         }
-         
-
-      })
-    }
 
     }
+
+
+    $("#edit_bid_price").keyup(function(){
+        $("#edit_bid_price").css("border","1px solid #eee")
+        $("#edit_bid_price_error").html("");
+
+    })    
+
+$("#edit_datepicker").click(function(){
+        $("#edit_datepicker").css("border","1px solid #eee")
+        $("#edit_datepicker_error").html("");
+
+    }) 
+
+$("#edit_checkbox").click(function(){
+     $("#edit_terms_and_conditions").html("");
+})
+function edit_bid_on_test(){
+    
+    var bid_id = $("#bid_id").val()
+    var bid_price = $("#edit_bid_price").val()
+    var expect_result_date = $("#edit_datepicker").val()
+
+
+    if (bid_price ==''){
+        $("#edit_bid_price").css("border", "1px solid #f37777");
+        $("#bid_price").focus();
+        $("#edit_bid_price_error").html("Enter Bid Price");
+        }    
+    else if (expect_result_date ==''){
+        $("#edit_datepicker").css("border", "1px solid #f37777");
+        $("#edit_datepicker").focus();
+        $("#edit_datepicker_error").html("Select Expected Date Of Upload Result");
+        }            
+    else if ( $("#edit_checkbox").prop('checked') == false){
+            $("#edit_terms_and_conditions").html("Please Accept Terms and Conditions");
+            }
+    else{
+        $.ajax({
+            method:"POST",
+            url : "{% url 'User_edit_bids_on_other_users_test' %}",
+            contentType:"application/JSON",
+            data:JSON.stringify({
+                "bid_id":bid_id,
+                "bid_price":bid_price,
+                "expect_result_date":expect_result_date
+
+            }),success:function(response){
+                if (response['status']=='1'){
+                    console.log(response)
+                     location.reload()
+                    /* comment %} swal({
+                        icon:"success",
+                        text:"Bid Updated Successfully",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                       
+                    }) */
+                }
+                else if (response['status']=='0'){
+                    console.log(response)
+                    swal({
+                        icon:"error",
+                        text:"Something Went Wrong",
+                        closeOnClickOutside:false
+                    })
+                }
+            }
+        })
+    }    
+
+}
+    
+
 </script>
 
 
