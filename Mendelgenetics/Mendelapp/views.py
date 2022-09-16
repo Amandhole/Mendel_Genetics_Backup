@@ -859,15 +859,13 @@ fieldnames = ['id', 'sortname', 'name', 'phonecode']
 # this code for add csv data to database file
 def add_css_data_coutnry_state_city(request):
     print(settings.BASE_DIR)
-    with open(f'{settings.BASE_DIR}/sample.csv', 'r') as f:
+    with open(f'{settings.BASE_DIR}/sample_test_master.csv', 'r', encoding="utf8") as f:
         csvreader = csv.reader(f)
         header = next(csvreader)
         for row in csvreader:
+            # print(row[0].strip(), row[1].strip(), row[2].strip(), row[4].strip(), row[5].strip())
             SampleTestMaster.objects.create(
-                group=row[0], pathalogy=row[1], gens=row[2],sample_type=row[3],transport=[4])
-            print('done')
-            # return HttpResponse('data added succesfully')
-            print('data added succesfully')
+                group=row[0].strip(), pathalogy=row[1].strip(), gens=row[2].strip(),sample_type=row[4].strip(),transport=row[5].strip())
         return HttpResponse('data added succesfully')    
 
 
