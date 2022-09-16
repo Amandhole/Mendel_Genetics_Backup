@@ -585,14 +585,54 @@
 
     function view_all_information_about_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,Centre,
     Email,other_way,test_requested,background_data,patient_test){
-        
+    
         console.log(id,patient_first_name)
 
-        $("#name").html(patient_first_name + patient_last_name)
-        $("#age").html(patient_age)
-        $("#race").html(patient_race)
-        $("#gender").html(patient_gender)
-        $("#weight").html(patient_weight)
+        if ((patient_first_name == '')||(patient_last_name == '')){
+            $("#name").html("No data")
+        }
+        else{
+            $("#name").html(patient_first_name + patient_last_name)
+        }
+
+        if ((patient_age =='')||(patient_age == 0)){
+            $("#age").html("No data")
+        }
+        else{
+            $("#age").html(patient_age)
+        }
+
+        if(patient_race == ''){
+            $("#race").html("No data")
+        }
+        else{
+            $("#race").html(patient_race)
+        }
+        
+        if(patient_gender==''){
+            $("#gender").html("No data")
+        }
+        else{
+            $("#gender").html(patient_gender)
+        }
+        
+        debugger
+
+    
+        if (patient_weight == "0.0"){
+            $("#weight").html("No data")
+        }
+        else{
+            $("#weight").html(patient_weight)
+        }
+        
+        if (patient_height == "0.0"){
+            $("#height").html("No data")
+        }
+        else{
+            $("#height").html(patient_height)
+        }
+        
         $("#height").html(patient_height)
         $("#dr_name").html(doctor_name)
         $("#centre").html(Centre)

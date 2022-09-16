@@ -319,12 +319,91 @@
                                 <hr>
                         </div>
 
-                        <div class="form-group ">
-                            <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
-                            <span id="testrequested_error" style="color: red;margin-left: 15PX;"></span>
-                          </div>
+                         
                         
+                        <div class="row" style="justify-content: center;margin-left: -54px;">
 
+                          <div class="col-md-2">
+                            <span class="float-right" style="margin-top:10px; margin-left:30px ;">
+                              Search By :
+                            </span>
+                          </div> 
+
+                          <div class="col-md-2">
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" type="radio" onclick="show_pathalogy_field()" value="Pathalogy" name="testradio" id="Pathalogyid" checked style="width:21px;">
+                                <label class="form-check-label" for="flexRadioDefault1">Pathalogy</label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-2">
+                            <div class="form-check form-check-inline ">
+                              <input class="form-check-input" type="radio" onclick="show_gens_field()"  value="Gens" name="testradio" id="Gensid" style="width:21px;">
+                              <label class="form-check-label" for="flexRadioDefault1"> Gens</label>
+                            </div>
+                          </div> 
+                  
+                          <div>
+                            
+                          </div>
+
+                          <div class="col-md-6" id="select_pathlogy_id">
+                            <select  id="select_sample_path" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
+                              <option value="">Select Pathalogy</option>
+                              {% for i in sampletest %}
+                                <option value={{i.id}}>{{i.pathalogy}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                          <div class="col-md-6" id="select_gens_id">
+                            <select  id="select_sample_gens" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
+                              <option value="">Select Gens</option>
+                              {% for i in sampletest %}
+                                  <option value="{{i.id}}">{{i.gens}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                        </div>
+
+                        <div class="form-group ">
+                            
+                            <span id="testrequested_error" style="color: red;margin-left: 153PX;"></span>
+                        </div>
+
+
+                        <div class="row" id="show_hide_data">
+                          <div class="col-md-2">
+                            <span>Sample Type :</span>
+                          </div>
+                          <div class="col-md-10">
+                            <span id="sample_type_id"></span>
+                          </div>
+                          
+                          <div class="col-md-2">
+                            <span>Transport:</span>
+                          </div>
+
+                          <div class="col-md-10">
+                            <span id="transport_id"></span>
+                          </div>
+                          
+                          <div class="col-md-2">
+                            <span id="gens">Gens:</span>
+                          </div>
+                          <div class="col-md-10">
+                            <span id="gens_id"></span>
+                          </div>
+                          
+                          <div class="col-md-2">
+                            <span id="path">Pathalogy :</span>
+                          </div>
+                          <div class="col-md-10">
+                            <span id="pathalogy_id"></span>
+                          </div>
+                          
+                        </div>
                            
                         <div style="margin-top: 25px;">
                           <h6>Background and data of interest</h6>
@@ -671,8 +750,14 @@
           $("#otherway_error").html("");
         });
 
-         $("#testrequested").keyup(function () {
-          $("#testrequested").css("border", "1px solid #eee");
+         $("#select_sample_path").click(function () {
+          $("#select_sample_path").css("border", "1px solid #eee");
+          $("#testrequested_error").html("");
+        });
+
+
+        $("#select_sample_gens").click(function () {
+          $("#select_sample_gens").css("border", "1px solid #eee");
           $("#testrequested_error").html("");
         });
 
@@ -707,9 +792,10 @@
 
 
         $("#post_test_by_user").click(function(){
+
+
              
           
-            
             var dr_name = $("#drname").val()
             var datepicker = $("#datepicker").val()
             
@@ -717,7 +803,7 @@
             var Email = $("#email").val()
             var other_way = $("#otherway").val()
             var contact_person = $("#contact_person_name").val()
-            var test_requested = $("#testrequested").val()
+            //var test_requested = $("#testrequested").val()
             var background_data = $("#backgrounddata").val()
             var patient_test = $("input[name='radiobutton']:checked").val();
             
@@ -734,6 +820,37 @@
             var weight_unit = $("#weight_unit").val()
             var height_unit = $("#height_unit").val()
 
+
+            var test_requested_type = $("input[name='testradio']:checked").val(); //type can be pathalogy or Gens
+    
+       
+            var test_req_id1 = $("#select_sample_path").val()
+            var test_req_id2 = $("#select_sample_gens").val()
+
+            var test_req_disc1 = $("#select_sample_path option:selected").text()
+            var test_req_disc2 = $("#select_sample_gens option:selected").text()
+
+            if (test_req_id1 != ''){
+             var test_req_id = test_req_id1
+             var test_req_disc = test_req_disc1
+            }
+
+            else if  (test_req_id2 != ''){
+             var test_req_id = test_req_id2
+             var test_req_disc = test_req_disc2
+            }
+
+            console.log(test_req_id)
+
+            console.log(test_req_disc)
+
+
+        
+
+         
+  
+          
+           // var test_sample_text = $("#select_sample option:selected").text()
 
             if( patient_test){
               test = patient_test
@@ -853,11 +970,13 @@
             }            
             
 
-            else if (test_requested ==''){
+            else if ((test_req_id1 =='')&&(test_req_id2 == '')){
                 $("#testrequested").css("border", "1px solid #f37777");
-                $("#testrequested").focus();
-                $("#testrequested_error").html("Enter Test Requested");
-            }
+                
+                $("#select_sample_path").focus();
+                $("#select_sample_gens").focus()
+                $("#testrequested_error").html("Select Test Requested");
+            } 
              else if (background_data ==''){
                 $("#backgrounddata").css("border", "1px solid #f37777");
                 $("#backgrounddata").focus();
@@ -893,12 +1012,14 @@
                   "Email":Email,
                   "other_way":other_way,
                   "contact_person":contact_person,
-                  "test_requested":test_requested,
+                  'test_req_id':test_req_id,
+                  "test_requested_type":test_requested_type,
+                  "test_req_disc":test_req_disc,
                   "background_data":background_data,
                   "patient_test":test,
                   "weight_unit":weight_unit,
                   "height_unit":height_unit
-
+                
 
                 }),
                 success : function (response){
@@ -934,9 +1055,87 @@
         
       $("#profile_setting").removeClass('active')
       $("#poste_test").addClass('active')
+      $("#select_gens_id").hide()
+
+      $("#show_hide_data").hide()
     })
 
 
+</script>
+
+<script>
+
+
+  
+
+  function show_pathalogy_field(){
+    
+    $("#select_gens_id").hide()
+    $("#select_pathlogy_id").show()
+    $("#show_hide_data").hide()
+    $("#select_sample_gens").val("")
+  
+  }
+
+
+  function show_gens_field(){
+
+    $("#select_gens_id").show()
+    $("#select_pathlogy_id").hide()
+    $("#show_hide_data").hide()
+    $("#select_sample_path").val("")
+  }
+
+
+  function show_data_selected_data(value){
+    console.log(value)
+    $("#show_hide_data").show()
+    $.ajax({
+      method:"POST",
+      url:"show_sample_test_data",
+      contentType:"application/json",
+      data:JSON.stringify({
+        "test_req_id":value
+      }),
+      success:function(response){
+        
+        if(response['status'] == '1'){
+          console.log(response)
+          $("#sample_type_id").text(response['obj_data'][0]['sample_type'])
+          $("#transport_id").text(response['obj_data'][0]['transport'])
+
+        //  $("#pathalogy_id").text(response['obj_data'][0]['pathalogy'])
+
+
+          var path_id = $("#select_sample_path").val()
+          var gens_id = $("#select_sample_gens").val()
+
+          if (path_id != ''){
+            $("#gens_id").text(response['obj_data'][0]['gens'])
+            $("#gens_id").show()
+            $("#path").hide()
+           // $("#select_sample_gens").val("")
+            $("#pathalogy_id").hide()
+             $("#gens").show()
+          }
+          
+
+          if (gens_id != ''){
+            $("#pathalogy_id").text(response['obj_data'][0]['pathalogy'])
+            $("#pathalogy_id").show()
+            $("#gens").hide()
+            //$("#select_sample_path").val("")
+            $("#gens_id").hide()
+            $("#path").show()
+          }
+
+        }
+        else if(response['status'] == '0'){
+          console.log('status 0')
+        }
+      }
+    }) 
+  } 
 </script>
     
    {% endblock %}

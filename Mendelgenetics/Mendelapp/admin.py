@@ -54,3 +54,9 @@ class UserBidsClass(admin.ModelAdmin):
 admin.site.register(UserBids, UserBidsClass)
 
 #
+
+
+class SampleTestMasterClass(admin.ModelAdmin):
+	list_display = ('id', 'group', 'pathalogy','gens', 'sample_type', 'transport')
+
+admin.site.register(SampleTestMaster, SampleTestMasterClass)

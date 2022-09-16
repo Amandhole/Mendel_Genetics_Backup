@@ -145,6 +145,13 @@
                                                 <div class="col-md-9">
                                                     <div class="rate-sec">
                                                         <!-- <p>Rate Offered</p> -->
+                                                        <h6 style="margin-top: 0px;font-size: 18px; ">@{{test.fk_user_test.fk_user.name}}</h6><br>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-9">
+                                                    <div class="rate-sec">
+                                                        <!-- <p>Rate Offered</p> -->
                                                         <h6 style="margin-top: 0px;font-size: 18px; ">{{test.fk_user_test.patient_test}}</h6>
                                                     </div>
                                                 </div>
@@ -186,7 +193,7 @@
                                               
 
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-3" style="margin-left:50px ;">
                                                     <div class="profile-sec" style="display: inline-flex;">
                                                         <!-- <img style="width:30px;" src="/static/website/{% static 'assets/images/profile-ico.png"> -->
 
@@ -202,7 +209,7 @@
                                                         </div>  {% endcomment %}
                                             
                                                         
-                                                        <div style="padding-top: 10px;">
+                                                        <div style="padding-top: 10px;margin-left: 50px;">
                                                             <span id=""></span>
                                                             <button type="button"  data-toggle="modal"  data-target="#edit_bid_test" onclick="edit_bid_test('{{test.id}}','{{test.bid_Price}}','{{test.expect_result_date|date:'m-d-Y'}}','{{test.checkbox}}')" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                                 <i class="flaticon-edit" ></i>
@@ -212,18 +219,19 @@
 
 
 
-                                                        <div style="padding-top: 10px; margin-left: 5px;">
-                                                            
+                                                        {% comment %} <div style="padding-top: 10px; margin-left: 5px;">    
                                                             <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
-                                                        </div>
+                                                        </div> {% endcomment %}
+
                                                     </div>
                                                 </div> 
                                                 
                                             </div>
                                         </div>
                                         {% endfor %}
+
                                     </div>    
                                 </div>
                       
@@ -231,7 +239,7 @@
                 
                             <div id="confirm_div" style="">
                                 <div class="tab-content" style="overflow-y: scroll; max-height: 580px;">
-                                    {% for test in Confirm_test_obj %}
+                                    {% for test in my_approved_bid %}
                                     <div class="tab-pane show active fade" id="current">
                                         <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
                                             background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
@@ -246,7 +254,14 @@
                                                 <div class="col-md-9">
                                                     <div class="rate-sec">
                                                         <!-- <p>Rate Offered</p> -->
-                                                        <h6 style="margin-top: 0px;font-size: 18px; ">{{test.patient_test}}</h6>
+                                                        <h6 style="margin-top: 0px;font-size: 18px; ">@{{test.fk_user_test.fk_user.name}}</h6><br>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-9">
+                                                    <div class="rate-sec">
+                                                        <!-- <p>Rate Offered</p> -->
+                                                        <h6 style="margin-top: 0px;font-size: 18px; ">{{test.fk_user_test.patient_test}}</h6>
                                                     </div>
                                                 </div>
 
@@ -256,15 +271,49 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">        
-                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested|slice:":180"}}...</h6> 
+                                                <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                    {% comment %} <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
+                                                    {% comment %} {{test.test_requested|length }} {% endcomment %}
+                                                    {%if test.fk_user_test.test_requested|length > 100 %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested|slice:":100"}}...</h6> 
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_user_test.test_requested}}</h6>
+                                                    {% endif %}    
+
                                                 </div><br>
 
+
+
                                                 <div class="col-md-8" style="margin-top: 15px;">
-                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'m-d-Y'}}</h6>
+                                                    <h6 style="font-size: 16px;">Bid Price</h6>
+                                                    <h6 style="font-size: 16px;">€ {{test.bid_Price}}</h6>
                                                 </div>
 
-                                                <div class="col-md-3" style="margin-left: 50px;">
+
+                                                <div class="col-md-8" style="margin-top: 15px;">
+                                                    <h6 style="font-size: 16px;">Expected Result Date</h6>
+                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.expect_result_date|date:'m-d-Y'}}</h6>
+                                                </div>
+
+                                                <div class="row">
+
+                                                
+                                                    <div class="col-md-8" style="margin-top: 13px;">
+                                                        <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'m-d-Y'}}</h6>
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+                                                        <span class="badge badge-primary float-right" style="margin-top:20px; margin-left:30px ; font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
+                                                            <i class="fas fa-thumbs-up"></i> Confirmed
+                                                        </span>
+                                                    </div>    
+                                                </div>
+
+                                                {% comment %} <div class="col-md-3" style="margin-left: 50px;">
                                                     <div class="profile-sec" style="display: inline-flex;">
                                                         <!-- <img style="width:30px;" src="/static/website/{% static 'assets/images/profile-ico.png"> -->
 
@@ -280,20 +329,21 @@
                                                 
                                                         <div style="padding-top: 10px;">
                                                     
-                                                            {% comment %} <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('31','da','sddfds','25','fasd','male','70.0','5.2','fds','09-02-2022','dsffa','aa@gmail.com','sdf','dfaaaaaaaaaaaaafdsfdsfdsfdsfsddsdsfdsfsdfsddsdsdsddsdsssdsd','fdsffdssffsdfsdf','EDTA Blood','KG','Ft')" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                             <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('31','da','sddfds','25','fasd','male','70.0','5.2','fds','09-02-2022','dsffa','aa@gmail.com','sdf','dfaaaaaaaaaaaaafdsfdsfdsfdsfsddsdsfdsfsdfsddsdsdsddsdsssdsd','fdsffdssffsdfsdf','EDTA Blood','KG','Ft')" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
 
                                                                 <i class="flaticon-edit"></i> 
-                                                            </button>    {% endcomment %}
+                                                            </button>   
                                                         </div>
 
                                                         <div style="padding-top: 10px;">
                                                                 
-                                                            {% comment %} <button type="button" onclick="delete_posted_test(id)" id="31" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                            <button type="button" onclick="delete_posted_test(id)" id="31" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                                 <i class="fa fa-trash"></i>
-                                                            </button> {% endcomment %}
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>  {% endcomment %}
+
                                             </div>
                                         </div>
                                         {% endfor %}
@@ -437,10 +487,10 @@
 
     function delete_posted_test(id){
         
-
+        alert(id)
         swal({
             icon:"warning",
-            text:"Are you sure to delete test?",
+            text:"Are you sure to delete bid?",
             buttons: ["No", "Yes"],
             dangerMode: true,
             closeOnClickOutside:false

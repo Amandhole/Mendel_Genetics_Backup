@@ -6,7 +6,7 @@ from django.urls import path
 from Mendelapp import views
 
 urlpatterns = [
-#     path('add_data', add_css_data_coutnry_state_city, name="add_data"),
+    path('add_data', add_css_data_coutnry_state_city, name="add_data"),
     path('', landing_page, name="landing_page"),
     path('user_signup', user_signup, name='user_signup'),
     path('login_page', user_login, name="login_page"),
@@ -49,7 +49,8 @@ urlpatterns = [
 
     path('Approve_users_bid_on_test', Approve_users_bid_on_test,name="Approve_users_bid_on_test"),
     path('Reject_bid_on_users_test', Reject_bid_on_users_test, name='Reject_bid_on_users_test'),
-    path('my_bids_on_other_users_test', my_bids_on_other_users_test,name="my_bids_on_other_users_test")
+    path('my_bids_on_other_users_test', my_bids_on_other_users_test,name="my_bids_on_other_users_test"),
+    path('show_sample_test_data', show_sample_test_data,name='show_sample_test_data')
    
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -569,26 +569,33 @@ def add_test_by_user(request):
             Email = data['Email']
             other_way = data['other_way']
             Contact_person_name = data['contact_person']
+            
+            test_req_id = data['test_req_id']
+            test_requested_type = data['test_requested_type']
+            test_requested = data['test_req_disc']
+            
 
-            test_requested = data['test_requested']
+           
+
             background_data = data['background_data']
             patient_test = data['patient_test']
             weight_unit = data['weight_unit']
             height_unit = data['height_unit']
             format_data = '%m-%d-%Y'
 
-            print(patient_test, 'dsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+            print(test_req_id, test_requested,
+                  'dsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
             converted_date = datetime.strptime(datepicker, format_data)
             # strfdate = converted_date.strftime("%Y-%m-%d %H:%M:%S")
 
             if UserMaster.objects.filter(id=user_id).exists():
                 user_obj = UserMaster.objects.get(id=user_id)
-                test_obj = UserTest(fk_user_id=user_id,  patient_first_name=first_name, patient_last_name=last_name,
+                test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,
                                     patient_age = patient_age, patient_race = patient_race, 
                                     patient_gender = gender, patient_weight = patient_weight,
                                     patient_height=patient_height, doctor_name=dr_name, date = converted_date,
                                     Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,
-                                    background_data=background_data, patient_test=patient_test, weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, status="Active", created_date_time=datetime.now())
+                                    background_data=background_data, patient_test=patient_test, weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name,test_requested_type = test_requested_type, status="Active", created_date_time=datetime.now())
 
                 test_obj.save()
 
@@ -598,15 +605,18 @@ def add_test_by_user(request):
         else:
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
-
+            sampletest = SampleTestMaster.objects.all()
             context = {
-                "user_obj": user_obj
+                "user_obj": user_obj,
+                'sampletest':sampletest,
             }
             return render(request, 'post-test.html', context)
     except:
         send_data = {'status': '0', 'msg': "Something Went Wrong",
                      'error': str(traceback.format_exc())}
+        print(traceback.format_exc())
         return redirect('landing_page')
+
     return JsonResponse(send_data)
 
 
@@ -847,18 +857,18 @@ fieldnames = ['id', 'sortname', 'name', 'phonecode']
 
 
 # this code for add csv data to database file
-# def add_css_data_coutnry_state_city(request):
-#     print(settings.BASE_DIR)
-#     with open(f'{settings.BASE_DIR}/city.csv', 'r') as f:
-#         csvreader = csv.reader(f)
-#         header = next(csvreader)
-#         for row in csvreader:
-#             CityMaster.objects.create(
-#                 id=row[0], name=row[1], state_id=row[2])
-#             print('done')
-#             # return HttpResponse('data added succesfully')
-#             print('data added succesfully')
-#         return HttpResponse('data added succesfully')    
+def add_css_data_coutnry_state_city(request):
+    print(settings.BASE_DIR)
+    with open(f'{settings.BASE_DIR}/sample.csv', 'r') as f:
+        csvreader = csv.reader(f)
+        header = next(csvreader)
+        for row in csvreader:
+            SampleTestMaster.objects.create(
+                group=row[0], pathalogy=row[1], gens=row[2],sample_type=row[3],transport=[4])
+            print('done')
+            # return HttpResponse('data added succesfully')
+            print('data added succesfully')
+        return HttpResponse('data added succesfully')    
 
 
 
@@ -1028,8 +1038,10 @@ def Reject_bid_on_users_test(request):
     return JsonResponse(send_data)
 
 
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def my_bids_on_other_users_test(request):
-    if 1 == 1:
+    try:
         session_id = request.session.get('user_id')
         if session_id:
             if UserMaster.objects.filter(id=session_id).exists():
@@ -1040,10 +1052,7 @@ def my_bids_on_other_users_test(request):
 
                 my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
 
-                # for i in my_active_bid:
-                #     print(i)
-                # print('my approved bid',my_approved_bid)
-                # print('my active bid',my_active_bid)
+                print('my approved bid',my_approved_bid)
                 context = {            
                     "user_obj": user_obj,
                     'my_active_bid':my_active_bid,
@@ -1053,7 +1062,30 @@ def my_bids_on_other_users_test(request):
                 return render(request,'my-bids.html',context)                
         else:            
             return redirect('landing_page')                        
-    else:
+    except:
         print(traceback.format_exc())
         return redirect('landing_page')
+
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)        
+def show_sample_test_data(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode('utf-8'))
+            test_req_id = data['test_req_id']
+            sample_test_obj = SampleTestMaster.objects.filter(id = test_req_id)
+            print('helllllllllll',sample_test_obj)
+            for i in sample_test_obj:
+
+                print(i)
+
+            send_data = {"msg":"Data recicved succesfully","status":"1","obj_data":list(sample_test_obj.values())}
         
+        else:
+            send_data = {"msg":"Request is not post","status":"0"}   
+    except:
+        send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
+        print(traceback.format_exc())
+    return JsonResponse(send_data)

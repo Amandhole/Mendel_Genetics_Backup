@@ -4,6 +4,13 @@ from django.db import models
 from django.db.models.fields import CharField, DateField,  TextField
 
 
+class SampleTestMaster(models.Model):
+    group = models.CharField(max_length=150, null=True)
+    pathalogy = models.CharField(max_length=150, null=True)
+    gens = models.CharField(max_length=150, null=True)
+    sample_type = models.CharField(max_length=150, null=True)
+    transport = models.CharField(max_length=150, null=True)
+
 class CountryMaster(models.Model):
     sortname = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
@@ -54,11 +61,13 @@ class UserMaster(models.Model):
 
     auc_bid_status = models.BooleanField(default=False)
 
+
     def __str__(self):
         return self.name
 
 
 class UserTest(models.Model):
+    fk_sample_master = models.ForeignKey(SampleTestMaster, on_delete=models.CASCADE, null=True, blank=True)
     fk_user = models.ForeignKey( UserMaster, on_delete=models.CASCADE, null=True, blank=True)
     patient_first_name = models.CharField( max_length=200, blank=True, null=True, default='')
     patient_last_name = models.CharField( max_length=600, blank=True, null=True ,default='')
@@ -76,7 +85,12 @@ class UserTest(models.Model):
     Centre = models.CharField(null=True, max_length=500, blank=True)
     Email = models.CharField(null=True, max_length=100, blank=True)
     other_way = models.CharField(null=True, max_length=500, blank=True)
+    
+    
+    test_requested_type = models.CharField(null=True, max_length=3000, blank=True)
     test_requested = models.CharField(null=True, max_length=3000, blank=True)
+
+
     background_data = models.CharField(null=True, max_length=3000, blank=True)
     status = models.CharField(null=True, max_length=15, default ="Active") # Active Confirm Deactive
 
@@ -101,3 +115,8 @@ class UserBids(models.Model):
 
     # def __str__(self):
     #     return self.fk_user_master
+
+
+
+
+

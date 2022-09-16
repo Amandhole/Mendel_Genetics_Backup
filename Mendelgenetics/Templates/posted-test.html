@@ -159,15 +159,44 @@
 
                                                     {% comment %} <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
                                                     {% comment %} {{test.test_requested|length }} {% endcomment %}
-                                                    {%if test.test_requested|length > 100 %}
+                                                    {%if test.fk_sample_master.pathalogy|length > 100 %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":100"}}...</h6> 
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy}}</h6>
+                                                    {% endif %}    
+
+                                                </div><br>
+
+                                                {% comment %} <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                    <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
+                                                    {% comment %} {{test.test_requested|length }} {% endcomment %}
+                                                    {% comment %} {%if test.fk_sample_master.gens|length > 100 %}
                                                         
                                                         <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested|slice:":100"}}...</h6> 
                                                     {% else %}    
                                                     
                                                         <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested}}</h6>
-                                                    {% endif %}    
+                                                    {% endif %}     
 
-                                                </div><br>
+                                                </div><br> {% endcomment %}
+
+
+                                                {% comment %} <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                    <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
+                                                    {% comment %} {{test.test_requested|length }} {% endcomment %}
+                                                    {% comment %} {%if test.fk_sample_master.transport|length > 100 %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.transport|slice:":100"}}...</h6> 
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.transport}}</h6>
+                                                    {% endif %} 
+
+                                                </div><br> {% endcomment %}
 
                                                 <div class="col-md-8" style="margin-top: 15px;">
                                                     <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'m-d-Y'}}</h6>
@@ -212,7 +241,10 @@
                       
                             </div>    
                 
-                            <div id="confirm_div" style="">
+                            
+                        </div>    
+
+                        <div id="confirm_div" style="">
                                 <div class="tab-content" style="overflow-y: scroll; max-height: 580px;">
                                     {% for test in Confirm_test_obj %}
                                     <div class="tab-pane show active fade" id="current">
@@ -240,7 +272,7 @@
                                                 </div>
 
                                                 <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">        
-                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested|slice:":180"}}...</h6> 
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":180"}}...</h6> 
                                                 </div><br>
 
                                                 <div class="col-md-8" style="margin-top: 15px;">
@@ -284,7 +316,6 @@
                                     </div>    
                                 </div>
                             </div>
-                        </div>    
         </div>    
     </section>
     <!--============= Dashboard Section Ends Here =============-->
@@ -1009,6 +1040,7 @@ function  get_test_id_to_see_all_bids(id){
 
     })
 }
+
 
 </script>
 {% endblock %}
