@@ -859,7 +859,7 @@ fieldnames = ['id', 'sortname', 'name', 'phonecode']
 # this code for add csv data to database file
 def add_css_data_coutnry_state_city(request):
     print(settings.BASE_DIR)
-    with open(f'{settings.BASE_DIR}\sample_test_master.csv', 'r', encoding="utf8") as f:
+    with open(f'{settings.BASE_DIR}/sample_test_master.csv', 'r', encoding="utf8") as f:
         csvreader = csv.reader(f)
         header = next(csvreader)
         for row in csvreader:
