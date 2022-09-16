@@ -129,7 +129,7 @@ def user_login(request):
                             "status": "2", "msg": "Corporate Login succesfull", "obj": obj.id}
 
 
-                        print('in login function 1111111111111111111111111111111111111111111111111111')   
+                        print('in login function ')   
                         return JsonResponse(send_data)
                     else:
                         send_data = {"status": "0",
