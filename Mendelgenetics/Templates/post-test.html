@@ -149,6 +149,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
 
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 CSS --> 
+
+
+
+
 <body>
    <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
     <!--============= ScrollToTop Section Starts Here =============-->
@@ -658,8 +666,10 @@
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
       function showTextBox(text_id, check_id)
       {
@@ -1136,6 +1146,12 @@
       }
     }) 
   } 
+
+  $("#select_sample_path").select2();
+  $("#select_sample_gens").select2();  
+
+  $(".select2-selection").css("padding","10px 0px 35px 20px")
+ 
 </script>
     
    {% endblock %}

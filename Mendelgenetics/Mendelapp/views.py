@@ -634,6 +634,7 @@ def test_added_by_user_list(request):
 
                 # test_obj = UserTest.objects.filter(fk_user_id=session_id, date__gte = today).order_by('-id') # for active test
                 test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Active").order_by('-id')
+                print(test_obj.query)
                 for i in test_obj:
                     i.bid_count = UserBids.objects.filter(fk_user_test_id = i.id).count()
               
@@ -957,7 +958,9 @@ def view_all_bids_on_my_test(request):
                         # print('test obj is------------', test_obj.patient_test)
                         # bid_obj = UserBids.objects.filter(fk_user_test_id = test_id)
                         
-                        bid_obj = UserBids.objects.filter(fk_user_test_id = test_id,bid_status="Pending")
+                        bid_obj = UserBids.objects.filter(fk_user_test_id = test_id,bid_status="Cancelled")
+
+                        # print('vvvvvvvv',bid_obj)
 
                         approved_bid_obj = UserBids.objects.get(fk_user_test_id=test_id, bid_status="Approved") if UserBids.objects.filter(fk_user_test_id=test_id, bid_status="Approved").exists() else None
                         # print('tttttttt', approved_bid_obj)
@@ -1003,6 +1006,11 @@ def Approve_users_bid_on_test(request):
                 bid_obj = UserBids.objects.get(id = bid_id)
                 bid_obj.bid_status = "Approved"
                 bid_obj.save()
+
+                canclld_bid_obj = UserBids.objects.filter(fk_user_test__id=test_id).exclude(id = bid_id).update(bid_status = "Cancelled")
+
+                print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',canclld_bid_obj)
+                
 
                 send_data = {"msg":"Bid approved successfully","status":"1" }
             
@@ -1050,11 +1058,14 @@ def my_bids_on_other_users_test(request):
 
                 my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
 
+                my_cancelled_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Cancelled')
+
                 print('my approved bid',my_approved_bid)
                 context = {            
                     "user_obj": user_obj,
                     'my_active_bid':my_active_bid,
-                    'my_approved_bid': my_approved_bid
+                    'my_approved_bid': my_approved_bid,
+                    "my_cancelled_bid": my_cancelled_bid
                     
                     }
                 return render(request,'my-bids.html',context)                
