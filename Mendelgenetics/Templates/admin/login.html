@@ -1,0 +1,234 @@
+
+    <!--============= Header Section Ends Here =============-->
+
+    <!--============= Cart Section Starts Here =============-->
+    {% extends "base.html" %}
+    {% load static %}
+    {%  block content %}
+
+    
+
+  <style>
+        .form-group {
+    margin-bottom: 0rem;
+}
+    </style>
+  
+    
+    <!--============= Cart Section Ends Here =============-->
+   
+
+
+    <!--============= Hero Section Starts Here =============-->
+    <div class="hero-section">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <a href="#0">Pages</a>
+                </li>
+                <li>
+                    <span>Sign In</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+    <!--============= Hero Section Ends Here =============-->
+    
+
+    <!--============= Account Section Starts Here =============-->
+    <section class="account-section padding-bottom">
+        <div class="container">
+            <div class="account-wrapper mt--100 mt-lg--440">
+                <div class="left-side">
+                    <div class="section-header" style="margin-bottom: 15px;">
+                        <h2 class="title">HI, THERE</h2>
+                        <p>You can log in to your account here.</p>
+                    </div>
+                    
+                    {% comment %} <div class="row" style="justify-content: center;">
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" type="radio" value="Corporate" name="radiobutton" id="corporate" checked="Checked" style="width:26px;">
+                                <label class="form-check-label" for="flexRadioDefault1">Corporate</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" type="radio" value="Individual" name="radiobutton" id="indivisual" style="width:26px;" >
+                                <label class="form-check-label" for="flexRadioDefault1"> Individual</label>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+
+                    <div class="login-form">
+                        <span id="username_error" style="color: red; margin-left: 110px;"></span>
+                        <div class="form-group mb-30">
+                            <label for="login-email"><i class="far fa-envelope" style="margin-left: 100px;"></i></label>
+                            <input type="text" id="username"  placeholder="Username" style="width: 450px;">
+                            
+                        </div>
+                        <span id="password_error" style="color: red; margin-left: 110px;"></span>
+                        <div class="form-group">
+                            <label for="login-pass"><i class="fas fa-lock" style="margin-left: 100px;"></i></label>
+                            <input type="password"  id="password" placeholder="Password" style="width: 450px;">
+                            <span class="pass-type"><i class="fas fa-eye" id='toggleconPassword' style="margin-right: 100px;"></i></span>
+                          
+                        </div>
+                        {% comment %} <div>
+                            
+                            {% comment %} <img src="{% static 'assets/images/loader/loader.gif' %}" alt="loader"> 
+                        </div> {% endcomment %}
+
+                        <div id="cover-spin"></div>
+
+
+                        <div class="form-group" style="margin-top: 1rem !important ; margin-bottom: 1rem;">
+                            <a href="{% url 'forget_password' %}">Forgot Password?</a>
+                        </div>
+                        <div class="form-group mb-0" style="margin-bottom: 1rem;">
+                            <button type="button" onclick="admin_login_button()" class="custom-button">LOG IN</button>
+                        </div>
+                    </div>
+
+                     {% comment %}  <div class="or" style="margin-top: 30px;">
+                        <span>Or</span>
+                    </div>
+
+                    <ul class="login-with"> 
+                        <li>
+                            <a href="#0"><i class="fab fa-facebook"></i>Log in with Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#0"><i class="fab fa-google-plus"></i>Log in with Google</a>
+                        </li>
+                    </ul>{% endcomment %}
+                    
+                </div>
+                <div class="right-side cl-white">
+                    <div class="section-header mb-0">
+                        <h3 class="title mt-0">NEW HERE?</h3>
+                        <p>Sign up and create your account</p>
+                        <a href="{% url 'user_signup' %}" class="custom-button transparent">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+
+<script>
+
+    $("#cover-spin").hide()
+
+       $("#toggleconPassword").click(function(){
+        if( $('#password').attr('type') == "password"){   
+            $("#password").attr('type', 'text')
+            $("#toggleconPassword").attr('class' , 'fas fa-eye-slash')
+            }
+        else{
+            $("#password").attr('type', 'password')
+            $("#toggleconPassword").attr('class' , 'fas fa-eye')
+        }
+      })
+  
+
+        $("#username").keyup(function(){
+            $("#username").css("border", "1px solid #eee");
+            $("#username_error").html("");
+        })
+
+
+      $("#password").keyup(function(){
+            $("#password").css('border','1px solid #eee');
+            $('#password_error').html('')
+      })
+    
+      
+
+
+        function admin_login_button(){
+            
+            
+            var username = $('#username').val()
+         
+            var password = $('#password').val()
+
+            /*
+            var user_type = $("input[name='radiobutton']:checked").val();
+            
+            var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i */
+
+            if (username == ''){
+
+                 
+              $("#username").css('border','1px solid #f37777');
+              $("#username").focus();
+              $("#username_error").html('Enter Email Address ');
+              
+            }
+
+           /* else if (!emailfilter.test(email_id)){
+             
+              $("#email_id").css('border','1px solid #f37777');
+              $("#email_id").focus();
+              $("#email_error").html('Enter Valid Email Address ');
+
+            } */
+
+            else if(password == ''){
+                /*   swal({
+                    text:"Enter Password",
+                    closeOnClickOutside:false
+                }) */
+                $("#password").css('border','1px solid #f37777');  
+                $("#password").focus();
+                $("#password_error").html('Enter Password ');
+            }
+
+            else{
+                $("#cover-spin").hide()
+                $.ajax({
+                    method:"POST",
+                    url:"{% url 'admin_user_login' %}",
+                    contentType:"application/json",
+                    data: JSON.stringify({
+                        "username":username,
+                        "password":password,
+                    }),
+                    success: function(response){
+                        if (response['status'] == "1"){
+                          console.log(response)  
+                          $("#cover-spin").hide()
+
+                          location.href = "{% url 'admin_dashboard' %}"
+                          
+                        }
+                       
+                        else if (response ['status'] == "0" ){
+                            $("#cover-spin").hide()
+                            swal({
+                                icon: "error",
+                                text:"Invalid Credential",
+                                closeOnClickOutside:false
+                            })
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+
+
+     {% endblock %}
+    <!--============= Account Section Ends Here =============-->
+
+
+    <!--============= Footer Section Starts Here =============-->
+    

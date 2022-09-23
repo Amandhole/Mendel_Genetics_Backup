@@ -699,7 +699,6 @@
         else{
             $.ajax({
                 method:"POST",
-                url:"{% url 'User_bids_on_other_users_test' %}",
                 contentType:"application/JSON",
                 data:JSON.stringify({
                     "user_id":user_id,

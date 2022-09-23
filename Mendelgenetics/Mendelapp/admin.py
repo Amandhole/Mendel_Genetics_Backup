@@ -21,8 +21,7 @@ admin.site.register(UserMaster, UserMasterClass)
 
 class UserTestClass(admin.ModelAdmin):
 	list_display = ('id', 'Contact_person_name',  'patient_test',
-	                'test_requested', 'doctor_name', 'date')
-
+	                'test_requested', 'doctor_name', 'status', 'rejected_reason' ,'date')
 
 admin.site.register(UserTest, UserTestClass)
 
@@ -57,6 +56,20 @@ admin.site.register(UserBids, UserBidsClass)
 
 
 class SampleTestMasterClass(admin.ModelAdmin):
-	list_display = ('id', 'group', 'pathalogy','gens', 'sample_type', 'transport')
+	list_display = ('id', 'group', 'plazo', 'pathalogy',
+	                'gens', 'group', 'sample_type', 'transport')
 
 admin.site.register(SampleTestMaster, SampleTestMasterClass)
+
+
+class AdminUserClass(admin.ModelAdmin):
+	list_display = ('id', 'name', 'username', 'password')
+	
+admin.site.register(AdminUser, AdminUserClass)
+
+
+class TestLotsClass(admin.ModelAdmin):
+	list_display = ('id', 'test_lot_id', 'tests_in_lot','test_group',
+	                'test_pathalogy', 'test_gen','test_quantity', 'lot_status')
+
+admin.site.register(TestLots, TestLotsClass)
