@@ -571,10 +571,10 @@ def add_test_by_user(request):
             test_requested_type = data['test_requested_type']
             test_requested = data['test_req_disc']
             background_data = data['background_data']
-            patient_test = data['patient_test']
+            # patient_test = data['patient_test']
             weight_unit = data['weight_unit']
             height_unit = data['height_unit']
-            format_data = '%m-%d-%Y'
+            format_data = '%d-%m-%Y'
             print(test_req_id, test_requested)
             converted_date = datetime.strptime(datepicker, format_data)
             # strfdate = converted_date.strftime("%Y-%m-%d %H:%M:%S")
@@ -602,7 +602,7 @@ def add_test_by_user(request):
                                     patient_gender = gender, patient_weight = patient_weight,
                                     patient_height=patient_height, doctor_name=dr_name, date = converted_date,
                                     Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,
-                                    background_data=background_data, patient_test=patient_test, weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=datetime.now(),
+                                    background_data=background_data,  weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=datetime.now(),
                                     auction_test_id=auction_test_id)
              
                 test_obj.save()
@@ -649,6 +649,7 @@ def test_added_by_user_list(request):
                 print('cancel test object', cancelled_test_obj)
 
                 test_active_obj = TestLots.objects.filter(lot_status="Published").order_by('-id')
+                print('fffffffffffffffffffffffffffffffffffffffff',test_active_obj)
                
                 
                 for test in test_active_obj:
@@ -657,7 +658,7 @@ def test_added_by_user_list(request):
 
                 print(test_active_obj.query)
                 for i in test_active_obj:
-                    i.bid_count = UserBids.objects.filter(fk_user_test_id = i.id).count()
+                    i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).count()
               
                 
                 Confirm_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Confirm").order_by('-id')
@@ -733,7 +734,7 @@ def posted_test_edit_by_user(request):
             email = data['email']
             otherway = data['otherway']
             contact_pereson = data['contact_pereson']
-            patient_test = data['patienttest']
+            # patient_test = data['patienttest']
 
             testrequested = data['testrequested']
             backgrounddata = data['backgrounddata']
@@ -744,7 +745,7 @@ def posted_test_edit_by_user(request):
             if UserTest.objects.filter(id=test_id).exists():
                 test_obj = UserTest.objects.get(id=test_id)
 
-                converted_date = datetime.strptime(datepicker, "%m-%d-%Y")
+                converted_date = datetime.strptime(datepicker, "%d-%m-%Y")
 
                 test_obj.patient_first_name = firstname
                 test_obj.patient_last_name = lastname
@@ -759,7 +760,7 @@ def posted_test_edit_by_user(request):
                 test_obj.Centre = centre
                 test_obj.Email = email
                 test_obj.other_way = otherway
-                test_obj.patient_test = patient_test
+                # test_obj.patient_test = patient_test
                 test_obj.test_requested = testrequested
                 test_obj.background_data = backgrounddata
                 test_obj.weight_unit = weight_unit
@@ -822,12 +823,16 @@ def All_test_list_exclude_current_user(request):
             today = datetime.today()
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
-                tets_obj = UserTest.objects.filter(Q(status="Active") & Q(admin_action_status ="Published")).exclude(fk_user_id=session_id)
+                # tets_obj = UserTest.objects.filter(Q(status="Active") & Q(admin_action_status ="Published")).exclude(fk_user_id=session_id)
 
-                # bid_obj = UserBids.objects.filter(fk_user_master__id = session_id)
 
+                tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id)
                 for test in tets_obj:
-                    bids = UserBids.objects.filter(fk_user_test=test)
+                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
+                    
+                print(tets_obj)
+                for test in tets_obj:
+                    bids = UserBids.objects.filter(fk_test_lot=test)
                     for bid in bids:
                         test.my_bid = True if bid.fk_user_master == user_obj else False
                         test.my_bid_obj = bid
@@ -905,15 +910,15 @@ def User_bids_on_other_users_test(request):
             data = json.loads(request.body.decode('utf-8'))
 
             user_id = data['user_id']
-            test_id = data['test_id']
+            lot_id = data['lot_id']
             bidprice = data['bidprice']
             expect_result_date = data['expect_result']
             checkbox = data['checkbox']
 
             converted_date = datetime.strptime(expect_result_date, "%m-%d-%Y")
-            print(user_id, test_id, bidprice, expect_result_date, checkbox)
+            print(user_id, lot_id, bidprice, expect_result_date, checkbox)
 
-            user_bid = UserBids(fk_user_master_id=user_id, fk_user_test_id=test_id,
+            user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id,
                                 bid_Price=bidprice, expect_result_date=converted_date, checkbox=checkbox,bid_status = "Pending")
 
             user_bid.save()
@@ -962,40 +967,46 @@ def User_edit_bids_on_other_users_test(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_all_bids_on_my_test(request):
+
     try :
+        print('in try')
         session_id = request.session.get('user_id')
 
         if session_id:
-            print('-----------------------------------------------------------')
+        
             if request.method == "POST":
                 data = json.loads(request.body.decode('utf-8'))
-                test_id = data['test_id']
+                lot_id = data['test_id']
                 
-                print('==================',test_id)
 
 
                 if UserMaster.objects.filter(id=session_id).exists():
                     user_obj = UserMaster.objects.get(id=session_id)
-                    if UserTest.objects.filter(id=test_id):
-                        test_obj = UserTest.objects.get(id=test_id)
-                        # print('test obj is------------', test_obj.patient_test)
-                        # bid_obj = UserBids.objects.filter(fk_user_test_id = test_id)
+                    if TestLots.objects.filter(id=lot_id):
+                        test_lot_obj = TestLots.objects.filter(id=lot_id)
+
+                        for test in test_lot_obj:
+                            test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
+
+                    
                         
-                        bid_obj = UserBids.objects.filter(fk_user_test_id = test_id,bid_status="Pending")
+                        print('qqqqqqqqqqqqq', test_lot_obj)
+                        bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending")
 
-                        # print('vvvvvvvv',bid_obj)
+                        print('ffffffffffffffffffffffff',bid_obj)
 
-                        approved_bid_obj = UserBids.objects.get(fk_user_test_id=test_id, bid_status="Approved") if UserBids.objects.filter(fk_user_test_id=test_id, bid_status="Approved").exists() else None
+                        approved_bid_obj = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Approved") if UserBids.objects.filter(
+                            fk_test_lot_id=lot_id, bid_status="Approved").exists() else None
                         # print('tttttttt', approved_bid_obj)
                         
                                     
                     
                         bidcount = bid_obj.count()
-                        print('aaaaaaaaaaaaaaaaaaaaa',bidcount)
+                    
 
                     context = {
                         "user_obj": user_obj,
-                        "test_obj": test_obj,
+                        "test_lot_obj": test_lot_obj,
                         "bid_obj": bid_obj,
                         "approved_bid": approved_bid_obj
                     }
@@ -1017,21 +1028,21 @@ def Approve_users_bid_on_test(request):
     try:
         if request.method =="POST":
             data = json.loads(request.body.decode('utf-8'))
-            test_id = data['test_id']
+            lot_id = data['lot_id']
             bid_id = data['bid_id']
-            if UserTest.objects.filter(id=test_id):
-                test_obj = UserTest.objects.get(id = test_id)
+            if TestLots.objects.filter(id=lot_id):
+                test_obj = TestLots.objects.get(id=lot_id)
                 print(test_obj.id)
-                test_obj.status = "Confirm"
+                test_obj.lot_status = "Approved"
                 test_obj.save()
 
                 bid_obj = UserBids.objects.get(id = bid_id)
                 bid_obj.bid_status = "Approved"
                 bid_obj.save()
 
-                canclld_bid_obj = UserBids.objects.filter(fk_user_test__id=test_id).exclude(id = bid_id).update(bid_status = "Cancelled")
+                UserBids.objects.filter(fk_test_lot__id=lot_id).exclude(id=bid_id).update(bid_status="Cancelled")
 
-                print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',canclld_bid_obj)
+                # print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',canclld_bid_obj)
                 
 
                 send_data = {"msg":"Bid approved successfully","status":"1" }
@@ -1052,9 +1063,7 @@ def Reject_bid_on_users_test(request):
             data = json.loads(request.body.decode('utf-8'))
             bid_id = data['bid_id']
             if UserBids.objects.filter(id=bid_id):
-                bid_obj = UserBids.objects.get(id=bid_id)
-                print(bid_obj.id)
-                bid_obj.delete()
+                UserBids.objects.filter(id=bid_id).update(bid_status="Cancelled")
                 send_data = {"msg": "Bid Rejected successfully", "status": "1"}
 
         else:
@@ -1077,6 +1086,10 @@ def my_bids_on_other_users_test(request):
 
                 print('my session id is',session_id)
                 my_active_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Pending')
+                
+                for test in my_active_bid:
+                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+
 
                 my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
 

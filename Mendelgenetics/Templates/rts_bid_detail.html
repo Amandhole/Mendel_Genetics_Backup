@@ -6,7 +6,7 @@
                         
                             <div class="tab-content" style="overflow-y: scroll; max-height:580px;">
                                 <div class="tab-pane show active fade" id="current">
-                                    <div class="ex chagene-box" style="height: 180px; margin-bottom: 20px;
+                                    <div class="ex chagene-box" style="max-height: 410px; margin-bottom: 20px;
                                         background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
                                         background: #8e67aa 0% 0% no-repeat padding-box;
                                         border-radius: 8px;
@@ -15,68 +15,107 @@
                                         padding: 30px; border: 1px solid #80808052;
                                         margin-top: 0px; padding-top: 15px;">
                                         <div class="row">
-
-                                            <div class="col-md-9">
-
-                                                <div class="rate-sec" style="margin-bottom:20px;">
-                                                    <!-- <p>Rate Offered</p> -->
-                                                    {% comment %} <span><img style="width:25px; position: absolute;" src="/static/assets/images/dashboard/user.png" alt="user"></span> {% endcomment %}
-                                                    <h6 style="margin-top: 0px; margin-top: 0px;font-size: 14px;color: #fff;margin-left: 34px; display: none;"> User Name</h6>
+                                           {% for test in test_lot_obj %} 
+                                           <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;">
+                                                    <span style="font-weight: 600;margin-left: -14px;color: white;"> Lot Id</span>
 
                                                 </div>
-                                          
-                                                <div class="rate-sec">
-                                                    <!-- <p>Rate Offered</p> -->
-                                                    <h6 style="margin-top: 0px;font-size: 18px;color: #fff; "> {{test_obj.patient_test}}</h6>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                    {%if test.test_lot_id %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.test_lot_id }}</h6> 
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                    {% endif %}    
                                                 </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="trans-sec">
-                                                    <span class="bid-amount" style="float:right; color: #37406f; font-weight:600; font-size: 20px; color: #fff; display: none;">$230</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12" style="margin-top: 18px; color: #fff; margin-bottom: 5px;">
-
-                                                {%if test_obj.test_requested|length > 100 %}
                                                 
-                                                    <h6 style="font-size: 15px; color: #fff; font-weight:400;">{{test_obj.test_requested|slice:":100" }}</h6>
-                                                {% else %}
-                                                
-                                                    <h6 style="font-size: 15px; color: #fff; font-weight:400;">{{test_obj.test_requested }}</h6>                                                    
-                                                 {% endif %}
-
-                                                </div><br>  
-                                            <div class="col-md-8" style="margin-top: 15px;">
-                                                <h6 style="font-size: 15px; font-weight: 400; color: #fff;">{{test_obj.date|date:'m-d-Y'}}</h6>
                                             </div>
+                                            
+                                            
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;">
+                                                    <span style="font-weight: 600;margin-left: -14px;color: white;">Pathalogy</span>
 
-                                            <div class="col-md-3">
-                                                <div class="profile-sec" style="display: inline-flex;">
-                                                    <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;color: white;">
+  
+                                                    {%if test.temp_string %}
+                                           
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.temp_string}}</h6>
+                                                     
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                    {% endif %}    
+                                                </div>
+                                                
+                                            </div> 
 
-                                                    <div style="padding-top: 10px; margin-left: 120px;">
+
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                    <span style="font-weight: 600;color: white;">Gen </span>
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                  
+                                                    {%if test.test_gen%}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.test_gen}}</h6> 
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                    {% endif %}    
+                                                </div>
+                                            </div> 
+
+
+
+                                            
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                    <span style="font-weight: 600;color: white;">Quantity</span>
+
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                   {%if test.test_quantity %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.test_quantity}}</h6> 
+                                                    {% else %}    
+                                                    
+                                                            <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                    {% endif %}    
+                            
+                                                  
+                                                </div>
+                                            </div> 
+
+                                               
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                    <span style="font-weight: 600;color: white;">Date  </span>
+                                                </div>
+
+                                                <div class="col-md-4" style="margin-top: 15px;">
+                                                    <h6 style="font-size: 15px; font-weight: 400;color: white; ">{{ test.created_date_time|date:'m-d-Y'}}</h6>
+                                                </div> 
+
+                                                <div class="col-md-2" style="padding-top: 10px; margin-left: 120px;">
                                                         <button type="button" onclick="reload_page_on_back()" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 0px; margin-right: 0px;">
                                                             <i class="fa fa-long-arrow-alt-left"></i>
                                                         </button>
-                                                    </div>
-                                                {% comment %}                                   
-                                                    <div style="padding-top: 10px;">
-                                                        <button type="button" onclick="get_exchange_btn(value)" value="58" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-                                                            <i class="flaticon-edit" data-toggle="modal" data-target="#exampleModal"></i> 
-                                                        </button>
-                                                    </div>
-                                                    <div style="padding-top: 10px;">
-                                            
-                                                        <button type="button" onclick="delete_posted_test({{test_obj.id}})" value="58" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-        
-                                                        
-                                                    </div> {% endcomment %}
                                                 </div>
+                    
                                             </div>
+                                            {% endfor %}
+
+
+
+
+                                  
 
                                         </div>
                                     </div>
@@ -169,16 +208,18 @@
                                             <h6 style="font-size: 15px; font-weight: 400; ">{{bid_obj.expect_result_date|date:'m-d-Y'}}</h6>
                                         </div>
 
-                                        {% if test_obj.status == "Active" %}
+                                        
                                         <div class="col-md-2" style="margin-top: 20px;">
                                             <div class="profile-sec" style="display: inline-flex;">
                                                 <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
 
                         
                                                 <div style="padding-top: 10px;">
-                                                    <button type="button" onclick="approve_user_bid('{{test_obj.id}}','{{bid_obj.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-                                                        <i class="fas fa-thumbs-up"></i>
-                                                    </button>
+                                                    {% for test in test_lot_obj %}
+                                                        <button type="button" onclick="approve_user_bid('{{test.id}}','{{bid_obj.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                            <i class="fas fa-thumbs-up"></i>
+                                                        </button>
+                                                    {% endfor %}
                                                 </div>
 
                                                 <div style="padding-top: 10px;">
@@ -188,7 +229,7 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                        {% endif %}
+                                
 
                                         
                                     </div>
@@ -214,8 +255,12 @@
 
 
 function approve_user_bid(id,bid_id){
-        console.log(id)
-        console.log(bid_id)
+    
+        var lot_id = id
+        var bid_id = bid_id
+
+        console.log(lot_id,bid_id)
+        
 
         swal({
             icon:"warning",
@@ -232,7 +277,7 @@ function approve_user_bid(id,bid_id){
             url : "{% url 'Approve_users_bid_on_test' %}",
             contentType : "application/json",
             data : JSON.stringify({
-                   "test_id":id,
+                   "lot_id":lot_id,
                    'bid_id':bid_id
             }),
             success : function(response){

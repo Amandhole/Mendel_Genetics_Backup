@@ -277,7 +277,7 @@
 
                             <div class="form-group  col-md-6">
                                <label for="datepicker"><i class="fa fa-calendar" style="margin-left: 315px;"></i></label>
-                              <input type="text" id="datepicker" placeholder="MM-DD-YY" style="padding-left: 20px;">
+                              <input type="text" id="datepicker" placeholder="DD-MM-YY" style="padding-left: 20px;">
                               
                               <span id="datepicker_error" style="color: red;margin-left: 15PX;"></span>
                             </div>
@@ -424,12 +424,12 @@
                           </div>  
 
 
-                          <div style="margin-top: 25px;">
-                          <h6>Sample type</h6>
-                            <hr>
-                          </div>
+                          {% comment %} <div style="margin-top: 25px;">
+                            <h6>Sample type</h6>
+                              <hr>
+                          </div> {% endcomment %}
 
-                        <div class="form-group">
+                        {% comment %} <div class="form-group">
                     
                           
                           <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 35px;">
@@ -441,21 +441,21 @@
 	                            <div class="col-md-2">
                                   <label for="#checkbox2" style="margin-top: -4px;"><input type="radio" id="checkbox2" placeholder=""  name="radiobutton" value="Swab" style="width: 15px; height: 15px;">&emsp;Swab</label>
                               </div>
-                               <div class="col-md-2">
+                              <div class="col-md-2">
                                   <label for="#checkbox3" style="margin-top: -4px;"><input type="radio" id="checkbox3" placeholder=""  name="radiobutton" value="Paraffin" style="width: 15px; height: 15px;">&emsp;Paraffin</label>
                               </div>
-                               <div class="col-md-2">
+                              <div class="col-md-2">
                                   <label onclick="showTextBox('id_text_box_show', 'checkbox4')" for="#checkbox4" style="margin-top: -4px;"><input type="radio" name="radiobutton"  value="" id="checkbox4" placeholder="" style="width: 15px; height: 15px;">&emsp;Other</label>
                               </div>                       
                               <div class="col-md-3" style="margin-top: 0px;">
                                   <input style="display: none;" type="text" id="id_text_box_show" name="text_field" placeholder="" style="padding-left: 20px;">
                                   <span id="id_text_box_show_error" style="color: red;margin-left: 15PX;"></span>
-                                </div>
+                              </div>
 
 
                             </div>
                         
-                        </div>
+                        </div> {% endcomment %}
 
 
 
@@ -791,7 +791,7 @@
     
 
 
-        $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy' , changeMonth: true, changeYear: true, todayHighlight: true}).val();
+        $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' , changeMonth: true, changeYear: true, todayHighlight: true}).val();
         $('#datepicker').attr('readonly', true);
 
         $('.ui-datepicker').addClass('notranslate');
@@ -815,9 +815,9 @@
             var contact_person = $("#contact_person_name").val()
             //var test_requested = $("#testrequested").val()
             var background_data = $("#backgrounddata").val()
-            var patient_test = $("input[name='radiobutton']:checked").val();
+            //var patient_test = $("input[name='radiobutton']:checked").val();
             
-            var othtest = $("#id_text_box_show").val()
+            //var othtest = $("#id_text_box_show").val()
 
             var user_id = $("#user_id").val()
             var first_name = $("#firstname").val()
@@ -862,7 +862,7 @@
           
            // var test_sample_text = $("#select_sample option:selected").text()
 
-            if( patient_test){
+            /*if( patient_test){
               test = patient_test
     
             }
@@ -872,7 +872,7 @@
             }
             else{
               test = othtest
-            }
+            }*/
      
 
             var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
@@ -1026,7 +1026,7 @@
                   "test_requested_type":test_requested_type,
                   "test_req_disc":test_req_disc,
                   "background_data":background_data,
-                  "patient_test":test,
+                  //"patient_test":test,
                   "weight_unit":weight_unit,
                   "height_unit":height_unit
                 
