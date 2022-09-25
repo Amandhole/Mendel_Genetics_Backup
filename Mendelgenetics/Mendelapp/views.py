@@ -879,18 +879,28 @@ fieldnames = ['id', 'sortname', 'name', 'phonecode']
 #     writer.writerows(rows)
 
 
+import pandas as pd
 
 # this code for add csv data to database file
 def add_css_data_coutnry_state_city(request):
     print(settings.BASE_DIR)
-    with open(f'{settings.BASE_DIR}/sample_test_master.csv', 'r', encoding="utf8") as f:
-        csvreader = csv.reader(f)
-        header = next(csvreader)
-        for row in csvreader:
-            # print(row[0].strip(), row[1].strip(), row[2].strip(), row[4].strip(), row[5].strip())
-            SampleTestMaster.objects.create(
-                group=row[0].strip(), pathalogy=row[1].strip(), gens=row[2].strip(),sample_type=row[4].strip(),transport=row[5].strip())
-        return HttpResponse('data added succesfully')    
+
+    data = pd.read_excel(f'{settings.BASE_DIR}/sample.xlsx', engine='openpyxl')
+        
+    data = data.to_dict('records')
+
+
+    for d in data:
+    	pass
+    	# SampleTestMaster.objects.create(group=d['Group'], plazo=d['Unnamed: 3'], pathalogy=d['Patology'], gens=d['Gens included'],sample_type=d['Sample type'], transport=d['transport conditions'])
+    # with open(f'{settings.BASE_DIR}/sample_test_master.csv', 'r', encoding="utf8") as f:
+        # csvreader = csv.reader(f)
+        # header = next(csvreader)
+        # for row in csvreader:
+        #     # print(row[0].strip(), row[1].strip(), row[2].strip(), row[4].strip(), row[5].strip())
+        #     SampleTestMaster.objects.create(
+        #         group=row[0].strip(), pathalogy=row[1].strip(), gens=row[2].strip(),sample_type=row[4].strip(),transport=row[5].strip())
+    return HttpResponse('data added succesfully')    
 
 
 
