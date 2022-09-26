@@ -103,8 +103,12 @@
                         <h5 class="title mb-15" style="margin-bottom: 20px;">Posted Test</h5>
                         <div class="dashboard-purchasing-tabs">
                             <ul class="nav-tabs nav">
+                                
                                 <li>
-                                    <a href="#" class="active" data-toggle="tab" id="active_div_button" >Active</a>
+                                    <a href="#" class="active" data-toggle="tab" id="pending_div_button" >Pending For Approval</a>
+                                </li>
+                                <li>
+                                    <a href="#"  data-toggle="tab" id="active_div_button" >Active</a>
                                 </li>
                                 <li>
                                     <a href="" data-toggle="tab" id="expire_div_button" >Cancelled</a>
@@ -113,12 +117,371 @@
                                     <a href="" id="confirm_div_button" data-toggle="tab">Confirmed</a>
                                 </li>
                             </ul>
+                        
+                        
 
+
+                    <div id="pending_div" >
+                        <div class="tab-content" style="overflow-y: scroll; max-height: 785px;">
+
+                            {% for test in pending_test %}
+                                <div class="tab-pane show active fade" id="current">
+                                    <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+                                        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                        background: #ffff 0% 0% no-repeat padding-box;
+                                        border-radius: 8px;
+                                        box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                        opacity: 1;
+                                        padding: 30px; border: 1px solid #80808052;
+                                        margin-top: 0px; padding-top: 15px;">
+                                  
+                                        <div class="row">
+                                          
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                    <span style="font-weight: 600;">Pathalogy </span>
+                                                </div>
+
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">
+                                                    {%if test.fk_sample_master.pathalogy|length > 100 %}   
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":100"}}...</h6> 
+                                                    {% else %}    
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy}}</h6>
+                                                    {% endif %}    
+                                                </div>
+                                            </div> 
+
+
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                    <span style="font-weight: 600;">Gen </span>
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                  
+                                                    {%if test.fk_sample_master.gens|length > 100 %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens|slice:":100"}}...</h6> 
+                                                    {% else %}    
+                                                    
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens}}</h6>
+                                                    {% endif %}    
+                                                </div>
+                                            </div>   
+                                            
+                                            
+
+
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                    <span style="font-weight: 600;">Contact Person </span>
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                   {%if test.Contact_person_name|length > 100 %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name|slice:":100"}}...</h6> 
+                                                    {% else %}    
+                                                    
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name}}</h6>
+                                                    {% endif %}    
+                                                </div>
+                                            </div> 
+
+                                               
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                    <span style="font-weight: 600;">Date  </span>
+                                                </div>
+
+                                                <div class="col-md-5" style="margin-top: 15px;">
+                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'d-m-Y'}}</h6>
+                                                </div> 
+
+                                          
+                                                <div class="col-md-4">
+                                                    <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                        <i class="flaticon-edit" ></i> 
+                                                    </button>   
+
+                                                
+                                                            
+                                                    <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>    
+                    </div>
+
+
+
+
+                    <div id="active_div" >
+                        <div class="tab-content" style="overflow-y: scroll; max-height: 785px;">
+
+                            {% for test in test_active_obj %}
+                                <div class="tab-pane show active fade" id="current">
+                                    <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+                                        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                        background: #ffff 0% 0% no-repeat padding-box;
+                                        border-radius: 8px;
+                                        box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                        opacity: 1;
+                                        padding: 30px; border: 1px solid #80808052;
+                                        margin-top: 0px; padding-top: 15px;">
+                                  
+                                        <div class="row">
+  
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;">
+                                                    <span style="font-weight: 600;margin-left: -14px;"> Lot Id</span>
+
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                  
+                                                    {%if test.test_lot_id %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_lot_id }}</h6> 
+                                                        {% else %}    
+                                                    
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %}    
+                                                </div>
+                                                
+                                            </div> 
+
+
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;">
+                                                    <span style="font-weight: 600;margin-left: -14px;">Pathalogy</span>
+
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                  
+                                                    {%if test.temp_string %}
+                                                        
+                                                   
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.temp_string}}</h6>
+                                                     
+                                                        {% else %}    
+                                                    
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %}    
+                                                </div>
+                                                
+                                            </div> 
+
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                    <span style="font-weight: 600;">Gen </span>
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                  
+                                                    {%if test.test_gen%}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_gen}}</h6> 
+                                                    {% else %}    
+                                                    
+                                                        <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                    {% endif %}    
+                                                </div>
+                                            </div>   
+                                            
+                                            
+
+
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                    <span style="font-weight: 600;">Quantity</span>
+
+                                                </div>
+                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                   {%if test.test_quantity %}
+                                                        
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_quantity}}</h6> 
+                                                    {% else %}    
+                                                    
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                    {% endif %}    
                             
-                            <div id="active_div" >
-                                <div class="tab-content" style="overflow-y: scroll; max-height: 580px;">
+                                                  
+                                                </div>
+                                            </div> 
 
-                                {% for test in test_obj %}
+                                               
+                                            <div class="row col-md-12">
+                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                    <span style="font-weight: 600;">Date  </span>
+                                                </div>
+
+                                                <div class="col-md-4" style="margin-top: 15px;">
+                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'d-m-Y'}}</h6>
+                                                </div> 
+
+                                          
+                                                <div class="col-md-5" >
+                                                        
+                                                        <button type="button" onclick="get_test_id_to_see_all_bids({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                        <i class="flaticon-auction"></i>
+                                                        </button>
+                                                        {% if test.bid_count %}
+                                                            <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
+                                                        {% endif %}
+                                                        </a>
+                                                    
+                                    
+                                                
+                                                        {% comment %} <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+
+                                                            <i class="flaticon-edit" ></i> 
+                                                        </button>    {% endcomment %}
+                                
+
+                                                        <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 5px; margin-right: 5px;">
+                                                            <i class="fa fa-eye" ></i> 
+                                                        </button> 
+
+
+                                                        <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button> 
+                                            
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>    
+                    </div>
+                
+                        
+
+                    <div id="cancelled_div" >
+                        <div class="tab-content" style="overflow-y: scroll; max-height: 580px;">
+
+                            {% for test in cancelled_test_obj %}
+                            <div class="tab-pane show active fade" id="current">
+                                <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+                                        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                        background: #ffff 0% 0% no-repeat padding-box;
+                                        border-radius: 8px;
+                                        box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                        opacity: 1;
+                                        padding: 30px; border: 1px solid #80808052;
+                                        margin-top: 0px; padding-top: 15px;">
+                                  
+                                    <div class="row">
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;margin-left: -14px;">
+                                                <span style="font-weight: 600;">Pathalogy </span>
+
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">  
+                                                {%if test.fk_sample_master.pathalogy|length > 100 %}
+                                                        
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":100"}}...</h6> 
+                                                {% else %}    
+                                                    
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy}}</h6>
+                                                {% endif %}    
+                                            </div>
+                                        </div> 
+
+
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                    <span style="font-weight: 600;">Gen </span>
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                  
+                                                {%if test.fk_sample_master.gens|length > 100 %}
+                                                        
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens|slice:":100"}}...</h6> 
+                                                {% else %}    
+                                                    
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens}}</h6>
+                                                {% endif %}    
+                                            </div>
+                                        </div>   
+                                            
+                                            
+
+
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                <span style="font-weight: 600;">Contact Person </span>
+
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                {%if test.Contact_person_name|length > 100 %}
+                                                        
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name|slice:":100"}}...</h6> 
+                                                {% else %}    
+                                                    
+                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name}}</h6>
+                                                {% endif %}    
+                                
+                                            </div>
+                                        </div> 
+
+                                               
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                <span style="font-weight: 600;">Date  </span>
+                                            </div>
+
+                                            <div class="col-md-5" style="margin-top: 15px;">
+                                                <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'d-m-Y'}}</h6>
+                                            </div> 
+
+                                          
+                                            <div class="col-md-4">
+                                                
+                                                {% comment %} <button type="button" onclick="get_test_id_to_see_all_bids({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                    <i class="flaticon-auction"></i>
+                                                </button>
+                                                {% if test.bid_count %}
+                                                    <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
+                                                {% endif %}
+                                                    </a> {% endcomment %}
+                                                
+                                            
+                                        
+                                                
+                                                <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+
+                                                    <i class="flaticon-edit" ></i> 
+                                                </button>   
+                                        
+
+                                        
+                                                            
+                                                <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>    
+                    </div>
+                    <div id="confirm_div" >
+                                <div class="tab-content" style="overflow-y: scroll; max-height: 785px;">
+
+                                    {% for test in Confirm_test_obj %}
                                     <div class="tab-pane show active fade" id="current">
                                         <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
                                             background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
@@ -130,182 +493,157 @@
                                             margin-top: 0px; padding-top: 15px;">
                                   
                                             <div class="row">
-                                                <div class="col-md-9">
-                                                    <div class="rate-sec">
-                                                        <!-- <p>Rate Offered</p> -->
-                                                        <h6 style="margin-top: 0px;font-size: 18px; ">{{test.patient_test}}</h6>
+
+
+
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="padding-top: 10px;">
+                                                        <span style="font-weight: 600;margin-left: -14px;"> Lot Id</span>
                                                     </div>
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">                                                 
+                                                        {%if test.fk_test_lot.test_lot_id %}                                                      
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.test_lot_id}}</h6> 
+                                                        {% else %}                                                       
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %}    
+                                                    </div>          
                                                 </div>
 
-                                                <div class="col-md-3">
-                                                    <div class="trans-sec">
-                                                        <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f;"> </span>
-                                                    </div>
-                                                </div>
+                                                {% comment %} end lot id div {% endcomment %}
 
-                                                <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
 
-                                                    {% comment %} <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
-                                                    {% comment %} {{test.test_requested|length }} {% endcomment %}
-                                                    {%if test.fk_sample_master.pathalogy|length > 100 %}
-                                                        
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":100"}}...</h6> 
-                                                    {% else %}    
+                                                <div class="row col-md-12">
                                                     
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy}}</h6>
-                                                    {% endif %}    
-
-                                                </div><br>
-
-                                                {% comment %} <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
-
-                                                    <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
-                                                    {% comment %} {{test.test_requested|length }} {% endcomment %}
-                                                    {% comment %} {%if test.fk_sample_master.gens|length > 100 %}
-                                                        
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested|slice:":100"}}...</h6> 
-                                                    {% else %}    
-                                                    
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_requested}}</h6>
-                                                    {% endif %}     
-
-                                                </div><br> {% endcomment %}
-
-
-                                                {% comment %} <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
-
-                                                    <h6 style="font-size: 17px; font-weight:400;">Description:Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</h6> {% endcomment %}
-                                                    {% comment %} {{test.test_requested|length }} {% endcomment %}
-                                                    {% comment %} {%if test.fk_sample_master.transport|length > 100 %}
-                                                        
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.transport|slice:":100"}}...</h6> 
-                                                    {% else %}    
-                                                    
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.transport}}</h6>
-                                                    {% endif %} 
-
-                                                </div><br> {% endcomment %}
-
-                                                <div class="col-md-8" style="margin-top: 15px;">
-                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'m-d-Y'}}</h6>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="profile-sec" style="display: inline-flex;">
-                                                        <!-- <img style="width:30px;" src="/static/website/{% static 'assets/images/profile-ico.png"> -->
-
-                                                        <div style="padding-top: 10px;">
-                                                            {% comment %} <a href="{% url 'view_all_bids_on_my_test' %}"> {% endcomment %}
-                                                            <button type="button" onclick="get_test_id_to_see_all_bids({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                                            <i class="flaticon-auction"></i>
-                                                            </button>
-                                                            {% if test.bid_count %}
-                                                                <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
-                                                            {% endif %}
-                                                            </a>
-                                                        </div> 
-                                            
-                                                        <div style="padding-top: 10px;">
-                                                
-                                                            <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'m-d-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-
-                                                                <i class="flaticon-edit" ></i> 
-                                                            </button>   
-                                                        </div>
-
-                                                        <div style="padding-top: 10px;">
-                                                            
-                                                            <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </div>
+                                                    <div class="col-md-3" style="padding-top: 10px;">
+                                                        <span style="font-weight: 600;margin-left: -14px;">Pathalogy</span>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div>    
-                                </div>
-                      
-                            </div>    
-                
-                            
-                        </div>    
 
-                        <div id="confirm_div" style="">
-                                <div class="tab-content" style="overflow-y: scroll; max-height: 580px;">
-                                    {% for test in Confirm_test_obj %}
-                                    <div class="tab-pane show active fade" id="current">
-                                        <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
-                                            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-                                            background: #ffff 0% 0% no-repeat padding-box;
-                                            border-radius: 8px;
-                                            box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
-                                            opacity: 1;
-                                            padding: 30px; border: 1px solid #80808052;
-                                            margin-top: 0px; padding-top: 15px;">
-                                    
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <div class="rate-sec">
-                                                        <!-- <p>Rate Offered</p> -->
-                                                        <h6 style="margin-top: 0px;font-size: 18px; ">{{test.patient_test}}</h6>
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                        {%if test.temp_string %}
+                                                           <h6 style="font-size: 17px; font-weight:400;">{{test.temp_string}}</h6>
+                                                        {% else %}   
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %}   
+                                                    </div>     
+                                                </div>
+
+                                                {% comment %} end pathalogy div {% endcomment %}
+
+
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                        <span style="font-weight: 600;">Gen </span>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="trans-sec">
-                                                        <span class="bid-amount" style="float:right; font-weight:600; font-size: 20px; color: #37406f;"> </span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">        
-                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":180"}}...</h6> 
-                                                </div><br>
-
-                                                <div class="col-md-8" style="margin-top: 15px;">
-                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'m-d-Y'}}</h6>
-                                                </div>
-
-                                                <div class="col-md-3" style="margin-left: 50px;">
-                                                    <div class="profile-sec" style="display: inline-flex;">
-                                                        <!-- <img style="width:30px;" src="/static/website/{% static 'assets/images/profile-ico.png"> -->
-
-                                                        <div style="padding-top: 10px;margin-left: 65px;">
-                                                            
-                                                            <button type="button" onclick="get_test_id_to_see_all_bids({{test.id}})" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                                                <i class="flaticon-auction"></i>
-                                                            </button>
-                                                            {% if test.bid_count %}
-                                                                <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
-                                                            {% endif %}    
-                                                        </div> 
-                                                
-                                                        <div style="padding-top: 10px;">
-                                                    
-                                                            {% comment %} <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('31','da','sddfds','25','fasd','male','70.0','5.2','fds','09-02-2022','dsffa','aa@gmail.com','sdf','dfaaaaaaaaaaaaafdsfdsfdsfdsfsddsdsfdsfsdfsddsdsdsddsdsssdsd','fdsffdssffsdfsdf','EDTA Blood','KG','Ft')" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-
-                                                                <i class="flaticon-edit"></i> 
-                                                            </button>    {% endcomment %}
-                                                        </div>
-
-                                                        <div style="padding-top: 10px;">
-                                                                
-                                                            {% comment %} <button type="button" onclick="delete_posted_test(id)" id="31" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button> {% endcomment %}
-                                                        </div>
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                  
+                                                        {%if test.fk_test_lot.test_gen %}    
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.test_gen}}</h6> 
+                                                        {% else %}    
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %}    
                                                     </div>
                                                 </div> 
-                                            </div>
-                                        </div>
-                                        {% endfor %}
                                             
-                                    </div>    
-                                </div>
+                                                {% comment %} end gen div {% endcomment %}
+                                            
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                        <span style="font-weight: 600;">Quantity</span>
+                                                    </div>
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                        {%if test.fk_test_lot.test_quantity %}
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.test_quantity}}</h6> 
+                                                        {% else %}
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %} 
+                                                    </div>
+                                                </div>
+
+                                                {% comment %} end quantity div {% endcomment %}
+                                                
+
+                                                <div class="row col-md-12">
+
+
+                                                    <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                        <span style="font-weight: 600;">Bid Price</span>
+                                                    </div>
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                        {%if test.bid_Price %}
+                                                            <h6 style="font-size: 17px; font-weight:400;">€ {{test.bid_Price}}</h6> 
+                                                        {% else %}
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %} 
+                                                        
+                                                    </div>
+                                                </div>    
+                                                    
+
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                        <span style="font-weight: 600;">Result Date</span>
+                                                    </div>
+                                                    <div class="col-md-7" style="margin-top: 18px; margin-bottom: 5px;">
+                                                        {%if test.expect_result_date %}
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.expect_result_date}}</h6> 
+                                                        {% else %}
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %} 
+                                                    </div>
+
+                                                    <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 5px; margin-right: 5px;">
+                                                        <i class="fa fa-eye" ></i> 
+                                                    </button> 
+
+                                                    <div class="col-md-2">
+                                                        <span class="badge badge-primary float-right" style="margin-top:20px; margin-left:30px ; font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
+                                                            <i class="fas fa-thumbs-down"></i> Confirmed
+                                                        </span>
+                                                    </div> 
+                                                </div>                                       
+                                            </div>    
+                                        </div>                       
+                                    </div>             
+                                    {% endfor %}
+                                </div> 
                             </div>
+
+                </div>    
+            </div>
         </div>    
     </section>
+      
+
+
+<div class="modal fade" id="aman_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 750px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 300px;">Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 190px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                
+                                   
+                <div class="login-form">
+
+                    <div id="accordion_data">
+
+                        
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <!--============= Dashboard Section Ends Here =============-->
 
 
@@ -347,7 +685,7 @@
 
                         <div class="form-group  col-md-6">
                             <label for="datepicker"><i class="fa fa-calendar" style="margin-left: 370px;"></i></label>
-                            <input type="text" id="datepicker" readonly placeholder="M/DD/YY" style="padding-left: 20px;" class="">
+                            <input type="text" id="datepicker" readonly placeholder="DD/MM/YY" style="padding-left: 20px;" class="">
 
                             <span id="datepicker_modal_error" style="color: red;margin-left: 15PX;"></span>
                         </div> 
@@ -409,12 +747,12 @@
                     </div>
                     
                     
-                    <div style="margin-top: 25px;">
+                    {% comment %} <div style="margin-top: 25px;">
                         <h6>Sample type</h6>
                         <hr>
-                    </div>
+                    </div> {% endcomment %}
 
-                    <div class="form-group">
+                    {% comment %} <div class="form-group">
                     
                           
                         <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 35px;">
@@ -440,7 +778,7 @@
                         </div> 
                         
                     </div>
-
+ {% endcomment %}
 
                 <div style="margin-top: 60px;">
                    <h6>Patient detail(Optional)</h6>
@@ -538,6 +876,10 @@
 </div>
 
 <!-- Edit test modal end here -->
+
+
+
+<!-- accordion modal test modal  start start here -->
 
 
 
@@ -640,7 +982,7 @@
     }
 
 
-    $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true,changeYear: true }).val();
+    $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true,changeYear: true }).val();
 
     function edit_posted_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,centre,Email,other_way,test_requested,background_data,patient_test,weight_unit,height_unit,Contact_person_name){
              
@@ -808,20 +1150,20 @@
       var otherway =  $("#otherway").val()
       var testrequested =  $("#testrequested").val()
       var backgrounddata =  $("#backgrounddata").val()
-      var patient_test = $("input[name='radiobutton']:checked").val();
-      var other_test = $("#id_text_box_show").val()
+      //var patient_test = $("input[name='radiobutton']:checked").val();
+      //var other_test = $("#id_text_box_show").val()
 
       var weight_unit = $("#weight_unit").val()
       var height_unit = $("#height_unit").val()
       var contact_pereson =$("#contact_person_name").val()
       
            
-      if( patient_test){
+      /*if( patient_test){
         test = patient_test
         }
       else{
         test = other_test   
-        }
+        }*/
 
       /*if (firstname == ''){
         $("#firstname").css('border','1px solid #f37777');
@@ -946,7 +1288,7 @@
             "contact_pereson":contact_pereson,
             "testrequested":testrequested,
             "backgrounddata":backgrounddata,
-            "patienttest":test,
+            //"patienttest":test,
             "weight_unit":weight_unit,
             "height_unit":height_unit
 
@@ -982,29 +1324,42 @@
 
 
 <script>
-        $("#expired_div").hide()
-        $("#confirm_div").hide()   
+    $("#pending_div").show()  
+        $("#active_div").hide()
+        $("#cancelled_div").hide()
+        $("#confirm_div").hide()
+        
     
 
     $("#active_div_button").click(function(){
     
         $("#active_div").show()
-        $("#expired_div").hide()
-        $("#confirm_div").hide()    
+        $("#cancelled_div").hide()
+        $("#confirm_div").hide()  
+        $("#pending_div").hide()  
     })
 
     $("#expire_div_button").click(function(){
-        $("#expired_div").show()
         $("#active_div").hide()
-        $("#confirm_div").hide()    
+        $("#cancelled_div").show()
+        $("#confirm_div").hide()
+        $("#pending_div").hide()    
 
     })
 
     $("#confirm_div_button").click(function(){
-        $("#expired_div").hide()
+        $("#cancelled_div").hide()
         $("#active_div").hide()
-        $("#confirm_div").show()    
+        $("#pending_div").hide()    
+        $("#confirm_div").show()
 
+    })
+
+    $("#pending_div_button").click(function(){
+        $("#cancelled_div").hide()
+        $("#active_div").hide()    
+        $("#confirm_div").hide()
+        $("#pending_div").show()
     })
 
 
@@ -1028,6 +1383,25 @@ function  get_test_id_to_see_all_bids(id){
 
     })
 }
+
+
+   function get_id_accordion(id){
+        $.ajax({
+            method:"POST",
+            url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
+            contentType:"application/JSON",
+            data:JSON.stringify({
+                "lot_id":id
+            }),
+            success:function(response){
+             
+                $("#accordion_data").html(response)
+                
+           
+            }
+
+        })
+    }
 
 
 </script>
