@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .login-form .form-group input {
+    height: 50px;
+    border: 1px solid rgba(97, 90, 191, 0.2);
+    background: #ffffff;
+    padding: 0 75px;
+}
+
+
+</style>
+    <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
+    <div class="hero-section style-2">
+        <div class="container">
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+	<div id="cover-spin"></div>
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+        <div class="container">
+            <div class="row justify-content-center">
+                {%  include  'sidebar.html' %}
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="header">
+									<div style="width: 100%; display: inline-flex;">
+										<h4 class="title float-left">Suppport Tickets</h4>
+										<button id="id_support_btn"  onclick="showHideAddSupport('add_support_ticket', 'id_back_support_btn', 'id_support_tabs', 'id_support_btn')" style="width: 80px; height: 30px; font-size: 16px; padding: 0px 10px;" class="btn btn-success float-right"><i class="fa-regular fa-plus"></i> Add</button>
+										<button id="id_back_support_btn" onclick="showHideAddSupport('id_support_tabs', 'id_support_btn', 'add_support_ticket', 'id_back_support_btn')" style="width: 40px; height: 30px; font-size: 16px; padding: 0px 10px; display: none;" class="btn btn-success float-right ml-5"><i class="fa-solid fa-arrow-left"></i></button>
+									</div>
+									<div class="dashboard-purchasing-tabs" id="id_support_tabs" style="width: 100%;">
+										<div class="row mt-2 mb-2">
+											<div class="col-md-8"></div>
+											<div class="col-md-4" style="display: inline-flex; justify-content: space-evenly;">
+												<span style="width: 50%; font-size: 16px; padding-top: 5px;"></span>
+												<select onchange="filterSupportTickets()" style="height: 40px; font-size: 16px;" class="form-control" name="" id="id_status_filter">
+													<option value="Open">Open</option>
+													<option value="Close">Close</option>
+												</select>
+											</div>
+										</div>
+										
+										<!-- <ul class="nav-tabs nav">
+											<li>
+												<a href="#" class="active" data-toggle="tab" id="open_support_btn" >Open</a>
+											</li>
+											<li>
+												<a href="" data-toggle="tab" id="close_support_btn" >Closed</a>
+											</li>
+										</ul> -->
+
+										<div id="support_div" style="overflow-y: auto; max-height: 580px;">
+											{{support_content}}
+										</div>  
+									</div>  
+									<div id="add_support_ticket" class="mt-4" style="display: none;">
+										<div class="login-form">
+											<div class="row" style="margin-bottom: -1rem;">
+												<div class="form-group mb-30 col-md-12">
+													<label for="login-email"><i class="fa-solid fa-clipboard"></i></label>
+													<input type="text" id="id_subject_input" onkeydown="removeErrMsg()" style="width: 603px; margin-left: -2px;"  placeholder="Subject">
+												</div>
+											</div>
+											<span id="id_subject_error_message" style="color: red; font-size: 14px;"></span>
+											<div style="width: 100%;" class="mt-2">
+												<center>
+													<div class="row" style="width: fit-content;">
+														<div class="col-md-6" >
+															<div class="form-group mb-0">
+																<button type="button" id="raise_support_button" onclick="raiseSupportTicket()" style="width: auto; padding-left: 45px;font-size: 16px;height: 45px;"  class="custom-button" >Submit</button>
+															</div>
+														</div>
+													</div>  
+												</center>
+											</div>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+<!-- Modal persnol detail start -->
+<!-- 
+<div class="modal fade" id="id_raise_support_ticket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 640px !important;">
+		<div class="modal-content">
+			<div class="modal-header modal-title">
+				<div>
+					<h5 class="" id="exampleModalLabel">Raise Support Ticket</h5>
+				</div>
+				<div>
+					<button type="button" class="close" id="close_support_modal" data-dismiss="modal" data-target="id_raise_support_ticket" aria-label="Close" style="padding-top: 15px;
+					padding-right: 40px;">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="login-form">
+					<div class="row" style="margin-bottom: -1rem;">
+						<div class="form-group mb-30 col-md-12">
+							<label for="login-email"><i class="fa-solid fa-clipboard"></i></label>
+							<input type="text" id="id_subject_input" onkeydown="removeErrMsg()" style="width: 603px; margin-left: -2px;"  placeholder="Subject">
+						</div>
+					</div>
+					<span id="id_subject_error_message" style="color: red; font-size: 14px;"></span>
+					<div style="width: 100%;">
+						<center>
+							<div class="row" style="width: fit-content;">
+								<div class="col-md-6" >
+									<div class="form-group mb-0">
+										<button type="button" id="raise_support_button" onclick="raiseSupportTicket()" style="width: auto; padding-left: 45px;font-size: 16px;height: 45px;"  class="custom-button" >Submit</button>
+									</div>
+								</div>
+							</div>  
+						</center>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!--============= Footer Section Starts Here =============-->
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script>
+	function filterSupportTickets()
+	{
+		$.ajax({
+			url: "/support_ticket_filter/",
+			method:'POST',
+			cache: false,
+			data: {'user_id': '{{user_obj.id}}', 'filter':$('#id_status_filter').val()},
+			success: function (resp_data) 
+			{
+				if (resp_data.status == "1")
+				{
+					$('#support_div').html(resp_data.support_content);
+				}
+			}
+		});
+	}
+	function showHideAddSupport(a, b, c, d)
+	{
+		removeErrMsg();
+		$('#id_subject_input').val('');
+		$('#'+a).show();
+		$('#'+b).show();
+		$('#'+c).hide();
+		$('#'+d).hide();
+	}
+	function removeErrMsg()
+	{
+		$('#id_subject_error_message').html('');
+	}
+	// function to raise support ticket
+	function raiseSupportTicket()
+	{
+		var subject = $('#id_subject_input').val();
+
+		if (subject == "")
+		{
+			$('#id_subject_error_message').html('Please enter the subject, to raise the support ticket...')
+		}	
+		else
+		{
+			$.ajax({
+				url: "/raise_support_ticket/",
+				method:'POST',
+				cache: false,
+				data: {'user_id': '{{user_obj.id}}', 'subject' : subject,'filter':$('#id_status_filter').val()},
+				success: function (resp_data) 
+				{
+					if (resp_data.status == "1")
+					{
+						swal("Ticket raised successfully!!! you can start chat now.", {
+							icon: "success",
+							button: "Ok",
+							closeOnClickOutside: false,
+						}).then((willDelete) => {
+							$('#support_div').html(resp_data.support_content);
+							$('#id_support_tabs').show();
+							$('#id_support_btn').show();
+							$('#add_support_ticket').hide();
+							$('#id_back_support_btn').hide();
+						});
+					}
+				}
+			});
+		}
+	}
+
+
+	$(document).ready(function(){
+		$("#profile_setting").removeClass('active')
+		$("#support_chat").addClass('active')
+    });
+</script>  
+
+{% endblock%}
+

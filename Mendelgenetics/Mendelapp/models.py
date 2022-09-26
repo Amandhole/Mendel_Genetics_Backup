@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 from django.db.models.fields import CharField, DateField,  TextField
 
@@ -117,6 +117,26 @@ class UserBids(models.Model):
     #     return self.fk_user_master
 
 
+#### support system management
+class Support(models.Model):
+    support_id = models.CharField(max_length=30, blank=True, null=True) 
+    fk_user = models.ForeignKey(UserMaster, on_delete=models.CASCADE, null=True, blank=True)  # foreign key to the user who bid
+    admin_email = models.EmailField(blank=True, null=True)
+    subject = models.TextField(max_length=1000, blank=True, null=True)
+    issue_date = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=30, blank=True, null=True)     # Open-Close
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.set_order_id()
+	
+    def set_order_id(self):
+        if not self.support_id:
+            cdate = datetime.datetime.now().strftime("%Y%m%d")
+            uid = f"{cdate}OD{self.id:05d}"
+            order= Support.objects.get(id=self.id)
+            order.support_id = uid
+            order.save()
 
-
+    def __str__(self):
+        return f"{self.support_id}"

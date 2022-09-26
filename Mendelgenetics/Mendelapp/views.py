@@ -941,33 +941,23 @@ def User_edit_bids_on_other_users_test(request):
 def view_all_bids_on_my_test(request):
     try :
         session_id = request.session.get('user_id')
-
         if session_id:
-            print('-----------------------------------------------------------')
             if request.method == "POST":
                 data = json.loads(request.body.decode('utf-8'))
                 test_id = data['test_id']
                 
-                print('==================',test_id)
-
-
                 if UserMaster.objects.filter(id=session_id).exists():
                     user_obj = UserMaster.objects.get(id=session_id)
                     if UserTest.objects.filter(id=test_id):
                         test_obj = UserTest.objects.get(id=test_id)
-                        # print('test obj is------------', test_obj.patient_test)
-                        # bid_obj = UserBids.objects.filter(fk_user_test_id = test_id)
                         
-                        bid_obj = UserBids.objects.filter(fk_user_test_id = test_id,bid_status="Cancelled")
+                        bid_obj = UserBids.objects.filter(fk_user_test_id = test_id,bid_status="Pending")
 
-                        # print('vvvvvvvv',bid_obj)
+                        print(bid_obj)
 
                         approved_bid_obj = UserBids.objects.get(fk_user_test_id=test_id, bid_status="Approved") if UserBids.objects.filter(fk_user_test_id=test_id, bid_status="Approved").exists() else None
                         # print('tttttttt', approved_bid_obj)
                         
-                    
-                    
-                    
                         bidcount = bid_obj.count()
                         print('aaaaaaaaaaaaaaaaaaaaa',bidcount)
 
@@ -1097,4 +1087,75 @@ def show_sample_test_data(request):
     except:
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
+    return JsonResponse(send_data)
+
+
+############################################# Support Chat View
+
+def support_chat(request):
+    try:
+        session_id = request.session.get('user_id')
+        if session_id: 
+            user_obj = UserMaster.objects.get(id=session_id)
+            support_tickets = Support.objects.filter(fk_user=user_obj, status='Open').order_by('-issue_date')
+
+            support_content = render_to_string('r_t_s_Templates/r_t_s_support_chat.html', {'support_tickets':support_tickets})
+
+            context = {
+                "user_obj": user_obj,
+                'support_content':support_content,
+            }
+
+            return render(request, 'support_chat.html', context=context)
+        return redirect('/login_page/')
+    except:
+        traceback.print_exc()
+    return redirect('/login_page/')
+
+############################################## raise_support_ticket
+
+@csrf_exempt
+def raise_support_ticket(request):
+    try:
+        send_data = {'status':'0', 'msg':'Something went wrong...'}
+        user_id = request.POST.get('user_id', None)
+        subject = request.POST.get('subject', None)
+        filter_status = request.POST.get('filter', None)
+        admin_email = 'villamredon@gmail.com'
+        status = 'Open'
+
+        try:
+            Support.objects.create(fk_user_id = user_id, subject=subject, admin_email=admin_email, status=status)
+
+            support_tickets = Support.objects.filter(fk_user_id=user_id, status=filter_status).order_by('-issue_date')
+
+            support_content = render_to_string('r_t_s_Templates/r_t_s_support_chat.html', {'support_tickets':support_tickets})
+
+            send_data = {'status':'1', 'msg':'Support ticket saved successfully...', 'support_content':support_content}
+        except:
+            send_data = {'status':'0', 'msg':'Something went wrong...'}
+    except:
+        traceback.print_exc()
+    return JsonResponse(send_data)
+
+###################################### support_ticket_filter
+
+
+@csrf_exempt
+def support_ticket_filter(request):
+    try:
+        send_data = {'status':'0', 'msg':'Something went wrong...'}
+        user_id = request.POST.get('user_id', None)
+        filter_status = request.POST.get('filter', None)
+
+        try:
+            support_tickets = Support.objects.filter(fk_user_id=user_id, status=filter_status).order_by('-issue_date')
+
+            support_content = render_to_string('r_t_s_Templates/r_t_s_support_chat.html', {'support_tickets':support_tickets})
+
+            send_data = {'status':'1', 'msg':'Support ticket saved successfully...', 'support_content':support_content}
+        except:
+            send_data = {'status':'0', 'msg':'Something went wrong...'}
+    except:
+        traceback.print_exc()
     return JsonResponse(send_data)

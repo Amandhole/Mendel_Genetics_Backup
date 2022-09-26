@@ -50,7 +50,10 @@ urlpatterns = [
     path('Approve_users_bid_on_test', Approve_users_bid_on_test,name="Approve_users_bid_on_test"),
     path('Reject_bid_on_users_test', Reject_bid_on_users_test, name='Reject_bid_on_users_test'),
     path('my_bids_on_other_users_test', my_bids_on_other_users_test,name="my_bids_on_other_users_test"),
-    path('show_sample_test_data', show_sample_test_data,name='show_sample_test_data')
+    path('show_sample_test_data', show_sample_test_data,name='show_sample_test_data'),
+    path('support_chat/', support_chat,name='support_chat'),
+    path('raise_support_ticket/', raise_support_ticket,name='raise_support_ticket'),
+    path('support_ticket_filter/', support_ticket_filter,name='support_ticket_filter'),
    
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
