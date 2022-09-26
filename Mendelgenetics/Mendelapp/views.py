@@ -654,7 +654,9 @@ def test_added_by_user_list(request):
                 
                 for test in test_active_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-
+                
+                for test in test_active_obj:
+                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
                 print(test_active_obj.query)
                 for i in test_active_obj:
@@ -667,7 +669,8 @@ def test_added_by_user_list(request):
                 
                 for test in Confirm_test_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
-
+                for test in Confirm_test_obj:
+                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
                 print('llllllllllllllllllll',Confirm_test_obj)
                 
                 # expire_test_obj = UserTest.objects.filter(fk_user_id=session_id , date__lt = today).order_by('-id')   # expired test
