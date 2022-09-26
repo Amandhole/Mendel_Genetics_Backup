@@ -186,9 +186,9 @@
                                                 </div>
                                                 <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
                                                   
-                                                    {%if test.test_gen %}
+                                                    {%if test.temp_gens %}
                                                         
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.test_gen}}</h6> 
+                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.temp_gens}}</h6> 
                                                     {% else %}    
                                                     
                                                             <h6 style="font-size: 17px; font-weight:400;">----</h6>
@@ -661,6 +661,8 @@
   
 <script>
    function get_id_accordion(id){
+
+        alert(id)
         $.ajax({
             method:"POST",
             url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
@@ -668,6 +670,8 @@
             data:JSON.stringify({
                 "lot_id":id
             }),
+
+    
             success:function(response){
              
                 $("#accordion_data").html(response)

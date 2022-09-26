@@ -835,7 +835,9 @@ def All_test_list_exclude_current_user(request):
                 tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id)
                 for test in tets_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-                    
+
+                for test in tets_obj:
+                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
                 print(tets_obj)
                 for test in tets_obj:
                     bids = UserBids.objects.filter(fk_test_lot=test)
@@ -1167,11 +1169,11 @@ def get_all_test_of_lot_from_active_tab(request):
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
-            test_list = TestLots.objects.get(id=lot_id).tests_in_lot
 
-            
+            print(lot_id)
+            test_list = TestLots.objects.get(id=lot_id).tests_in_lot            
             test_data =eval(test_list)
-        
+            print(test_data)
             test_in_lot = UserTest.objects.filter(id__in=test_data)
 
             context = {
