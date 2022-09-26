@@ -220,7 +220,7 @@
                                                     <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
-                                                </div>
+                                                </div> 
                                             </div>
                                         </div>
                                             
@@ -334,17 +334,13 @@
                                                     <span style="font-weight: 600;">Date  </span>
                                                 </div>
 
-                                                <div class="col-md-5" style="margin-top: 15px;">
+                                                <div class="col-md-4" style="margin-top: 15px;">
                                                     <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'d-m-Y'}}</h6>
                                                 </div> 
 
                                           
-                                                <div class="col-md-4">
-                                                    
-                                                    <!-- <img style="width:30px;" src="/static/website/{% static 'assets/images/profile-ico.png"> -->
-
-                                                    
-                                                            {% comment %} <a href="{% url 'view_all_bids_on_my_test' %}"> {% endcomment %}
+                                                <div class="col-md-5" >
+                                                        
                                                         <button type="button" onclick="get_test_id_to_see_all_bids({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                         <i class="flaticon-auction"></i>
                                                         </button>
@@ -361,11 +357,14 @@
                                                         </button>    {% endcomment %}
                                 
 
-                                            
-                                                            
-                                                        <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;margin-left: 10px;">
+                                                        <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 5px; margin-right: 5px;">
+                                                            <i class="fa fa-eye" ></i> 
+                                                        </button> 
+
+
+                                                        <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
                                                             <i class="fa fa-trash"></i>
-                                                        </button>
+                                                        </button> 
                                             
                                                 </div>
                                             </div>
@@ -604,6 +603,10 @@
                                                         {% endif %} 
                                                     </div>
 
+                                                    <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 5px; margin-right: 5px;">
+                                                        <i class="fa fa-eye" ></i> 
+                                                    </button> 
+
                                                     <div class="col-md-2">
                                                         <span class="badge badge-primary float-right" style="margin-top:20px; margin-left:30px ; font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
                                                             <i class="fas fa-thumbs-down"></i> Confirmed
@@ -621,6 +624,38 @@
             </div>
         </div>    
     </section>
+      
+
+
+<div class="modal fade" id="aman_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 750px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 300px;">Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 190px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                
+                                   
+                <div class="login-form">
+
+                    <div id="accordion_data">
+
+                        
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <!--============= Dashboard Section Ends Here =============-->
 
 
@@ -853,6 +888,10 @@
 </div>
 
 <!-- Edit test modal end here -->
+
+
+
+<!-- accordion modal test modal  start start here -->
 
 
 
@@ -1356,6 +1395,25 @@ function  get_test_id_to_see_all_bids(id){
 
     })
 }
+
+
+   function get_id_accordion(id){
+        $.ajax({
+            method:"POST",
+            url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
+            contentType:"application/JSON",
+            data:JSON.stringify({
+                "lot_id":id
+            }),
+            success:function(response){
+             
+                $("#accordion_data").html(response)
+                
+           
+            }
+
+        })
+    }
 
 
 </script>

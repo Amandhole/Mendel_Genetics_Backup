@@ -125,7 +125,7 @@
 
                             
                     <div id="active_div" >
-                        <div class="tab-content" style="overflow-y: scroll; max-height: 875px;">
+                        <div class="tab-content" style="overflow-y: scroll; max-height: 500px;">
 
                             {% for test in test_obj %}
                             <div class="tab-pane show active fade" id="current">
@@ -256,13 +256,17 @@
 
                                                 <div style="padding-top: 10px;">
 
-                                                    <button type="button" data-toggle="modal" data-target="#view_all_information_about_test" onclick="view_all_information_about_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'m-d-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                    {% comment %} <button type="button" data-toggle="modal" data-target="#view_all_information_about_test" onclick="view_all_information_about_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'m-d-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
                                                         <i class="fa fa-eye" ></i> 
-                                                    </button>   
+                                                    </button>     {% endcomment %}
                                                             
+                                                    <button type="button" data-toggle="modal" data-target="#modal_for_accordion" onclick="get_id_accordion({{test.id}})"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                        <i class="fa fa-eye" ></i> 
+                                                    </button>  
                                                         
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>   
                                 </div>
@@ -618,6 +622,36 @@
 
 
 
+{% comment %} aaccordion for test {% endcomment %}
+
+
+<div class="modal fade" id="modal_for_accordion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 750px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 300px;">Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 190px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                
+                                   
+                <div class="login-form">
+
+                    <div id="accordion_data">
+
+                        
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -625,7 +659,27 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
+<script>
+   function get_id_accordion(id){
+        $.ajax({
+            method:"POST",
+            url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
+            contentType:"application/JSON",
+            data:JSON.stringify({
+                "lot_id":id
+            }),
+            success:function(response){
+             
+                $("#accordion_data").html(response)
+                console.log(response)
+                
 
+           
+            }
+
+        })
+    }
+</script>
 <script>
         $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true, }).val();
         

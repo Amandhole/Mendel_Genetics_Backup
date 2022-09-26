@@ -1158,24 +1158,33 @@ def show_sample_test_data(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)        
 def get_all_test_of_lot_from_active_tab(request):
+
+   
     try:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
             test_list = TestLots.objects.get(id=lot_id).tests_in_lot
 
-            print('hhhhhhhhhhhhhhhhhhhhhh', type(test_list), test_list)
-            tes_data =eval(test_list)
+            
+            test_data =eval(test_list)
         
+            test_in_lot = UserTest.objects.filter(id__in=test_data)
 
-            all_test_of_lot = UserTest.objects.filter(id__in=tes_data)
+            context = {
+                "test_in_lot": test_in_lot
+                        }
             
-            print(all_test_of_lot, type(all_test_of_lot))
-            
-            send_data = {"msg":"Data recicved succesfully","status":"1","all_test_of_lot":list(all_test_of_lot.values())}
+            print('---------------------------pppppppppppppppppppppppppppppppppppppp', test_in_lot)
+    
+            send_data = render_to_string('rts_accordion.html', context)
+         
         else:
             send_data = {"msg":"Request is not post","status":"0"}   
     except:
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
-    return JsonResponse(send_data)
+    return HttpResponse(send_data)
+
+
+
