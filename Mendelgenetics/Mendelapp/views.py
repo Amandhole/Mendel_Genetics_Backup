@@ -649,7 +649,7 @@ def test_added_by_user_list(request):
                 print('cancel test object', cancelled_test_obj)
 
                 test_active_obj = TestLots.objects.filter(lot_status="Published").order_by('-id')
-                print('fffffffffffffffffffffffffffffffffffffffff',test_active_obj)
+                print(test_active_obj)
                
                 
                 for test in test_active_obj:
@@ -660,12 +660,15 @@ def test_added_by_user_list(request):
                 for i in test_active_obj:
                     i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).count()
               
-                
-                Confirm_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Confirm").order_by('-id')
-                for i in Confirm_test_obj:
-                    i.bid_count = UserBids.objects.filter(fk_user_test_id = i.id).count()
+                # Confirm_test_obj = TestLots.objects.filter(fk_user_master_id=session_id, lot_status="Approved").order_by('-id')
 
+                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
                 
+                
+                for test in Confirm_test_obj:
+                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+
+                print('llllllllllllllllllll',Confirm_test_obj)
                 
                 # expire_test_obj = UserTest.objects.filter(fk_user_id=session_id , date__lt = today).order_by('-id')   # expired test
                 # print('expired test obj',expire_test_obj)
@@ -1103,9 +1106,17 @@ def my_bids_on_other_users_test(request):
 
                 my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
 
+                for test in my_approved_bid:
+                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+
+                print(my_approved_bid)
+
                 my_cancelled_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Cancelled')
 
-                print('my approved bid',my_approved_bid)
+                for test in my_cancelled_bid:
+                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+
+                print('my cancelled bid',my_cancelled_bid)
                 context = {            
                     "user_obj": user_obj,
                     'my_active_bid':my_active_bid,

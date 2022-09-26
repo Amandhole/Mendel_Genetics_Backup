@@ -501,8 +501,9 @@
         console.log(lot_for_user);
         //console.log('user_id',user_id)
         
-    
-        swal({
+        
+        if($("#checkboxid").prop('checked')){
+          swal({
             icon:"warning",
             text:"Are you sure to publish test?",
             buttons: ["No", "Yes"],
@@ -532,6 +533,14 @@
         })
           }
         })
+        }
+        else{
+              swal({
+              icon:"error",
+              text:"Please select test",
+              closeOnClickOutside:false                    
+        })
+      }
     }
 
 
@@ -552,8 +561,8 @@
                 });
                 console.log('user id',user_id)
                 console.log('test id',test_id)
-
-        swal({
+        if($("#checkboxid").prop('checked')){
+                    swal({
             icon:"warning",
             text:"Are you sure to reject test?",
             buttons: ["No", "Yes"],
@@ -584,11 +593,20 @@
         })
           }
         })
+        }
+        else{
+              swal({
+              icon:"error",
+              text:"Please select test",
+              closeOnClickOutside:false                    
+        })
+        }
+
     }
 
 
     function view_detail_of_test_by_admin(){
-      alert('hello')
+      consol.log('hello')
     }
 </script>
 
