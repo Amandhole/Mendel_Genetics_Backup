@@ -92,6 +92,7 @@ def user_signup(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_login(request):
     session_id = request.session.get('user_id')
+    print('before try')
     try:
         
         if request.method == "POST":
@@ -137,16 +138,18 @@ def user_login(request):
                                      "msg": "Invalid credential", "obj": obj.id}
                         return JsonResponse(send_data)
             else:
-                print('in else')
+          
                 data = {"status": "0", "msg": "invalid credential"}
                 print(data)
                 return JsonResponse(data)
-        else:
+        else:    
             session_id = request.session.get('user_id')
-            if session_id:  
+            print(session_id)
+            if session_id:
+                print('444444444444444444444444444444444444444444444444444444')
                 return redirect('user_profile_page')
             else:
-                print('request not post')
+                print('5555555555555555555555555555555555555555555555555555555')
                 return render(request, 'login.html', {"session_id": session_id})
     except:
         send_data = {"status": "0", "msg": "Invalid credential",
