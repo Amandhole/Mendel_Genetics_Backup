@@ -1065,9 +1065,29 @@
         console.log(db);
         
         function googleTranslateElementInit() {
-            setCookie('googtrans', '/es/es', 1);
+            
+            var lang = getCookie("googtrans");
+            if (lang == "" || lang == null) 
+            {
+                setCookie('googtrans', '/es/es', 1);
+            }
+
+
             new google.translate.TranslateElement({ includedLanguages :'en,es'}, 'google_translate_element');
         }
+        function getCookie(lang) 
+        {
+            var cookieArr = document.cookie.split(";");
+            for(var i = 0; i < cookieArr.length; i++) 
+            {
+                var cookiePair = cookieArr[i].split("=");
+                if(lang == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
         function setCookie(key, value, expiry) {
             var expires = new Date();
             expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
