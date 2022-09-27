@@ -83,7 +83,9 @@
                             <li>
                                 <a href="{% url 'pending_test' %}" class="" id="show_test_to_user"><i class="flaticon-auction"></i>Test</a>
                             </li>
-
+                            <li>
+                                <a href="/support_chat_admin/" class="" id="id_support_chat"><i class="fa-brands fa-rocketchat"></i>Support Chat &emsp; <span id="total_chat_count" style="padding: 2px 7px 2px 8px; color: white; width: 40px; height : 20px; border-radius: 50%; background: red;">0</span></a>
+                            </li>
                             <li>
                                 <a  id="logout"  style="cursor:pointer ;" ><i class="fa-solid fa-share-from-square"></i>Logout</a>
                             </li>
@@ -170,6 +172,22 @@
     })
 
     $(document).ready(function(){
+
+        db.collection("ChatMessages").where("status", "==", 'Open').where("receiver_email", "==", 'villamredon@gmail.com')
+        .onSnapshot(function(querySnapshot) {
+            var total_count = 0;
+            querySnapshot.forEach((doc) => {
+                total_count = total_count + doc.data()['receiver_seen'];
+        });
+            
+            $('#total_chat_count').html(total_count);
+            
+            // $('#support_div').html(string);
+        })
+
+
+
+
         var status = $("#auc_bid_status_id").val()
         if (status == "True"){
             console.log('btn status true')

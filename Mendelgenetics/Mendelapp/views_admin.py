@@ -230,3 +230,23 @@ def test_reject_by_admin(request):
         print(traceback.format_exc())
         send_data = {"msg":"something went wrong", "status":"0","error":traceback.format_exc()}
     return JsonResponse(send_data)
+
+
+    
+############################################# Support Chat View
+
+def support_chat(request):
+    try:
+        session_id = request.session.get('user_id')
+        if session_id: 
+            user_obj = AdminUser.objects.get(id=session_id)
+            
+            context = {
+                "user_obj": user_obj
+            }
+
+            return render(request, 'admin/support_chat_admin.html', context=context)
+        return redirect('/admin_user_login')
+    except:
+        traceback.print_exc()
+    return redirect('/admin_user_login')

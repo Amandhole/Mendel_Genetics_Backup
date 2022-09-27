@@ -981,9 +981,14 @@ def User_edit_bids_on_other_users_test(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_all_bids_on_my_test(request):
     try :
-        print('in try')
         session_id = request.session.get('user_id')
+
         if session_id:
+        
+            if request.method == "POST":
+                data = json.loads(request.body.decode('utf-8'))
+                lot_id = data['test_id']
+                
                 if UserMaster.objects.filter(id=session_id).exists():
                     user_obj = UserMaster.objects.get(id=session_id)
                     if TestLots.objects.filter(id=lot_id):
@@ -992,8 +997,6 @@ def view_all_bids_on_my_test(request):
                         for test in test_lot_obj:
                             test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
 
-                    
-                        
                         print('qqqqqqqqqqqqq', test_lot_obj)
                         bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending")
 
@@ -1003,9 +1006,9 @@ def view_all_bids_on_my_test(request):
                             fk_test_lot_id=lot_id, bid_status="Approved").exists() else None
                         # print('tttttttt', approved_bid_obj)
                         
+                    
                         bidcount = bid_obj.count()
                     
-
                     context = {
                         "user_obj": user_obj,
                         "test_lot_obj": test_lot_obj,
@@ -1021,7 +1024,7 @@ def view_all_bids_on_my_test(request):
             send_data= {"msg": "User Not Exist"}
     except:      
         send_data= {"msg": "Something Went Wrong", "staus": "0","error":traceback.format_exc()}
-    # return HttpResponse(send_data)    
+    return HttpResponse(send_data)    
 
 
 @csrf_exempt
@@ -1162,10 +1165,10 @@ def support_chat(request):
             }
 
             return render(request, 'support_chat.html', context=context)
-        return redirect('/login_page/')
+        return redirect('/login_page')
     except:
         traceback.print_exc()
-    return redirect('/login_page/')
+    return redirect('/login_page')
 
 ############################################## raise_support_ticket
 
@@ -1203,6 +1206,7 @@ def support_ticket_filter(request):
         user_id = request.POST.get('user_id', None)
         filter_status = request.POST.get('filter', None)
 
+        print(user_id, filter_status)
         try:
             support_tickets = Support.objects.filter(fk_user_id=user_id, status=filter_status).order_by('-issue_date')
 
@@ -1214,6 +1218,45 @@ def support_ticket_filter(request):
     except:
         traceback.print_exc()
     return JsonResponse(send_data)
+
+
+@csrf_exempt
+def support_ticket_filter_admin(request):
+    try:
+        send_data = {'status':'0', 'msg':'Something went wrong...'}
+        filter_status = request.POST.get('filter', None)
+
+        try:
+            support_tickets = Support.objects.filter(status=filter_status).order_by('-issue_date')
+
+            support_content = render_to_string('r_t_s_Templates/r_t_s_support_chat.html', {'support_tickets':support_tickets, 'user':'Admin'})
+
+            send_data = {'status':'1', 'msg':'Support ticket saved successfully...', 'support_content':support_content}
+        except:
+            send_data = {'status':'0', 'msg':'Something went wrong...'}
+    except:
+        traceback.print_exc()
+    return JsonResponse(send_data)
+
+######################################## close_support_ticket
+
+@csrf_exempt
+def close_support_ticket(request):
+    try:
+        send_data = {'status':'0', 'msg':'Something went wrong...'}
+        support_id = request.POST['support_id']
+
+        try:
+            Support.objects.filter(support_id=support_id).update(status='Close')
+
+            send_data = {'status':'1', 'msg':'Support ticket closed successfully...'}
+        except:
+            send_data = {'status':'0', 'msg':'Something went wrong...'}
+    except:
+        traceback.print_exc()
+    return JsonResponse(send_data)
+
+
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)        
 def get_all_test_of_lot_from_active_tab(request):

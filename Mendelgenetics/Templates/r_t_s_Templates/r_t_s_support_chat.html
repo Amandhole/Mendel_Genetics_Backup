@@ -31,25 +31,55 @@
 						</div>
 					</div>
 					<div class="row text-right">
-						<div class="col-md-12">
-							<div class="profile-sec" style="display: inline-flex;">
-								<div style="padding-top: 10px;">
-									<button type="button" onclick="showChatBox('{{obj.fk_user.name}}', '{{obj.fk_user.email}}', '{{obj.support_id}}', '{{obj.subject}}', '{{obj.issue_date}}')" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-										<i class="fa-solid fa-message"></i>
-									</button>
-								</div>&emsp;
-								<div style="padding-top: 10px;">
-									<button type="button" onclick="closeSupport(id)" id="{{test.id}}" style="background-color: red;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-										<i class="fa-regular fa-circle-xmark"></i>
-									</button>
+						{% if user %}
+							<div class="col-md-4 text-left" style="font-size: 12px;">
+								<span>{{obj.fk_user.name}}</span><br>
+								<span>{{obj.fk_user.email}}<span>
+							</div>
+							<div class="col-md-8">
+								<div class="profile-sec" style="display: inline-flex;">
+									{% if obj.status == 'Open' %}
+										<div style="padding-top: 10px;">
+											<button type="button" onclick="showChatBox('Admin', 'villamredon@gmail.com', '{{obj.fk_user.name}}', '{{obj.fk_user.email}}', '{{obj.support_id}}', '{{obj.subject}}', '{{obj.issue_date}}')" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+												<i class="fa-solid fa-message"></i>
+											</button>
+											<span id="count_{{obj.support_id}}" style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 18px; width: 18px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">0</span>
+										</div>&emsp;
+										<div style="padding-top: 10px;">
+											<button type="button" onclick="close_support_ticket('{{obj.support_id}}')" id="{{test.id}}" style="background-color: red;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+												<i class="fa-regular fa-circle-xmark"></i>
+											</button>
+										</div>
+									{% endif %}
 								</div>
 							</div>
-						</div>
+						{% else %}
+							<div class="col-md-12">
+								<div class="profile-sec" style="display: inline-flex;">
+									{% if obj.status == 'Open' %}
+										<div style="padding-top: 10px;">
+											<button type="button" onclick="showChatBox('Admin', 'villamredon@gmail.com', '{{obj.fk_user.name}}', '{{obj.fk_user.email}}', '{{obj.support_id}}', '{{obj.subject}}', '{{obj.issue_date}}')" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+												<i class="fa-solid fa-message"></i>
+											</button>
+											<span id="count_{{obj.support_id}}" style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 18px; width: 18px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">0</span>
+										</div>&emsp;
+										<div style="padding-top: 10px;">
+											<button type="button" onclick="close_support_ticket('{{obj.support_id}}')" id="{{test.id}}" style="background-color: red;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+												<i class="fa-regular fa-circle-xmark"></i>
+											</button>
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>    
 		</div>
 	{% endfor %}
+	<script>
+		get_support_tickets_count('{{obj.fk_user.email}}');
+	</script>
 {% else %}
 		<br>
 		<h5>No Tickets are there...</h5>

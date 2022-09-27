@@ -56,4 +56,6 @@ urlpatterns = [
     path('support_ticket_filter/', support_ticket_filter,name='support_ticket_filter'),
    
     path('get_all_test_of_lot_from_active_tab',get_all_test_of_lot_from_active_tab, name="get_all_test_of_lot_from_active_tab"),
+    path('close_support_ticket/',close_support_ticket, name="close_support_ticket"),
+    path('support_ticket_filter_admin/',support_ticket_filter_admin, name="support_ticket_filter_admin"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

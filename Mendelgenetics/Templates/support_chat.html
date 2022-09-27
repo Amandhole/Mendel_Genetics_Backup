@@ -204,10 +204,29 @@
 		}
 	}
 
+	function get_support_tickets_count(sender_email)
+	{
+		db.collection("ChatMessages").where("status", "==", 'Open').where("sender_email", "==", sender_email)
+		.onSnapshot(function(querySnapshot) {
+			var total_count = 0;
+			querySnapshot.forEach((doc) => {
+				total_count = total_count + doc.data()['sender_seen'];
+
+				$('#count_'+doc.data()['support_id']).html(doc.data()['sender_seen']);
+		});
+			
+			// querySnapshot.size == 0 ? (flag = true) : (flag = false);
+			// $('#total_chat_count').html(total_count);
+			
+			// $('#support_div').html(string);
+		})
+	}
 
 	$(document).ready(function(){
 		$("#profile_setting").removeClass('active')
 		$("#support_chat").addClass('active')
+
+		get_support_tickets_count('{{user_obj.email}}');
     });
 </script>  
 

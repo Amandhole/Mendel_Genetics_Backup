@@ -151,7 +151,7 @@ class Support(models.Model):
     def set_order_id(self):
         if not self.support_id:
             cdate = datetime.datetime.now().strftime("%Y%m%d")
-            uid = f"{cdate}OD{self.id:05d}"
+            uid = f"{cdate}AA{self.id:05d}"
             order= Support.objects.get(id=self.id)
             order.support_id = uid
             order.save()

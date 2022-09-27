@@ -1,5 +1,15 @@
-async function showMessages(receiver_email,receiver_name, sender_email, support_id, subject, issue_date)
+document.getElementById("text_message").addEventListener("keydown", function (e) 
 {
+	if (e.key === "Enter") 
+	{  
+		send_message();
+	}
+});
+
+
+async function showMessages(receiver_email, sender_email, support_id)
+{
+	console.log(receiver_email, sender_email);
 	messages_list = ""
 	$('#chat-messages').html("");
 	
@@ -9,22 +19,19 @@ async function showMessages(receiver_email,receiver_name, sender_email, support_
 	const ref_2 = await db.collection("ChatMessages").where('sender_email', '==', receiver_email).where('receiver_email', '==',  sender_email).where('support_id', '==', support_id).get();
 	
 	if (ref_1.empty){
-		console.log("1")
 		db.collection("ChatMessages").where('sender_email', '==', receiver_email).where('receiver_email' , '==',  sender_email).where('support_id', '==', support_id)
 		.onSnapshot(function(querySnapshot) {  
 				includeMetadataChanges: true;
 				querySnapshot.forEach(function(doc) {
 				doc.data()['message'].forEach(function(messages)
 				{
-					console.log(messages)	
 					if( messages['sender_email'] == receiver_email )
 					{
 						messages_list += `<div class="message">
-							${doc.data()['receiver']}
 							<div class="bubble">
 								${messages['message']}
 								<div class="corner"></div>
-								<span class="right-time">${messages['date']} | ${messages['time'].replace(/:\d+ (\w\w)$/, ' $1')}</span>
+								<span class="left-time">${messages['date']} | ${messages['time'].replace(/:\d+ (\w\w)$/, ' $1')}</span>
 							</div>
 						</div>`;
 
@@ -49,7 +56,7 @@ async function showMessages(receiver_email,receiver_name, sender_email, support_
 		
 			
 				// var height=$(".chat-message").height()+200;
-				// $(".chat-message").scrollTop(height)
+				$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
 			});
 		});
 		
@@ -63,7 +70,6 @@ async function showMessages(receiver_email,receiver_name, sender_email, support_
 				includeMetadataChanges: true;
 				querySnapshot.forEach(function(doc) {
 				doc.data()['message'].forEach(function(messages){
-				console.log(messages)		
 				if( messages['sender_email'] == sender_email ){
 
 					messages_list += `<div class="message right">
@@ -79,11 +85,10 @@ async function showMessages(receiver_email,receiver_name, sender_email, support_
 				else if ( messages['sender_email'] == receiver_email ) {
 					
 					messages_list += `<div class="message">
-						${doc.data()['receiver']}
 						<div class="bubble">
 							${messages['message']}
 							<div class="corner"></div>
-							<span class="right-time">${messages['date']} | ${messages['time'].replace(/:\d+ (\w\w)$/, ' $1')}</span>
+							<span class="left-time">${messages['date']} | ${messages['time'].replace(/:\d+ (\w\w)$/, ' $1')}</span>
 						</div>
 					</div>`;
 				}
@@ -216,7 +221,6 @@ async function send_message()
 			}
 			else
 			{
-				console.log(ref_1[0])
 				const docRefId = ref_1.docs[0].id;
 			
 				db.collection("ChatMessages").doc(docRefId).update({
@@ -228,7 +232,7 @@ async function send_message()
 
 		$('#text_message').val("");
 	
-		showMessages('villamredon@gmail.com','Admin', sender_email, support_id);
+		showMessages(receiver_email, sender_email, support_id);
 		// if (usertype == "Driver" )
 		// {
 		// 	$(".chat-active").find(".customerviewmessage").click();
@@ -238,4 +242,79 @@ async function send_message()
 		// 	$(".chat-active").find(".viewmessge").click();
 		// }
 	}
+}
+
+
+
+async function clear_notification_count(support_id, user_type)
+{
+	const ref = await db.collection("ChatMessages").where('support_id', '==', support_id).get()
+	.then(function(querySnapshot) 
+	{
+		querySnapshot.forEach(function(doc) 
+		{
+			if (user_type == 'Admin')
+			{
+				doc.ref.update({receiver_seen: 0});
+			}
+			else
+			{
+				doc.ref.update({sender_seen: 0}) ;
+			}
+		});
+	})
+}
+function show_msg(support_id)
+{
+	$.ajax({
+		url: "/close_support_ticket/",
+		method:'POST',
+		cache: false,
+		data: {'support_id':support_id},
+		success: function (resp_data) 
+		{
+			$('#overlayer_transparent').hide();
+			swal({
+				icon:"warning",
+				text:"Ticket closed successfully...",
+				buttons: "Ok",
+				dangerMode: true,
+				closeOnClickOutside:false	
+			}).then((willUpdate) => {
+				location.reload();
+			});
+		}
+	});
+}
+
+async function close_support_ticket_firestore(support_id)
+{
+	const ref = await db.collection("ChatMessages").where('support_id', '==', support_id).get()
+	.then(function(querySnapshot) 
+	{
+		querySnapshot.forEach(function(doc) 
+		{
+			doc.ref.update({status: "Close"}).then(function() {
+				show_msg(support_id);
+			});
+		});
+	});
+}
+
+function close_support_ticket(support_id)
+{
+	swal({
+		icon:"warning",
+		text:"Are you sure, to close the support ticket ?",
+		buttons: ["No", "Yes"],
+		dangerMode: true,
+		closeOnClickOutside:false	
+	}).then((willUpdate) => 
+	{
+		
+		if(willUpdate) {
+			$('#overlayer_transparent').show();
+			close_support_ticket_firestore(support_id);
+		}
+	});
 }

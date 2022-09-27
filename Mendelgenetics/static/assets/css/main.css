@@ -1518,6 +1518,45 @@ input[type="submit"] {
     animation: loader-inner 2.5s infinite ease-in;
 }
 
+
+#overlayer_transparent {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999999;
+    background: #4628bd94;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+#overlayer_transparent .loader {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    z-index: 3;
+    border: 4px solid white;
+    top: 50%;
+    -webkit-animation: loader 2.5s infinite ease;
+    animation: loader 2.5s infinite ease;
+}
+
+#overlayer_transparent .loader .loader-inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: white;
+    -webkit-animation: loader-inner 2.5s infinite ease-in;
+    animation: loader-inner 2.5s infinite ease-in;
+}
+
 @-webkit-keyframes loader {
     0% {
         -webkit-transform: rotate(0deg);

@@ -38,11 +38,12 @@
     <style>
         .right-time{
             right: 0 !important;
-            width: 115px;
+            width: 125px;
+            /* margin-right: -20px; */
         }
         .left-time{
             left: 0 !important;
-            width: 115px;
+            width: 125px;
         }
         #chatbox{
             z-index: 2;
@@ -133,7 +134,7 @@
         #chat-messages div.message{
             padding:0 0 30px 58px;
             clear:both;
-            margin-bottom:45px;
+            margin-bottom:40px;
         }
         #chat-messages div.message.right{
             padding: 0 58px 30px 0;
@@ -412,6 +413,11 @@
 
 </style>
 <body>
+    <div class="overlayer" id="overlayer_transparent" style="display: none; background: #4628bd94 !important;">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
     <!--============= ScrollToTop Section Starts Here =============-->
     <div class="overlayer" id="overlayer">
         <div class="loader">
@@ -448,9 +454,9 @@
                     <ul class="cart-button-area">
                         <ul class="nav nav-pills mr-auto justify-content-end">
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- <a class="nav-link text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-bell"></i>
-                                </a>
+                                </a> -->
                                 <ul class="dropdown-menu" style="font-size: 15px;">
                                     <li class="head text-light" style="background: -webkit-linear-gradient(90deg, #3da9f5 0%, #683df5 100%);">
                                         <div class="row">
@@ -727,75 +733,77 @@
    
 <!-- Chat box -->
 
+
 <div id="chatbox"> 
-    <div id="chatview" class="p1">    	
-        <div id="profile" style="width: 400px;">
-            <div onclick="hideChatBox()" id="close" style="font-size: 20px;">
-                <i class="fa-regular fa-circle-xmark"></i>
-            </div>
-            
-            <p id="id_receiver_user_name">@Support</p>
-            <!-- <span id="id_receiver_email">miro@badev@gmail.com</span> -->
-        </div>
-        <div id="chat-messages">
-            <!-- <label>Thursday 02</label>
-            
-            <div class="message">
-                <div class="bubble">
-                    Really cool stuff!
-                    <div class="corner"></div>
-                    <span class="left-time">3 min</span>
-                </div>
-            </div>
-            
-            <div class="message right">
-                <div class="bubble">
-                    Can you share a link for the tutorial?
-                    <div class="corner"></div>
-                    <span class="right-time">1 min</span>
-                </div>
-            </div>
-            
-            <div class="message">
-                <div class="bubble">
-                    Yeah, hold on
-                    <div class="corner"></div>
-                    <span class="left-time">Now</span>
-                </div>
-            </div>
-            
-            <div class="message right">
-                <div class="bubble">
-                    Can you share a link for the tutorial?
-                    <div class="corner"></div>
-                    <span class="right-time">1 min</span>
-                </div>
-            </div>
-            
-            <div class="message">
-                <div class="bubble">
-                    Yeah, hold on
-                    <div class="corner"></div>
-                    <span class="left-time">Now</span>
-                </div>
-            </div> -->
-            
-        </div>
-        
-        <div id="sendmessage">
-            <input class="send_message_input" id="text_message" type="text" placeholder="Send message..." />
-            <button onclick="send_message()" id="send"><i class="fa-solid fa-paper-plane"></i></button>
-            <input type="hidden" name="" id="receiver_email" value="villamredon@gmail.com">
-            <input type="hidden" name="" id="receiver_user_name" value="Admin">
-            <input type="hidden" name="" id="sender_email" value="">
-            <input type="hidden" name="" id="sender_name" value="">
-            <input type="hidden" name="" id="support_id" value="">
-            <input type="hidden" name="" id="support_subject" value="">
-            <input type="hidden" name="" id="support_date" value="">
-            <input type="hidden" name="" id="lot_id" value="">
-        </div>
-    </div>        
+	<div id="chatview" class="p1">    	
+		<div id="profile" style="width: 400px;">
+			<div onclick="hideChatBox()" id="close" style="font-size: 20px;">
+				<i class="fa-regular fa-circle-xmark"></i>
+			</div>
+			
+			<p id="id_receiver_user_name">@Support</p>
+			<!-- <span id="id_receiver_email">miro@badev@gmail.com</span> -->
+		</div>
+		<div id="chat-messages">
+			<!-- <label>Thursday 02</label>
+			
+			<div class="message">
+				<div class="bubble">
+					Really cool stuff!
+					<div class="corner"></div>
+					<span class="left-time">3 min</span>
+				</div>
+			</div>
+			
+			<div class="message right">
+				<div class="bubble">
+					Can you share a link for the tutorial?
+					<div class="corner"></div>
+					<span class="right-time">1 min</span>
+				</div>
+			</div>
+			
+			<div class="message">
+				<div class="bubble">
+					Yeah, hold on
+					<div class="corner"></div>
+					<span class="left-time">Now</span>
+				</div>
+			</div>
+			
+			<div class="message right">
+				<div class="bubble">
+					Can you share a link for the tutorial?
+					<div class="corner"></div>
+					<span class="right-time">1 min</span>
+				</div>
+			</div>
+			
+			<div class="message">
+				<div class="bubble">
+					Yeah, hold on
+					<div class="corner"></div>
+					<span class="left-time">Now</span>
+				</div>
+			</div> -->
+			
+		</div>
+		
+		<div id="sendmessage">
+			<input class="send_message_input" id="text_message" type="text" placeholder="Send message..." />
+			<button onclick="send_message()" id="send"><i class="fa-solid fa-paper-plane"></i></button>
+			<input type="hidden" name="" id="receiver_email" value="villamredon@gmail.com">
+			<input type="hidden" name="" id="receiver_user_name" value="Admin">
+			<input type="hidden" name="" id="sender_email" value="">
+			<input type="hidden" name="" id="sender_name" value="">
+			<input type="hidden" name="" id="support_id" value="">
+			<input type="hidden" name="" id="support_subject" value="">
+			<input type="hidden" name="" id="support_date" value="">
+			<input type="hidden" name="" id="lot_id" value="">
+		</div>
+	</div>        
 </div>
+	
 
         
         
@@ -1016,18 +1024,22 @@
         {
             $('#chatbox').hide();
         }
-        function showChatBox(user_name, user_email, support_id, subject, support_date)
+        function showChatBox(receiver_name, receiver_email, user_name, sender_email, support_id, subject, support_date)
         {
-            console.log(user_name, user_email, support_id);
             $('#chatbox').show();
 
-            $('#sender_email').val(user_email);
+            var user_type = (user_name == 'Admin') ? 'Admin' : 'Auctioner';
+            clear_notification_count(support_id, user_type);
+            
+            $("#receiver_user_name").val(receiver_name);
+            $("#receiver_email").val(receiver_email);
+            $('#sender_email').val(sender_email);
             $('#sender_name').val(user_name);
             $('#support_id').val(support_id);
             $('#support_subject').val(subject);
             $('#support_date').val(support_date);
 
-            showMessages('villamredon@gmail.com','Admin', user_email, support_id);
+            showMessages(receiver_email,  sender_email, support_id);
 
             $('#lot_id').val(lot_id);
 
