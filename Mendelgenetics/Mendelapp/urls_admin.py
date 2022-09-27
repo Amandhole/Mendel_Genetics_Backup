@@ -9,6 +9,7 @@ from Mendelapp.views_admin import  *
 
 urlpatterns = [
     path("admin_user_login", admin_user_login, name="admin_user_login"),
+    path('admin_user_logout', admin_user_logout, name="admin_user_logout"),
     path('admin_dashboard', admin_dashboard, name="admin_dashboard"),
     path('show_corprate_user_to_admin', show_corprate_user_to_admin,name='show_corprate_user_to_admin'),
     path('show_individual_user_to_admin', show_individual_user_to_admin,name="show_individual_user_to_admin"),
@@ -17,4 +18,5 @@ urlpatterns = [
     path('get_lot_of_test_from_admin', get_lot_of_test_from_admin,name="get_lot_of_test_from_admin"),
     path('test_reject_by_admin', test_reject_by_admin, name="test_reject_by_admin")
 ]
+
 

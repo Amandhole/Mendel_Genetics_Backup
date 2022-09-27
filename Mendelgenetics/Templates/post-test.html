@@ -1037,7 +1037,7 @@
                     console.log(response)
                     swal({
                       icon:"success",
-                      text: "Test Posted Successfully",
+                      text: "Test Posted Successfully" + "\n" + " Auction Id"+" " +  response['test_id'],
                       closeOnClickOutside : false
                     }).then(function(){
                       location.href="{% url 'test_added_by_user_list' %}"

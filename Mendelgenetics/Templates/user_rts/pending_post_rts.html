@@ -1,0 +1,94 @@
+<div class="tab-content" style="overflow-y: scroll; max-height: 785px;">
+
+    {% for test in pending_test %}
+        <div class="tab-pane show active fade" id="current">
+            <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+                background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                background: #ffff 0% 0% no-repeat padding-box;
+                border-radius: 8px;
+                box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                opacity: 1;
+                padding: 30px; border: 1px solid #80808052;
+                margin-top: 0px; padding-top: 15px;">
+            
+                <div class="row">
+                    
+                    <div class="row col-md-12">
+                        <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                            <span style="font-weight: 600;">Pathalogy </span>
+                        </div>
+
+                        <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">
+                            {%if test.fk_sample_master.pathalogy|length > 100 %}   
+                                <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":100"}}...</h6> 
+                            {% else %}    
+                                <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy}}</h6>
+                            {% endif %}    
+                        </div>
+                    </div> 
+
+
+                    <div class="row col-md-12">
+                        <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                            <span style="font-weight: 600;">Gen </span>
+                        </div>
+                        <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                            
+                            {%if test.fk_sample_master.gens|length > 100 %}
+                                
+                                <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens|slice:":100"}}...</h6> 
+                            {% else %}    
+                            
+                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens}}</h6>
+                            {% endif %}    
+                        </div>
+                    </div>   
+                    
+                    
+
+
+                    <div class="row col-md-12">
+                        <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                            <span style="font-weight: 600;">Contact Person </span>
+                        </div>
+                        <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                            {%if test.Contact_person_name|length > 100 %}
+                                
+                                <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name|slice:":100"}}...</h6> 
+                            {% else %}    
+                            
+                                    <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name}}</h6>
+                            {% endif %}    
+                        </div>
+                    </div> 
+
+                        
+                    <div class="row col-md-12">
+                        <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                            <span style="font-weight: 600;">Date  </span>
+                        </div>
+
+                        <div class="col-md-5" style="margin-top: 15px;">
+                            <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'d-m-Y'}}</h6>
+                        </div> 
+
+                    
+                        <div class="col-md-4">
+                            <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                <i class="flaticon-edit" ></i> 
+                            </button>   
+
+                        
+                                    
+                            <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div> 
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    {% endfor %}
+</div>
