@@ -31,12 +31,8 @@ def admin_user_login(request):
                 print('in else')
                 send_data = {"status": "0", "msg": "User Not Exist"}
         else:
-            session_id = request.session.get('user_id')
-            if session_id:
-                return redirect('user_profile_page')
-            else:
-                print('request not post')
-                return render(request, 'admin/login.html', {"session_id": session_id})
+            print('request not post')
+            return render(request, 'admin/admin_login.html', {"session_id": session_id})
     except:
         send_data = {"status": "0", "msg": "Something Went wrong", "error": str(traceback.format_exc())}
 
