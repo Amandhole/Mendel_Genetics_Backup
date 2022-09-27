@@ -295,12 +295,12 @@ $("#logout").click(function(){
             if(willUpdate) {
             $.ajax({
             method : "POST",
-            url : "{% url 'userlogout' %}",
+            url : "{% url 'admin_user_logout' %}",
             contentType : "application/json",
             data : JSON.stringify({
             }),
             success : function(response){
-               location.href="{% url 'login_page' %}" 
+               location.href="{% url 'admin_user_login' %}" 
                
             }
         })

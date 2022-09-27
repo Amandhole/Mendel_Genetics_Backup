@@ -12,8 +12,10 @@ from datetime import datetime
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_user_login(request):
-    session_id = request.session.get('user_id')
+    session_id = request.session.get('admin_user_id')
+    print('session id',session_id)
     try:
+        
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             username = data['username']
@@ -22,7 +24,7 @@ def admin_user_login(request):
             if AdminUser.objects.filter(username=username, password=password).exists():
                 if AdminUser.objects.get(username=username, password=password):
                     user_obj = AdminUser.objects.get(username=username, password=password)
-                    request.session['user_id'] = str(user_obj.id)
+                    request.session['admin_user_id'] = str(user_obj.id)
                     request.session['user_name'] = str(user_obj.username)
                     send_data = {"status": "1","msg": "User Login Successfully", "obj": user_obj.id}
                 else:
@@ -31,13 +33,13 @@ def admin_user_login(request):
                 print('in else')
                 send_data = {"status": "0", "msg": "User Not Exist"}
         else:
-            session_id = request.session.get('user_id')
+            print(session_id)
             if session_id:
-                return redirect('user_profile_page')
-            else:
-                print('request not post')
-                return render(request, 'admin/login.html', {"session_id": session_id})
+                return redirect('admin_dashboard')
+            else:    
+                return render(request, 'admin/admin_login.html', {"session_id": session_id})
     except:
+        
         send_data = {"status": "0", "msg": "Something Went wrong", "error": str(traceback.format_exc())}
 
         print(traceback.format_exc())
@@ -45,11 +47,23 @@ def admin_user_login(request):
     return JsonResponse(send_data)
 
 
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def admin_user_logout(request):
+    try:
+        del request.session['admin_user_id']
+        print('deleting session')
+        return redirect('admin_user_login')
+    except:
+        return redirect('admin_user_login')
+
+
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_dashboard(request):
-    session_id = request.session.get('user_id')
+    session_id = request.session.get('admin_user_id')
+    
     try:
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
@@ -67,7 +81,7 @@ def admin_dashboard(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def show_corprate_user_to_admin(request):
     try:
-        session_id = request.session.get('user_id')
+        session_id = request.session.get('admin_user_id')
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
@@ -86,7 +100,7 @@ def show_corprate_user_to_admin(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def show_individual_user_to_admin(request):
-    session_id = request.session.get('user_id')
+    session_id = request.session.get('admin_user_id')
     try:
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
@@ -111,7 +125,7 @@ def show_individual_user_to_admin(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def pending_test(request):
     try:
-        session_id = request.session.get('user_id')
+        session_id = request.session.get('admin_user_id')
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
@@ -133,7 +147,7 @@ def pending_test(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def published_test(request):
     try:
-        session_id = request.session.get('user_id')
+        session_id = request.session.get('admin_user_id')
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)

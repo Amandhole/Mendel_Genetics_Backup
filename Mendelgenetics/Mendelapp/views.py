@@ -152,7 +152,8 @@ def user_login(request):
         send_data = {"status": "0", "msg": "Invalid credential",
                      "error": str(traceback.format_exc())}
 
-        print(traceback.format_exc())             
+        print(traceback.format_exc())      
+        print('11111111111111111111111111111111111111111111111111111111111111111111111111111')       
         return redirect('landing_page')
     return JsonResponse(send_data)
 
@@ -260,6 +261,7 @@ def reset_password(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_profile_page(request):
+    
 
     session_id = request.session.get('user_id')
     print(session_id)
@@ -579,22 +581,12 @@ def add_test_by_user(request):
             converted_date = datetime.strptime(datepicker, format_data)
             # strfdate = converted_date.strftime("%Y-%m-%d %H:%M:%S")
 
-            random_no = str(random.randint(1000000, 9999999))  # code for genrate auction id
+            # random_no = str(random.randint(1000000, 9999999))  # code for genrate auction id
          
-            auction_test_id = ""
+               
             user_id_len = len(user_id)
-
-            if (user_id_len == 1):
-               auction_test_id = "00"+user_id + random_no
-
-            elif (user_id_len == 2):
-                auction_test_id = "0"+user_id + random_no      
-            
-            else:
-                auction_test_id = user_id + random_no
-            
-            print('auction id is',auction_test_id)     
-                
+                # f"{user.id:03d}{test.id:07d}" 
+                            
             if UserMaster.objects.filter(id=user_id).exists():
                 user_obj = UserMaster.objects.get(id=user_id)
                 test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,
@@ -603,11 +595,16 @@ def add_test_by_user(request):
                                     patient_height=patient_height, doctor_name=dr_name, date = converted_date,
                                     Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,
                                     background_data=background_data,  weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=datetime.now(),
-                                    auction_test_id=auction_test_id)
+                                    )
              
                 test_obj.save()
+
+                test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{test_obj.id:07d}"
+                test_obj.save()
                 
-                send_data = {'status': "1", 'msg': "Test Added Succesfully"}
+
+                
+                send_data = {'status': "1", 'msg': "Test Added Succesfully", "test_id": test_obj.auction_test_id}
             else:
                 send_data = {'status': "0", "msg": "User Not found"}
         else:
@@ -654,7 +651,9 @@ def test_added_by_user_list(request):
                 
                 for test in test_active_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-
+                
+                for test in test_active_obj:
+                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
                 print(test_active_obj.query)
                 for i in test_active_obj:
@@ -667,7 +666,8 @@ def test_added_by_user_list(request):
                 
                 for test in Confirm_test_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
-
+                for test in Confirm_test_obj:
+                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
                 print('llllllllllllllllllll',Confirm_test_obj)
                 
                 # expire_test_obj = UserTest.objects.filter(fk_user_id=session_id , date__lt = today).order_by('-id')   # expired test
@@ -832,7 +832,9 @@ def All_test_list_exclude_current_user(request):
                 tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id)
                 for test in tets_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-                    
+
+                for test in tets_obj:
+                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
                 print(tets_obj)
                 for test in tets_obj:
                     bids = UserBids.objects.filter(fk_test_lot=test)
@@ -1266,11 +1268,11 @@ def get_all_test_of_lot_from_active_tab(request):
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
-            test_list = TestLots.objects.get(id=lot_id).tests_in_lot
 
-            
+            print(lot_id)
+            test_list = TestLots.objects.get(id=lot_id).tests_in_lot            
             test_data =eval(test_list)
-        
+            print(test_data)
             test_in_lot = UserTest.objects.filter(id__in=test_data)
 
             context = {

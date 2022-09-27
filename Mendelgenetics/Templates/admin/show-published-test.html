@@ -297,7 +297,7 @@
                                 
                                       <thead>
                                         <tr>
-                                        <td><input claas="checkbox"  type="checkbox" name="" id="select_all" style="width: 30px;margin-left: 8px;"><p style="font-weight: 600;"></p></td>
+                                        {% comment %} <td><input claas="checkbox"  type="checkbox" name="" id="select_all" style="width: 30px;margin-left: 8px;"><p style="font-weight: 600;"></p></td> {% endcomment %}
                                           <th>Sr No</th>
                                           <th>Lot Id</th>
                                           <th>Date</th>
@@ -309,9 +309,9 @@
                                       <tbody>
                                         {% for i in published_test_obj %}
                                         <tr>
-                                            <td>
+                                            {% comment %} <td>
                                                 <input style="margin-left: 8px;width: 30px;" type="checkbox" class="checkbox" name="checkbox" id="checkboxid" value={{i.id}} data-id={{i.fk_user.id}}> 
-                                            </td>
+                                            </td> {% endcomment %}
                                             <td>{{forloop.counter}}</td>
 
                                             {% if i.test_lot_id %}
