@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .login-form .form-group input {
+    height: 50px;
+    border: 1px solid rgba(97, 90, 191, 0.2);
+    background: #ffffff;
+    padding: 0 75px;
+}
+
+
+</style>
+    <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
+    <div class="hero-section style-2">
+        <div class="container">
+        </div>
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    </div>
+	<div id="cover-spin"></div>
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+        <div class="container">
+            <div class="row justify-content-center">
+                {%  include  'admin/sidebar.html' %}
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="header">
+									<div style="width: 100%; display: inline-flex;">
+										<h4 class="title float-left">Suppport Tickets</h4>
+									</div>
+									<div class="dashboard-purchasing-tabs" id="id_support_tabs" style="width: 100%;">
+										<div class="row mt-2 mb-2">
+											<div class="col-md-8"></div>
+											<div class="col-md-4" style="display: inline-flex; justify-content: space-evenly;">
+												<span style="width: 50%; font-size: 16px; padding-top: 5px;"></span>
+												<select onchange="filterSupportTickets()" style="height: 40px; font-size: 16px;" class="form-control" name="" id="id_status_filter">
+													<option value="Open">Open</option>
+													<option value="Close">Close</option>
+												</select>
+											</div>
+										</div>
+
+										<div id="support_div" style="overflow-y: auto; max-height: 580px;">
+											{{support_content}}
+										</div>  
+									</div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!--============= Footer Section Starts Here =============-->
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script>
+	
+
+
+	function filterSupportTickets()
+	{
+		if($('#id_status_filter').val() == 'Open')
+		{
+			create_support_list();
+		}
+		else
+		{
+			$.ajax({
+				url: "/support_ticket_filter_admin/",
+				method:'POST',
+				cache: false,
+				data: {'filter':$('#id_status_filter').val()},
+				success: function (resp_data) 
+				{
+					if (resp_data.status == "1")
+					{
+						$('#support_div').html(resp_data.support_content);
+					}
+				}
+			});
+		}
+	}
+	// function to raise support ticket
+	function create_support_list()
+	{
+		var notification_list = ""
+		var notification = ""
+		
+		// .orderBy("server_datetime","desc")
+		$('#support_div').html('');
+		var status = 'Open'
+		db.collection("ChatMessages").where("status", "==", 'Open')
+		.onSnapshot(function(querySnapshot) {
+			var string = '';
+			var total_count = 0;
+			querySnapshot.forEach((doc) => {
+				total_count = total_count + doc.data()['receiver_seen'];
+
+				string += `<div class="tab-content">
+							<div class="tab-pane show active fade" id="current">
+								<div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+									background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+									background: #ffff 0% 0% no-repeat padding-box;
+									border-radius: 8px;
+									box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+									opacity: 1;
+									padding: 30px; border: 1px solid #80808052;
+									margin-top: 0px; padding-top: 15px;">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="rate-sec">
+												<!-- <p>Rate Offered</p> -->
+												<h6 style="margin-top: 0px;font-size: 14px; ">${doc.data()['support_id']}</h6>
+											</div>
+										</div>
+
+										<div class="col-md-6" style="font-size: 14px;">
+											<div class="trans-sec">
+												<span style="float:right; font-weight:600; color: #37406f;">${doc.data()['support_date']}</span>
+												<!-- {{ test.date|date:'m-d-Y'}} -->
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12" style="margin-top: 18px; margin-bottom: 5px;">
+											<h6 style="font-size: 18px; font-weight:400;">${doc.data()['support_subject']}</h6>
+										</div>
+									</div>
+									<div class="row text-right">
+										<div class="col-md-4 text-left" style="font-size: 12px;">
+											<span>${doc.data()['sender']}</span><br>
+											<span>${doc.data()['sender_email']}<span>
+										</div>
+										<div class="col-md-8">
+											<div class="profile-sec" style="display: inline-flex;">
+												<div style="padding-top: 10px;">
+													<button type="button" onclick="showChatBox('${doc.data()['sender']}','${doc.data()['sender_email']}' ,'Admin','villamredon@gmail.com', '${doc.data()['support_id']}', '${doc.data()['support_subject']}', '${doc.data()['support_date']}')" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+														<i class="fa-solid fa-message"></i>
+													</button>
+													<span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 18px; width: 18px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">${doc.data()['receiver_seen']}</span>
+												</div>&emsp;
+												<div style="padding-top: 10px;">
+													<button type="button" onclick="close_support_ticket('${doc.data()['support_id']}')" id="{{test.id}}" style="background-color: red;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+														<i class="fa-regular fa-circle-xmark"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>    
+						</div>`;
+		});
+			
+			// querySnapshot.size == 0 ? (flag = true) : (flag = false);
+			$('#total_chat_count').html(total_count);
+			
+			$('#support_div').html(string);
+		})
+	}
+
+	$(document).ready(function() 
+	{
+		create_support_list();
+		$("#profile_setting").removeClass('active')
+     	$("#id_support_chat").addClass('active')	
+		
+	});
+	
+</script>  
+
+{% endblock%}
+

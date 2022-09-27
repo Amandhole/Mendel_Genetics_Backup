@@ -62,11 +62,14 @@
                             <li>
                                 <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i> Posted Test</a>
                             </li>
+                            <li>
+                                <a href="/support_chat/" class="" id="id_support_chat"><i class="fa-brands fa-rocketchat"></i>Support Chat &emsp; <span id="total_chat_count" style="padding: 2px 7px 2px 8px; color: white; width: 40px; height : 20px; border-radius: 50%; background: red;">0</span></a>
+                            </li>
 
                             <li>
                                 <a  id="logout"  style="cursor:pointer ;" ><i class="fa-solid fa-share-from-square"></i>Logout</a>
                             </li>
-                             {% comment %} <li> 
+                            {% comment %} <li> 
                                 <a href="winning-bids.html"><i class="flaticon-best-seller" id="current_order"></i>Current Order</a>
                             </li> {% endcomment %}
 
@@ -113,7 +116,9 @@
                                     <li>
                                         <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i> Posted Test</a>
                                     </li>
-
+                                    <li>
+                                        <a href="/support_chat/" class="" id="id_support_chat"><i class="fa-brands fa-rocketchat"></i>Support Chat &emsp; <span id="total_chat_count" style="padding: 2px 7px 2px 8px; color: white; width: 40px; height : 20px; border-radius: 50%; background: red;">0</span></a>
+                                    </li>
                                     
                                     {% comment %} <i class="fa fa-sign-out" aria-hidden="true"></i> {% endcomment %}
                                     <li>
@@ -224,6 +229,9 @@
     })
 
     $(document).ready(function(){
+        $("#profile_setting").removeClass('active')
+        $("#id_support_chat").addClass('active')
+
         var status = $("#auc_bid_status_id").val()
         if (status == "True"){
             console.log('btn status true')
@@ -241,6 +249,17 @@
 <script>
     $(document).ready(function() {
 
+    db.collection("ChatMessages").where("status", "==", 'Open').where("sender_email", "==", '{{user_obj.email}}')
+    .onSnapshot(function(querySnapshot) {
+        var total_count = 0;
+        querySnapshot.forEach((doc) => {
+            total_count = total_count + doc.data()['sender_seen'];
+    });
+        
+        $('#total_chat_count').html(total_count);
+        
+        // $('#support_div').html(string);
+    })
     
     var readURL = function(input) {
         if (input.files && input.files[0]) {

@@ -62,6 +62,7 @@ class SampleTestMasterClass(admin.ModelAdmin):
 admin.site.register(SampleTestMaster, SampleTestMasterClass)
 
 
+admin.site.register(Support)
 class AdminUserClass(admin.ModelAdmin):
 	list_display = ('id', 'name', 'username', 'password')
 	
