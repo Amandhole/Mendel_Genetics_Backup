@@ -249,9 +249,9 @@ def test_reject_by_admin(request):
     
 ############################################# Support Chat View
 
-def support_chat(request):
+def support_chat_admin(request):
     try:
-        session_id = request.session.get('user_id')
+        session_id = request.session.get('admin_user_id')
         if session_id: 
             user_obj = AdminUser.objects.get(id=session_id)
             
