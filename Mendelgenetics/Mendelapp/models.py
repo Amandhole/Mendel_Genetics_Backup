@@ -129,7 +129,7 @@ class UserBids(models.Model):
     bid_Price = models.FloatField(blank=True, default='')
     expect_result_date = models.DateField(null=True, blank=True)
     checkbox = models.CharField(max_length=50, null=True)
-    bid_status = models.CharField(null=True, max_length=15, default ="") #Pending Approved
+    bid_status = models.CharField(null=True, max_length=15, default ="") #Pending Approved ,cancelled
 
     # def __str__(self):
     #     return self.fk_user_master

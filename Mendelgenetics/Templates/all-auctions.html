@@ -224,7 +224,7 @@
                                             </div>
 
                                             <div class="col-md-5" style="margin-top: 15px;">
-                                                <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'m-d-Y'}}</h6>
+                                                <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'d-m-Y'}}</h6>
                                             </div> 
 
                                           
@@ -662,7 +662,6 @@
 <script>
    function get_id_accordion(id){
 
-        alert(id)
         $.ajax({
             method:"POST",
             url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
@@ -685,7 +684,7 @@
     }
 </script>
 <script>
-        $('#datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true, }).val();
+        $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true, changeYear: true, }).val();
         
     
     $(document).ready(function(){

@@ -632,72 +632,99 @@ import ast
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_added_by_user_list(request):
+
     try:
         session_id = request.session.get('user_id')
         if session_id:
 
             today = datetime.today()
             if UserMaster.objects.filter(id=session_id).exists():
-                user_obj = UserMaster.objects.get(id=session_id)
+                    user_obj = UserMaster.objects.get(id=session_id)
+    
+                    pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
+                    cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
+                    test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')
+                    Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
+                    
+                    for test in test_active_obj:
+                        test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
+                    
+                    for test in test_active_obj:
+                        test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
-                
-                # test_obj = UserTest.objects.filter(fk_user_id=session_id, date__gte = today).order_by('-id') # for active test
-                pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
-                print('pending',pending_test)
+            
+                    for i in test_active_obj:
+                        i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).exclude(bid_status="Cancelled").count()
+                    
+                    for test in Confirm_test_obj:
+                        test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
 
-                cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
-                print('cancel test object', cancelled_test_obj)
+                    for test in Confirm_test_obj:
+                        test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
+                                      
+                    if request.method == "POST":  
+                        data = json.loads(request.body.decode('utf-8'))
+                        tab_type = data['tab_type']
+                       
+                        if tab_type == "Active_tab":
+                            context = {   
+                                "user_obj": user_obj,
+                                "test_active_obj": test_active_obj,
+                                }
+                            send_data = render_to_string('user_rts/active_post_rts.html', context)
 
-                test_active_obj = TestLots.objects.filter(lot_status="Published").order_by('-id')
-                print(test_active_obj)
-               
-                
-                for test in test_active_obj:
-                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-                
-                for test in test_active_obj:
-                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
-                print(test_active_obj.query)
-                for i in test_active_obj:
-                    i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).count()
-              
-                # Confirm_test_obj = TestLots.objects.filter(fk_user_master_id=session_id, lot_status="Approved").order_by('-id')
 
-                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
-                
-                
-                for test in Confirm_test_obj:
-                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
-                for test in Confirm_test_obj:
-                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
-                print('llllllllllllllllllll',Confirm_test_obj)
-                
-                # expire_test_obj = UserTest.objects.filter(fk_user_id=session_id , date__lt = today).order_by('-id')   # expired test
-                # print('expired test obj',expire_test_obj)
-
-                context = {
+                        elif tab_type == "Pending_tab":
+                            context = {
+                                "user_obj": user_obj,
+                                "pending_test": pending_test
+                                }
+                            send_data = render_to_string('user_rts/pending_post_rts.html', context)
                         
-                        "user_obj": user_obj,
-                        "test_active_obj": test_active_obj,
-                        "Confirm_test_obj":Confirm_test_obj,
-                        "cancelled_test_obj":cancelled_test_obj,
-                        "pending_test": pending_test
-                        # 'expire_test_obj': expire_test_obj
+                        
+                        elif tab_type == "Cancelled_tab":
+                            context = {
+                                "user_obj": user_obj,
+                                "cancelled_test_obj": cancelled_test_obj,
+                                }
+                            send_data = render_to_string('user_rts/cancelld_post_rts.html', context)
+                        
+
+
+                        elif tab_type == "Confirm_tab":
+                            context = {   
+                                "user_obj": user_obj,
+                                "Confirm_test_obj":Confirm_test_obj,
+                                }
+                            send_data = render_to_string('user_rts/confirmed_post_rts.html', context)
+
+                        
+                            
+                        return HttpResponse(send_data)
+                    else:
+                        context = {
+                            "user_obj": user_obj,
+                            "test_active_obj": test_active_obj,
+                            "Confirm_test_obj":Confirm_test_obj,
+                            "cancelled_test_obj":cancelled_test_obj,
+                            "pending_test": pending_test
                             }
-                return render(request, 'posted-test.html',context)
+                    return render(request, 'posted-test.html',context)
+                    
         else:            
             return redirect('landing_page')
-
     except:
         print(traceback.format_exc())
         return redirect('landing_page')
+
 
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_test_delete_by_user(request):
     try:
+        session_id = request.session.get('user_id')
         if request.method == "POST":
 
             data = json.loads(request.body.decode('utf-8'))
@@ -706,16 +733,24 @@ def posted_test_delete_by_user(request):
             if UserTest.objects.filter(id=test_id).exists():
                 test_obj = UserTest.objects.get(id=test_id)
                 test_obj.delete()
-
-                send_data = {'status': '1', "msg": "Test Deleted Succusfully"}
+                pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
+                cancelled_test_obj = UserTest.objects.filter(fk_user_id=session_id, status="Cancelled").order_by('-id')
+                context={
+                    "pending_test":pending_test,
+                    "cancelled_test_obj":cancelled_test_obj                    }
+                send_data = render_to_string('user_rts/pending_post_rts.html', context)
+                send_data = render_to_string('user_rts/cancelld_post_rts.html', context)
+                return HttpResponse(send_data)
             else:
-                send_data = {'status': '1', "msg": "Test Does Not Exist"}
+                send_data = {'status': '0', "msg": "Test Does Not Exist"}
+                return JsonResponse(send_data)
         else:
             send_data = {'status': '0', "msg": "Request Is Not Post"}
+            return JsonResponse(send_data)
     except:
-        send_data = {'status': '0', "msg": "Something Went Wrong",
-                     "error": traceback.format_exc()}
-    return JsonResponse(send_data)
+        send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
+        print(traceback.format_exc())
+        return JsonResponse(send_data)
 
 
 @csrf_exempt
@@ -832,7 +867,7 @@ def All_test_list_exclude_current_user(request):
                 # tets_obj = UserTest.objects.filter(Q(status="Active") & Q(admin_action_status ="Published")).exclude(fk_user_id=session_id)
 
 
-                tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id)
+                tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id).order_by('-id')
                 for test in tets_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
 
@@ -933,7 +968,7 @@ def User_bids_on_other_users_test(request):
             expect_result_date = data['expect_result']
             checkbox = data['checkbox']
 
-            converted_date = datetime.strptime(expect_result_date, "%m-%d-%Y")
+            converted_date = datetime.strptime(expect_result_date, "%d-%m-%Y")
             print(user_id, lot_id, bidprice, expect_result_date, checkbox)
 
             user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id,
@@ -1002,15 +1037,17 @@ def view_all_bids_on_my_test(request):
                         for test in test_lot_obj:
                             test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
 
+                        for test in test_lot_obj:
+                            test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
+
                         print('qqqqqqqqqqqqq', test_lot_obj)
                         bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending")
 
                         print('ffffffffffffffffffffffff',bid_obj)
 
-                        approved_bid_obj = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Approved") if UserBids.objects.filter(
-                            fk_test_lot_id=lot_id, bid_status="Approved").exists() else None
+                        approved_bid_obj = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Approved") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Approved").exists() else None
                         # print('tttttttt', approved_bid_obj)
-                        
+        
                     
                         bidcount = bid_obj.count()
                     
@@ -1095,23 +1132,27 @@ def my_bids_on_other_users_test(request):
                 user_obj = UserMaster.objects.get(id=session_id)
 
                 print('my session id is',session_id)
+
                 my_active_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Pending')
-                
                 for test in my_active_bid:
-                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.temp_string = joined_string = " , ".join(
+                        ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.test_gen = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
 
 
                 my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
-
                 for test in my_approved_bid:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.test_gen = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
+            
 
-                print(my_approved_bid)
+
 
                 my_cancelled_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Cancelled')
-
                 for test in my_cancelled_bid:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.test_gen = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
+
 
                 print('my cancelled bid',my_cancelled_bid)
                 context = {            

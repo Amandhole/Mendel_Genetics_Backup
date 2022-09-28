@@ -12,8 +12,6 @@ from datetime import datetime
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_user_login(request):
-    session_id = request.session.get('admin_user_id')
-    print('session id',session_id)
     try:
         
         if request.method == "POST":
@@ -152,8 +150,7 @@ def published_test(request):
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
             
-                published_test_obj = TestLots.objects.filter(
-                    Q(lot_status="Published") | Q(lot_status="Approved")).order_by('-fk_user_master__name')
+                published_test_obj = TestLots.objects.filter(Q(lot_status="Published") | Q(lot_status="Approved")).order_by('-fk_user_master__name')
                
                 
                 print('published test', published_test_obj)
@@ -251,6 +248,7 @@ def test_reject_by_admin(request):
 
 def support_chat(request):
     try:
+        print('111111111111111111')
         session_id = request.session.get('user_id')
         if session_id: 
             user_obj = AdminUser.objects.get(id=session_id)
