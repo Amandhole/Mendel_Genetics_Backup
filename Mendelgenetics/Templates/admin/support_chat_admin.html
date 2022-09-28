@@ -96,7 +96,7 @@
 		// .orderBy("server_datetime","desc")
 		$('#support_div').html('');
 		var status = 'Open'
-		db.collection("ChatMessages").where("status", "==", 'Open')
+		db.collection("ChatMessages").orderBy("created", "desc").where("status", "==", 'Open')
 		.onSnapshot(function(querySnapshot) {
 			var string = '';
 			var total_count = 0;

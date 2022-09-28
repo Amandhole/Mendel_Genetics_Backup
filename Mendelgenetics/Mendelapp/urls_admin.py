@@ -17,7 +17,7 @@ urlpatterns = [
     path('published_test', published_test, name='published_test'),
     path('get_lot_of_test_from_admin', get_lot_of_test_from_admin,name="get_lot_of_test_from_admin"),
     path('test_reject_by_admin', test_reject_by_admin, name="test_reject_by_admin"),
-    path('support_chat_admin/', support_chat, name="support_chat")
+    path('support_chat_admin/', support_chat_admin, name="support_chat")
 ]
 
 
