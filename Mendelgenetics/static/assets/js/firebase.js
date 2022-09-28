@@ -167,7 +167,7 @@ async function send_message()
 		
 		let chat_messages2_obj = await chat_messages2.get();
 		
-		
+		debugger;
 		if (chat_messages1_obj.empty && chat_messages2_obj.empty ) 
 		{
 			db.collection("ChatMessages").add({
@@ -191,6 +191,7 @@ async function send_message()
 				
 				sender_profile :"" ,
 				sender_seen : 0,
+				created: firebase.firestore.FieldValue.serverTimestamp(),
 			})
 			.then(function(docRef) {
 				console.log("Document written with ID: ", docRef);
@@ -215,8 +216,8 @@ async function send_message()
 		
 				db.collection("ChatMessages").doc(docRefId).update({
 					message : firebase.firestore.FieldValue.arrayUnion(message_data),
-					sender_seen : increment
-				
+					sender_seen : increment,
+					created: firebase.firestore.FieldValue.serverTimestamp(),
 				})
 			}
 			else
@@ -225,7 +226,8 @@ async function send_message()
 			
 				db.collection("ChatMessages").doc(docRefId).update({
 					message : firebase.firestore.FieldValue.arrayUnion(message_data),
-					receiver_seen : increment
+					receiver_seen : increment,
+					created: firebase.firestore.FieldValue.serverTimestamp(),
 				})
 			}
 		}
