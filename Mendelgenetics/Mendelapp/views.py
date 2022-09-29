@@ -868,6 +868,9 @@ def All_test_list_exclude_current_user(request):
 
 
                 tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id).order_by('-id')
+
+                for i in tets_obj:
+                    print(i)
                 for test in tets_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
 

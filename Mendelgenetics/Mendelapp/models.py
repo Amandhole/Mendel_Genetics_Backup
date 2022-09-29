@@ -118,7 +118,7 @@ class TestLots(models.Model):
     test_gen = models.TextField(null=True, max_length=2000, default="")
     test_quantity = models.IntegerField(blank=True, null=True)
     lot_status = models.CharField(null=True, max_length=15, default="Published") #after approve bid status is Approved
-    created_date_time = models.DateTimeField(null=True, blank=True)
+    created_date_time = models.DateTimeField(auto_now =True)
 
 
 class UserBids(models.Model):
