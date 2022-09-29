@@ -1333,6 +1333,3 @@ def get_all_test_of_lot_from_active_tab(request):
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
     return HttpResponse(send_data)
-
-
-

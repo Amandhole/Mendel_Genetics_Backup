@@ -12,7 +12,7 @@ from datetime import datetime
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_user_login(request):
-    session_id = request.session.get('admin_user_id')
+    # session_id = request.session.get('admin_user_id')
     try:
         
         if request.method == "POST":
