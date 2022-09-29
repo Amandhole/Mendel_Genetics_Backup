@@ -37,11 +37,10 @@ def admin_user_login(request):
                 return redirect('admin_dashboard')
             else:    
                 return render(request, 'admin/admin_login.html', {"user_obj": session_id})
-    except:
-        
+    except:       
+        print(traceback.format_exc())
         send_data = {"status": "0", "msg": "Something Went wrong", "error": str(traceback.format_exc())}
 
-        print(traceback.format_exc())
         return redirect('landing_page')
     return JsonResponse(send_data)
 
