@@ -22,8 +22,10 @@
     <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
         <div class="container">
             <div class="row justify-content-center">
-                {%  include  'admin/sidebar.html' %}
-                <div class="col-lg-8">
+
+                {% comment %} {%  include  'admin/sidebar.html' %} {% endcomment %}
+                
+				<div class="col-lg-8">
                     <div class="row">
                         <div class="col-12">
                             <div class="dash-pro-item mb-30 dashboard-widget">
@@ -170,7 +172,7 @@
 	{
 		create_support_list();
 		$("#profile_setting").removeClass('active')
-     	$("#id_support_chat").addClass('active')	
+     	$("#id_support_chat").addClass('newclass')	
 		
 	});
 	

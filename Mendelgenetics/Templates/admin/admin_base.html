@@ -411,6 +411,15 @@
   display: block;
 }
 
+
+
+.newclass ,a:hover{
+    color: white;
+    background-color: #f58025;
+    border-radius: 10px;
+    opacity: 80%%;
+}    
+
 </style>
 <body>
     <div class="overlayer" id="overlayer_transparent" style="display: none; background: #4628bd94 !important;">
@@ -569,97 +578,104 @@
 
         <div class="header-bottom">
             <div class="container">
+
+
                 <div class="header-wrapper">
                     <div class="logo">
                         <a href="{% url 'landing_page' %}">
                             <img src="{% static 'assets/images/logo/logo.png' %}" alt="logo">
                         </a>
                     </div>
-                    <ul class="menu ml-auto">
-                        <li>
-                            <a href="{% url 'landing_page' %}">Home</a>
+
+                    {% if user_obj %}
+                        <ul class="menu ml-auto">
+                            <li>
+                                <a href="{% url 'admin_dashboard' %}" id="id_dashboard">Dashboard</a>    
+                            </li>
                             
-                        </li>
-                        <li>
-                            <a href="#">Categories</a>
-                        </li>
-                        <li>
-                            <a href="">Corporate Area</a>
-                        </li>
-                        <li>
-                            <a href="">Individual Area</a>
-                        </li>
-                     <!--    <li>
-                            <a href="#0">Pages</a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="#0">Product</a>
-                                    <ul class="submenu">
-                                        <li>
-                                            <a href="product.html">Product Page 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-2.html">Product Page 2</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Product Details</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#0">My Account</a>
-                                    <ul class="submenu">
-                                        <li>
-                                            <a href="sign-up.html">Sign Up</a>
-                                        </li>
-                                        <li>
-                                            <a href="sign-in.html">Sign In</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#0">Dashboard</a>
-                                    <ul class="submenu">
-                                        <li>
-                                            <a href="dashboard.html">Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a href="profile.html">Personal Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="my-bid.html">My Bids</a>
-                                        </li>
-                                        <li>
-                                            <a href="winning-bids.html">Winning Bids</a>
-                                        </li>
-                                        <li>
-                                            <a href="notifications.html">My Alert</a>
-                                        </li>
-                                        <li>
-                                            <a href="my-favorites.html">My Favorites</a>
-                                        </li>
-                                        <li>
-                                            <a href="referral.html">Referrals</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="about.html">About Us</a>
-                                </li>
-                                <li>
-                                    <a href="faqs.html">Faqs</a>
-                                </li>
-                                <li>
-                                    <a href="error.html">404 Error</a>
-                                </li>
-                            </ul>
-                        </li> -->
+                            <li>
+                                <a href="{% url 'pending_test' %}" class="" id="id_test">User Tests</a>
+                            </li>
                         
-                    </ul>
-                    <form class="search-form">
-                        <input type="text" placeholder="Search for brand, model....">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </form>
+                            <li>
+                                <a href="#" id="id_users">Users</a>
+                                <ul class="submenu">
+                                    {% comment %} <li>
+                                        <a href="#0">Product</a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="product.html">Product Page 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="product-2.html">Product Page 2</a>
+                                            </li>
+                                            <li>
+                                                <a href="product-details.html">Product Details</a>
+                                            </li>
+                                        </ul>
+                                    </li> {% endcomment %}
+                                    {% comment %} <li>
+                                        <a href="#0">My Account</a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="sign-up.html">Sign Up</a>
+                                            </li>
+                                            <li>
+                                                <a href="sign-in.html">Sign In</a>
+                                            </li>
+                                        </ul>
+                                    </li> {% endcomment %}
+                                    {% comment %} <li>
+                                        <a href="#0">Dashboard</a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="dashboard.html">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="profile.html">Personal Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="my-bid.html">My Bids</a>
+                                            </li>
+                                            <li>
+                                                <a href="winning-bids.html">Winning Bids</a>
+                                            </li>
+                                            <li>
+                                                <a href="notifications.html">My Alert</a>
+                                            </li>
+                                            <li>
+                                                <a href="my-favorites.html">My Favorites</a>
+                                            </li>
+                                            <li>
+                                                <a href="referral.html">Referrals</a>
+                                            </li>
+                                        </ul>
+                                    </li> {% endcomment %}
+                                
+                                    <li>
+                                        <a href="{% url 'show_corprate_user_to_admin' %}" id="id_corporatet">Corporate User</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'show_individual_user_to_admin' %} " id="id_individual">Individual User</a>
+                                    </li>
+                                </ul>
+                            </li> 
+
+                            <li>
+                                <a href="/support_chat_admin/" class="" id="id_support_chat">
+                                    Support Chat                          
+                                    <span id="total_chat_count" style="padding: 2px 7px 2px 8px; color: white; width: 40px; height : 20px; border-radius: 50%; background: red;">0</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'admin_user_logout' %}">Logout</a>
+                            </li> 
+                        </ul> 
+                    {% endif %}    
+
+                    
+                   
                     <div class="search-bar d-md-none">
                         <a href="#0"><i class="fas fa-search"></i></a>
                     </div>
@@ -1118,6 +1134,19 @@
                 $('.save_button_text').html('SAVE');
             }
         });
+
+         db.collection("ChatMessages").where("status", "==", 'Open').where("receiver_email", "==", 'villamredon@gmail.com')
+        .onSnapshot(function(querySnapshot) {
+            var total_count = 0;
+            querySnapshot.forEach((doc) => {
+                total_count = total_count + doc.data()['receiver_seen'];
+        });
+            
+            $('#total_chat_count').html(total_count);
+            
+            // $('#support_div').html(string);
+        })
+
     </script>
 </body>
 

@@ -253,12 +253,12 @@
         <div class="container">
             <div class="row justify-content-center">
 
-              {%  include  'admin/sidebar.html' %}
+              {% comment %} {%  include  'admin/sidebar.html' %} {% endcomment %}
 
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="row">
                         <div class="col-10">
-                            <div class="dash-pro-item mb-30 dashboard-widget" style="width:820px; max-height:1450px;">
+                            <div class="dash-pro-item mb-30 dashboard-widget" style="width:1200px; max-height:1450px;">
                                 
                                 <div style="margin-top: 25px;">
                                     <center> <h6>Test</h6></center>
@@ -443,7 +443,7 @@
 <script>
 
     $(document).ready(function(){
-      $("#show_test_to_user").addClass('active')
+      $("#id_test").addClass('newclass')
       $("#select_gens_id").hide()
       $("#show_hide_data").hide() 
 

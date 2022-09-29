@@ -12,6 +12,7 @@ from datetime import datetime
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_user_login(request):
+    session_id = request.session.get('admin_user_id')
     try:
         
         if request.method == "POST":
@@ -35,7 +36,7 @@ def admin_user_login(request):
             if session_id:
                 return redirect('admin_dashboard')
             else:    
-                return render(request, 'admin/admin_login.html', {"session_id": session_id})
+                return render(request, 'admin/admin_login.html', {"user_obj": session_id})
     except:
         
         send_data = {"status": "0", "msg": "Something Went wrong", "error": str(traceback.format_exc())}
@@ -215,6 +216,7 @@ def get_lot_of_test_from_admin(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_reject_by_admin(request):
+    session_id = request.session.get('admin_user_id')
     try:
         session_id = request.session.get('user_id')
         if request.method == "POST":
