@@ -144,14 +144,10 @@
                                                     <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
                                                         <span style="font-weight: 600;">Auction id </span>
                                                     </div>
-
-                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">
-                                                    
-                                                        {%if test.auction_test_id %}   
-                                                            <h6 style="font-size: 17px; font-weight:400;">{{ test.auction_test_id }}</h6> 
-                                                        {% else %}    
-                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
-                                                        {% endif %}   
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">   
+                                                            <h6 style="font-size: 17px; font-weight:400;">
+                                                                {%if test.auction_test_id %}{{ test.auction_test_id }}{% else %}----{% endif %} 
+                                                            </h6> 
                                                     </div>
                                                 </div> 
 
@@ -1082,7 +1078,19 @@
         }) 
     })
 
-
+    function hideShowBriefPathDetails(div_id, button_id)
+    {
+        if ($('#'+div_id).is(':visible') == true)
+        {
+            $('#'+div_id).hide(300);
+            $('#'+button_id).html(`<i class="fa-solid fa-plus"></i>`);
+        }
+        else
+        {
+            $('#'+div_id).show(300);
+            $('#'+button_id).html(`<i class="fa-solid fa-minus"></i>`);
+        }
+    }
 
 
 
