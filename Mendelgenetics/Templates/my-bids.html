@@ -515,7 +515,7 @@ element.style {
                                                                 </span>
 
                                                             
-                                                                {% comment %} {% if test.fk_test_lot.result_upload_status == "Upload" %}
+                                                                {% if test.fk_test_lot.result_upload_status == "Upload" %}
                                                                     <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
                                                                          Uploaded
                                                                     </span> 
@@ -523,7 +523,7 @@ element.style {
                                                                     <button type="button"  data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.fk_test_lot.id}}')"   style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                                         <i class="fa fa-upload"  ></i> 
                                                                     </button> 
-                                                                {% endif %}  {% endcomment %}
+                                                                {% endif %}  
                                         
                                                             </div> 
                                                         </div>                                       
@@ -697,7 +697,7 @@ element.style {
                     </div>
                 </div>
 
-                                                    
+                <p style="text-align: center;">( files accepted  jpg , jpeg , png , pdf )</p>                                    
                                  
     
                 <div class="row" style="justify-content:center; margin-top: 50px;">

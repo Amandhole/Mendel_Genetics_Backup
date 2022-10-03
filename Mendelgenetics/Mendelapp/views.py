@@ -10,15 +10,17 @@ from requests import request
 from .models import *
 import json
 from django.http import HttpResponse, JsonResponse
-import traceback
+
 from django.views.decorators.csrf import csrf_exempt
 from twilio.rest import Client
 from datetime import datetime
 from django.views.decorators.cache import cache_control
 
 from django.template.loader import get_template, render_to_string
-import csv
 import random
+import requests
+import csv
+import traceback
 from django.db.models import Q
 
 # Create your views here.

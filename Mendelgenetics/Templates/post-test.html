@@ -936,29 +936,27 @@
                 url : "{% url 'add_test_by_user' %}",
                 contentType : "application/json",
                 data : JSON.stringify({
-                  "user_id":user_id,
-                  "first_name":first_name,
-                  "last_name": last_name,
-                  "patient_age":patient_age,
-                  "patient_race":patient_race,
-                  "select_gender":select_gender,
-                  "patient_weight":patient_weight,
-                  "patient_height":patient_height,
-                  "dr_name":dr_name,
-                  "datepicker":datepicker,
-                  "center":center,
-                  "Email":Email,
-                  "other_way":other_way,
-                  "contact_person":contact_person,
-                  'test_req_id':test_req_id,
-                  "test_requested_type":test_requested_type,
-                  "test_req_disc":test_req_disc,
-                  "background_data":background_data,
-                  //"patient_test":test,
-                  "weight_unit":weight_unit,
-                  "height_unit":height_unit
-                
-
+                    "user_id":user_id,
+                    "first_name":first_name,
+                    "last_name": last_name,
+                    "patient_age":patient_age,
+                    "patient_race":patient_race,
+                    "select_gender":select_gender,
+                    "patient_weight":patient_weight,
+                    "patient_height":patient_height,
+                    "dr_name":dr_name,
+                    "datepicker":datepicker,
+                    "center":center,
+                    "Email":Email,
+                    "other_way":other_way,
+                    "contact_person":contact_person,
+                    'test_req_id':test_req_id,
+                    "test_requested_type":test_requested_type,
+                    "test_req_disc":test_req_disc,
+                    "background_data":background_data,
+                    //"patient_test":test,
+                    "weight_unit":weight_unit,
+                    "height_unit":height_unit
                 }),
                 success : function (response){
                   if (response['status'] == '1'){
@@ -999,15 +997,12 @@
 <script>
 
     $(document).ready(function(){
-      
-
+    
       $("#profile_setting").removeClass('active')
       $("#poste_test").addClass('active')
       $("#select_gens_id").hide()
 
       $("#show_hide_data").hide()
-
-
 
       var  profile = $("#check_profile").val()  
       if(profile == "profile_incomplete" ){
@@ -1019,19 +1014,10 @@
             location.href="{% url 'user_profile_page' %}"
           })
         } 
-       
-       
-
-
     })
-
-
 </script>
 
 <script>
-
-
-  
 
   function show_pathalogy_field(){
     

@@ -566,10 +566,14 @@
 
 
 
-
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
 
 <script>
@@ -588,6 +592,8 @@
 
         $("#show_hide_data").hide()
         $("#select_gens_id").hide()
+
+
 
     })
 </script>
@@ -720,7 +726,7 @@
     $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true,changeYear: true }).val();
 
     function edit_posted_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,centre,Email,other_way,test_requested,background_data,patient_test,weight_unit,height_unit,Contact_person_name){
-             
+        debugger     
         $("#test_id").val(id)
         $("#firstname").val(patient_first_name)
         $("#lastname").val(patient_last_name)
@@ -842,6 +848,12 @@
           $("#email_modal_error").html("");
         });
 
+
+        $("#select_sample_path").click(function () {
+          $("#select_sample_path").css("border", "1px solid #eee");
+          $("#testrequested_error").html("");
+        });
+
          $("#otherway").keyup(function () {
           $("#otherway").css("border", "1px solid #eee");
           $("#otherway_modal_error").html("");
@@ -867,24 +879,36 @@
           $("#contact_person_name_error").html("");
         });
 
+  
     function edit_posted_test_save_button(){
       
+        debugger   
+        
+        var test_id = $("#test_id").val()
+        var firstname =  $("#firstname").val()
+        var lastname =  $("#lastname").val()  
+        var patientage =  $("#patientage").val()
+        var patientrace =  $("#patientrace").val()
+        var selectgender =  $("#selectgender").val()
+        var patientweight =  $("#patientweight").val()
+        var patientheight =  $("#patientheight").val()
+        var drname =  $("#drname").val()      
+        var datepicker =  $("#datepicker").val()
+        var centre =  $("#centre").val()  
+        var email =  $("#email").val()
+        var otherway =  $("#otherway").val()
+      
 
-      var test_id = $("#test_id").val()
-      var firstname =  $("#firstname").val()
-      var lastname =  $("#lastname").val()  
-      var patientage =  $("#patientage").val()
-      var patientrace =  $("#patientrace").val()
-      var selectgender =  $("#selectgender").val()
-      var patientweight =  $("#patientweight").val()
-      var patientheight =  $("#patientheight").val()
-      var drname =  $("#drname").val()      
-      var datepicker =  $("#datepicker").val()
-      var centre =  $("#centre").val()  
-      var email =  $("#email").val()
-      var otherway =  $("#otherway").val()
-      var testrequested =  $("#testrequested").val()
-      var backgrounddata =  $("#backgrounddata").val()
+
+        var test_requested_type = $("input[name='testradio']:checked").val(); //type can be pathalogy or Gens
+    
+    
+        var test_req_id1 = $("#select_sample_path").val()
+        var test_req_id2 = $("#select_sample_gens").val()
+
+
+        var test_req_disc1 = $("#select_sample_path option:selected").text()
+        var test_req_disc2 = $("#select_sample_gens option:selected").text()
       //var patient_test = $("input[name='radiobutton']:checked").val();
       //var other_test = $("#id_text_box_show").val()
 
@@ -895,9 +919,12 @@
            
       var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
-   
+        if (test_req_id1 != ''){
+            var test_req_id = test_req_id1
+            var test_req_disc = test_req_disc1
+        }
 
-        if (drname == ''){
+        else if (drname == ''){
         $("#drname").css('border','1px solid #f37777');
         $("#drname").focus();
         $("#drname_modal_error").html('Enter Doctor Name')   
@@ -916,7 +943,13 @@
       }
 
 
-
+        else if ((test_req_id1 =='')&&(test_req_id2 == '')){
+            $("#testrequested").css("border", "1px solid #f37777");
+            
+            $("#select_sample_path").focus();
+            $("#select_sample_gens").focus()
+            $("#testrequested_error").html("Select Test Requested");
+        } 
     
        
     else if ((email =='') && (otherway ==''))
@@ -965,11 +998,10 @@
         
         else if ($("#checkbox4").prop('checked') == true && test == ''){
 
-                $("#id_text_box_show").css("border", "1px solid #f37777");
-                $("#id_text_box_show").focus();
-                $("#id_text_box_show_error").html("Enter Test");
-            }
-      
+            $("#id_text_box_show").css("border", "1px solid #f37777");
+            $("#id_text_box_show").focus();
+            $("#id_text_box_show_error").html("Enter Test");
+        }
 
 
       else {
@@ -991,8 +1023,8 @@
             "centre":centre,
             "email":email,
             "otherway":otherway,
+            "test_requested_type":test_requested_type,
             "contact_pereson":contact_pereson,
-            "testrequested":testrequested,
             "backgrounddata":backgrounddata,
             //"patienttest":test,
             "weight_unit":weight_unit,
@@ -1229,10 +1261,11 @@ function reload_page_on_back(){
     }) 
   } 
 
-  $("#select_sample_path").select2();
-  $("#select_sample_gens").select2();  
 
-  $(".select2-selection").css("padding","10px 0px 35px 20px")
+  
+    $("#select_sample_path").select2();
+    $("#select_sample_gens").select2();  
+    $(".select2-selection").css("padding","10px 0px 35px 20px")
 
   
  
