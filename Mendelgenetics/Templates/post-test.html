@@ -797,25 +797,14 @@
           $("#contact_person_name_error").html("");
         });
 
-
-    
-
-
         $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' , changeMonth: true, changeYear: true, todayHighlight: true}).val();
         $('#datepicker').attr('readonly', true);
 
         $('.ui-datepicker').addClass('notranslate');
 
 
-
-
-
-
         $("#post_test_by_user").click(function(){
 
-
-             
-          
             var dr_name = $("#drname").val()
             var datepicker = $("#datepicker").val()
             
@@ -860,72 +849,9 @@
              var test_req_disc = test_req_disc2
             }
 
-        
-           // var test_sample_text = $("#select_sample option:selected").text()
-
-            /*if( patient_test){
-              test = patient_test
-    
-            }
-            else if (othtest){
-              test = othtest
-            
-            }
-            else{
-              test = othtest
-            }*/
-     
 
             var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
-         /* console.log(first_name,last_name,patient_age,patient_race,select_gender,
-          patient_weight,patient_height,dr_name,Email,other_way,test_requested,background_data,center) */
-
-    
-          
-           /*if (first_name ==''){
-                $("#firstname").css("border", "1px solid #f37777");
-                $("#firstname").focus();
-                $("#firstname_error").html("Enter First Name ");
-            }
-            
-            else if (last_name ==''){
-                $("#lastname").css("border", "1px solid #f37777");
-                $("#lastname").focus();
-                $("#lastname_error").html("Enter Last Name");
-            }
-
-            
-            else if (patient_age ==''){
-                $("#patientage").css("border", "1px solid #f37777");
-                $("#patientage").focus();
-                $("#patientage_error").html("Enter Age ");
-            }
-
-
-            else if (patient_race ==''){
-                $("#patientrace").css("border", "1px solid #f37777");
-                $("#patientrace").focus();
-                $("#patientrace_error").html("Enter Race ");
-            }
-
-            else if (select_gender ==''){
-                $("#selectgender").css("border", "1px solid #f37777");
-                $("#selectgender").focus();
-                $("#selectgender_error").html("Select Gender");
-            }
-
-            else if (patient_weight ==''){
-                $("#patientweight").css("border", "1px solid #f37777");
-                $("#patientweight").focus();
-                $("#patientweight_error").html("Enter Weight");
-            }
-
-            else if (patient_height ==''){
-                $("#patientheight").css("border", "1px solid #f37777");
-                $("#patientheight").focus();
-                $("#patientheight_error").html("Enter Height");
-            } */
 
             if (dr_name ==''){
                 $("#drname").css("border", "1px solid #f37777");

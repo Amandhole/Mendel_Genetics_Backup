@@ -365,7 +365,7 @@
 
 
                     
-                        <div class="row" style="justify-content: center;margin-left: -54px;">
+                        {% comment %} <div class="row" style="justify-content: center;margin-left: -54px;">
 
                           <div class="col-md-2">
                             <span class="float-right" style="margin-top:10px; margin-left:30px ;">
@@ -409,7 +409,7 @@
                             </select>
                           </div>
 
-                        </div>
+                        </div> {% endcomment %}
 
                     {% comment %} <div class="form-group ">
                         <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
@@ -428,39 +428,7 @@
                     </div>
                     
                     
-                    {% comment %} <div style="margin-top: 25px;">
-                        <h6>Sample type</h6>
-                        <hr>
-                    </div> {% endcomment %}
-
-                    {% comment %} <div class="form-group">
-                    
-                          
-                        <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 35px;">
-	                           
-                              <div class="col-md-3">
-                                  <label for="#checkbox1" style="margin-top: -4px;"><input type="radio" id="checkbox1" placeholder="" checked="checked" name="radiobutton" value="EDTA Blood" style="width: 15px; height: 15px;"> EDTA Blood</label>
-                              </div>
-
-	                            <div class="col-md-2">
-                                  <label for="#checkbox2" style="margin-top: -4px;"><input type="radio" id="checkbox2" placeholder="" name="radiobutton" value="Swab" style="width: 15px; height: 15px;"> Swab</label>
-                              </div>
-                               <div class="col-md-2">
-                                  <label for="#checkbox3" style="margin-top: -4px;"><input type="radio" id="checkbox3" placeholder="" name="radiobutton" value="Paraffin" style="width: 15px; height: 15px;"> Paraffin</label>
-                              </div>
-                               <div class="col-md-2">
-                                  <label onclick="showTextBox('id_text_box_show', 'checkbox4')" for="#checkbox4" style="margin-top: -4px;"><input type="radio" name="radiobutton" value="" id="checkbox4" placeholder="" style="width: 15px; height: 15px;"> Other</label>
-                              </div>                       
-                              <div class="col-md-3" style="margin-top: 0px;">
-                                  <input style="display: none;padding: 5px;" type="text" id="id_text_box_show" name="text_field" placeholder="">
-                                  <span id="id_text_box_show_error" style="color: red;margin-left: 15PX;"></span>
-                                </div>
-
-                        </div> 
-                        
-                    </div>
- {% endcomment %}
-
+                   
                 <div style="margin-top: 60px;">
                    <h6>Patient detail(Optional)</h6>
                    <hr>
@@ -890,54 +858,7 @@
            
       var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
-      /*if( patient_test){
-        test = patient_test
-        }
-      else{
-        test = other_test   
-        }*/
-
-      /*if (firstname == ''){
-        $("#firstname").css('border','1px solid #f37777');
-        $("#firstname").focus();
-        $("#firstname_modal_error").html('Enter First Name ')   
-      } 
-
-      else if (lastname == ''){
-        $("#lastname").css('border','1px solid #f37777');
-        $("#lastname").focus();
-        $("#lastname_modal_error").html('Enter Last Name ')   
-      }
-
-      else if (patientage == ''){
-        $("#patientage").css('border','1px solid #f37777');
-        $("#patientage").focus();
-        $("#patientage_modal_error").html('Enter Age')   
-      }
-
-       else if (patientrace == ''){
-        $("#patientrace").css('border','1px solid #f37777');
-        $("#patientrace").focus();
-        $("#patientrace_modal_error").html('Enter Race ')   
-      }
-
-
-       else if (selectgender == ''){
-        $("#selectgender").css('border','1px solid #f37777');
-        $("#selectgender").focus();
-        $("#selectgender_modal_error").html('Select Gender')   
-      }
-        else if (patientweight == ''){
-        $("#patientweight").css('border','1px solid #f37777');
-        $("#patientweight").focus();
-        $("#patientweight_modal_error").html('Enter Weight')   
-      }
-
-         else if ( patientheight== ''){
-        $("#patientheight").css('border','1px solid #f37777');
-        $("#patientheight").focus();
-        $("#patientheight_modal_error").html('Enter Height')   
-      }*/
+   
 
         if (drname == ''){
         $("#drname").css('border','1px solid #f37777');
