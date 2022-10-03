@@ -92,23 +92,15 @@ def user_signup(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_login(request):
     session_id = request.session.get('user_id')
-    print('before try')
     try:
-        
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
 
             email = data['email_id']
             password = data['password']
             user_type = data['user_type']
-            print(email)
-            print(password)
-            print(user_type)
-
-            print(type(password))
 
             if UserMaster.objects.filter(email=email, password=password).exists():
-
                 obj = UserMaster.objects.get(email=email, password=password)
 
                 request.session['user_id'] = str(obj.id)
@@ -116,47 +108,29 @@ def user_login(request):
 
                 if user_type == "Individual":
                     if obj.is_individual:
-                        send_data = {
-                            "status": "1", "msg": "individual Login succesfull", "obj": obj.id}
-                        return JsonResponse(send_data)
+                        send_data = {"status": "1", "msg": "individual Login succesfull", "obj": obj.id}
                     else:
-                        send_data = {"status": "0",
-                                     "msg": "Invalid credential", "obj": obj.id}
-                        return JsonResponse(send_data)
+                        send_data = {"status": "0","msg": "Invalid credential", "obj": obj.id}
+                    return JsonResponse(send_data)
 
                 elif user_type == "Corporate":
 
                     if obj.is_corporate:
-                        send_data = {
-                            "status": "2", "msg": "Corporate Login succesfull", "obj": obj.id}
-
-
-                        print('in login function ')   
-                        return JsonResponse(send_data)
+                        send_data = {"status": "2", "msg": "Corporate Login succesfull", "obj": obj.id}
                     else:
-                        send_data = {"status": "0",
-                                     "msg": "Invalid credential", "obj": obj.id}
-                        return JsonResponse(send_data)
+                        send_data = {"status": "0","msg": "Invalid credential", "obj": obj.id}
+                    return JsonResponse(send_data)
             else:
-          
-                data = {"status": "0", "msg": "invalid credential"}
-                print(data)
-                return JsonResponse(data)
+                return JsonResponse({"status": "0", "msg": "invalid credential"})
         else:    
             session_id = request.session.get('user_id')
-            print(session_id)
             if session_id:
-                print('444444444444444444444444444444444444444444444444444444')
                 return redirect('user_profile_page')
             else:
-                print('5555555555555555555555555555555555555555555555555555555')
                 return render(request, 'login.html', {"session_id": session_id})
     except:
-        send_data = {"status": "0", "msg": "Invalid credential",
-                     "error": str(traceback.format_exc())}
-
+        send_data = {"status": "0", "msg": "Invalid credential", "error": str(traceback.format_exc())}
         print(traceback.format_exc())      
-        print('11111111111111111111111111111111111111111111111111111111111111111111111111111')       
         return redirect('landing_page')
     return JsonResponse(send_data)
 
@@ -166,10 +140,9 @@ def user_login(request):
 def userlogout(request):
     try:
         del request.session['user_id']
-        print('deleting session')
-        return redirect('login_page')
     except:
-        return redirect('login_page')
+        traceback.print_exc()
+    return redirect('login_page')
 
 
 @csrf_exempt
@@ -178,63 +151,39 @@ def send_otp_for_signup_verification(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         email = data['email_id']
-        # mobile_no = data['mobile_no']
 
         if UserMaster.objects.filter(email=email).exists():
             send_data = {'status': "2", 'msg': "Email Already Exists"}
-        # elif UserMaster.objects.filter(mobile_no=mobile_no).exists():
-            # send_data = {'status': "2", 'msg': "Mobile Already Exists"}
         else:
-            # email_otp = str(random.randint(100000, 999999))
             email_otp = '123456'
-
             message = email_otp+" is your otp for varification."
-            # status = send_sms_web(mobile_no, message)
-            print(email_otp)
-            
-
             send_data = {'status': "1",'msg': "OTP Sent Successfully", 'Email_OTP': email_otp}
-
     except:
         print(str(traceback.format_exc()))
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
 
 
 @ csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def forget_password_OTP(request):
-
     session_id = request.session.get('user_id')
-    print('creating session', session_id)
     try:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             email = data['email_id']
 
             if UserMaster.objects.filter(email=email).exists():
-
-                # email_otp = str(random.randint(100000, 999999))
                 email_otp = '123456'
-                print(email_otp)
-
-                send_data = {
-                    'status': "1", 'msg': "OTP Sent succesfully", "email_otp": email_otp}
-
-                return JsonResponse(send_data)
+                send_data = {'status': "1", 'msg': "OTP Sent succesfully", "email_otp": email_otp}
             else:
                 send_data = {'status': "0", 'msg': "Email Not Exists"}
-                return JsonResponse(send_data)
+            return JsonResponse(send_data)
         else:
             return render(request, 'forget-pasword.html')
     except:
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
-        return redirect('landing_page')
-
-    return JsonResponse(send_data)
-
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
+    return redirect('landing_page')
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -249,14 +198,12 @@ def reset_password(request):
             user_obj.password = password
             user_obj.save()
 
-            send_data = {'status': "1",
-                         'msg': "Your password has been reset successfully"}
+            send_data = {'status': "1",'msg': "Your password has been reset successfully"}
         else:
             send_data = {'status': "0", 'msg': "Email Not Exists"}
     except:
         print(str(traceback.format_exc()))
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
         return redirect('landing_page')             
     return JsonResponse(send_data)
 
@@ -264,18 +211,14 @@ def reset_password(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_profile_page(request):
-    
-
     session_id = request.session.get('user_id')
-    print(session_id)
     try:
         if session_id:
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
 
                 # print('user_obj', user_obj.user_image.url)
-                print(user_obj.name, user_obj.email, user_obj.mobile_no, user_obj.address_line1,
-                      user_obj.password, user_obj.is_individual, user_obj.is_corporate, user_obj.created_datime)
+                print(user_obj.name, user_obj.email, user_obj.mobile_no, user_obj.address_line1,user_obj.password, user_obj.is_individual, user_obj.is_corporate, user_obj.created_datime)
                 countru_obj = CountryMaster.objects.all()
 
                 contxt = {
@@ -314,18 +257,15 @@ def bid_auction_status_toggle(request):
                 elif tgl_btn_value == 0:
                     obj.auc_bid_status = False
                     obj.save()
-                    print('in else ifllllllpppppppppppppppppppppppppl')
 
                 send_data = {'status': '1', 'msg': "Field Toggle Succesfully"}
-
             else:
                 send_data = {'status': '0', 'msg': "User Not Found"}
 
         else:
             send_data = {'status': '0', 'msg': "Request Not Post"}
     except:
-        send_data = {'status': '0', 'msg': "Something Went Wrong",
-                     'error': traceback.format_exc()}             
+        send_data = {'status': '0', 'msg': "Something Went Wrong",'error': traceback.format_exc()}             
     return JsonResponse(send_data)
 
 
@@ -342,13 +282,9 @@ def get_state_of_country(request):
         if request.method == "POST":
     
             state_obj = StateMaster.objects.filter(country_id=country_id)
-        
-            
-
             send_data = {'status': "1", 'msg': "Got States Of Country", "state_obj": list(state_obj.values())}  # json object not serilizable
 
         else:
-            
             send_data = {'status': "0", 'msg': "Request Is Not Post"}
     except:
         
@@ -369,14 +305,12 @@ def get_city_of_state(request):
             city_obj = CityMaster.objects.filter(state_id=state_id)
             print(city_obj)
 
-            send_data = {'status': "1", 'msg': "Got city Of State",
-                         "city_obj": list(city_obj.values())}
+            send_data = {'status': "1", 'msg': "Got city Of State","city_obj": list(city_obj.values())}
 
         else:
             send_data = {'status': "0", 'msg': "Request Is Not Post"}
     except:
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     "error": traceback(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong","error": traceback(traceback.format_exc())}
     return JsonResponse(send_data)
 
 
@@ -394,16 +328,14 @@ def edit_user_profile_image(request):
                 user_obj.save()
 
                 # print('ttttttttttt', user_id, profile_pic)
-                send_data = {'status': '1',
-                             'msg': 'Profile Picture updated successfully'}
+                send_data = {'status': '1','msg': 'Profile Picture updated successfully'}
             else:
                 send_data = {'status': '0', 'msg': 'User Not Exists'}
 
         else:
             send_data = {'status': '0', 'msg': 'Request is not post'}
     except:
-        send_data = {'status': '0', 'msg': 'Something went wrong',
-                     'error': traceback.format_exc()}
+        send_data = {'status': '0', 'msg': 'Something went wrong','error': traceback.format_exc()}
     return JsonResponse(send_data)
 
 
@@ -423,18 +355,13 @@ def edit_user_proifle_page(request):
         cif_no = data['CIF_number']
         zipcode = data['zipcode']
 
-        print('aaaaaaaaabbbbbbbbbbccccccccc',address)
-
         if UserMaster.objects.filter(id=user_id).exists():
             user_obj = UserMaster.objects.get(id=user_id)
             user_obj.name = name
             user_obj.mobile_no = mobile
             user_obj.address_line1 = address
-
-            if country == "Select Country":
-                user_obj.country = "----"
-            else:
-                user_obj.country = country
+            
+            user_obj.country = "----" if country == "Select Country" else country
 
             if state == "Select State":
                 user_obj.state = "----"
@@ -451,14 +378,12 @@ def edit_user_proifle_page(request):
             user_obj.profile_status=True
             user_obj.save()
 
-            send_data = {'status': "1",
-                         'msg': "Profile Updated successfully"}
+            send_data = {'status': "1",'msg': "Profile Updated successfully"}
         else:
             send_data = {'status': "0", 'msg': "User Id Not Exists"}
     except:
         print(str(traceback.format_exc()))
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
 
 
@@ -476,8 +401,7 @@ def change_user_email_send_otp(request):
                 email_otp = '123456'
                 print(email_otp)
 
-                send_data = {'status': "1",
-                             'msg': "OTP Sent To Register Email", "email_otp": email_otp}
+                send_data = {'status': "1",'msg': "OTP Sent To Register Email", "email_otp": email_otp}
             else:
 
                 send_data = {'status': "0", 'msg': "User Not Exists"}
@@ -485,8 +409,7 @@ def change_user_email_send_otp(request):
             send_data = {'status': "0", 'msg': "Request is not post"}
     except:
         print(str(traceback.format_exc()))
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
 
 
@@ -509,16 +432,14 @@ def add_users_new_email_address(request):
                 user_obj = UserMaster.objects.get(id=user_id, email=old_email)
                 user_obj.email = new_email
                 user_obj.save()
-                send_data = {'status': "1",
-                             'msg': "Email Address Change Succesfully", }
+                send_data = {'status': "1",'msg': "Email Address Change Succesfully", }
             else:
                 send_data = {'status': "0", 'msg': "User Not Exists"}
         else:
             send_data = {'status': "0", 'msg': "Request is not post"}
     except:
         print(str(traceback.format_exc()))
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
 
 
@@ -537,16 +458,13 @@ def reset_current_password(request):
                     id=user_id, password=old_password)
                 user_obj.password = new_password
                 user_obj.save()
-                send_data = {'status': "1",
-                             'msg': "Reset password Succesfully", }
+                send_data = {'status': "1",'msg': "Reset password Succesfully", }
             else:
-                send_data = {'status': "0",
-                             'msg': "Incorrect Current Password"}
+                send_data = {'status': "0",'msg': "Incorrect Current Password"}
         else:
             send_data = {'status': "0", 'msg': "Request is not post"}
     except:
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
 
 

@@ -318,7 +318,7 @@
                                         {% for i in all_test_obj %}
                                         <tr>
                                             <td>
-                                                <input type="checkbox" class="checkbox" name="checkbox"  id="checkboxid" value={{i.id}} data-id={{i.fk_user.id}} data-group_id={{i.fk_sample_master.group}} style="margin-left: 8px;width:30px"> 
+                                                <input type="checkbox" class="checkbox" name="checkbox_test"  id="checkboxid{{forloop.counter}}" value={{i.id}} data-id={{i.fk_user.id}} data-group_id={{i.fk_sample_master.group}} style="margin-left: 8px;width:30px"> 
                                             </td>
                                             <td>{{forloop.counter}}</td>
 
@@ -483,8 +483,7 @@
    {
       var test_id=[]
       var lot_for_user = []
-    
-      $("input:checkbox[name='checkbox']:checked").each(function(){
+      $("input:checkbox[name='checkbox_test']:checked").each(function(){
           var user_id = $(this).attr("data-id"); 
           var group_id = $(this).attr("data-group_id"); 
 
@@ -502,49 +501,55 @@
 
         console.log(lot_for_user);
         //console.log('user_id',user_id)
-        
-
-        if(lot_for_user.length > 0){
-              swal({
-                icon:"warning",
-                text:"Are you sure to publish test?",
-                buttons: ["No", "Yes"],
-                dangerMode:false,
-                closeOnClickOutside:false                    
-            }).then((willUpdate) => {
-              if(willUpdate){
-              $.ajax({
-              method:"Post",
-              url:"{% url 'get_lot_of_test_from_admin' %}",
-              contentType:"application/json",
-              data:JSON.stringify({
-                "testlot":(lot_for_user)
-              }),
-              success: function(response){
-                if (response['status'] == '1'){
-                  location.reload();
-                }
-                else if (response['status'] == '0'){
-                  swal({
-                  icon:"error",
-                  text:"Something Went Wrong",
-                  closeOnClickOutside:false                    
-            })
-                }
-              }
-            })
-              }
-            })
-            }
-        else{
-              swal({
-              icon:"error",
-              text:"Please select test",
+        if (lot_for_user.length > 0)
+        {
+            swal({
+              icon:"warning",
+              text:"Are you sure to publish test?",
+              buttons: ["No", "Yes"],
+              dangerMode:false,
               closeOnClickOutside:false                    
-        })
-      }
+          }).then((willUpdate) => {
+            if(willUpdate)
+            {
+              $.ajax({
+                method:"Post",
+                url:"{% url 'get_lot_of_test_from_admin' %}",
+                contentType:"application/json",
+                data:JSON.stringify({
+                  "testlot":(lot_for_user)
+                }),
+                success: function(response)
+                {
+                  if (response['status'] == '1')
+                  {
+                    location.reload();
+                  }
+                  else if (response['status'] == '0')
+                  {
+                      swal({
+                      icon:"error",
+                      text:"Something Went Wrong",
+                      closeOnClickOutside:false                    
+                    })
+                  }
+                }
+              })
+            }
+          })
+        }
+        else
+        {
+          swal({
+            icon:"error",
+            text:"Please select test",
+            closeOnClickOutside:false                    
+          })
+        }
+        
     }
 
+    
 
     function test_rejected_by_admin()
    {
