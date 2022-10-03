@@ -363,6 +363,54 @@
                         <hr>
                     </div>
 
+
+                    
+                        <div class="row" style="justify-content: center;margin-left: -54px;">
+
+                          <div class="col-md-2">
+                            <span class="float-right" style="margin-top:10px; margin-left:30px ;">
+                              Search By :
+                            </span>
+                          </div> 
+
+                          <div class="col-md-2">
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" type="radio" onclick="show_pathalogy_field()" value="Pathalogy" name="testradio" id="Pathalogyid" checked style="width:21px;">
+                                <label class="form-check-label" for="flexRadioDefault1">Pathalogy</label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-2">
+                            <div class="form-check form-check-inline ">
+                              <input class="form-check-input" type="radio" onclick="show_gens_field()"  value="Gens" name="testradio" id="Gensid" style="width:21px;">
+                              <label class="form-check-label" for="flexRadioDefault1"> Gens</label>
+                            </div>
+                          </div> 
+                  
+                          <div>
+                            
+                          </div>
+
+                          <div class="col-md-6" id="select_pathlogy_id">
+                            <select  id="select_sample_path" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
+                              <option value="">Select Pathalogy</option>
+                              {% for i in sampletest %}
+                                <option value={{i.id}}>{{i.pathalogy}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                          <div class="col-md-6" id="select_gens_id">
+                            <select  id="select_sample_gens" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
+                              <option value="">Select Gens</option>
+                              {% for i in sampletest %}
+                                  <option value="{{i.id}}">{{i.gens}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                        </div>
+
                     {% comment %} <div class="form-group ">
                         <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
                         <span id="testrequested_modal_error" style="color: red;margin-left: 15PX;"></span>
@@ -519,6 +567,7 @@
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
 
 <script>
@@ -609,16 +658,8 @@
         })
     }
 
-        })
-        
-        
+    })        
     }
-
-
-
-
-
-
 
 
     function delete_posted_test(id){
@@ -1153,6 +1194,92 @@ function reload_page_on_back(){
     location.reload()
     }
 </script>
+
+
+
+<script>
+
+
+  
+
+  function show_pathalogy_field(){
+    
+    $("#select_gens_id").hide()
+    $("#select_pathlogy_id").show()
+    $("#show_hide_data").hide()
+    $("#select_sample_gens").val("")
+  
+  }
+
+
+  function show_gens_field(){
+
+    $("#select_gens_id").show()
+    $("#select_pathlogy_id").hide()
+    $("#show_hide_data").hide()
+    $("#select_sample_path").val("")
+  }
+
+
+  function show_data_selected_data(value){
+    console.log(value)
+    $("#show_hide_data").show()
+    $.ajax({
+      method:"POST",
+      url:"show_sample_test_data",
+      contentType:"application/json",
+      data:JSON.stringify({
+        "test_req_id":value
+      }),
+      success:function(response){
+        
+        if(response['status'] == '1'){
+          console.log(response)
+          $("#sample_type_id").text(response['obj_data'][0]['sample_type'])
+          $("#transport_id").text(response['obj_data'][0]['transport'])
+
+        //  $("#pathalogy_id").text(response['obj_data'][0]['pathalogy'])
+
+
+          var path_id = $("#select_sample_path").val()
+          var gens_id = $("#select_sample_gens").val()
+
+          if (path_id != ''){
+            $("#gens_id").text(response['obj_data'][0]['gens'])
+            $("#gens_id").show()
+            $("#path").hide()
+           // $("#select_sample_gens").val("")
+            $("#pathalogy_id").hide()
+             $("#gens").show()
+          }
+          
+
+          if (gens_id != ''){
+            $("#pathalogy_id").text(response['obj_data'][0]['pathalogy'])
+            $("#pathalogy_id").show()
+            $("#gens").hide()
+            //$("#select_sample_path").val("")
+            $("#gens_id").hide()
+            $("#path").show()
+          }
+
+        }
+        else if(response['status'] == '0'){
+          console.log('status 0')
+        }
+      }
+    }) 
+  } 
+
+  $("#select_sample_path").select2();
+  $("#select_sample_gens").select2();  
+
+  $(".select2-selection").css("padding","10px 0px 35px 20px")
+
+  
+ 
+</script>
+   
 {% endblock %}
 
 

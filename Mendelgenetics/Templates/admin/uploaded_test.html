@@ -354,27 +354,24 @@
                                                 <td>----</td>
                                             {% endif %}
 
-                                            <td>---</td>
-                                            {% comment %} {% if test.bidder_doc_first %}
+                                            {% if test.bidder_doc_first %}
                                                 <td><button type="button" onclick="download_document()" style="background-color: green;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                   <i class="fa fa-download"></i> 
                                                 </button></td>
                                             {% else %}
                                                 <td>No Doc</td>
-                                            {% endif %} {% endcomment %}
+                                            {% endif %}
 
-                                            <td>---</td>
-                                            {% comment %} {% if test.bidder_doc_second %}
+                                            {% if test.bidder_doc_second %}
                                                 <td><button type="button"  onclick="download_document()" style="background-color: green;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                   <i class="fa fa-download"></i> 
                                                 </button></td>
                                             {% else %}
                                                 <td>No Doc</td>
-                                            {% endif %} {% endcomment %}
+                                            {% endif %}
 
                                             <td>
-                                                ---
-                                                {% comment %} {% if test.result_upload_status == "Upload" %}
+                                                {% if test.result_upload_status == "Upload" %}
                                                     <button type="button" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id()" style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                       <i class="fa fa-upload"></i> 
                                                     </button>
@@ -383,7 +380,7 @@
                                                     <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7600bc;margin-left: 45px;">
                                                         uploaded
                                                     </span>
-                                                {% endif %}      {% endcomment %}
+                                                {% endif %}     
                                             </td> 
                                           </tr>
                                         {% endfor %}
