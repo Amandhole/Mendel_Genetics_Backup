@@ -15,9 +15,12 @@ urlpatterns = [
     path('show_individual_user_to_admin', show_individual_user_to_admin,name="show_individual_user_to_admin"),
     path('pending_test', pending_test, name='pending_test'),
     path('published_test', published_test, name='published_test'),
+    path('upload_result_by_admin', upload_result_by_admin,name='upload_result_by_admin'),
+    path('uploaded_result_test', uploaded_result_test, name="uploaded_result_test"),
     path('get_lot_of_test_from_admin', get_lot_of_test_from_admin,name="get_lot_of_test_from_admin"),
     path('test_reject_by_admin', test_reject_by_admin, name="test_reject_by_admin"),
-    path('support_chat_admin/', support_chat_admin, name="support_chat")
+    path('support_chat_admin/', support_chat_admin, name="support_chat"),
+    path('upload_result_by_admin', upload_result_by_admin,name="upload_result_by_admin")
 ]
 
 

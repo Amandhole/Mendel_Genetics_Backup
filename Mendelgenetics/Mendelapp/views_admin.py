@@ -151,6 +151,7 @@ def published_test(request):
                 user_obj = AdminUser.objects.get(id=session_id)
             
                 published_test_obj = TestLots.objects.filter(Q(lot_status="Published") | Q(lot_status="Approved")).order_by('-fk_user_master__name')
+                # published_test_obj = TestLots.objects.filter(lot_status="Published").order_by('-fk_user_master__name')
                
                 
                 print('published test', published_test_obj)
@@ -166,6 +167,51 @@ def published_test(request):
             return redirect('landing_page')
     except:
         print(traceback.format_exc())
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def uploaded_result_test(request):
+    try:
+        print('llllllllllllllllllllllllllllllllllllllll')
+        session_id = request.session.get('admin_user_id')
+        if session_id:
+            if AdminUser.objects.filter(id=session_id).exists():
+                user_obj = AdminUser.objects.filter(id=session_id)
+
+                # uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & (Q(fk_test_lot__lot_status="Approved") | Q(fk_test_lot__lot_status="AdminApproved"))).order_by('-fk_user_master__name')
+                uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & Q(lot_status="Approved")).order_by('-fk_user_master__name')
+
+
+                context = {
+                    "user_obj": user_obj,
+                    "uploaded_result_obj": uploaded_result_obj
+                }
+                return render(request, 'admin/uploaded_test.html', context)
+            else:
+                return render(request, 'admin/uploaded_test.html', context)
+        else:
+            return redirect('landing_page')
+    except:
+        print(traceback.format_exc())
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def upload_result_by_admin(request):
+    try:
+        if request.method =="POST":
+            data = json.loads(request.body.decode('utf-8'))
+            test_lot_id = data['test_lot_id']
+            TestLots.objects.filter(id=test_lot_id).update(lot_status="AdminApproved")
+            send_data = {"status": "1","msg": "lot status has been changeed to  AdminApproved"}
+        else:
+            send_data = {"status": "0", "msg": "Request is not post"}
+    except:
+        print(traceback.format_exc())
+        send_data = {"status": "0", "msg": "Something Went Wrong"}
+    return JsonResponse(send_data)
+
 
 
 
@@ -243,6 +289,31 @@ def test_reject_by_admin(request):
         send_data = {"msg":"something went wrong", "status":"0","error":traceback.format_exc()}
     return JsonResponse(send_data)
 
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def upload_result_by_admin(request):
+    try:
+        if request.method == "POST":
+            # data = json.loads(request.body.decode('utf-8'))
+            first_doccument = request.FILES.get('first_documet')
+            second_doccument = request.FILES.get('second_documet')
+            bid_lot_id = request.POST.get('bid_test_id')
+
+            print('test id', bid_lot_id)
+
+            TestLots.objects.filter(id=bid_lot_id).update(admin_doc_first=first_doccument, admin_doc_second=second_doccument,
+                                                          upload_date_time=datetime.now(), result_upload_status="AdminUpload")
+
+            send_data = {"msg": "Request is not post", "status": "1"}
+
+        else:
+            send_data = {"msg": "Request is not post", "status": "0"}
+    except:
+        send_data = {"msg": "Something went wrong",
+                     "status": "0", "error": traceback.format_exc()}
+        print(traceback.format_exc())
+    return JsonResponse(send_data)
 
     
 ############################################# Support Chat View

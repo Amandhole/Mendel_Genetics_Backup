@@ -231,7 +231,8 @@
                 
                 
                 <!-- <div class="btn-wrapper text-center">
-                    <a href="#0" class="custom-button"><span>Checkout</span></a>
+                    <a href="#0" class="custom-button"><span>Checkout</span>
+                    </a>
                 </div> -->
             </div>
         </div>
@@ -287,6 +288,7 @@
                                        <select id="select_test" style="height: 40px;border-radius:5px;background-color: #683df5;color: white;" onchange="window.location.href=this.value;">
                                           <option value="{% url 'pending_test' %}">Pending</option>
                                           <option value="{% url 'published_test' %}">Published</option>
+                                          <option value="{% url 'uploaded_result_test' %}">Result Upload</option>
 
                                       </select> 
                                     </div>
@@ -316,9 +318,10 @@
                                         {% for i in all_test_obj %}
                                         <tr>
                                             <td>
-                                                <input type="checkbox" class="checkbox" name="checkbox" id="checkboxid" value={{i.id}} data-id={{i.fk_user.id}} data-group_id={{i.fk_sample_master.group}} style="margin-left: 8px;width:30px"> 
+                                                <input type="checkbox" class="checkbox" name="checkbox"  id="checkboxid" value={{i.id}} data-id={{i.fk_user.id}} data-group_id={{i.fk_sample_master.group}} style="margin-left: 8px;width:30px"> 
                                             </td>
                                             <td>{{forloop.counter}}</td>
+
 
                                             {% if i.auction_test_id %}
                                               <td>{{i.auction_test_id}}</td>
@@ -326,6 +329,7 @@
                                               <td>----</td>
                                             {% endif %}   
 
+                                            
                                            {%if i.created_date_time%}
                                             
                                               <td>{{i.created_date_time|date:'m-d-Y'}}</td>
@@ -499,39 +503,39 @@
         console.log(lot_for_user);
         //console.log('user_id',user_id)
         
-        
+
         if($("#checkboxid").prop('checked')){
-          swal({
-            icon:"warning",
-            text:"Are you sure to publish test?",
-            buttons: ["No", "Yes"],
-            dangerMode:false,
-            closeOnClickOutside:false                    
-        }).then((willUpdate) => {
-          if(willUpdate){
-          $.ajax({
-          method:"Post",
-          url:"{% url 'get_lot_of_test_from_admin' %}",
-          contentType:"application/json",
-          data:JSON.stringify({
-            "testlot":(lot_for_user)
-          }),
-          success: function(response){
-            if (response['status'] == '1'){
-              location.reload();
-            }
-            else if (response['status'] == '0'){
               swal({
-              icon:"error",
-              text:"Something Went Wrong",
-              closeOnClickOutside:false                    
-        })
+                icon:"warning",
+                text:"Are you sure to publish test?",
+                buttons: ["No", "Yes"],
+                dangerMode:false,
+                closeOnClickOutside:false                    
+            }).then((willUpdate) => {
+              if(willUpdate){
+              $.ajax({
+              method:"Post",
+              url:"{% url 'get_lot_of_test_from_admin' %}",
+              contentType:"application/json",
+              data:JSON.stringify({
+                "testlot":(lot_for_user)
+              }),
+              success: function(response){
+                if (response['status'] == '1'){
+                  location.reload();
+                }
+                else if (response['status'] == '0'){
+                  swal({
+                  icon:"error",
+                  text:"Something Went Wrong",
+                  closeOnClickOutside:false                    
+            })
+                }
+              }
+            })
+              }
+            })
             }
-          }
-        })
-          }
-        })
-        }
         else{
               swal({
               icon:"error",
@@ -559,6 +563,8 @@
                 });
                 console.log('user id',user_id)
                 console.log('test id',test_id)
+
+
         if($("#checkboxid").prop('checked')){
                     swal({
             icon:"warning",

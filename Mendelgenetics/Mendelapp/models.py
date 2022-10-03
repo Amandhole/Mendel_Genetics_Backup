@@ -64,6 +64,7 @@ class UserMaster(models.Model):
     is_corporate = models.BooleanField(default=False)
     created_datime = models.DateTimeField(null=True, blank=True)
     auc_bid_status = models.BooleanField(default=False)
+    profile_status = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 
@@ -115,10 +116,23 @@ class TestLots(models.Model):
     tests_in_lot = models.CharField(null=True, max_length=1000, default="")
     test_group = models.CharField(null=True, max_length=1000, default="")
     test_pathalogy = models.TextField(null=True, max_length=2000, default="")
-    test_gen = models.TextField(null=True, max_length=2000, default="")
+    test_gen = models.TextField(null=True, max_length=2000, default="")# Publish Approved and AdminApproved   #after upload result status will be Approved # after approve by admin result will show to auctioner
     test_quantity = models.IntegerField(blank=True, null=True)
-    lot_status = models.CharField(null=True, max_length=15, default="Published") #after approve bid status is Approved
+    lot_status = models.CharField(null=True, max_length=15, default="Published")
     created_date_time = models.DateTimeField(auto_now =True)
+    
+    bidder_doc_first = models.ImageField(upload_to='Documentfirst/', null=True, blank=True)
+    bidder_doc_second = models.ImageField(upload_to='Documentsecond/', null=True, blank=True)
+
+    admin_doc_first = models.ImageField(upload_to='Documentfirst/', null=True, blank=True)
+    admin_doc_second = models.ImageField(upload_to='Documentsecond/', null=True, blank=True)
+    
+    upload_date_time = models.DateTimeField(auto_now=True)
+    result_upload_status = models.CharField(null=True, max_length=15, default="Pending")  #Pending , Upload , AdminUpload
+
+
+
+
 
 
 class UserBids(models.Model):
@@ -126,16 +140,18 @@ class UserBids(models.Model):
     fk_user_master = models.ForeignKey(UserMaster, on_delete=models.CASCADE, null=True, blank=True)
     fk_user_test = models.ForeignKey(UserTest, on_delete=models.CASCADE, null=True, blank=True)
     fk_test_lot = models.ForeignKey(TestLots, on_delete=models.CASCADE, null=True, blank=True)
+
     bid_Price = models.FloatField(blank=True, default='')
     expect_result_date = models.DateField(null=True, blank=True)
-    checkbox = models.CharField(max_length=50, null=True)
-    bid_status = models.CharField(null=True, max_length=15, default ="") #Pending Approved ,cancelled
+    checkbox = models.CharField(max_length=50, null=True)# Pending Approved ,cancelled
+    bid_status = models.CharField(null=True, max_length=15, default="")
+# ###########result upload###################
 
     # def __str__(self):
     #     return self.fk_user_master
 
-
 #### support system management
+
 class Support(models.Model):
     support_id = models.CharField(max_length=30, blank=True, null=True) 
     fk_user = models.ForeignKey(UserMaster, on_delete=models.CASCADE, null=True, blank=True)  # foreign key to the user who bid

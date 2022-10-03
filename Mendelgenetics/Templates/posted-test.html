@@ -137,7 +137,24 @@
                                             margin-top: 0px; padding-top: 15px;">
                                     
                                             <div class="row">
-                                            
+                                                
+
+
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                        <span style="font-weight: 600;">Auction id </span>
+                                                    </div>
+
+                                                    <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">
+                                                    
+                                                        {%if test.auction_test_id %}   
+                                                            <h6 style="font-size: 17px; font-weight:400;">{{ test.auction_test_id }}</h6> 
+                                                        {% else %}    
+                                                            <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                        {% endif %}   
+                                                    </div>
+                                                </div> 
+
                                                 <div class="row col-md-12">
                                                     <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
                                                         <span style="font-weight: 600;">Pathalogy </span>
@@ -545,6 +562,62 @@
       $("#checkbox1").click(function(){
         $("#id_text_box_show").hide()
       })
+
+
+
+
+      function delete_cancelled_test(id){        
+
+        swal({
+            icon:"warning",
+            text:"Are you sure to delete test?",
+            buttons: ["No", "Yes"],
+            dangerMode: true,
+            closeOnClickOutside:false
+            
+                    
+        }).then((willDelete) => {
+            if(willDelete) {
+            $.ajax({
+            method : "POST",
+            url : "{% url 'posted_cancelled_test_delete_by_user' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+                "test_id":id
+            }),
+            success : function(response){
+                if(response['status'] == '0'){
+                    console.log(response)
+                    swal({
+                        icon : "error",
+                        text: "Something Went Wrong",
+                        closeOnClickOutside:false,
+                    //    timer: 1000
+                    })
+                }
+                else{
+                    console.log(response)
+                    swal({
+                        icon:"success",
+                        text:"Test Deleted Successfully ",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                        $("#div_show_test").html(response)
+                    })
+                }
+            }
+        })
+    }
+
+        })
+        
+        
+    }
+
+
+
+
+
 
 
 
@@ -1039,6 +1112,7 @@ function  get_test_id_to_see_all_bids(id){
 
 
    function get_id_accordion(id){
+      
         $.ajax({
             method:"POST",
             url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
@@ -1055,6 +1129,8 @@ function  get_test_id_to_see_all_bids(id){
 
         })
     }
+
+ 
 
 function reload_page_on_back(){
     location.reload()

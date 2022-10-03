@@ -261,7 +261,7 @@
                             <div class="dash-pro-item mb-30 dashboard-widget" style="width:1200px; max-height:1450px;">
                                 
                                 <div style="margin-top: 25px;">
-                                    <center> <h6>Test</h6></center>
+                                    <center> <h6>Result Uploaded Test</h6></center>
                                     <hr>
                                 </div>
                                 {% comment %} div for pending test {% endcomment %}
@@ -279,9 +279,11 @@
                                     <div class="col-auto">
                               
                                        <select id="select_test" style="height: 40px;border-radius:5px;background-color: #683df5;color: white;" onchange="window.location.href=this.value;">
+
+                                        
+                                        <option value="{% url 'uploaded_result_test' %}">Result Upload</option>
                                         <option value="{% url 'published_test' %}">Published</option>  
                                         <option value="{% url 'pending_test' %}">Pending</option>
-                                        <option value="{% url 'uploaded_result_test' %}">Result Upload</option>
                                           
 
                                       </select> 
@@ -301,66 +303,85 @@
                                         {% comment %} <td><input claas="checkbox"  type="checkbox" name="" id="select_all" style="width: 30px;margin-left: 8px;"><p style="font-weight: 600;"></p></td> {% endcomment %}
                                           <th>Sr No</th>
                                           <th>Lot Id</th>
-                                          <th>Date</th>
-                                          <th>Name</th>
-                                          <th>Group</th>
-                                          <th>Quantity</th>
+                                          <th>Auction Date</th>
+                                          <th>Auctioner</th>
+                                          <th>Bidder</th>
+                                          <th>Result date</th>
+                                          <th>Doc 1</th>
+                                          <th>Doc 2</th>
+                                          <th>Action</th>
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        {% for i in published_test_obj %}
+                                        {% for test in uploaded_result_obj %}
                                         <tr>
                                             {% comment %} <td>
                                                 <input style="margin-left: 8px;width: 30px;" type="checkbox" class="checkbox" name="checkbox" id="checkboxid" value={{i.id}} data-id={{i.fk_user.id}}> 
                                             </td> {% endcomment %}
                                             <td>{{forloop.counter}}</td>
 
-                                            {% if i.test_lot_id %}
-                                              <td>{{i.test_lot_id}}</td>
-                                            {%else%}
-                                              <td>----</td>
+                                            
+
+                                            {% if test.test_lot_id %}
+                                                <td>{{test.test_lot_id}}</td>
+                                            {% else %}
+                                                <td>----</td>
+                                            {% endif %}
+
+
+                                            {% if test.created_date_time %}
+                                                <td>{{test.created_date_time}}</td>
+                                            {% else %}
+                                                <td>----</td>
+                                            {% endif %}    
+
+
+                                            {% if test.fk_user_master.name %}
+                                                <td>{{test.fk_user_master.name}}</td>
+                                            {% else %}
+                                                <td>----</td>
                                             {% endif %}   
 
-                                           {%if i.created_date_time%}
-                                            
-                                              <td>{{i.created_date_time|date:'m-d-Y'}}</td>
-                                            {%else%}
-                                              <td>----</td>
-                                            {% endif %}    
+                                            {% if test.fsdf %}
+                                                <td>{{test.test_quantity}}</td>
+                                            {% else %}
+                                                <td>----</td>
+                                            {% endif %}       
 
+                                            {% if test.upload_date_time %}
+                                                <td>{{test.upload_date_time}}</td>
+                                            {% else %}
+                                                <td>----</td>
+                                            {% endif %}
 
-                                            {%if i.fk_user_master.name%}
-                                              <td>{{i.fk_user_master.name}}</td>
-                                            {%else%}
-                                              <td>----</td>
-                                            {% endif %}  
-                                            
-                                            
-                                            {%if i.test_group%}
-                                              <td>{{i.test_group}}</td>
-                                            {%else%}
-                                              <td>----</td>
-                                            {% endif %}    
+                                            {% if test.bidder_doc_first %}
+                                                <td><button type="button" onclick="download_document()" style="background-color: green;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                  <i class="fa fa-download"></i> 
+                                                </button></td>
+                                            {% else %}
+                                                <td>No Doc</td>
+                                            {% endif %}
 
-                                            {%if i.test_quantity%}
-                                              <td>{{i.test_quantity}}</td>
-                                            {%else%}
-                                              <td>----</td>
-                                            {% endif %}    
-                                            
-                                            
+                                            {% if test.bidder_doc_second %}
+                                                <td><button type="button"  onclick="download_document()" style="background-color: green;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                  <i class="fa fa-download"></i> 
+                                                </button></td>
+                                            {% else %}
+                                                <td>No Doc</td>
+                                            {% endif %}
 
-                                          
+                                            <td>
+                                                {% if test.result_upload_status == "Upload" %}
+                                                    <button type="button" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id()" style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                      <i class="fa fa-upload"></i> 
+                                                    </button>
+                                                {% else %}
 
-                                            {% comment %} <td>
-                                                <button type="button"  onclick="approve_test_from_user()" style="background-color: #7019f4;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-                                                    <i class="fas fa-thumbs-up"></i>
-                                                </button> 
-
-                                                <button type="button" onclick="delete_test_by_admin()"  style="background-color: red;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-                                                    <i class="fas fa-trash"></i>
-                                                </button> 
-                                            </td> {% endcomment %}
+                                                    <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7600bc;margin-left: 45px;">
+                                                        uploaded
+                                                    </span>
+                                                {% endif %}     
+                                            </td> 
                                           </tr>
                                         {% endfor %}
 
@@ -422,6 +443,98 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="upload_result_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 700px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                <div class="" style="justify-content:center;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="justify-content: center;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+            </div>
+
+            <input type="hidden" id="test_id">
+
+            <div class="modal-body">
+
+                                   
+                <div class="login-form">
+                
+                    <div>
+                        <h6 style="text-align: center;">Upload Documents</h6><hr><br>
+                    </div>
+                
+
+                    {% comment %} <label class="flot-center" for="title">Select Files</label><br> {% endcomment %}
+                          
+                    <div class="col-md-12 row">
+
+                        <div class="col-md-6">
+                            <div class="">
+                                <input accept="image/*" class="inpcls" id="first_file" required type="file"><br>
+
+                                    {% if meal_data.meal_image %}
+                                        <img alt="Image" id="target_img_first" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {% else %}
+                                        <img alt="Image" id="target_img_first" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {% endif %}
+                                        {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
+                               
+                                    <span class="focus-input100"></span><br>
+                                    
+
+                            </div>
+                        </div>
+                        
+                        
+
+
+                        <div class="col-md-6">
+                            <div class="">
+                                <input accept="image/*" class="input100" id="second_file" required type="file"><br>
+
+                                    {% if meal_data.meal_image %}
+
+                                        <img alt="Image" id="target_img_second" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {% else %}
+                                        <img alt="Image" id="target_img_second" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {%endif%}
+                            
+                                    {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
+                                    <span class="focus-input100"></span><br>
+                               
+                                    <span id="error_second_file" style="color:#ff4c4ce8;font-size: 14px;"></span>
+                            </div>
+                        </div>
+
+                        <span id="error_first_file" style="color:#ff4c4ce8;font-size: 14px;margin-left: 12rem;"></span>
+                    </div>
+                </div>
+
+                                                    
+                                 
+    
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+        
+                    <div class="form-group mb-0">
+                        <button type="button" id="" onclick="upload_result()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
+                    </div> 
+    
+                </div>                        
+            </div>
+      </div>
+
+        </div>
+    </div>
+</div>
+
     <!--============= Dashboard Section Ends Here =============-->
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -437,7 +550,155 @@
     <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
     <script src="assets/resource/tiny_mce.js"></script>
   
+<script>
+    
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_first').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
 
+
+    function readURL_second_image(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_second').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    var file_size1 = 0;
+
+    $("#target_img_first").hide()
+        
+		$('#first_file').bind('change', function () 
+		{
+
+			$('#error_first_file').html('');
+
+			file_size1 = this.files[0].size;
+
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#first_file')[0].files[0].name;
+
+
+            if(file_size1 > 2000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_first").hide()
+                $('#error_first_file').text('File must be less than 2mb...');
+            }
+            else{
+                readURL(this);
+                $("#target_img_first").show()
+    
+            }
+
+	});
+
+
+{% comment %} javascipt code for second file {% endcomment %}
+
+    $("#target_img_second").hide()
+        file_size1 = 0;
+		$('#second_file').bind('change', function () 
+		{
+
+			$('#error_first_file').html('');
+
+			file_size1 = this.files[0].size;
+
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#second_file')[0].files[0].name;
+
+
+            if(file_size1 > 2000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_second").hide()
+                $('#error_first_file').text('File must be less than 2mb...');
+            }
+            else{
+                readURL_second_image(this);
+                $("#target_img_second").show()
+    
+            }
+
+	});
+
+
+
+    
+function append_lot_id(){
+    alert('hello')
+    $("#bid_test_id").val(id)
+}
+
+function upload_result_by_admin() {
+
+    var bid_test_id = $("#bid_test_id").val()
+   
+    var first_documet = $('#first_file').val();
+    var second_documet = $('#second_file').val();
+
+
+    if ((first_documet == "") && (second_documet == "") ) {
+
+        $('#error_first_file').html('Please Select atleast one file');
+    }
+    
+
+    else if(file_size1 > 2000000){
+        $('#error_first_file').text('File must be less than 2mb...');
+    }
+
+    
+    else{
+        var item_data = new FormData();
+        var first_documet = $('#first_file')[0].files;
+        var second_documet = $('#second_file')[0].files;
+        
+
+        item_data.append('first_documet', first_documet[0]);
+        item_data.append('second_documet', second_documet[0]);
+        item_data.append('bid_test_id', bid_test_id);
+        
+        $.ajax({
+            method: "POST",
+            url: "{% url 'upload_result_by_admin' %}",
+            enctype: "mutipart/form_data",
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: item_data,
+            success: function (response) {
+                if (response['status'] == "1"){
+                    swal({
+                        icon:"success",
+                        text:"Result Uploaded Succesfully",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                        location.reload()
+                    })
+                }
+                else if (response['status'] == "0"){
+                    swal({
+                        icon:"error",
+                        text:"Something wennt wrong",
+                        closeOnClickOutside:false
+                    })
+                }
+            }
+        });
+    }
+}
+
+</script>
 
 <script>
 
@@ -462,26 +723,51 @@
 </script>
 
 <script>
-    {% comment %} function approve_test_from_user(){
-        swal({
-            icon:"warning",
-            text:"Are you sure to publish test?",
-            buttons: ["No", "Yes"],
-            dangerMode: false,
-            closeOnClickOutside:false                    
-        })
-    }  {% endcomment %}
 
-   function delete_test_by_admin(){
+   function upload_result_by_admin(id){
+        console.log(id)
         swal({
             icon:"warning",
-            text:"Are you sure to delete test?",
+            text:"Are you sure to upload result?",
             buttons: ["No", "Yes"],
             dangerMode: true,
             closeOnClickOutside:false                    
+        }).then((willUpdate) => {
+            if(willUpdate){
+                $.ajax({
+                    method:"POST",
+                    url:"{% url 'upload_result_by_admin' %}",
+                    contentType:"application/json",
+                    data:JSON.stringify({
+                        "test_lot_id":id
+                    }),
+                    success:function(response){
+                        if(response['status']== '1'){
+                            swal({
+                                icon:"success",
+                                text:"Result has been published Successfully",
+                                closeOnClickOutside:false
+                            }).then(function(){
+                                location.reload()
+                            })
+                        }
+                        else if(response['status'] == '0'){
+                            swal({
+                                icon:"error",
+                                text:"Something Went wrong",
+                                closeOnClickOutside:false
+                            })
+                        }
+                    }
+                })
+            }
         })
+        
    } 
 
+
+
+   
    function approve_test_from_user()
    {
       var test_id=[]
@@ -537,10 +823,10 @@
         })
           }
         })
-      
+    }
 
-
-
+    function download_document(){
+      alert('donwload doc')
     }
 </script>
 

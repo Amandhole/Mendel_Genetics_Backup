@@ -74,3 +74,6 @@ class TestLotsClass(admin.ModelAdmin):
 	                'test_pathalogy', 'test_gen','test_quantity', 'lot_status')
 
 admin.site.register(TestLots, TestLotsClass)
+
+
+

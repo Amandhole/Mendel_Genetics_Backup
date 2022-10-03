@@ -238,6 +238,14 @@
     <!--============= Hero Section Ends Here =============-->
 
 
+
+
+    {% if user_obj.profile_status %} 
+
+    {% else %}
+        <input type="hidden"  id="check_profile" value="profile_incomplete">
+    {% endif %}
+
     <!--============= Dashboard Section Starts Here =============-->
     <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
         <div class="container">
@@ -247,7 +255,9 @@
                 
                 
                 <div class="col-lg-8">
+                
                     <div class="row">
+                           
                         <div class="col-10">
                             <div class="dash-pro-item mb-30 dashboard-widget" style="width:900px;">
                                 <div class="header">
@@ -256,18 +266,17 @@
                                 </div>
 
 
-                         
+                      
                         <div class="login-form">
 
                         
-
+                         
                         <div style="margin-top: 25px;">
                           <h6>Prescriber Data</h6>
                                   <hr>
                         </div>
 
-
-                         
+                    
                         <div class="row">
 
                             <div class="form-group  col-md-6">
@@ -414,7 +423,7 @@
                         </div>
                            
                         <div style="margin-top: 25px;">
-                          <h6>Background and data of interest</h6>
+                          <h6>Background and data of interest(Optional)</h6>
                             <hr>
                         </div>
 
@@ -455,7 +464,7 @@
 
                             </div>
                         
-                        </div> {% endcomment %}
+                            </div> {% endcomment %}
 
 
 
@@ -586,7 +595,7 @@
                         <div class="form-group mb-0 ">
                             <button type="button" style="height:45px;width: 130px; padding-left: 5px;padding-right: 5px;" class="custom-button" id="post_test_by_user" >Post Test</button>
                         </div>
-                    </form>
+                    
                                 
                             </div>
                         </div>
@@ -609,11 +618,12 @@
                                 </ul>
                             </div>
                         </div> -->
-                        
+                      
                         
                         
                     </div>
                 </div>
+              
             </div>
         </div>
     </section>
@@ -987,11 +997,11 @@
                 $("#select_sample_gens").focus()
                 $("#testrequested_error").html("Select Test Requested");
             } 
-             else if (background_data ==''){
+             /*else if (background_data ==''){
                 $("#backgrounddata").css("border", "1px solid #f37777");
                 $("#backgrounddata").focus();
                 $("#backgrounddata_error").html("Enter Background Data");
-            }
+            } */
 
             else if ($("#checkbox4").prop('checked') == true && test == ''){
 
@@ -1037,14 +1047,23 @@
                     console.log(response)
                     swal({
                       icon:"success",
-                      text: "Test Posted Successfully" + "\n" + " Auction Id"+" " +  response['test_id'],
-                      closeOnClickOutside : false
-                    }).then(function(){
-                      location.href="{% url 'test_added_by_user_list' %}"
+                      text: "Test posted successfully , auction Id is "+" " +  response['test_id'] + "\n " + "Do you want to post another post ?",
+                      closeOnClickOutside : false,
+                      buttons: ["No", "Yes"],
+                      dangerMode:false,
+                    }).then((willupdate)=>{
+                      if(willupdate){
+                        location.reload()
+                      }
+                      else{
+                        location.href="{% url 'test_added_by_user_list' %}"
+                      }
+                      
                     })
 
                   }
-                  else if (response['status'] == '0'){
+                  
+                  else if (response['status'] == '0'){ 
                     console.log(response)
                     swal({
                       icon:"error",
@@ -1062,12 +1081,30 @@
 <script>
 
     $(document).ready(function(){
-        
+      
+
       $("#profile_setting").removeClass('active')
       $("#poste_test").addClass('active')
       $("#select_gens_id").hide()
 
       $("#show_hide_data").hide()
+
+
+
+      var  profile = $("#check_profile").val()  
+      if(profile == "profile_incomplete" ){
+          swal({
+          icon:"warning",
+          text: "Please complete  you'r profile to post a test",
+          closeOnClickOutside : false
+          }).then(function(){
+            location.href="{% url 'user_profile_page' %}"
+          })
+        } 
+       
+       
+
+
     })
 
 
@@ -1151,6 +1188,8 @@
   $("#select_sample_gens").select2();  
 
   $(".select2-selection").css("padding","10px 0px 35px 20px")
+
+  
  
 </script>
     

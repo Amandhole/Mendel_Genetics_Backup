@@ -36,14 +36,12 @@ urlpatterns = [
     path("bid_auction_status_toggle", bid_auction_status_toggle,
          name="bid_auction_status_toggle"),
     path('change_state/', Show_state, name='change_state'),
-    path('posted_test_delete_by_user', posted_test_delete_by_user,
+    path('posted_test_delete_by_user', posted_pending_test_delete_by_user,
          name='posted_test_delete_by_user'),
-    path('posted_test_edit_by_user', posted_test_edit_by_user,
-         name="posted_test_edit_by_user"),
-    path("User_bids_on_other_users_test", User_bids_on_other_users_test,
-         name="User_bids_on_other_users_test"),
-    path("User_edit_bids_on_other_users_test",
-         User_edit_bids_on_other_users_test, name="User_edit_bids_on_other_users_test"),
+    path('posted_cancelled_test_delete_by_user',posted_cancelled_test_delete_by_user, name="posted_cancelled_test_delete_by_user"),
+    path('posted_test_edit_by_user', posted_test_edit_by_user,name="posted_test_edit_by_user"),
+    path("User_bids_on_other_users_test", User_bids_on_other_users_test,name="User_bids_on_other_users_test"),
+    path("User_edit_bids_on_other_users_test",User_edit_bids_on_other_users_test, name="User_edit_bids_on_other_users_test"),
     path('view_all_bids_on_my_test', view_all_bids_on_my_test,
          name='view_all_bids_on_my_test'),
 
@@ -58,4 +56,5 @@ urlpatterns = [
     path('get_all_test_of_lot_from_active_tab',get_all_test_of_lot_from_active_tab, name="get_all_test_of_lot_from_active_tab"),
     path('close_support_ticket/',close_support_ticket, name="close_support_ticket"),
     path('support_ticket_filter_admin/',support_ticket_filter_admin, name="support_ticket_filter_admin"),
+    path('upload_result_by_bidder', upload_result_by_bidder,name="upload_result_by_bidder")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

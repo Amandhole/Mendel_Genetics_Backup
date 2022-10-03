@@ -9,10 +9,25 @@
 
 <style type="text/css">
     
-    .purchasing-table tbody tr {
+.purchasing-table tbody tr {
     font-size: 14px;
     color: #171d1c;
     font-weight: 500;
+}
+
+
+element.style {
+}
+
+
+
+.inpcls{
+    background: #f4f4f4;
+    border: 1px solid transparent;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-left: 10px;
 }
 
 </style>
@@ -36,7 +51,6 @@
     <!--============= Cart Section Starts Here =============-->
     <div class="cart-sidebar-area">
         <div class="top-content">
-            
             <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
         </div>
         <div class="bottom-content">
@@ -44,43 +58,36 @@
                 
                 
                 <ul id="menu" style="color: white;">
+                    <li><a class='prett' href='#' title='Menu'>About Us</a>
+                </ul>
+
+                <ul class='menus'>
+                    <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
+                    <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
+                    <li><a href='#' title='Dropdown 3'>Management Team</a></li>
+                    <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
+                    <li><a href='#' title='Dropdown 3'>Quality</a></li>
+                </ul>
+        
+
+                    <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
+                <ul class='menus'>
                     
-                        <li><a class='prett' href='#' title='Menu'>About Us</a>
-      <ul class='menus'>
-        
-        <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
-        <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
-        <li><a href='#' title='Dropdown 3'>Management Team</a></li>
-        <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
-        <li><a href='#' title='Dropdown 3'>Quality</a></li>
-      </ul>
-    </li>
+                    <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
+                    <li><a href='#' title='Dropdown 3'>Liquid Biopsy</a></li>
+                    <li><a href='#' title='Dropdown 3'>Molecular Oncology</a></li>
+                    <li><a href='#' title='Dropdown 3'>NGS Panels</a></li>
+                    <li><a href='#' title='Dropdown 3'>Exome</a></li>
+                </ul>
+            
 
-                        <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
-      <ul class='menus'>
-        
-        <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
-        <li><a href='#' title='Dropdown 3'>Liquid Biopsy</a></li>
-        <li><a href='#' title='Dropdown 3'>Molecular Oncology</a></li>
-        <li><a href='#' title='Dropdown 3'>NGS Panels</a></li>
-        <li><a href='#' title='Dropdown 3'>Exome</a></li>
-      </ul>
-    </li>
-
-                
+                <ul class="menu">
                     <li><a href="" style="color: #fff;">Precision Medicine</a></li>
                     <li><a href="" style="color: #fff;">Genetic Counselling</a></li>
                     <li><a href="" style="color: #fff;">Ordering a test</a></li>
                     <li><a href="" style="color: #fff;">News and Events</a></li>
                     <li><a href="" style="color: #fff;">Contact</a></li>
                 </ul>
-                
-                
-                
-                
-                <!-- <div class="btn-wrapper text-center">
-                    <a href="#0" class="custom-button"><span>Checkout</span></a>
-                </div> -->
             </div>
         </div>
     </div>
@@ -88,9 +95,10 @@
 
 
     <!--============= Hero Section Starts Here =============-->
-    <div class="hero-section style-2 pb-lg-400">
-        
-        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}"></div>
+    <div class="hero-section style-2 pb-lg-400">  
+        <div class="bg_img hero-bg bottom_center" data-background="{% static 'assets/images/banner/hero-bg.png' %}">
+
+        </div>
     </div>
 
 
@@ -102,12 +110,9 @@
 
                 {%  include  'sidebar.html' %}
 
-
                 <div id="rts_div" class="col-lg-8">
 
                 </div>
-
-               
 
                 <div class="col-lg-8" id="postedlist">
                     
@@ -212,7 +217,6 @@
 
                                                         <div class="row col-md-12">
 
-
                                                             <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
                                                                 <span style="font-weight: 600;">Bid Price</span>
                                                             </div>
@@ -247,7 +251,6 @@
                                                                     <i class="flaticon-edit" ></i>
                                                                 </button>
                                                             </div>
-
                                                         </div>                                       
                                                     </div>    
                                                 </div>                       
@@ -277,8 +280,6 @@
                                                     margin-top: 0px; padding-top: 15px;">
                                         
                                                     <div class="row">
-
-
 
                                                         <div class="row col-md-12">
                                                             <div class="col-md-3" style="padding-top: 10px;">
@@ -408,7 +409,10 @@
                                                     margin-top: 0px; padding-top: 15px;">
                                         
                                                     <div class="row">
+                                                        
+                                                        <input type="hidden" id="bid_test_id">
 
+                                                        
                                                         <div class="row col-md-12">
                                                             <div class="col-md-3" style="padding-top: 10px;">
                                                                 <span style="font-weight: 600;margin-left: -14px;"> Lot Id</span>
@@ -496,7 +500,7 @@
                                                             <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
                                                                 <span style="font-weight: 600;">Result Date</span>
                                                             </div>
-                                                            <div class="col-md-7" style="margin-top: 18px; margin-bottom: 5px;">
+                                                            <div class="col-md-3" style="margin-top: 18px; margin-bottom: 5px;">
                                                                 {%if test.expect_result_date %}
                                                                     <h6 style="font-size: 17px; font-weight:400;">{{test.expect_result_date}}</h6> 
                                                                 {% else %}
@@ -504,10 +508,22 @@
                                                                 {% endif %} 
                                                             </div>
 
-                                                            <div class="col-md-2">
-                                                                <span class="badge badge-primary float-right" style="margin-top:20px; margin-left:30px ; font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
-                                                                    <i class="fas fa-thumbs-down"></i> Confirmed
+                                                            <div class="col-md-6" style="margin-top: 10px;">
+                                                                <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
+                                                                    <i class="fas fa-thumbs-up"></i> Confirmed
                                                                 </span>
+
+                                                            
+                                                                {% if test.fk_test_lot.result_upload_status == "Upload" %}
+                                                                    <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
+                                                                         Uploaded
+                                                                    </span> 
+                                                                {% else %}
+                                                                    <button type="button"  data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.fk_test_lot.id}}')"   style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                                        <i class="fa fa-upload"  ></i> 
+                                                                    </button> 
+                                                                {% endif %} 
+                                        
                                                             </div> 
                                                         </div>                                       
                                                     </div>    
@@ -519,7 +535,6 @@
                                     {% endif %}    
                                 </div> 
                             </div>
-
                         </div>
                     </div>    
                 </div>    
@@ -560,7 +575,7 @@
 
 
                 
-                <input type="hidden" id="bid_id">
+                <input type="hidden" id="lot_id">
                           
                     <div class="form-group">
                         <input type="text" id="edit_bid_price" placeholder="Bid Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="padding-left: 20px;" maxlength="5">
@@ -606,20 +621,258 @@
 
 <!-- Edit test modal end here -->
 
+{% comment %} upload result modal start here {% endcomment %}
+
+<div class="modal fade" id="upload_result_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 700px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                <div class="" style="justify-content:center;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="justify-content: center;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
 
+            </div>
+
+            <input type="hidden" id="test_id">
+
+            <div class="modal-body">
+
+                                   
+                <div class="login-form">
+                
+                    <div>
+                        <h6 style="text-align: center;">Upload Documents</h6><hr><br>
+                    </div>
+                
+
+                    {% comment %} <label class="flot-center" for="title">Select Files</label><br> {% endcomment %}
+                          
+                    <div class="col-md-12 row">
+
+                        <div class="col-md-6">
+                            <div class="">
+                                <input accept="image/*" class="inpcls" id="first_file" required type="file"><br>
+
+                                    {% if meal_data.meal_image %}
+                                        <img alt="Image" id="target_img_first" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {% else %}
+                                        <img alt="Image" id="target_img_first" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {% endif %}
+                                        {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
+                               
+                                    <span class="focus-input100"></span><br>
+                                    
+
+                            </div>
+                        </div>
+                        
+                        
+
+
+                        <div class="col-md-6">
+                            <div class="">
+                                <input accept="image/*" class="input100" id="second_file" required type="file"><br>
+
+                                    {% if meal_data.meal_image %}
+
+                                        <img alt="Image" id="target_img_second" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {% else %}
+                                        <img alt="Image" id="target_img_second" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                                    {%endif%}
+                            
+                                    {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
+                                    <span class="focus-input100"></span><br>
+                               
+                                    <span id="error_second_file" style="color:#ff4c4ce8;font-size: 14px;"></span>
+                            </div>
+                        </div>
+
+                        <span id="error_first_file" style="color:#ff4c4ce8;font-size: 14px;margin-left: 12rem;"></span>
+                    </div>
+                </div>
+
+                                                    
+                                 
+    
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+        
+                    <div class="form-group mb-0">
+                        <button type="button" id="" onclick="upload_result()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
+                    </div> 
+    
+                </div>                        
+            </div>
+      </div>
+
+        </div>
+    </div>
+</div>
+
+{% comment %} upload result modal end here {% endcomment %}
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
 
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_first').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    function readURL_second_image(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_second').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    var file_size1 = 0;
+
+    $("#target_img_first").hide()
+        
+		$('#first_file').bind('change', function () 
+		{
+
+			$('#error_first_file').html('');
+
+			file_size1 = this.files[0].size;
+
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#first_file')[0].files[0].name;
+
+
+            if(file_size1 > 2000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_first").hide()
+                $('#error_first_file').text('File must be less than 2mb...');
+            }
+            else{
+                readURL(this);
+                $("#target_img_first").show()
+    
+            }
+
+	});
+
+
+{% comment %} javascipt code for second file {% endcomment %}
+
+    $("#target_img_second").hide()
+        file_size1 = 0;
+		$('#second_file').bind('change', function () 
+		{
+
+			$('#error_first_file').html('');
+
+			file_size1 = this.files[0].size;
+
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#second_file')[0].files[0].name;
+
+
+            if(file_size1 > 2000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_second").hide()
+                $('#error_first_file').text('File must be less than 2mb...');
+            }
+            else{
+                readURL_second_image(this);
+                $("#target_img_second").show()
+    
+            }
+
+	});
+
+
+
+    
+function append_lot_id(id){
+    console.log(id)
+    alert(id)
+    $("#bid_test_id").val(id)
+}
+
+function upload_result() {
+
+    var bid_test_id = $("#bid_test_id").val()
+   
+    var first_documet = $('#first_file').val();
+    var second_documet = $('#second_file').val();
+
+
+    if ((first_documet == "") && (second_documet == "") ) {
+
+        $('#error_first_file').html('Please Select atleast one file');
+    }
+    
+
+    else if(file_size1 > 2000000){
+        $('#error_first_file').text('File must be less than 2mb...');
+    }
+
+    
+    else{
+        var item_data = new FormData();
+        var first_documet = $('#first_file')[0].files;
+        var second_documet = $('#second_file')[0].files;
+        
+
+        item_data.append('first_documet', first_documet[0]);
+        item_data.append('second_documet', second_documet[0]);
+        item_data.append('bid_test_id', bid_test_id);
+        
+        $.ajax({
+            method: "POST",
+            url: "{% url 'upload_result_by_bidder' %}",
+            enctype: "mutipart/form_data",
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: item_data,
+            success: function (response) {
+                if (response['status'] == "1"){
+                    swal({
+                        icon:"success",
+                        text:"Result Uploaded Succesfully",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                        location.reload()
+                    })
+                }
+                else if (response['status'] == "0"){
+                    swal({
+                        icon:"error",
+                        text:"Something wennt wrong",
+                        closeOnClickOutside:false
+                    })
+                }
+            }
+        });
+    }
+}
+        
+
+
 
     $("#closebtn").click(function(){
-
         $("#id_text_box_show").hide()
-    })
-        
+    })    
     $("#rts_div").hide()
 
     $(document).ready(function(){
@@ -851,6 +1104,9 @@ function  get_test_id_to_see_all_bids(id){
 
     })
 }
+
+
+
 
 </script>
 

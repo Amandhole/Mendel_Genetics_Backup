@@ -448,6 +448,7 @@ def edit_user_proifle_page(request):
             user_obj.CIF_number = cif_no
             user_obj.Landline_number = landline
             user_obj.zipcode = zipcode
+            user_obj.profile_status=True
             user_obj.save()
 
             send_data = {'status': "1",
@@ -555,6 +556,7 @@ def reset_current_password(request):
 def add_test_by_user(request):
     try:
         session_id = request.session.get('user_id')
+        
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
 
@@ -722,7 +724,7 @@ def test_added_by_user_list(request):
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def posted_test_delete_by_user(request):
+def posted_pending_test_delete_by_user(request):
     try:
         session_id = request.session.get('user_id')
         if request.method == "POST":
@@ -734,11 +736,46 @@ def posted_test_delete_by_user(request):
                 test_obj = UserTest.objects.get(id=test_id)
                 test_obj.delete()
                 pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
+                context={
+                    "pending_test":pending_test
+                    }
+                send_data = render_to_string('user_rts/pending_post_rts.html', context)
+                return HttpResponse(send_data)
+            else:
+                send_data = {'status': '0', "msg": "Test Does Not Exist"}
+                return JsonResponse(send_data)
+        else:
+            send_data = {'status': '0', "msg": "Request Is Not Post"}
+            return JsonResponse(send_data)
+    except:
+        send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
+        print(traceback.format_exc())
+        return JsonResponse(send_data)
+
+
+
+
+
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def posted_cancelled_test_delete_by_user(request):
+    try:
+        session_id = request.session.get('user_id')
+        if request.method == "POST":
+
+            data = json.loads(request.body.decode('utf-8'))
+            test_id = data['test_id']
+
+            if UserTest.objects.filter(id=test_id).exists():
+                test_obj = UserTest.objects.get(id=test_id)
+                test_obj.delete()
+
                 cancelled_test_obj = UserTest.objects.filter(fk_user_id=session_id, status="Cancelled").order_by('-id')
                 context={
-                    "pending_test":pending_test,
-                    "cancelled_test_obj":cancelled_test_obj                    }
-                send_data = render_to_string('user_rts/pending_post_rts.html', context)
+                    "cancelled_test_obj":cancelled_test_obj             
+                    }
                 send_data = render_to_string('user_rts/cancelld_post_rts.html', context)
                 return HttpResponse(send_data)
             else:
@@ -751,6 +788,10 @@ def posted_test_delete_by_user(request):
         send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
         print(traceback.format_exc())
         return JsonResponse(send_data)
+
+
+
+
 
 
 @csrf_exempt
@@ -869,14 +910,14 @@ def All_test_list_exclude_current_user(request):
 
                 tets_obj = TestLots.objects.filter(lot_status="Published").exclude(fk_user_master__id=session_id).order_by('-id')
 
-                for i in tets_obj:
-                    print(i)
+                ls = []
                 for test in tets_obj:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-
-                for test in tets_obj:
                     test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
-                print(tets_obj)
+              
+                
+                
+        
                 for test in tets_obj:
                     bids = UserBids.objects.filter(fk_test_lot=test)
                     for bid in bids:
@@ -961,7 +1002,7 @@ def add_css_data_coutnry_state_city(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def User_bids_on_other_users_test(request):
-    try:
+    if 1 == 1:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
 
@@ -974,15 +1015,14 @@ def User_bids_on_other_users_test(request):
             converted_date = datetime.strptime(expect_result_date, "%d-%m-%Y")
             print(user_id, lot_id, bidprice, expect_result_date, checkbox)
 
-            user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id,
-                                bid_Price=bidprice, expect_result_date=converted_date, checkbox=checkbox,bid_status = "Pending")
+            user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id, bid_Price=bidprice,expect_result_date=converted_date, checkbox=checkbox, bid_status="Pending")
 
             user_bid.save()
 
             send_data = {"status": "1", "msg": "Bid Added Succesfully"}
         else:
             send_data = {"status": "0", "msg": "Request Is Not Post"}
-    except:
+    else:
         send_data = {"status": "0", "msg": "Something Went Wrong",
                      "error": traceback.format_exc()}
     return JsonResponse(send_data)
@@ -1084,6 +1124,7 @@ def Approve_users_bid_on_test(request):
                 test_obj = TestLots.objects.get(id=lot_id)
                 print(test_obj.id)
                 test_obj.lot_status = "Approved"
+                print('apppppppppppppppppppppprvvvvvvvvvvvdddddddddddd')
                 test_obj.save()
 
                 bid_obj = UserBids.objects.get(id = bid_id)
@@ -1311,10 +1352,12 @@ def close_support_ticket(request):
 def get_all_test_of_lot_from_active_tab(request):
 
    
-    try:
+    if 1 == 1:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
+            
+            print('-----------------------',lot_id)
 
             print(lot_id)
             test_list = TestLots.objects.get(id=lot_id).tests_in_lot            
@@ -1326,13 +1369,40 @@ def get_all_test_of_lot_from_active_tab(request):
                 "test_in_lot": test_in_lot
                         }
             
-            print('---------------------------pppppppppppppppppppppppppppppppppppppp', test_in_lot)
+            print('----------', test_in_lot)
     
             send_data = render_to_string('rts_accordion.html', context)
+         
+        else:
+            send_data = {"msg":"Request is not post","status":"0"}   
+    else:
+        send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
+        print(traceback.format_exc())
+    return HttpResponse(send_data)
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def upload_result_by_bidder(request):
+    try:
+        if request.method == "POST":
+            # data = json.loads(request.body.decode('utf-8'))
+            first_doccument = request.FILES.get('first_documet')
+            second_doccument = request.FILES.get('second_documet')
+            bid_lot_id = request.POST.get('bid_test_id')
+
+            print('test id', bid_lot_id)
+
+            TestLots.objects.filter(id=bid_lot_id).update(bidder_doc_first=first_doccument, bidder_doc_second=second_doccument,
+                                                          upload_date_time=datetime.now(), result_upload_status="Upload")
+            
+    
+
+            send_data = {"msg":"Request is not post","status":"1"} 
          
         else:
             send_data = {"msg":"Request is not post","status":"0"}   
     except:
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
-    return HttpResponse(send_data)
+    return JsonResponse(send_data)    

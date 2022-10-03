@@ -1,5 +1,6 @@
 <div class="tab-content" style="overflow-y: scroll; max-height: 600px;">
     {% if pending_test %}
+    
         {% for test in pending_test %}
             <div class="tab-pane show active fade" id="current">
                 <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
@@ -12,6 +13,22 @@
                     margin-top: 0px; padding-top: 15px;">
                 
                     <div class="row">
+
+                        
+                        <div class="row col-md-12">
+                            <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                <span style="font-weight: 600;">Auction id </span>
+                            </div>
+
+                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">
+                            
+                                {%if test.auction_test_id %}   
+                                    <h6 style="font-size: 17px; font-weight:400;">{{ test.auction_test_id }}</h6> 
+                                {% else %}    
+                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                {% endif %}   
+                            </div>
+                        </div> 
                         
                         <div class="row col-md-12">
                             <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
