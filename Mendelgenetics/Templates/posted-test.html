@@ -365,7 +365,7 @@
 
 
                     
-                        {% comment %} <div class="row" style="justify-content: center;margin-left: -54px;">
+                        <div class="row" style="justify-content: center;margin-left: -54px;">
 
                           <div class="col-md-2">
                             <span class="float-right" style="margin-top:10px; margin-left:30px ;">
@@ -409,12 +409,46 @@
                             </select>
                           </div>
 
-                        </div> {% endcomment %}
+                        </div> 
 
                     {% comment %} <div class="form-group ">
                         <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
                         <span id="testrequested_modal_error" style="color: red;margin-left: 15PX;"></span>
                     </div> {% endcomment %}
+
+
+                    
+                        <div class="row" id="show_hide_data">
+                          <div class="col-md-2">
+                            <span>Sample Type :</span>
+                          </div>
+                          <div class="col-md-10">
+                            <span id="sample_type_id"></span>
+                          </div>
+                          
+                          <div class="col-md-2">
+                            <span>Transport:</span>
+                          </div>
+
+                          <div class="col-md-10">
+                            <span id="transport_id"></span>
+                          </div>
+                          
+                          <div class="col-md-2">
+                            <span id="gens">Gens:</span>
+                          </div>
+                          <div class="col-md-10">
+                            <span id="gens_id"></span>
+                          </div>
+                          
+                          <div class="col-md-2">
+                            <span id="path">Pathalogy :</span>
+                          </div>
+                          <div class="col-md-10">
+                            <span id="pathalogy_id"></span>
+                          </div>
+                          
+                        </div>
 
 
                     <div style="margin-top: 25px;">
@@ -549,9 +583,12 @@
 
     $(document).ready(function(){
         
-      $("#profile_setting").removeClass('active')
-      $("#posted_test").addClass('active')
-      
+        $("#profile_setting").removeClass('active')
+        $("#posted_test").addClass('active')
+
+        $("#show_hide_data").hide()
+        $("#select_gens_id").hide()
+
     })
 </script>
 

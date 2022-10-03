@@ -623,12 +623,14 @@ def test_added_by_user_list(request):
                             
                         return HttpResponse(send_data)
                     else:
+                        sampletest = SampleTestMaster.objects.all()
                         context = {
                             "user_obj": user_obj,
                             "test_active_obj": test_active_obj,
                             "Confirm_test_obj":Confirm_test_obj,
                             "cancelled_test_obj":cancelled_test_obj,
-                            "pending_test": pending_test
+                            "pending_test": pending_test,
+                            "sampletest": sampletest
                             }
                     return render(request, 'posted-test.html',context)
                     
@@ -949,7 +951,7 @@ def User_bids_on_other_users_test(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def User_edit_bids_on_other_users_test(request):
     print('===================')
-    try:
+    if 1 == 1:
         if request.method == "POST":
 
             data = json.loads(request.body.decode('utf-8'))
@@ -958,8 +960,7 @@ def User_edit_bids_on_other_users_test(request):
             bid_price = data['bid_price']
             biexpect_result_dated = data['expect_result_date']
 
-            converted_date = datetime.strptime(
-                biexpect_result_dated, "%m-%d-%Y")
+            converted_date = datetime.strptime(biexpect_result_dated, "%m-%d-%Y")
 
             if UserBids.objects.filter(id=bid_id):
                 userbid_obj = UserBids.objects.get(id=bid_id)
@@ -971,7 +972,7 @@ def User_edit_bids_on_other_users_test(request):
                 send_data = {"status": '0', "msg": "User Bid Not Found"}
         else:
             send_data = {"status": '0', "msg": "Request Is Not Post"}
-    except:
+    else:
         send_data = {"status": '0', "msg": "Something Went Wrong",
                      "error": traceback.format_exc()}
     return JsonResponse(send_data)
