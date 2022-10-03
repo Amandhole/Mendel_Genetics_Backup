@@ -157,7 +157,7 @@
 
 
                                                 
-                                                <div class="row col-md-12">
+                                                <!-- <div class="row col-md-12">
                                                         <div class="col-md-3" style="padding-top: 10px;">
                                                             <span style="font-weight: 600;margin-left: -14px;">Pathalogy</span>
 
@@ -194,7 +194,7 @@
                                                                     <h6 style="font-size: 17px; font-weight:400;">----</h6>
                                                             {% endif %}    
                                                         </div>
-                                                </div>    
+                                                </div>     -->
                                                     
                                                 
                                                 <div class="row col-md-12">
@@ -206,7 +206,12 @@
 
                                                         {%if test.test_quantity %}
                                                                 
-                                                                <h6 style="font-size: 17px; font-weight:400;">{{test.test_quantity}}</h6> 
+                                                                <h6 style="font-size: 17px; font-weight:400;">{{test.test_quantity}}
+                                                                    &emsp;
+                                                                    <span id="plus_minus_button{{forloop.counter}}" onclick="hideShowBriefPathDetails('brief_pathalogy_info{{forloop.counter}}', 'plus_minus_button{{forloop.counter}}')" style="color: #7019f4; cursor: pointer;">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </span>
+                                                                </h6> 
                                                             {% else %}    
                                                             
                                                                     <h6 style="font-size: 17px; font-weight:400;">----</h6>
@@ -216,7 +221,44 @@
                                                         </div>
                                                 </div>
 
-                                            
+                                                <div id="brief_pathalogy_info{{forloop.counter}}" style="display: none;">
+                                                    {% for brief_obj in test.view_path_brief_list %}
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-3" style="padding-top: 10px;">
+                                                                <span style="font-weight: 600;margin-left: -14px;">{{forloop.counter}}) Pathalogy : </span>
+                                                            </div>
+                                                            <div class="col-md-8 text-left" style="margin-top: 15px; margin-bottom: 5px; margin-left: -50px; min-width: 75%;">
+                                                                <h6 style="font-size: 17px; font-weight:400;">
+                                                                    {{brief_obj.pathalogy}}
+                                                                </h6>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-2" style="padding-top: 10px;">
+                                                                <span style="font-weight: 600;margin-left: -14px;">Gens : </span>
+                                                            </div>
+                                                            <div class="col-md-9" style="margin-top: 15px; margin-bottom: 5px;">
+                                                                <h6 style="font-size: 17px; font-weight:400;">
+                                                                    {{brief_obj.gens}}
+                                                                </h6>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-2" style="padding-top: 10px;">
+                                                                <span style="font-weight: 600;margin-left: -14px;">Quantity : </span>
+                                                            </div>
+                                                            <div class="col-md-9" style="margin-top: 15px; margin-bottom: 5px;">
+                                                                <h6 style="font-size: 17px; font-weight:400;">
+                                                                    {{brief_obj.quantity}}
+                                                                </h6>
+                                                            </div>
+                                                        </div> 
+                                                        <hr style="width: 90%; margin-left: 5%;">
+                                                    {% endfor %}
+                                                </div>
 
                                                 <div class="row col-md-12">
                                                     <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
@@ -695,7 +737,21 @@
       $("#profile_setting").removeClass('active')
       $("#all_auctions").addClass('active')
     })
-
+    
+    
+    function hideShowBriefPathDetails(div_id, button_id)
+    {
+        if ($('#'+div_id).is(':visible') == true)
+        {
+            $('#'+div_id).hide(300);
+            $('#'+button_id).html(`<i class="fa-solid fa-plus"></i>`);
+        }
+        else
+        {
+            $('#'+div_id).show(300);
+            $('#'+button_id).html(`<i class="fa-solid fa-minus"></i>`);
+        }
+    }
 
     function view_all_information_about_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,Centre,
     Email,other_way,test_requested,background_data,patient_test){

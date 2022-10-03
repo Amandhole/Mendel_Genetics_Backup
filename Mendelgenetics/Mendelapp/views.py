@@ -549,6 +549,22 @@ def add_test_by_user(request):
 
 import ast
 # get test list of perticular user
+
+def get_brief_path_list(test_list):
+    temp_list = []
+    for path in ast.literal_eval(test_list):
+        if not any(d['pathalogy'] == path for d in temp_list):
+            pathalogy_obj = SampleTestMaster.objects.filter(pathalogy=path).last()
+            temp_list.append({
+                'pathalogy' : path,
+                'gens' : pathalogy_obj.gens,
+                'quantity' : 1
+            })
+        else:
+            index = next((index for (index, d) in enumerate(temp_list) if d["pathalogy"] in path), None)
+            temp_list[index]['quantity'] += 1
+    return temp_list
+
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_added_by_user_list(request):
@@ -556,84 +572,74 @@ def test_added_by_user_list(request):
     try:
         session_id = request.session.get('user_id')
         if session_id:
-
-            today = datetime.today()
             if UserMaster.objects.filter(id=session_id).exists():
-                    user_obj = UserMaster.objects.get(id=session_id)
-    
-                    pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
-                    cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
-                    test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')
-                    Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
-                    
-                    for test in test_active_obj:
-                        test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-                    
-                    for test in test_active_obj:
-                        test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
+                user_obj = UserMaster.objects.get(id=session_id)
 
-            
-                    for i in test_active_obj:
-                        i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).exclude(bid_status="Cancelled").count()
-                    
-                    for test in Confirm_test_obj:
-                        test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
+                cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
+                test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')
+                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
+                
 
-                    for test in Confirm_test_obj:
-                        test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
-                                      
-                    if request.method == "POST":  
-                        data = json.loads(request.body.decode('utf-8'))
-                        tab_type = data['tab_type']
-                       
-                        if tab_type == "Active_tab":
-                            context = {   
-                                "user_obj": user_obj,
-                                "test_active_obj": test_active_obj,
-                                }
-                            send_data = render_to_string('user_rts/active_post_rts.html', context)
+                for test in test_active_obj:
+                    test.bid_count = UserBids.objects.filter(fk_test_lot__id = test.id).exclude(bid_status="Cancelled").count()
+                    test.view_path_brief_list = get_brief_path_list(test.test_pathalogy)
 
+                for test in Confirm_test_obj:
+                    test.temp_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.temp_gens = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
+                    test.view_path_brief_list = get_brief_path_list(test.fk_test_lot.test_pathalogy)
 
+                if request.method == "POST":  
+                    data = json.loads(request.body.decode('utf-8'))
+                    tab_type = data['tab_type']
 
-                        elif tab_type == "Pending_tab":
-                            context = {
-                                "user_obj": user_obj,
-                                "pending_test": pending_test
-                                }
-                            send_data = render_to_string('user_rts/pending_post_rts.html', context)
-                        
-                        
-                        elif tab_type == "Cancelled_tab":
-                            context = {
-                                "user_obj": user_obj,
-                                "cancelled_test_obj": cancelled_test_obj,
-                                }
-                            send_data = render_to_string('user_rts/cancelld_post_rts.html', context)
-                        
-
-
-                        elif tab_type == "Confirm_tab":
-                            context = {   
-                                "user_obj": user_obj,
-                                "Confirm_test_obj":Confirm_test_obj,
-                                }
-                            send_data = render_to_string('user_rts/confirmed_post_rts.html', context)
-
-                        
-                            
-                        return HttpResponse(send_data)
-                    else:
-                        context = {
+                    if tab_type == "Active_tab":
+                        context = {   
                             "user_obj": user_obj,
                             "test_active_obj": test_active_obj,
-                            "Confirm_test_obj":Confirm_test_obj,
-                            "cancelled_test_obj":cancelled_test_obj,
+                            }
+                        send_data = render_to_string('user_rts/active_post_rts.html', context)
+
+
+
+                    elif tab_type == "Pending_tab":
+                        context = {
+                            "user_obj": user_obj,
                             "pending_test": pending_test
                             }
-                    return render(request, 'posted-test.html',context)
+                        send_data = render_to_string('user_rts/pending_post_rts.html', context)
                     
-        else:            
-            return redirect('landing_page')
+                    
+                    elif tab_type == "Cancelled_tab":
+                        context = {
+                            "user_obj": user_obj,
+                            "cancelled_test_obj": cancelled_test_obj,
+                            }
+                        send_data = render_to_string('user_rts/cancelld_post_rts.html', context)
+                    
+
+
+                    elif tab_type == "Confirm_tab":
+                        context = {   
+                            "user_obj": user_obj,
+                            "Confirm_test_obj":Confirm_test_obj,
+                            }
+                        send_data = render_to_string('user_rts/confirmed_post_rts.html', context)
+
+                    
+                        
+                    return HttpResponse(send_data)
+                else:
+                    context = {
+                        "user_obj": user_obj,
+                        "test_active_obj": test_active_obj,
+                        "Confirm_test_obj":Confirm_test_obj,
+                        "cancelled_test_obj":cancelled_test_obj,
+                        "pending_test": pending_test
+                        }
+                return render(request, 'posted-test.html',context)
+        return redirect('landing_page')
     except:
         print(traceback.format_exc())
         return redirect('landing_page')
@@ -829,17 +835,27 @@ def All_test_list_exclude_current_user(request):
 
                 ls = []
                 for test in tets_obj:
-                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.test_pathalogy))
-                    test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
-              
-                
-                
-        
-                for test in tets_obj:
+                    test.temp_string = " , ".join(ast.literal_eval(test.test_pathalogy))
+                    test.temp_gens = " , ".join(ast.literal_eval(test.test_gen))
                     bids = UserBids.objects.filter(fk_test_lot=test)
                     for bid in bids:
                         test.my_bid = True if bid.fk_user_master == user_obj else False
                         test.my_bid_obj = bid
+                    
+                    
+                    temp_list = []
+                    for path in ast.literal_eval(test.test_pathalogy):
+                        if not any(d['pathalogy'] == path for d in temp_list):
+                            pathalogy_obj = SampleTestMaster.objects.filter(pathalogy=path).last()
+                            temp_list.append({
+                                'pathalogy' : path,
+                                'gens' : pathalogy_obj.gens,
+                                'quantity' : 1
+                            })
+                        else:
+                            index = next((index for (index, d) in enumerate(temp_list) if d["pathalogy"] in path), None)
+                            temp_list[index]['quantity'] += 1
+                    test.view_path_brief_list = temp_list
 
                 context = {
                     "user_obj": user_obj,
