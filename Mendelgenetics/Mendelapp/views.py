@@ -797,7 +797,7 @@ def posted_cancelled_test_delete_by_user(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_test_edit_by_user(request):
-    try:
+    if 1 == 1:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             test_id = data['test_id']
@@ -818,7 +818,7 @@ def posted_test_edit_by_user(request):
             contact_pereson = data['contact_pereson']
             # patient_test = data['patienttest']
 
-            testrequested = data['testrequested']
+            # testrequested = data['testrequested']
             backgrounddata = data['backgrounddata']
 
             weight_unit = data['weight_unit']
@@ -843,7 +843,7 @@ def posted_test_edit_by_user(request):
                 test_obj.Email = email
                 test_obj.other_way = otherway
                 # test_obj.patient_test = patient_test
-                test_obj.test_requested = testrequested
+                # test_obj.test_requested = testrequested
                 test_obj.background_data = backgrounddata
                 test_obj.weight_unit = weight_unit
                 test_obj.height_unit = height_unit
@@ -855,9 +855,8 @@ def posted_test_edit_by_user(request):
                 send_data = {'status': '0', "msg": "Test Not Exists"}
         else:
             send_data = {'status': '0', "msg": "Request Is Not Post"}
-    except:
-        send_data = {'status': '0', "msg": "Something Went Wrong",
-                     "error": traceback.format_exc()}
+    else:
+        send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
     return JsonResponse(send_data)
 
 

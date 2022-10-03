@@ -363,10 +363,10 @@
                         <hr>
                     </div>
 
-                    <div class="form-group ">
+                    {% comment %} <div class="form-group ">
                         <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
                         <span id="testrequested_modal_error" style="color: red;margin-left: 15PX;"></span>
-                    </div>
+                    </div> {% endcomment %}
 
 
                     <div style="margin-top: 25px;">
@@ -847,6 +847,8 @@
       var contact_pereson =$("#contact_person_name").val()
       
            
+      var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
       /*if( patient_test){
         test = patient_test
         }
@@ -914,35 +916,51 @@
         $("#centre_modal_error").html('Enter Centre')   
       }
 
-        else if (email == ''){
-        $("#email").css('border','1px solid #f37777');
-        $("#email").focus();
-        $("#email_modal_error").html('Enter Email')   
-      }
 
-       /* else if (otherway == ''){
-        $("#otherway").css('border','1px solid #f37777');
-        $("#otherway").focus();
-        $("#otherway_modal_error").html('Enter other ways')   
-      }*/
+
+    
+       
+    else if ((email =='') && (otherway ==''))
+    {
+        if ((!emailfilter.test(email)) && (email != '')) 
+        {
+
+            $("#email").css("border", "1px solid #f37777");
+            $("#email").focus();
+            $("#email_modal_error").html("Enter Valid Email  ");
+        }
+        else
+        {
+            $("#email").css("border", "1px solid #f37777");
+            $("#email").focus();
+            $("#email_modal_error").html("Enter Email");
+        }
+    }
+
+    else if ((!emailfilter.test(email)) && (email != '')){
+        $("#email").css("border", "1px solid #f37777");
+        $("#email").focus();
+        $("#email_error").html("Enter Valid Email  ");
+    } 
+
       else if (contact_pereson == ''){
         $("#contact_person_name").css('border','1px solid #f37777');
         $("#contact_person_name").focus();
         $("#contact_person_name_error").html('Enter Contact Person Name') 
-      }
+    }
 
 
-      else if (testrequested == ''){
+      /* else if (testrequested == ''){
         $("#testrequested").css('border','1px solid #f37777');
         $("#testrequested").focus();
         $("#testrequested_modal_error").html('Enter Description')   
-      }
+      } */
 
-         else if (backgrounddata == ''){
+    /*else if (backgrounddata == ''){
         $("#backgrounddata").css('border','1px solid #f37777');
         $("#backgrounddata").focus();
         $("#backgrounddata_modal_error").html('Enter Background Data')   
-      }
+    }*/
 
 
         
