@@ -49,6 +49,7 @@ element.style {
     <!--============= Header Section Ends Here =============-->
 
     <!--============= Cart Section Starts Here =============-->
+    <input type="hidden" id="bid_id">
     <div class="cart-sidebar-area">
         <div class="top-content">
             <span class="side-sidebar-close-btn"><i class="fas fa-times"></i></span>
@@ -804,7 +805,6 @@ element.style {
     
 function append_lot_id(id){
     console.log(id)
-    alert(id)
     $("#bid_test_id").val(id)
 }
 
@@ -912,7 +912,6 @@ function upload_result() {
 
     function delete_posted_test(id){
         
-        alert(id)
         swal({
             icon:"warning",
             text:"Are you sure to delete bid?",
@@ -999,7 +998,6 @@ function edit_bid_on_test(){
     var bid_id = $("#bid_id").val()
     var bid_price = $("#edit_bid_price").val()
     var expect_result_date = $("#edit_datepicker").val()
-
 
     if (bid_price ==''){
         $("#edit_bid_price").css("border", "1px solid #f37777");
