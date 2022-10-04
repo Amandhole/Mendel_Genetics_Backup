@@ -247,7 +247,7 @@
     </div>
     <!--============= Hero Section Ends Here =============-->
 
-
+    <input type="hidden" id="lot_id">
     <!--============= Dashboard Section Starts Here =============-->
     <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
         <div class="container">
@@ -355,9 +355,9 @@
                                             {% endif %}
 
 
-                                            <button type="submit" onclick="window.open('file.doc')">
+                                            {% comment %} <button type="submit" onclick="window.open('file.doc')"> {% endcomment %}
                                             {% if test.bidder_doc_first %}
-                                                <td><button type="submit" onclick="download_document()" style="background-color: green;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                <td><button type="button" class="btn-success" onclick="window.open('{{test.bidder_doc_first.url}}')" style="color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                   <i class="fa fa-download"></i> 
                                                 </button></td>
                                             {% else %}
@@ -365,7 +365,7 @@
                                             {% endif %}
 
                                             {% if test.bidder_doc_second %}
-                                                <td><button type="button"  onclick="download_document()" style="background-color: green;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                <td><button type="button" class="btn-success" onclick="window.open('{{test.bidder_doc_second.url}}')" style="color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                   <i class="fa fa-download"></i> 
                                                 </button></td>
                                             {% else %}
@@ -373,15 +373,17 @@
                                             {% endif %}
 
                                             <td>
+
+
                                                 {% if test.result_upload_status == "Upload" %}
-                                                    <button type="button" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id()" style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                    <button type="submit" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.id}}')" style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                       <i class="fa fa-upload"></i> 
                                                     </button>
                                                 {% else %}
 
-                                                    <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7600bc;margin-left: 45px;">
-                                                        uploaded
-                                                    </span>
+                                                  <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
+                                                       Result Uploaded
+                                                  </span>
                                                 {% endif %}     
                                             </td> 
                                           </tr>
@@ -480,8 +482,8 @@
 
                         <div class="col-md-6">
                             <div class="">
-                                <input accept="image/*" class="inpcls" id="first_file" required type="file"><br>
-
+                                {% comment %} <input accept="image/*" class="inpcls" id="first_file" required type="file"><br> {% endcomment %}
+                                <input  class="inpcls" id="first_file" required type="file"><br>
                                     {% if meal_data.meal_image %}
                                         <img alt="Image" id="target_img_first" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
                                     {% else %}
@@ -526,7 +528,7 @@
                 <div class="row" style="justify-content:center; margin-top: 50px;">
         
                     <div class="form-group mb-0">
-                        <button type="button" id="" onclick="upload_result()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
+                        <button type="button" id="" onclick="upload_result_by_admin()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
                     </div> 
     
                 </div>                        
@@ -630,21 +632,20 @@
                 $("#target_img_second").show()
     
             }
-
 	});
 
 
 
     
-function append_lot_id(){
-    console.log('hello')
-    $("#bid_test_id").val(id)
+function append_lot_id(id){
+    //alert(id)
+    $("#lot_id").val(id)
 }
 
 function upload_result_by_admin() {
 
-    var bid_test_id = $("#bid_test_id").val()
-   
+    var lot_id = $("#lot_id").val()
+    //alert(lot_id)
     var first_documet = $('#first_file').val();
     var second_documet = $('#second_file').val();
 
@@ -655,8 +656,8 @@ function upload_result_by_admin() {
     }
     
 
-    else if(file_size1 > 2000000){
-        $('#error_first_file').text('File must be less than 2mb...');
+    else if(file_size1 > 10000000){
+        $('#error_first_file').text('File must be less than 10mb.');
     }
 
     
@@ -668,7 +669,7 @@ function upload_result_by_admin() {
 
         item_data.append('first_documet', first_documet[0]);
         item_data.append('second_documet', second_documet[0]);
-        item_data.append('bid_test_id', bid_test_id);
+        item_data.append('lot_id', lot_id);
         
         $.ajax({
             method: "POST",
@@ -700,6 +701,8 @@ function upload_result_by_admin() {
     }
 }
 
+
+
 </script>
 
 <script>
@@ -725,48 +728,6 @@ function upload_result_by_admin() {
 </script>
 
 <script>
-
-   function upload_result_by_admin(id){
-        console.log(id)
-        swal({
-            icon:"warning",
-            text:"Are you sure to upload result?",
-            buttons: ["No", "Yes"],
-            dangerMode: true,
-            closeOnClickOutside:false                    
-        }).then((willUpdate) => {
-            if(willUpdate){
-                $.ajax({
-                    method:"POST",
-                    url:"{% url 'upload_result_by_admin' %}",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "test_lot_id":id
-                    }),
-                    success:function(response){
-                        if(response['status']== '1'){
-                            swal({
-                                icon:"success",
-                                text:"Result has been published Successfully",
-                                closeOnClickOutside:false
-                            }).then(function(){
-                                location.reload()
-                            })
-                        }
-                        else if(response['status'] == '0'){
-                            swal({
-                                icon:"error",
-                                text:"Something Went wrong",
-                                closeOnClickOutside:false
-                            })
-                        }
-                    }
-                })
-            }
-        })
-        
-   } 
-
 
 
    

@@ -556,52 +556,63 @@
       var test_id=[]
       var user_id = []
 
-              $("input:checkbox[name='checkbox']:checked").each(function(){
-                    var value = $(this).prop("value");
-                    if ( value== "yes"){
-                        console.log('');
-                    }
-                    else{
-                        test_id.push($(this).val());
-                        user_id.push($(this).data("id")); 
-                    }
-                });
-                console.log('user id',user_id)
-                console.log('test id',test_id)
+        $("input:checkbox[name='checkbox_test']:checked").each(function(){
+              var value = $(this).prop("value");
+               
+              
+              if ( value== "yes"){
+                  console.log('');
+              }
+              else{
+                  test_id.push($(this).val());
+                  user_id.push($(this).data("id")); 
+              }
+          });
+         
+          console.log(test_id)
+          console.log(user_id)
 
-
-        if($("#checkboxid").prop('checked')){
-                    swal({
-            icon:"warning",
-            text:"Are you sure to reject test?",
-            buttons: ["No", "Yes"],
-            dangerMode:true,
-            closeOnClickOutside:false                    
-        }).then((willUpdate) => {
-          if(willUpdate){
-          $.ajax({
-          method:"Post",
-          url:"{% url 'test_reject_by_admin' %}",
-          contentType:"application/json",
-          data:JSON.stringify({
-            "test_id":test_id,
-            "user_id":user_id
-          }),
-          success: function(response){
-            if (response['status'] == '1'){
-              location.reload();
-            }
-            else if (response['status'] == '0'){
-              swal({
-              icon:"error",
-              text:"Something Went Wrong",
-              closeOnClickOutside:false                    
-        })
-            }
-          }
-        })
-          }
-        })
+        //if($("#checkboxid").prop('checked'))
+        
+        //alert($('.checkbox:checked').length)
+        if($('.checkbox:checked').length > 0)
+          {
+       
+            swal({
+                icon:"warning",
+                text:"Are you sure to reject test?",
+                buttons: ["No", "Yes"],
+                dangerMode:true,
+                closeOnClickOutside:false                    
+              }).then((willUpdate) => {
+                if(willUpdate)
+                {
+                  $.ajax({
+                  method:"Post",
+                  url:"{% url 'test_reject_by_admin' %}",
+                  contentType:"application/json",
+                  data:JSON.stringify({
+                    "test_id":test_id,
+                    "user_id":user_id
+                      }),
+                      success: function(response)
+                        {
+                          if (response['status'] == '1')
+                          {
+                            location.reload();
+                          }
+                          else if (response['status'] == '0')
+                            {
+                            swal({
+                              icon:"error",
+                              text:"Something Went Wrong",
+                              closeOnClickOutside:false                    
+                              })
+                            }
+                        }
+                  })
+              }
+         })
         }
         else{
               swal({

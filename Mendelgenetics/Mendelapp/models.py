@@ -121,11 +121,11 @@ class TestLots(models.Model):
     lot_status = models.CharField(null=True, max_length=15, default="Published")
     created_date_time = models.DateTimeField(auto_now =True)
     
-    bidder_doc_first = models.ImageField(upload_to='Documentfirst/', null=True, blank=True)
-    bidder_doc_second = models.ImageField(upload_to='Documentsecond/', null=True, blank=True)
+    bidder_doc_first = models.FileField(upload_to='biderdoc1/', null=True, blank=True)
+    bidder_doc_second = models.FileField(upload_to='biderdoc2/', null=True, blank=True)
 
-    admin_doc_first = models.ImageField(upload_to='Documentfirst/', null=True, blank=True)
-    admin_doc_second = models.ImageField(upload_to='Documentsecond/', null=True, blank=True)
+    admin_doc_first = models.FileField(upload_to='Admindoc1/', null=True, blank=True)
+    admin_doc_second = models.FileField(upload_to='Admindoc2/', null=True, blank=True)
     
     upload_date_time = models.DateTimeField(auto_now=True)
     result_upload_status = models.CharField(null=True, max_length=15, default="Pending")  #Pending , Upload , AdminUpload

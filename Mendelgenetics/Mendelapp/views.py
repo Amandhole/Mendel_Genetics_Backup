@@ -580,8 +580,10 @@ def test_added_by_user_list(request):
                 pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
                 cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
                 test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')
-                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
-                
+                # Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
+                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id)
+
+                print(Confirm_test_obj)
 
                 for test in test_active_obj:
                     test.bid_count = UserBids.objects.filter(fk_test_lot__id = test.id).exclude(bid_status="Cancelled").count()
@@ -1328,9 +1330,13 @@ def upload_result_by_bidder(request):
 
             print('test id', bid_lot_id)
 
-            TestLots.objects.filter(id=bid_lot_id).update(bidder_doc_first=first_doccument, bidder_doc_second=second_doccument,
-                                                          upload_date_time=datetime.now(), result_upload_status="Upload")
-            
+            TestLots.objects.filter(id=bid_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
+            obj = TestLots.objects.get(id=bid_lot_id)
+            if first_doccument:
+                obj.bidder_doc_first = first_doccument
+            if second_doccument:
+                obj.bidder_doc_second =second_doccument
+            obj.save()
     
 
             send_data = {"msg":"Request is not post","status":"1"} 

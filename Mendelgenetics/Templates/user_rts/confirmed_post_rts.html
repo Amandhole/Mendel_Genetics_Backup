@@ -158,19 +158,50 @@
                                     {% endif %} 
                                 </div>
 
-                                <div class="col-md-6" style="margin-top: 10px;">
+                                <div class="col-md-6" style="margin-top: 10px;margin-left: 14px;">
                                     
-                                    <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.fk_test_lot.id}})"  style="background-color: #7019f4;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 80px;">
+                                    <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.fk_test_lot.id}})"  style="background-color: #7019f4;color: white;height: 29px;width: 58px; border-radius: 5px; border: none;  margin-left:-40px">
                                         <i class="fa fa-eye" ></i> 
                                     </button> 
 
                                     
-                                    <span class="badge badge-primary float-right" style="font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
+                                    <span class="badge badge-primary" style="font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
                                         <i class="fas fa-thumbs-up"></i> Confirmed
                                     </span>
 
+                                    {% if test.fk_test_lot.admin_doc_first  %}
+
+                                        <td>
+                                            <button type="button" class="btn-success" onclick="window.open('{{test.fk_test_lot.admin_doc_first.url}}')" style="color: white;height: 29px;width: 58px; border-radius: 5px; border: none;;">
+                                                  <i class="fa fa-download"></i> 
+                                            </button>
+                                        </td>
+    
+                                    {% endif %}  
+
+
+                                     {% if test.fk_test_lot.admin_doc_second  %}
+
+                                        <td>
+                                            <button type="button" class="btn-success" onclick="window.open('{{test.fk_test_lot.admin_doc_second.url}}')" style="color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
+                                                  <i class="fa fa-download"></i> 
+                                            </button>
+                                        </td>
+    
+                                    {% endif %}  
+
+
+                                    {% if not test.fk_test_lot.admin_doc_first and not test.fk_test_lot.admin_doc_second %}    
+                                        <span class="badge badge-primary float-right" style="font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4; margin-right: 40px;">
+                                            No Result
+                                        </span>
+
+                                    {% endif %}    
+                                    
                                    
-                                
+                                   
+
+    
                                 </div>
                                 
                             </div>                                       

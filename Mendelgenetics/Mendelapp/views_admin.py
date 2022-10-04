@@ -173,15 +173,13 @@ def published_test(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def uploaded_result_test(request):
     try:
-        print('llllllllllllllllllllllllllllllllllllllll')
         session_id = request.session.get('admin_user_id')
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.filter(id=session_id)
 
                 # uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & (Q(fk_test_lot__lot_status="Approved") | Q(fk_test_lot__lot_status="AdminApproved"))).order_by('-fk_user_master__name')
-                uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & Q(lot_status="Approved")).order_by('-fk_user_master__name')
-
+                uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & Q(lot_status="Approved") | Q(result_upload_status="AdminUpload")).order_by('-id')
 
                 context = {
                     "user_obj": user_obj,
@@ -196,21 +194,7 @@ def uploaded_result_test(request):
         print(traceback.format_exc())
 
 
-@csrf_exempt
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def upload_result_by_admin(request):
-    try:
-        if request.method =="POST":
-            data = json.loads(request.body.decode('utf-8'))
-            test_lot_id = data['test_lot_id']
-            TestLots.objects.filter(id=test_lot_id).update(lot_status="AdminApproved")
-            send_data = {"status": "1","msg": "lot status has been changeed to  AdminApproved"}
-        else:
-            send_data = {"status": "0", "msg": "Request is not post"}
-    except:
-        print(traceback.format_exc())
-        send_data = {"status": "0", "msg": "Something Went Wrong"}
-    return JsonResponse(send_data)
+
 
 
 
@@ -298,13 +282,17 @@ def upload_result_by_admin(request):
             # data = json.loads(request.body.decode('utf-8'))
             first_doccument = request.FILES.get('first_documet')
             second_doccument = request.FILES.get('second_documet')
-            bid_lot_id = request.POST.get('bid_test_id')
+            lot_id = request.POST.get('lot_id')
 
-            print('test id', bid_lot_id)
+            print('lot id', lot_id)
 
-            TestLots.objects.filter(id=bid_lot_id).update(admin_doc_first=first_doccument, admin_doc_second=second_doccument,
-                                                          upload_date_time=datetime.now(), result_upload_status="AdminUpload")
-
+            TestLots.objects.filter(id=lot_id).update(upload_date_time=datetime.now(), result_upload_status="AdminUpload")
+            obj = TestLots.objects.get(id=lot_id)
+            if first_doccument:
+                obj.admin_doc_first=first_doccument
+            if second_doccument:
+                obj.admin_doc_second=second_doccument
+            obj.save()    
             send_data = {"msg": "Request is not post", "status": "1"}
 
         else:

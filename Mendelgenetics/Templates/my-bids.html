@@ -124,12 +124,16 @@ element.style {
                                 <li>
                                     <a href="#" class="active" data-toggle="tab" id="active_div_button" >Active</a>
                                 </li>
-                                <li>
-                                    <a href="" data-toggle="tab" id="cancelled_div_button" >Cancelled</a>
-                                </li>
+
                                 <li>
                                     <a href="" id="confirm_div_button" data-toggle="tab">Confirmed</a>
                                 </li>
+                                
+
+                                <li>
+                                    <a href="" data-toggle="tab" id="cancelled_div_button" >Cancelled</a>
+                                </li>
+                               
                             </ul>
 
                             
@@ -509,15 +513,19 @@ element.style {
                                                                 {% endif %} 
                                                             </div>
 
-                                                            <div class="col-md-6" style="margin-top: 10px;">
+                                                            <div class="col-md-6 float-right" style="margin-top: 10px;margin-left: 14px;">
                                                                 <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
                                                                     <i class="fas fa-thumbs-up"></i> Confirmed
                                                                 </span>
 
                                                             
-                                                                {% if test.fk_test_lot.result_upload_status == "Upload" %}
+                                                                {% if test.fk_test_lot.result_upload_status == "Upload"  %}
                                                                     <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
-                                                                         Uploaded
+                                                                        Result Uploaded
+                                                                    </span> 
+                                                                {% elif test.fk_test_lot.result_upload_status == "AdminUpload" %}
+                                                                    <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
+                                                                        Result Uploaded
                                                                     </span> 
                                                                 {% else %}
                                                                     <button type="button"  data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.fk_test_lot.id}}')"   style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
@@ -657,8 +665,8 @@ element.style {
 
                         <div class="col-md-6">
                             <div class="">
-                                <input accept="image/*" class="inpcls" id="first_file" required type="file"><br>
-
+                                {% comment %} <input accept="image/*" class="inpcls" id="first_file" type="file"><br> {% endcomment %}
+                                <input accept="image/*"  class="inpcls" id="first_file" type="file" required ><br>
                                     {% if meal_data.meal_image %}
                                         <img alt="Image" id="target_img_first" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
                                     {% else %}

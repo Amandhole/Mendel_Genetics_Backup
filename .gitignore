@@ -55,3 +55,4 @@ Mendelgenetics/migrations/
 db.sqlite3
 csv files/
 Mendelgenetics/csv files/
+*.media
