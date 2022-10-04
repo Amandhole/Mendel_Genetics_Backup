@@ -180,10 +180,21 @@ def uploaded_result_test(request):
 
                 # uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & (Q(fk_test_lot__lot_status="Approved") | Q(fk_test_lot__lot_status="AdminApproved"))).order_by('-fk_user_master__name')
                 uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & Q(lot_status="Approved") | Q(result_upload_status="AdminUpload")).order_by('-id')
+             
+
+                for i in uploaded_result_obj:
+                    if UserBids.objects.filter(fk_test_lot_id=i.id, bid_status='Approved').exists():
+                        bider_obj = UserBids.objects.get(fk_test_lot_id=i.id, bid_status='Approved')
+
+                        bidder_name = bider_obj.fk_user_master.name if bider_obj.fk_user_master else ''
+                        i.bidder_name = bidder_name
+                    else:
+                        pass
 
                 context = {
                     "user_obj": user_obj,
-                    "uploaded_result_obj": uploaded_result_obj
+                    "uploaded_result_obj": uploaded_result_obj,
+                
                 }
                 return render(request, 'admin/uploaded_test.html', context)
             else:

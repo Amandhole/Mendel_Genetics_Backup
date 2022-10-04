@@ -581,7 +581,7 @@ def test_added_by_user_list(request):
                 cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
                 test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')
                 # Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
-                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id)
+                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id).order_by('-id')
 
                 print(Confirm_test_obj)
 
