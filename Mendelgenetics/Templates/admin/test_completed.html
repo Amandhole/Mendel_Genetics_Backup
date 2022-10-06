@@ -280,12 +280,12 @@
                               
                                        <select id="select_test" style="height: 40px;border-radius:5px;background-color: #683df5;color: white;" onchange="window.location.href=this.value;">
 
-                                        
-                                        <option value="{% url 'uploaded_result_test' %}">Result Upload</option>
-                                        <option value="{% url 'published_test' %}">Published</option>  
-                                        <option value="{% url 'pending_test' %}">Pending</option>
                                         <option value="{% url 'completed_test' %}">Test Completed</option>
+                                        <option value="{% url 'pending_test' %}">Pending</option>
+                                        <option value="{% url 'published_test' %}">Published</option>  
+                                        <option value="{% url 'uploaded_result_test' %}">Result Upload</option>
                                         
+                                      
                                         
                                           
 
@@ -316,7 +316,7 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        {% for test in uploaded_result_obj %}
+                                        {% for test in completed_test_obj %}
                                         <tr>
                                             {% comment %} <td>
                                                 <input style="margin-left: 8px;width: 30px;" type="checkbox" class="checkbox" name="checkbox" id="checkboxid" value={{i.id}} data-id={{i.fk_user.id}}> 

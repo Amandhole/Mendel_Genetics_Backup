@@ -179,12 +179,14 @@ def uploaded_result_test(request):
                 user_obj = AdminUser.objects.filter(id=session_id)
 
                 # uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & (Q(fk_test_lot__lot_status="Approved") | Q(fk_test_lot__lot_status="AdminApproved"))).order_by('-fk_user_master__name')
-                uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & Q(lot_status="Approved") | Q(result_upload_status="AdminUpload")).order_by('-id')
-             
+                uploaded_result_obj = TestLots.objects.filter(result_upload_status="Upload").order_by('-id')
+                print('gggggggggggggggggggggggggggggggggggg',uploaded_result_obj)
 
                 for i in uploaded_result_obj:
-                    if UserBids.objects.filter(fk_test_lot_id=i.id, bid_status='Approved').exists():
-                        bider_obj = UserBids.objects.get(fk_test_lot_id=i.id, bid_status='Approved')
+                    if UserBids.objects.filter(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Bidder').exists():
+                        print()
+                        bider_obj = UserBids.objects.get(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Bidder')
+                        print('vvvvvvvvvvvvvvvvvvvvvvvv',bider_obj)
 
                         bidder_name = bider_obj.fk_user_master.name if bider_obj.fk_user_master else ''
                         i.bidder_name = bidder_name
@@ -204,6 +206,44 @@ def uploaded_result_test(request):
     except:
         print(traceback.format_exc())
 
+
+
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def completed_test(request):
+    try:
+        session_id = request.session.get('admin_user_id')
+        if session_id:
+            if AdminUser.objects.filter(id=session_id).exists():
+                user_obj = AdminUser.objects.filter(id=session_id)
+
+                # uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & (Q(fk_test_lot__lot_status="Approved") | Q(fk_test_lot__lot_status="AdminApproved"))).order_by('-fk_user_master__name')
+                completed_test_obj = TestLots.objects.filter(result_upload_status="AdminUpload").order_by('-id')
+             
+
+                for i in completed_test_obj:
+                    if UserBids.objects.filter(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Admin').exists():
+                        bider_obj = UserBids.objects.get(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Admin')
+
+                        bidder_name = bider_obj.fk_user_master.name if bider_obj.fk_user_master else ''
+                        i.bidder_name = bidder_name
+                    else:
+                        pass
+
+                context = {
+                    "user_obj": user_obj,
+                    "completed_test_obj": completed_test_obj,
+                
+                }
+                return render(request, 'admin/test_completed.html', context)
+            else:
+                return render(request, 'admin/test_completed.html', context)
+        else:
+            return redirect('landing_page')
+    except:
+        print(traceback.format_exc())
 
 
 
@@ -298,6 +338,10 @@ def upload_result_by_admin(request):
             print('lot id', lot_id)
 
             TestLots.objects.filter(id=lot_id).update(upload_date_time=datetime.now(), result_upload_status="AdminUpload")
+
+            bid_obj = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")
+            bid_obj.bid_status="Result_Upload_By_Admin"
+            bid_obj.save()
             obj = TestLots.objects.get(id=lot_id)
             if first_doccument:
                 obj.admin_doc_first=first_doccument

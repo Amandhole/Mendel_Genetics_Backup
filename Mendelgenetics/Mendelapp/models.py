@@ -2,7 +2,7 @@ from django.db import models
 import datetime
 # Create your models here.
 from django.db.models.fields import CharField, DateField,  TextField
-
+from django_resized import ResizedImageField
 
 class AdminUser(models.Model):
     name = models.CharField(max_length = 50,null=True, blank=True)
@@ -127,8 +127,8 @@ class TestLots(models.Model):
     admin_doc_first = models.FileField(upload_to='Admindoc1/', null=True, blank=True)
     admin_doc_second = models.FileField(upload_to='Admindoc2/', null=True, blank=True)
     
-    upload_date_time = models.DateTimeField(auto_now=True)
-    result_upload_status = models.CharField(null=True, max_length=15, default="Pending")  #Pending , Upload , AdminUpload
+    upload_date_time = models.DateTimeField(auto_now=True)    # Pending , Upload , 
+    result_upload_status = models.CharField(null=True, max_length=15, default="Pending")
 
 
 
@@ -140,16 +140,15 @@ class UserBids(models.Model):
     fk_user_master = models.ForeignKey(UserMaster, on_delete=models.CASCADE, null=True, blank=True)
     fk_user_test = models.ForeignKey(UserTest, on_delete=models.CASCADE, null=True, blank=True)
     fk_test_lot = models.ForeignKey(TestLots, on_delete=models.CASCADE, null=True, blank=True)
-
     bid_Price = models.FloatField(blank=True, default='')
     expect_result_date = models.DateField(null=True, blank=True)
-    checkbox = models.CharField(max_length=50, null=True)# Pending Approved ,cancelled
+    checkbox = models.CharField(max_length=50, null=True)   
+    # Pending, Approved , Cancelled , Result_Upload_By_Bidder,Result_Upload_By_Admin
     bid_status = models.CharField(null=True, max_length=15, default="")
-# ###########result upload###################
 
+# ###########result upload###################
     # def __str__(self):
     #     return self.fk_user_master
-
 #### support system management
 
 class Support(models.Model):

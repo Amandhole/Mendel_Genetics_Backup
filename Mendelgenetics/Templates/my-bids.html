@@ -129,6 +129,9 @@ element.style {
                                     <a href="" id="confirm_div_button" data-toggle="tab">Confirmed</a>
                                 </li>
                                 
+                                <li>
+                                    <a href="" data-toggle="tab" id="Complte_div_div_button" >Completed</a>
+                                </li>
 
                                 <li>
                                     <a href="" data-toggle="tab" id="cancelled_div_button" >Cancelled</a>
@@ -399,7 +402,7 @@ element.style {
                             </div>
 
 
-                            <div id="confirm_div" >
+                            <div id="confirm_div">
                                 <div class="tab-content" style="overflow-y: scroll; max-height: 785px;">
                                     {% if my_approved_bid %}
                                         {% for test in my_approved_bid %}
@@ -519,20 +522,19 @@ element.style {
                                                                 </span>
 
                                                             
-                                                                {% if test.fk_test_lot.result_upload_status == "Upload"  %}
+                                                                {% comment %} {% if test.fk_test_lot.result_upload_status == "Upload"  %}
                                                                     <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
                                                                         Result Uploaded
                                                                     </span> 
                                                                 {% elif test.fk_test_lot.result_upload_status == "AdminUpload" %}
                                                                     <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
                                                                         Result Uploaded
-                                                                    </span> 
-                                                                {% else %}
+                                                                    </span>  {% endcomment %}
+                                                                {% comment %} {% else %} {% endcomment %}
                                                                     <button type="button"  data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.fk_test_lot.id}}')"   style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                                         <i class="fa fa-upload"  ></i> 
                                                                     </button> 
-                                                                {% endif %}  
-                                        
+                                                                {% comment %} {% endif %}   {% endcomment %}
                                                             </div> 
                                                         </div>                                       
                                                     </div>    
@@ -544,6 +546,151 @@ element.style {
                                     {% endif %}    
                                 </div> 
                             </div>
+
+
+                            <div id="complte_div">
+                                <div class="tab-content" style="overflow-y: scroll; max-height: 785px;">
+                                    {% if my_complete_bid %}
+                                        {% for test in my_complete_bid %}
+                                            <div class="tab-pane show active fade" id="current">
+                                                <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
+                                                    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                                    background: #ffff 0% 0% no-repeat padding-box;
+                                                    border-radius: 8px;
+                                                    box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                                    opacity: 1;
+                                                    padding: 30px; border: 1px solid #80808052;
+                                                    margin-top: 0px; padding-top: 15px;">
+                                        
+                                                    <div class="row">
+                                                        
+                                                        <input type="hidden" id="bid_test_id">
+
+                                                        
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-3" style="padding-top: 10px;">
+                                                                <span style="font-weight: 600;margin-left: -14px;"> Lot Id</span>
+                                                            </div>
+                                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">                                                 
+                                                                {%if test.fk_test_lot.test_lot_id %}                                                      
+                                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.test_lot_id}}</h6> 
+                                                                {% else %}                                                       
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %}    
+                                                            </div>          
+                                                        </div>
+
+                                                        {% comment %} end lot id div {% endcomment %}
+
+
+                                                        <div class="row col-md-12">
+                                                            
+                                                            <div class="col-md-3" style="padding-top: 10px;">
+                                                                <span style="font-weight: 600;margin-left: -14px;">Pathalogy</span>
+                                                            </div>
+
+                                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                                {%if test.temp_string %}
+                                                                <h6 style="font-size: 17px; font-weight:400;">{{test.temp_string}}</h6>
+                                                                {% else %}   
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %}   
+                                                            </div>     
+                                                        </div>
+
+                                                        {% comment %} end pathalogy div {% endcomment %}
+
+
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                                <span style="font-weight: 600;">Gen </span>
+                                                            </div>
+                                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                        
+                                                                {%if test.test_gen %}    
+                                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.test_gen}}</h6> 
+                                                                {% else %}    
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %}    
+                                                            </div>
+                                                        </div> 
+                                                    
+                                                        {% comment %} end gen div {% endcomment %}
+                                                    
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                                <span style="font-weight: 600;">Quantity</span>
+                                                            </div>
+                                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                                {%if test.fk_test_lot.test_quantity %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.test_quantity}}</h6> 
+                                                                {% else %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %} 
+                                                            </div>
+                                                        </div>
+
+                                                        {% comment %} end quantity div {% endcomment %}
+                                                        
+
+                                                        <div class="row col-md-12">
+
+
+                                                            <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                                <span style="font-weight: 600;">Bid Price</span>
+                                                            </div>
+                                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                                {%if test.bid_Price %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">€ {{test.bid_Price}}</h6> 
+                                                                {% else %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %} 
+                                                                
+                                                            </div>
+                                                        </div>    
+                                                            
+
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                                <span style="font-weight: 600;">Result Date</span>
+                                                            </div>
+                                                            <div class="col-md-3" style="margin-top: 18px; margin-bottom: 5px;">
+                                                                {%if test.expect_result_date %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.expect_result_date}}</h6> 
+                                                                {% else %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %} 
+                                                            </div>
+
+                                                            <div class="col-md-6 float-right" style="margin-top: 10px;margin-left: 14px;">
+                                                                <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
+                                                                    <i class="fas fa-thumbs-up"></i> Confirmed
+                                                                </span>
+
+                                                            
+                                                                {% comment %} {% if test.bid_status == "Result_Upload_By_Bidder" %} {% endcomment %}
+                                                                    <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
+                                                                        Result Uploaded
+                                                                    </span>    
+                                                                {% comment %} {% else %}  {% endcomment %}
+                                                                    {% comment %} <p>Wrong</p> {% endcomment %}
+                                                                {% comment %} {% endif %}   {% endcomment %}
+                                                            </div> 
+                                                        </div>                                       
+                                                    </div>    
+                                                </div>                       
+                                            </div>             
+                                        {% endfor %}
+                                    {% else %} 
+                                        <h6 style="text-align: center;"> No test available</h6>
+                                    {% endif %}    
+                                </div> 
+                            </div>
+
+
+
+
+
                         </div>
                     </div>    
                 </div>    
@@ -666,7 +813,9 @@ element.style {
                         <div class="col-md-6">
                             <div class="">
                                 {% comment %} <input accept="image/*" class="inpcls" id="first_file" type="file"><br> {% endcomment %}
-                                <input accept="image/*"  class="inpcls" id="first_file" type="file" required ><br>
+                                
+                                <label for="first_file">Document 1 </label>
+                                <input accept="image/*,.pdf,.doc,.docx,"  class="inpcls" id="first_file" type="file" required style="padding:12px 0 0 33px;"><br>
                                     {% if meal_data.meal_image %}
                                         <img alt="Image" id="target_img_first" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
                                     {% else %}
@@ -680,12 +829,11 @@ element.style {
                             </div>
                         </div>
                         
-                        
-
 
                         <div class="col-md-6">
                             <div class="">
-                                <input accept="image/*" class="input100" id="second_file" required type="file"><br>
+                                <label for="second_file">Document 2 </label>
+                                <input accept="image/*,.pdf,.doc,.docx," class="input100" id="second_file" required type="file" style="padding:12px 0 0 33px;"><br>
 
                                     {% if meal_data.meal_image %}
 
@@ -705,7 +853,7 @@ element.style {
                     </div>
                 </div>
 
-                <p style="text-align: center;">( files accepted  jpg , jpeg , png , pdf )</p>                                    
+                <p style="text-align: center;">(Accepted jpg , jpeg , png , pdf , Doc , Docx)</p>                                    
                                  
     
                 <div class="row" style="justify-content:center; margin-top: 50px;">
@@ -811,12 +959,14 @@ function append_lot_id(id){
 
 function upload_result() {
 
+
+   
     var bid_test_id = $("#bid_test_id").val()
    
     var first_documet = $('#first_file').val();
     var second_documet = $('#second_file').val();
 
-
+    
     if ((first_documet == "") && (second_documet == "") ) {
 
         $('#error_first_file').html('Please Select atleast one file');
@@ -1057,28 +1207,36 @@ function edit_bid_on_test(){
 <script>
         $("#cancelled_div").hide()
         $("#confirm_div").hide()   
-    
+        $("#complte_div").hide()
 
     $("#active_div_button").click(function(){
     
         $("#active_div").show()
         $("#cancelled_div").hide()
-        $("#confirm_div").hide()    
+        $("#confirm_div").hide()
+        $("#complte_div").hide()    
     })
 
     $("#cancelled_div_button").click(function(){
         $("#cancelled_div").show()
         $("#active_div").hide()
         $("#confirm_div").hide()    
-
+        $("#complte_div").hide()
     })
 
     $("#confirm_div_button").click(function(){
         $("#confirm_div").show()
         $("#cancelled_div").hide()
         $("#active_div").hide()
-    
+        $("#complte_div").hide()
 
+    })
+
+    $("#Complte_div_div_button").click(function(){
+        $("#confirm_div").hide()
+        $("#cancelled_div").hide()
+        $("#active_div").hide()
+        $("#complte_div").show()
     })
     
 

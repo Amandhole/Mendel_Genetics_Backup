@@ -105,7 +105,7 @@
                             <ul class="nav-tabs nav">
                                 
                                 <li>
-                                    <a href="#" class="active" data-toggle="tab" id="pending_div_button" >Pending For Approval</a>
+                                    <a href="#" class="active" data-toggle="tab" id="pending_div_button" >Pending</a>
                                 </li>
                                 <li>
                                     <a href="#"  data-toggle="tab" id="active_div_button" >Active</a>
@@ -114,8 +114,12 @@
                                     <a href="" id="confirm_div_button" data-toggle="tab">Confirmed</a>
                                 </li>
                                 <li>
+                                    <a href="#" data-toggle="tab" id="completed_div_button">Completed</a>
+                                </li>
+                                <li>
                                     <a href="#" data-toggle="tab" id="cancelled_div_button" >Cancelled</a>
                                 </li>
+                                
                                
                             </ul>
                         
@@ -1128,6 +1132,25 @@
         }) 
 
     })
+
+    $("#completed_div_button").click(function(){  
+
+    var tab_type = "Complete_tab"
+    $.ajax({
+        method:"POST",
+        url:"{% url 'test_added_by_user_list' %}",
+        contentType:"application/json",
+        data:JSON.stringify({
+            "tab_type":tab_type
+        }),
+        success:function(response){
+            $("#div_show_test").html(response)
+        }
+    }) 
+
+    })
+
+   
 
     $("#pending_div_button").click(function(){
 

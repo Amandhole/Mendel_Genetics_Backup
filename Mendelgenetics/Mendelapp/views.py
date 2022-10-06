@@ -577,17 +577,28 @@ def test_added_by_user_list(request):
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
 
-                pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')
-                cancelled_test_obj = UserTest.objects.filter( fk_user_id=session_id, status="Cancelled").order_by('-id')
-                test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')
-                # Confirm_test_obj = UserBids.objects.filter(bid_status='Approved').exclude(fk_user_master__id=session_id)
-                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id).order_by('-id')
+                pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')                                # Pending
 
-                print(Confirm_test_obj)
+                test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')                  # Published
+                
+                Confirm_test_obj = UserBids.objects.filter(Q(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id) | Q(bid_status="Result_Upload_By_Bidder")).order_by('-id')   # Approved or Result_Upload_By_Bidder
+                
+                Completed_test_obj = UserBids.objects.filter(
+                    bid_status='Result_Upload_By_Admin', fk_test_lot__fk_user_master__id=session_id).order_by('-id')  # Result_Upload_By_Admin
+                
+                cancelled_test_obj = UserTest.objects.filter(fk_user_id=session_id, status="Cancelled").order_by('-id')                         # Cancelled
+                
+
+                
 
                 for test in test_active_obj:
                     test.bid_count = UserBids.objects.filter(fk_test_lot__id = test.id).exclude(bid_status="Cancelled").count()
                     test.view_path_brief_list = get_brief_path_list(test.test_pathalogy)
+
+                for test in Completed_test_obj:
+                    test.temp_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.temp_gens = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
+                    test.view_path_brief_list = get_brief_path_list(test.fk_test_lot.test_pathalogy)    
 
                 for test in Confirm_test_obj:
                     test.temp_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
@@ -614,6 +625,8 @@ def test_added_by_user_list(request):
                             }
                         send_data = render_to_string('user_rts/pending_post_rts.html', context)
                     
+
+           
                     
                     elif tab_type == "Cancelled_tab":
                         context = {
@@ -631,7 +644,12 @@ def test_added_by_user_list(request):
                             }
                         send_data = render_to_string('user_rts/confirmed_post_rts.html', context)
 
-                    
+                    elif tab_type == "Complete_tab":
+                        context = {
+                            "user_obj": user_obj,
+                            "Completed_test_obj": Completed_test_obj
+                            }
+                        send_data = render_to_string('user_rts/completed.html', context)
                         
                     return HttpResponse(send_data)
                 else:
@@ -1114,19 +1132,24 @@ def my_bids_on_other_users_test(request):
 
                 print('my session id is',session_id)
 
-                my_active_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Pending')
+                my_active_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Pending').order_by('-id')
                 for test in my_active_bid:
                     test.temp_string = joined_string = " , ".join(
                         ast.literal_eval(test.fk_test_lot.test_pathalogy))
                     test.test_gen = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
 
 
-                my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved')
+                my_approved_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Approved').order_by('-id')
+                
                 for test in my_approved_bid:
                     test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
                     test.test_gen = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
-            
+             
+                my_complete_bid = UserBids.objects.filter(Q(fk_user_master__id=session_id, bid_status='Result_Upload_By_Bidder') | Q(fk_user_master__id=session_id, bid_status='Result_Upload_By_Admin')).order_by('-id')
 
+                for test in my_complete_bid:
+                    test.temp_string = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.test_gen = joined_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
 
 
                 my_cancelled_bid = UserBids.objects.filter( fk_user_master__id=session_id, bid_status='Cancelled')
@@ -1140,6 +1163,7 @@ def my_bids_on_other_users_test(request):
                     "user_obj": user_obj,
                     'my_active_bid':my_active_bid,
                     'my_approved_bid': my_approved_bid,
+                    "my_complete_bid": my_complete_bid,
                     "my_cancelled_bid": my_cancelled_bid
                     
                     }
@@ -1327,20 +1351,22 @@ def upload_result_by_bidder(request):
             first_doccument = request.FILES.get('first_documet')
             second_doccument = request.FILES.get('second_documet')
             bid_lot_id = request.POST.get('bid_test_id')
-
-            print('test id', bid_lot_id)
-
+            
             TestLots.objects.filter(id=bid_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
+
+            bid_obj = UserBids.objects.get(fk_test_lot_id=bid_lot_id, bid_status="Approved")
+
+            bid_obj.bid_status="Result_Upload_By_Bidder"
+
+            bid_obj.save()
+
             obj = TestLots.objects.get(id=bid_lot_id)
             if first_doccument:
                 obj.bidder_doc_first = first_doccument
             if second_doccument:
                 obj.bidder_doc_second =second_doccument
-            obj.save()
-    
-
+            obj.save()            
             send_data = {"msg":"Request is not post","status":"1"} 
-         
         else:
             send_data = {"msg":"Request is not post","status":"0"}   
     except:
