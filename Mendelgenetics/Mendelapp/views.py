@@ -1,3 +1,4 @@
+import socket
 from django.conf import settings
 
 # Create your views here.
@@ -22,10 +23,26 @@ import requests
 import csv
 import traceback
 from django.db.models import Q
-
+from django.core.mail import send_mail
+# from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from Mendelgenetics.settings import EMAIL_HOST_USER, EMAIL_PORT, EMAIL_HOST_PASSWORD, EMAIL_HOST
 # Create your views here.
 # send message to number extends
 
+
+#send mail 
+# send_mail(
+#     'testing email',
+#      'Hello this is just testing email',
+#      EMAIL_HOST_USER, ['dholeaman19@gmail.com'],
+#      fail_silently=False
+#     )
+
+
+
+
+# message = f'Menopause {type} \n\n{que_ans}'msg_body = f'Customer Email ID : {email} \n\nDear Admin, \n{message}'
 
 
 def send_sms_web(mobile_no, message_body):
@@ -147,6 +164,7 @@ def userlogout(request):
     return redirect('login_page')
 
 
+
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def send_otp_for_signup_verification(request):
@@ -157,13 +175,21 @@ def send_otp_for_signup_verification(request):
         if UserMaster.objects.filter(email=email).exists():
             send_data = {'status': "2", 'msg': "Email Already Exists"}
         else:
-            email_otp = '123456'
-            message = email_otp+" is your otp for varification."
+            # email_otp = '123456'
+            email_otp = str(random.randint(100000, 999999))
             send_data = {'status': "1",'msg': "OTP Sent Successfully", 'Email_OTP': email_otp}
+
+            message = email_otp+" is your otp for varification."
+            subject="OTP Is" 
+
+            send_mail(subject, message, EMAIL_HOST_USER,[email], fail_silently=False)
+
     except:
         print(str(traceback.format_exc()))
         send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
+
+
 
 
 @ csrf_exempt
@@ -176,7 +202,12 @@ def forget_password_OTP(request):
             email = data['email_id']
 
             if UserMaster.objects.filter(email=email).exists():
-                email_otp = '123456'
+                # email_otp = '123456'
+                email_otp = str(random.randint(100000, 999999))
+                message = email_otp+" is your otp for varification."
+                subject="OTP Is"
+
+                send_mail(subject, message, EMAIL_HOST_USER,[email], fail_silently=False)
                 send_data = {'status': "1", 'msg': "OTP Sent succesfully", "email_otp": email_otp}
             else:
                 send_data = {'status': "0", 'msg': "Email Not Exists"}
@@ -186,6 +217,8 @@ def forget_password_OTP(request):
     except:
         send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return redirect('landing_page')
+
+
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -1373,3 +1406,5 @@ def upload_result_by_bidder(request):
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
     return JsonResponse(send_data)    
+
+

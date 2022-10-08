@@ -152,3 +152,19 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"),)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# email integration using proton
+
+# EMAIL_HOST = 'smtp.protonmail.com'
+# EMAIL_PORT = 1234
+# EMAIL_HOST_USER = 'mendel_project@proton.me'
+# EMAIL_HOST_PASSWORD = 'l$D]Z$%olxGiP(2"aas3FcCaAf3qd,'
+# EMAIL_USE_TLS = True
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'techquadradeveloper@gmail.com'
+EMAIL_HOST_PASSWORD = 'sxglyooewoxnrtck'
+EMAIL_USE_TLS = True
