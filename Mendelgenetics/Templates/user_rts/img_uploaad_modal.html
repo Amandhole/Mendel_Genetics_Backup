@@ -1,0 +1,242 @@
+{% load static %}
+{% for  i in user_test_obj %}
+    <input type="hidden" value="{{i.id}}" class="hidden_test_ids">
+    <div class="col-md-4">
+        
+        <a ><h6 style="margin-top: 15px;color: rebeccapurple;">Auc Id <span> {{i.auction_test_id}}</span></h6></a>
+      &emsp; <span id="hide_show_btn{{forloop.counter}}"  onclick="hide_show_btn_function('hide_show_content{{forloop.counter}}','hide_show_btn{{forloop.counter}}')" style="color: rebeccapurple; cursor: pointer;"><i class="fa-solid fa-plus"></i></span><hr>
+      <div id="hide_show_content{{forloop.counter}}" style="display:none;">
+            <br><b><span style="margin-left: 20px;">pathalogy :</span></b>
+            <br><p style="margin-left: 40px;margin-top: 10px;">{{i.fk_sample_master.pathalogy}}</p>
+
+            <b><span style="margin-left: 20px;">Gens :</span></b>
+            <br><p style="margin-left: 40px;margin-top: 10px;">{{i.fk_sample_master.gens}}</p><br>
+          
+      </div>
+    </div>
+
+    <div class="col-md-4">
+        {% comment %} <h6>Doccument 1</h6> {% endcomment %}
+        <div class="">
+            {% comment %} <input accept="image/*" class="inpcls" id="first_file" type="file"><br> {% endcomment %}
+            
+        
+            <input accept="image/*,.pdf,.doc,.docx,"  class="inpcls" id="first_file_{{i.id}}"  onchange="remove_error_massage('error_file_{{i.id}}')" type="file" required style="padding:12px 0 0 33px;"><br>
+                {% if meal_data.meal_image %}
+                    <img alt="Image" id="target_img_first" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                {% else %}
+                    {% comment %} <img alt="Image" id="target_img_first" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;"> {% endcomment %}
+                {% endif %}
+                    {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
+        
+                <span class="focus-input100"></span><br>
+                
+
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="">
+            {% comment %} <h6>Doccument 2</h6> {% endcomment %}
+            {% comment %} <label for="second_file">Document 2 </label> {% endcomment %}
+            <input accept="image/*,.pdf,.doc,.docx," class="input100" id="second_file_{{i.id}}" onchange="remove_error_massage('error_file_{{i.id}}')" required type="file" style="padding:12px 0 0 33px;"><br>
+
+                {% if meal_data.meal_image %}
+
+                    <img alt="Image" id="target_img_second" src="{{meal_data.meal_image.url}}" style="border:1px solid #b2b2b2;width: 40%;height: 122px;margin-bottom:10px;margin-top: 5px;">
+                {% else %}
+                    {% comment %} <img alt="Image" id="target_img_second" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;"> {% endcomment %}
+                {%endif%}
+        
+                {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
+                <span class="focus-input100"></span><br>
+        
+                <span id="error_file_{{i.id}}" style="color:#ff4c4ce8;font-size: 14px;margin-left: -125px;"></span>
+        </div>
+    </div>
+
+{% endfor %}
+<script>
+
+     function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_first').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readURL_second_image(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_second').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    var file_size1 = 0;
+    $("#target_img_first").hide()
+		$('#first_file').bind('change', function () 
+		{
+			$('#error_first_file').html('');
+			file_size1 = this.files[0].size;
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#first_file')[0].files[0].name;
+
+            if(file_size1 > 10000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_first").hide()
+                $('#error_first_file').text('File must be less than 10mb...');
+            }
+            else{
+                readURL(this);
+                $("#target_img_first").show()
+    
+            }
+
+	});
+
+
+{% comment %} javascipt code for second file {% endcomment %}
+
+    $("#target_img_second").hide()
+        file_size1 = 0;
+		$('#second_file').bind('change', function () 
+		{
+
+			$('#error_first_file').html('');
+
+			file_size1 = this.files[0].size;
+
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#second_file')[0].files[0].name;
+
+
+            if(file_size1 > 10000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_second").hide()
+                $('#error_first_file').text('File must be less than 10mb...');
+            }
+            else{
+                readURL_second_image(this);
+                $("#target_img_second").show()
+    
+            }
+
+	});
+
+
+
+
+function upload_result() 
+{
+    var test_files_array = new Array();
+
+    // {'files': [{'349':['file_1','file_2']}, {'350':['file_1','file_2']}]}
+    $('.hidden_test_ids').each(function(i, obj)
+    {
+        var test_id = obj.value;
+
+        var first_document = $('#first_file_'+test_id).val();
+        var second_document = $('#second_file_'+test_id).val();
+
+        var file_1 = $('#first_file_'+test_id)[0].files[0];
+        var file_2 = $('#second_file_'+test_id)[0].files[0];
+``
+        var file_size1 = (first_document == "") ? "" : file_1.size;
+        var file_size2 = (second_document == "") ? "" : file_2.size;
+
+        if ((first_document == "") && (second_document == "") ) {
+
+            $('#error_file_'+test_id).html('Please Select atleast one file');
+        }
+        else if(file_size1 > 10000000 && file_size1 != "")
+        {
+            $('#error_file_'+test_id).text('First document must be less than 10mb.');
+        }
+        else if(file_size2 > 10000000 && file_size2 != "")
+        {
+            $('#error_file_'+test_id).text('Second document must be less than 10mb.');
+        }
+        else
+        {
+            var obj = {}
+            obj[test_id] = {'doc_1' : (file_1 == undefined) ? "" : file_1, 'doc_2' : (file_2 == undefined) ? "" : file_2};
+            test_files_array.push(obj);
+            
+
+
+            console.log('object array',test_files_array);
+            
+            $.ajax({
+            method: "POST",
+            url: "{% url 'upload_result_by_bidder' %}",
+            enctype: "mutipart/form_data",
+            processData: false,
+            contentType: false,
+            cache: false,
+            data:test_files_array,
+            success: function (response) {
+                if (response['status'] == "1"){
+                    swal({
+                        icon:"success",
+                        text:"Result Uploaded Succesfully",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                        location.reload()
+                    })
+                }
+                else if (response['status'] == "0"){
+                    swal({
+                        icon:"error",
+                        text:"Something wennt wrong",
+                        closeOnClickOutside:false
+                    })
+                }
+            }
+        });
+            
+        }
+
+    });
+
+
+  
+ 
+    
+     
+}
+        
+
+
+
+
+
+
+function hide_show_btn_function(div_id,btn_id){
+    if ($('#'+div_id).is(':visible') == true)
+    {
+        $('#'+div_id).hide(300);
+        $('#'+btn_id).html(`<i class="fa-solid fa-plus"></i>`);
+    }
+    else
+    {
+        $('#'+div_id).show(300);
+        $('#'+btn_id).html(`<i class="fa-solid fa-minus"></i>`);
+    }
+
+}
+
+
+function remove_error_massage(error_masage){
+
+    $("#"+error_masage).hide()
+}
+
+</script>        

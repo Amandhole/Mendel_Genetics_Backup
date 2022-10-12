@@ -990,7 +990,7 @@ def add_css_data_coutnry_state_city(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def User_bids_on_other_users_test(request):
-    if 1 == 1:
+    try:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
 
@@ -1010,7 +1010,7 @@ def User_bids_on_other_users_test(request):
             send_data = {"status": "1", "msg": "Bid Added Succesfully"}
         else:
             send_data = {"status": "0", "msg": "Request Is Not Post"}
-    else:
+    except:
         send_data = {"status": "0", "msg": "Something Went Wrong",
                      "error": traceback.format_exc()}
     return JsonResponse(send_data)
@@ -1018,11 +1018,9 @@ def User_bids_on_other_users_test(request):
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def User_edit_bids_on_other_users_test(request):
-    print('===================')
+def User_edit_bids_on_other_users_test(request):   
     try:
         if request.method == "POST":
-
             data = json.loads(request.body.decode('utf-8'))
 
             bid_id = data['bid_id']
@@ -1378,14 +1376,18 @@ def get_all_test_of_lot_from_active_tab(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def upload_result_by_bidder(request):
-    try:
+    if 1 == 1:
         if request.method == "POST":
             # data = json.loads(request.body.decode('utf-8'))
-            first_doccument = request.FILES.get('first_documet')
-            second_doccument = request.FILES.get('second_documet')
-            bid_lot_id = request.POST.get('bid_test_id')
+            # first_doccument = request.FILES.get('first_documet')
+            # second_doccument = request.FILES.get('second_documet')
+            bid_lot_id = request.POST.get('data')
             
-            TestLots.objects.filter(id=bid_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
+        
+            print('pppppppppppppppppppppppp')
+        
+
+            '''TestLots.objects.filter(id=bid_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
 
             bid_obj = UserBids.objects.get(fk_test_lot_id=bid_lot_id, bid_status="Approved")
 
@@ -1398,13 +1400,45 @@ def upload_result_by_bidder(request):
                 obj.bidder_doc_first = first_doccument
             if second_doccument:
                 obj.bidder_doc_second =second_doccument
-            obj.save()            
+            obj.save()'''
+
             send_data = {"msg":"Request is not post","status":"1"} 
         else:
             send_data = {"msg":"Request is not post","status":"0"}   
-    except:
+    else:
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
     return JsonResponse(send_data)    
 
 
+
+
+
+@csrf_exempt
+def get_user_test_by_lot_id(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode('utf-8'))
+            lot_id = data['user_lot_id']
+            obj_lot = TestLots.objects.get(id=lot_id)
+            user_test_id = obj_lot.tests_in_lot
+            result = ast.literal_eval(user_test_id)
+            empt_list = [int(i) for i in result] #list comprehenssion    
+            user_test_obj = UserTest.objects.filter(id__in=empt_list)
+            context = {   
+                    "user_test_obj": user_test_obj
+                    }
+            print('in iffffffffffffffffffff')        
+            print(user_test_obj)
+            send_data = render_to_string('user_rts/img_uploaad_modal.html', context)
+           
+           
+            return HttpResponse(send_data)
+        else:
+            print('in elseeeeeeeeeeeeeeeee')
+            return redirect('landing_page')
+    except:
+        print(traceback.format_exc())
+        return redirect('landing_page')
+
+        
