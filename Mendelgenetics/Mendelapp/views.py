@@ -1376,36 +1376,34 @@ def get_all_test_of_lot_from_active_tab(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def upload_result_by_bidder(request):
-    if 1 == 1:
+    try:
         if request.method == "POST":
-            # data = json.loads(request.body.decode('utf-8'))
-            # first_doccument = request.FILES.get('first_documet')
-            # second_doccument = request.FILES.get('second_documet')
-            bid_lot_id = request.POST.get('data')
+            for key, file in request.FILES.items():
+                test_list = key.split('_')              # ['file', '1', '349']
+                # print(test_list[2], test_list[1], test_list) 
+
+                if test_list[1] == '1':
+                    UserTest.objects.filter(id=test_list[2]).update(bidder_doc_first=file)
+                elif test_list[1] == '2':
+                    UserTest.objects.filter(id=test_list[2]).update(bidder_doc_second=file)
+                
+            test_lot_id = request.POST.get('test_lot_id')
+            print('test lot id',test_lot_id)
             
-        
-            print('pppppppppppppppppppppppp')
-        
+            TestLots.objects.filter(id=test_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
 
-            '''TestLots.objects.filter(id=bid_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
-
-            bid_obj = UserBids.objects.get(fk_test_lot_id=bid_lot_id, bid_status="Approved")
+            bid_obj = UserBids.objects.get(fk_test_lot_id=test_lot_id, bid_status="Approved")
 
             bid_obj.bid_status="Result_Upload_By_Bidder"
 
             bid_obj.save()
 
-            obj = TestLots.objects.get(id=bid_lot_id)
-            if first_doccument:
-                obj.bidder_doc_first = first_doccument
-            if second_doccument:
-                obj.bidder_doc_second =second_doccument
-            obj.save()'''
+          
 
             send_data = {"msg":"Request is not post","status":"1"} 
         else:
             send_data = {"msg":"Request is not post","status":"0"}   
-    else:
+    except:
         send_data = {"msg":"Something went wrong","status":"0","error":traceback.format_exc()}
         print(traceback.format_exc())
     return JsonResponse(send_data)    
@@ -1428,7 +1426,7 @@ def get_user_test_by_lot_id(request):
             context = {   
                     "user_test_obj": user_test_obj
                     }
-            print('in iffffffffffffffffffff')        
+                  
             print(user_test_obj)
             send_data = render_to_string('user_rts/img_uploaad_modal.html', context)
            

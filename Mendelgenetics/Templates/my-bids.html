@@ -531,6 +531,7 @@ element.style {
                                                                         Result Uploaded
                                                                     </span>  {% endcomment %}
                                                                 {% comment %} {% else %} {% endcomment %}
+                                                                <input type="hidden" value="{{test.fk_test_lot.id}}" id="hidden_test_lot_id">
                                                                     <button type="button"  data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.fk_test_lot.id}}')"   style="background-color: #00b7eb;color: white;height: 29px;width: 58px; border-radius: 5px; border: none; margin-left: 2px;">
                                                                         <i class="fa fa-upload"  ></i> 
                                                                     </button> 

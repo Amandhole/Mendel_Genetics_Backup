@@ -135,8 +135,14 @@
 
 
 function upload_result() 
-{
+{   
+
+    var test_lot_id = $("#hidden_test_lot_id").val()
+    console.log(test_lot_id)
+
     var test_files_array = new Array();
+
+    var form_data = new FormData();
 
     // {'files': [{'349':['file_1','file_2']}, {'350':['file_1','file_2']}]}
     $('.hidden_test_ids').each(function(i, obj)
@@ -158,30 +164,36 @@ function upload_result()
         }
         else if(file_size1 > 10000000 && file_size1 != "")
         {
+            alert('hello')
             $('#error_file_'+test_id).text('First document must be less than 10mb.');
         }
         else if(file_size2 > 10000000 && file_size2 != "")
-        {
+        {   
+            alert('hiiiiiiiiiiiii')
             $('#error_file_'+test_id).text('Second document must be less than 10mb.');
         }
         else
         {
-            var obj = {}
-            obj[test_id] = {'doc_1' : (file_1 == undefined) ? "" : file_1, 'doc_2' : (file_2 == undefined) ? "" : file_2};
+            file1 = (file_1 == undefined) ? "" : file_1;
+            file2 = (file_2 == undefined) ? "" : file_2;
+            form_data.append(`file_1_${test_id}`, file1);
+            form_data.append(`file_2_${test_id}`, file2);
+            form_data.append('test_lot_id',test_lot_id)
             test_files_array.push(obj);
-            
+        }
+    });
 
-
-            console.log('object array',test_files_array);
-            
-            $.ajax({
+    if(test_files_array.length > 0)
+    {
+        $.ajax({
             method: "POST",
             url: "{% url 'upload_result_by_bidder' %}",
             enctype: "mutipart/form_data",
             processData: false,
             contentType: false,
             cache: false,
-            data:test_files_array,
+            data:form_data,
+
             success: function (response) {
                 if (response['status'] == "1"){
                     swal({
@@ -201,16 +213,7 @@ function upload_result()
                 }
             }
         });
-            
-        }
-
-    });
-
-
-  
- 
-    
-     
+    }
 }
         
 
