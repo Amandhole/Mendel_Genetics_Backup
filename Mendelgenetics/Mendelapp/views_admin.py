@@ -128,6 +128,7 @@ def pending_test(request):
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
                 all_test_obj = UserTest.objects.filter(status="Pending").order_by('-fk_user__name')
+                print('/////////////////////////////////')
                 context = {
                     "user_obj": user_obj,
                     "all_test_obj": all_test_obj,
@@ -135,7 +136,7 @@ def pending_test(request):
                 
                 return render(request, 'admin/show-pending-test.html', context)
             else:
-                return render(request, 'admin/show-pending-test.html.html', context)
+                return redirect('landing_page')
         else:
             return redirect('landing_page')
     except:
