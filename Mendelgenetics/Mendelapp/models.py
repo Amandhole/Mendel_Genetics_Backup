@@ -2,7 +2,7 @@ from django.db import models
 import datetime
 # Create your models here.
 from django.db.models.fields import CharField, DateField,  TextField
-from django_resized import ResizedImageField
+
 
 class AdminUser(models.Model):
     name = models.CharField(max_length = 50,null=True, blank=True)
