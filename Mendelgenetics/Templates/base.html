@@ -550,7 +550,7 @@
                             <li>
                                 {% comment %} <a href="" class="user-button"><i class="flaticon-user"></i></a> {% endcomment %}
                                 <a class="user-button"><i class="flaticon-user"></i></a>
-                                <span style="color: white;">{{user_obj.name}}</span>
+                                <span class="notranslate" style="color: white;">{{user_obj.name}}</span>
                             </li>                            
 
                         {% else %}
@@ -577,7 +577,7 @@
                     </div>
                     <ul class="menu ml-auto">
                         <li>
-                            <a href="{% url 'landing_page' %}">Home</a>
+                            <a href="{% url 'landing_page' %}"><span class="home_text notranslate">Home</span></a>
                             
                         </li>
                         <li>
@@ -1100,10 +1100,16 @@
                 if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
                 {
                     $('.save_button_text').html('GUARDAR');
+                    $('.home_text').html('página principal');
+                    $('.post_test_text').html('cargar test');
+                    $('.posted_test_home_text').html('tests publicados');
                 }
                 else
                 {
                     $('.save_button_text').html('SAVE');
+                    $('.home_text').html('Home');
+                    $('.post_test_text').html('Post Test');
+                    $('.posted_test_home_text').html('Posted Test');
                 }
             }, 1000);
         });
@@ -1112,10 +1118,16 @@
             if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
             {
                 $('.save_button_text').html('GUARDAR');
+                $('.home_text').html('página principal');
+                $('.post_test_text').html('cargar test');
+                $('.posted_test_home_text').html('tests publicados');
             }
             else
             {
                 $('.save_button_text').html('SAVE');
+                $('.home_text').html('Home');
+                $('.post_test_text').html('Post Test');
+                $('.posted_test_home_text').html('Posted Test');
             }
         });
     </script>

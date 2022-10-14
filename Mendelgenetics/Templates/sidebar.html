@@ -45,8 +45,8 @@
                                 
                             </div>
                             <div class="content">
-                                <h5 class="title">{{user_obj.name}}</h5>
-                                <span class="username">{{user_obj.email}}</span>
+                                <h5 class="title notranslate">{{user_obj.name}}</h5>
+                                <span class="username notranslate">{{user_obj.email}}</span>
                             </div>
                         </div>
 
@@ -57,10 +57,10 @@
                                 <a href="{% url 'user_profile_page' %}" class="" id="profile_setting"><i class="flaticon-settings"></i>Profile Setting</a>
                             </li>
                             <li>
-                                <a href="{% url 'add_test_by_user' %}" class="" id="poste_test"><i class="flaticon-settings"></i>Post Test</a>
+                                <a href="{% url 'add_test_by_user' %}" class="" id="poste_test"><i class="flaticon-settings"></i><span class="post_test_text notranslate">Post Test</span></a>
                             </li>
                             <li>
-                                <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i> Posted Test</a>
+                                <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i><span class="posted_test_home_text notranslate">Posted Test</span></a>
                             </li>
                             <li>
                                 <a href="/support_chat/" class="" id="id_support_chat"><i class="fa-brands fa-rocketchat"></i>Support Chat &emsp; <span id="total_chat_count" style="padding: 2px 7px 2px 8px; color: white; width: 40px; height : 20px; border-radius: 50%; background: red;">0</span></a>
@@ -110,11 +110,11 @@
                                         <a href="{% url 'user_profile_page' %}" class="" id="profile_setting"><i class="flaticon-settings"></i>Profile Setting</a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'add_test_by_user' %}" class="" id="poste_test"><i class="fa-brands fa-telegram"></i>Post Test</a>
+                                        <a href="{% url 'add_test_by_user' %}" class="" id="poste_test"><i class="fa-brands fa-telegram"></i><span class="post_test_text notranslate">Post Test</span></a>
                                     </li>
 
                                     <li>
-                                        <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i> Posted Test</a>
+                                        <a href="{% url 'test_added_by_user_list' %}" class="" id="posted_test"><i class="flaticon-auction"></i><span class="posted_test_home_text notranslate">Posted Test</span></a>
                                     </li>
                                     <li>
                                         <a href="/support_chat/" class="" id="id_support_chat"><i class="fa-brands fa-rocketchat"></i>Support Chat &emsp; <span id="total_chat_count" style="padding: 2px 7px 2px 8px; color: white; width: 40px; height : 20px; border-radius: 50%; background: red;">0</span></a>

@@ -364,20 +364,20 @@
                             
                           </div>
 
-                          <div class="col-md-6" id="select_pathlogy_id">
-                            <select  id="select_sample_path" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
+                          <div class="col-md-6 notranslate" id="select_pathlogy_id">
+                            <select  id="select_sample_path" class="notranslate" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
                               <option value="">Select Pathalogy</option>
                               {% for i in sampletest %}
-                                <option value={{i.id}}>{{i.pathalogy}}</option>
+                                <option class="notranslate" value="{{i.id}}">{{i.pathalogy}}</option>
                               {% endfor %}
                             </select>
                           </div>
 
-                          <div class="col-md-6" id="select_gens_id">
-                            <select  id="select_sample_gens" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
+                          <div class="col-md-6 notranslate" id="select_gens_id">
+                            <select  id="select_sample_gens" class="notranslate" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
                               <option value="">Select Gens</option>
                               {% for i in sampletest %}
-                                  <option value="{{i.id}}">{{i.gens}}</option>
+                                  <option class="notranslate" value="{{i.id}}">{{i.gens}}</option>
                               {% endfor %}
                             </select>
                           </div>
@@ -395,7 +395,7 @@
                             <span>Sample Type :</span>
                           </div>
                           <div class="col-md-10">
-                            <span id="sample_type_id"></span>
+                            <span id="sample_type_id" class="notranslate"></span>
                           </div>
                           
                           <div class="col-md-2">
@@ -403,21 +403,21 @@
                           </div>
 
                           <div class="col-md-10">
-                            <span id="transport_id"></span>
+                            <span id="transport_id" class="notranslate"></span>
                           </div>
                           
                           <div class="col-md-2">
                             <span id="gens">Gens:</span>
                           </div>
                           <div class="col-md-10">
-                            <span id="gens_id"></span>
+                            <span id="gens_id" class="notranslate"></span>
                           </div>
                           
                           <div class="col-md-2">
                             <span id="path">Pathalogy :</span>
                           </div>
                           <div class="col-md-10">
-                            <span id="pathalogy_id"></span>
+                            <span id="pathalogy_id" class="notranslate"></span>
                           </div>
                           
                         </div>
@@ -997,7 +997,7 @@
 <script>
 
     $(document).ready(function(){
-    
+      
       $("#profile_setting").removeClass('active')
       $("#poste_test").addClass('active')
       $("#select_gens_id").hide()
@@ -1091,7 +1091,7 @@
   $("#select_sample_path").select2();
   $("#select_sample_gens").select2();  
 
-  $(".select2-selection").css("padding","10px 0px 35px 20px")
+  $(".select2-selection").css("padding","10px 0px 35px 20px");
 
   
  
