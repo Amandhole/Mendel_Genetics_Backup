@@ -409,7 +409,7 @@
 
 
 
-<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel" style="display: none;"  id="show_rst_section">
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel" >
         <div class="container">
             <div class="row justify-content-center">
 
@@ -650,8 +650,8 @@
         success:function(response){
           console.log('rts div')
           
+          $("#rts_div").show();
           $("#table_section").hide()
-          $("#show_rst_section").show()
           $("#rts_div").html(response);
            
         }
@@ -666,7 +666,7 @@
 
    
   
-  <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
+  {% comment %} <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span> {% endcomment %}
       
 
    
