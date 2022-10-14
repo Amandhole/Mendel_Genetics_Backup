@@ -133,8 +133,7 @@ def pending_test(request):
                     "user_obj": user_obj,
                     "all_test_obj": all_test_obj,
                 }
-                
-                return render(request, 'admin/show-pending-test.html', context)
+                return render(request,'admin/show-pending-test.html',context)
             else:
                 return redirect('landing_page')
         else:
@@ -308,10 +307,6 @@ def test_reject_by_admin(request):
             
             rejected_test_obj = UserTest.objects.filter(Q(id__in=test_id) & Q(fk_user__id__in=user_id)).update(status="Cancelled",rejected_reason = "Test rejected by Admin")
             
-            # for i in rejected_test_obj:
-            #     i = i.status = "Cancelled"
-            #     i.save()
-
             print('dddddddd',rejected_test_obj)
 
             context = {

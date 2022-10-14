@@ -122,7 +122,7 @@ class TestLots(models.Model):
     lot_status = models.CharField(null=True, max_length=15, default="Published")
     created_date_time = models.DateTimeField(auto_now =True)
 
-
+    comment = models.TextField(blank=True, null=True)
     admin_doc_first = models.FileField(upload_to='Admindoc1/', null=True, blank=True)
     admin_doc_second = models.FileField(upload_to='Admindoc2/', null=True, blank=True)
     

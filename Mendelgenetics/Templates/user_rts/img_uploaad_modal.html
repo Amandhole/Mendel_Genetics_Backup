@@ -28,12 +28,14 @@
                     {% comment %} <img alt="Image" id="target_img_first" src="{% static 'assets/images/dashboard/user-profile-pic-upload.png' %}" alt="user" style="border:1px solid #b2b2b2;height: 122px;margin-bottom:10px;margin-top: 5px;"> {% endcomment %}
                 {% endif %}
                     {% comment %} <i class="fas fa-trash-alt" onclick="Remove_Image('{{meal_data.id}}')" style="cursor:pointer;"></i> {% endcomment %}
-        
+
                 <span class="focus-input100"></span><br>
-                
 
         </div>
     </div>
+
+
+   
 
 
     <div class="col-md-4">
@@ -57,6 +59,7 @@
     </div>
 
 {% endfor %}
+            
 <script>
 
      function readURL(input) {
@@ -140,6 +143,10 @@ function upload_result()
     var test_lot_id = $("#hidden_test_lot_id").val()
     console.log(test_lot_id)
 
+    var comment = $("#comment_area").val()
+    
+    console.log(comment)
+
     var test_files_array = new Array();
 
     var form_data = new FormData();
@@ -148,6 +155,7 @@ function upload_result()
     $('.hidden_test_ids').each(function(i, obj)
     {
         var test_id = obj.value;
+
 
         var first_document = $('#first_file_'+test_id).val();
         var second_document = $('#second_file_'+test_id).val();
@@ -160,17 +168,20 @@ function upload_result()
 
         if ((first_document == "") && (second_document == "") ) {
 
-            $('#error_file_'+test_id).html('Please Select atleast one file');
+            $('#error_file_'+test_id).html('Please Select  atleast one file');
+            $('#error_file_'+test_id).show()
         }
         else if(file_size1 > 10000000 && file_size1 != "")
         {
-            alert('hello')
+
             $('#error_file_'+test_id).text('First document must be less than 10mb.');
+            $('#error_file_'+test_id).show()
         }
         else if(file_size2 > 10000000 && file_size2 != "")
         {   
-            alert('hiiiiiiiiiiiii')
+    
             $('#error_file_'+test_id).text('Second document must be less than 10mb.');
+            $('#error_file_'+test_id).show()
         }
         else
         {
@@ -179,6 +190,7 @@ function upload_result()
             form_data.append(`file_1_${test_id}`, file1);
             form_data.append(`file_2_${test_id}`, file2);
             form_data.append('test_lot_id',test_lot_id)
+            form_data.append('comment',comment)
             test_files_array.push(obj);
         }
     });

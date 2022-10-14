@@ -1388,9 +1388,12 @@ def upload_result_by_bidder(request):
                     UserTest.objects.filter(id=test_list[2]).update(bidder_doc_second=file)
                 
             test_lot_id = request.POST.get('test_lot_id')
-            print('test lot id',test_lot_id)
             
-            TestLots.objects.filter(id=test_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload")
+            comment = request.POST.get('comment')
+
+      
+            TestLots.objects.filter(id=test_lot_id).update(
+                upload_date_time=datetime.now(), result_upload_status="Upload", comment=comment)
 
             bid_obj = UserBids.objects.get(fk_test_lot_id=test_lot_id, bid_status="Approved")
 
