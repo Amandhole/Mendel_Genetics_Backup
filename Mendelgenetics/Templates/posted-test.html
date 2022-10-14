@@ -82,8 +82,6 @@
     </div>
 
 
-
-    <!--============= Dashboard Section Starts Here =============-->
     <section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel">
         <div class="container">
             <div class="row justify-content-center">
@@ -249,29 +247,59 @@
       
 
 
-<div class="modal fade" id="aman_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 750px !important;">
+
+<div class="modal fade" id="upload_result_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!--============= Dashboard Section Starts Here =============-->
+    <div class="modal-dialog" style="max-width: 850px !important;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 300px;">Preview</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 190px;">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                <div class="" style="justify-content:center;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="justify-content: center;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
             </div>
 
+            <input type="hidden" id="test_id">
+
             <div class="modal-body">
-                
+
                                    
                 <div class="login-form">
+                
+                    <div>
+                        <h6 style="text-align: center;">Download Documents</h6><hr><br>
+                    </div>
+                
 
-                    <div id="accordion_data">
+                    {% comment %} <label class="flot-center" for="title">Select Files</label><br> {% endcomment %}
+                          
+                    <div class="col-md-12 row" id="download_doccument_by_auctioner">
 
                         
 
+                        <span id="error_first_file" style="color:#ff4c4ce8;font-size: 14px;margin-left: 12rem;"></span>
                     </div>
                 </div>
-                
+
+                                                    
+               {% comment %} <p style="text-align: center;">(Accepted jpg , jpeg , png , pdf , Doc , Docx)</p> {% endcomment %}
+    
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+        
+                    {% comment %} <div class="form-group mb-0">
+                        <button type="button" id="" onclick="upload_result_by_admin()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
+                    </div>  {% endcomment %}
+    
+                </div>                        
             </div>
+      </div>
+
         </div>
     </div>
 </div>
@@ -1171,7 +1199,6 @@
 
 
 function  get_test_id_to_see_all_bids(id){
-    console.log(id)
     
     console.log(id)    
     $.ajax({
@@ -1202,7 +1229,7 @@ function  get_test_id_to_see_all_bids(id){
             }),
             success:function(response){
              
-                $("#accordion_data").html(response)
+                $("#download_doccument_by_auctioner").html(response)
                 
            
             }

@@ -249,7 +249,7 @@
 
 
     <!--============= Dashboard Section Starts Here =============-->
-    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel" id="table_section">
         <div class="container">
             <div class="row justify-content-center">
 
@@ -306,6 +306,7 @@
                                           <th>Name</th>
                                           <th>Group</th>
                                           <th>Quantity</th>
+                                          <th>Auction</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -350,7 +351,14 @@
                                             {% endif %}    
                                             
                                             
-
+                                         
+                                            <td >
+                                              <button type="button" onclick="get_test_id_to_see_all_bids('106')" style="background-color: #7019f4;color: white;width: 100px; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
+                                                bids  <i class="flaticon-auction"></i>
+                                              </button>
+                                            </td>
+                                            
+                                    
                                           
 
                                             {% comment %} <td>
@@ -375,8 +383,63 @@
                 </div>
             </div>
         </div>
+
     </section>
     <!-- Button trigger modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel" style="display: none;"  id="show_rst_section">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                {% comment %} {%  include  'sidebar.html' %} {% endcomment %}
+
+
+                <div id="rts_div" class="col-lg-12">
+
+                </div>
+
+               
+ 
+            </div>
+        </div>    
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     
@@ -570,6 +633,31 @@
             }
         });
     });
+
+
+
+
+   function  get_test_id_to_see_all_bids(id){
+    
+    console.log(id)    
+    $.ajax({
+        method:"POST",
+        url : "{% url 'view_all_bids_on_my_test' %}",
+        contentType:"application/json",
+        data: JSON.stringify({
+            "test_id":id
+        }),
+        success:function(response){
+          console.log('rts div')
+          
+          $("#table_section").hide()
+          $("#show_rst_section").show()
+          $("#rts_div").html(response);
+           
+        }
+
+    })
+} 
 </script>
 
 
@@ -577,7 +665,9 @@
 
 
    
-
+  
+  <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
+      
 
    
 

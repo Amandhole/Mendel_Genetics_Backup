@@ -1,131 +1,239 @@
-<!-- Latest compiled and minified CSS -->
-<!-- CSS only -->
-{% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> {% endcomment %}
+{% load static %}
+{% for  i in user_test_obj %}
+    <input type="hidden" value="{{i.id}}" class="hidden_test_ids">
+    <div class="col-md-4">
+        
+        <a ><h6 style="margin-top: 5px;color: rebeccapurple;">Auc Id <span> {{i.auction_test_id}}</span></h6></a>
+      &emsp; <span id="hide_show_btn{{forloop.counter}}"  onclick="hide_show_btn_function('hide_show_content{{forloop.counter}}','hide_show_btn{{forloop.counter}}')" style="color: rebeccapurple; cursor: pointer;"><i class="fa-solid fa-plus"></i></span><hr>
+      <div id="hide_show_content{{forloop.counter}}" style="display:none;">
+            <br><b><span style="margin-left: 20px;">pathalogy :</span></b>
+            <br><p style="margin-left: 40px;margin-top: 10px;">{{i.fk_sample_master.pathalogy}}</p>
 
+            <b><span style="margin-left: 20px;">Gens :</span></b>
+            <br><p style="margin-left: 40px;margin-top: 10px;">{{i.fk_sample_master.gens}}</p><br>
+          
+      </div>
+    </div>
 
-{% for test in test_in_lot%}
-<div class="accordion accordion-flush" id="accordionFlushExample">
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingOne" style="width:656px ;margin-left: 25px;border-radius: 5px;font-size:24px;">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{forloop.counter}}" aria-expanded="false" aria-controls="flush-collapseOne">
-               Aucton Id {{test.auction_test_id}}
-            </button>
-        </h2>
-        <div id="flush-collapse{{forloop.counter}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">
-
-
-                
-                        <div class="tab-content" style="max-height: 785px;">
-
-                    
-                                <div class="tab-pane show active fade" id="current">
-                                    <div class="exchagene-box" style="height:auto; margin-bottom: 20px;
-                                        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-                                        background: #ffff 0% 0% no-repeat padding-box;
-                                        border-radius: 8px;
-                                        box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
-                                        opacity: 1;
-                                        padding: 30px; border: 1px solid #80808052;
-                                        margin-top: 0px; padding-top: 15px;
-                                        width: 656px;margin-left: 25px;">
-                                  
-                                        <div class="row">
-                                          
-                                            <div class="row col-md-12">
-                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
-                                                    <span style="font-weight: 600;">Pathalogy </span>
-                                                </div>
-
-                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;margin-left: -5px;">
-                                                    {%if test.fk_sample_master.pathalogy|length > 100 %}   
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy|slice:":100"}}...</h6> 
-                                                    {% else %}    
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.pathalogy}}</h6>
-                                                    {% endif %}    
-                                                </div>
-                                            </div> 
-
-
-                                            <div class="row col-md-12">
-                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
-                                                    <span style="font-weight: 600;">Gen </span>
-                                                </div>
-                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
-                                                  
-                                                    {%if test.fk_sample_master.gens|length > 100 %}
-                                                        
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens|slice:":100"}}...</h6> 
-                                                    {% else %}    
-                                                    
-                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.fk_sample_master.gens}}</h6>
-                                                    {% endif %}    
-                                                </div>
-                                            </div>   
-                                            
-                                            
-
-
-                                            <div class="row col-md-12">
-                                                <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
-                                                    <span style="font-weight: 600;">Contact Person </span>
-                                                </div>
-                                                <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
-
-                                                   {%if test.Contact_person_name|length > 100 %}
-                                                        
-                                                        <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name|slice:":100"}}...</h6> 
-                                                    {% else %}    
-                                                    
-                                                            <h6 style="font-size: 17px; font-weight:400;">{{test.Contact_person_name}}</h6>
-                                                    {% endif %}    
-                                                </div>
-                                            </div> 
-
-                                               
-                                            <div class="row col-md-12">
-                                                <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
-                                                    <span style="font-weight: 600;">Date  </span>
-                                                </div>
-
-                                                <div class="col-md-5" style="margin-top: 15px;">
-                                                    <h6 style="font-size: 15px; font-weight: 400; ">{{ test.date|date:'d-m-Y'}}</h6>
-                                                </div> 
-
-                                          
-                                                {% comment %} <div class="col-md-4">
-                                                    <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-                                                        <i class="flaticon-edit" ></i> 
-                                                    </button>   
-
-                                                
-                                                            
-                                                    <button type="button" onclick="delete_posted_test(id)" id="{{test.id}}" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </div> {% endcomment %}
-                                            </div>
-                                        </div>
-                                            
-                                    </div>
-                                </div>
-                    
-                        </div>    
-                 
-
-
-
-
-
-            </div>
+    <div class="col-md-4">
+        
+        <div class="">
+            {% if i.bidder_doc_first %}       
+                <button class="btn-primary action-btn" onclick="window.open('{{i.bidder_doc_first.url}}')" style="background-color: #3CB371;margin-left: 70px;width: 130px;border-radius: 5px;height: 45px;border: none">Doccument1 <i class="fas fa-download"></i></button>
+            {% else %}
+                <button class="btn-primary action-btn" disabled style="background-color: #7019f4;margin-left: 70px;width: 130px;height: 45px;border-radius: 5px;">No Doccument </button>
+            {% endif %}
         </div>
     </div>
-</div>
+
+
+   
+
+
+    <div class="col-md-4">
+        <div class="">
+            {% if i.bidder_doc_second %}
+                <button class="btn-primary action-btn"  onclick="window.open('{{i.bidder_doc_second.url}}')" style="background-color: #3CB371;margin-left: 70px;width: 130px;border-radius: 5px;height: 45px;border: none">Doccument2<i class="fas fa-download"></i></button>
+            {% else %}
+                <button class="btn-primary action-btn" disabled style="background-color: #7019f4;margin-left: 70px;width: 130px;height: 45px;border-radius: 5px;">No Doccument</button>
+            {% endif %}
+        </div>
+    </div>
+
 {% endfor %}
+            
+<script>
+
+     function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_first').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readURL_second_image(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#target_img_second').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    var file_size1 = 0;
+    $("#target_img_first").hide()
+		$('#first_file').bind('change', function () 
+		{
+			$('#error_first_file').html('');
+			file_size1 = this.files[0].size;
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#first_file')[0].files[0].name;
+
+            if(file_size1 > 10000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_first").hide()
+                $('#error_first_file').text('File must be less than 10mb...');
+            }
+            else{
+                readURL(this);
+                $("#target_img_first").show()
+    
+            }
+
+	});
+
+
+{% comment %} javascipt code for second file {% endcomment %}
+
+    $("#target_img_second").hide()
+        file_size1 = 0;
+		$('#second_file').bind('change', function () 
+		{
+
+			$('#error_first_file').html('');
+
+			file_size1 = this.files[0].size;
+
+			var i = $('.custom-file-upload').clone();
+			var file1 = $('#second_file')[0].files[0].name;
+
+
+            if(file_size1 > 10000000){
+                console.log('file greater than 2 mb')
+                $("#target_img_second").hide()
+                $('#error_first_file').text('File must be less than 10mb...');
+            }
+            else{
+                readURL_second_image(this);
+                $("#target_img_second").show()
+    
+            }
+
+	});
+
+
+
+
+function upload_result() 
+{   
+
+    var test_lot_id = $("#hidden_test_lot_id").val()
+    console.log(test_lot_id)
+
+    var comment = $("#comment_area").val()
+    
+    console.log(comment)
+
+    var test_files_array = new Array();
+
+    var form_data = new FormData();
+
+    // {'files': [{'349':['file_1','file_2']}, {'350':['file_1','file_2']}]}
+    $('.hidden_test_ids').each(function(i, obj)
+    {
+        var test_id = obj.value;
+
+
+        var first_document = $('#first_file_'+test_id).val();
+        var second_document = $('#second_file_'+test_id).val();
+
+        var file_1 = $('#first_file_'+test_id)[0].files[0];
+        var file_2 = $('#second_file_'+test_id)[0].files[0];
+``
+        var file_size1 = (first_document == "") ? "" : file_1.size;
+        var file_size2 = (second_document == "") ? "" : file_2.size;
+
+        if ((first_document == "") && (second_document == "") ) {
+
+            $('#error_file_'+test_id).html('Please Select  atleast one file');
+            $('#error_file_'+test_id).show()
+        }
+        else if(file_size1 > 10000000 && file_size1 != "")
+        {
+
+            $('#error_file_'+test_id).text('First document must be less than 10mb.');
+            $('#error_file_'+test_id).show()
+        }
+        else if(file_size2 > 10000000 && file_size2 != "")
+        {   
+    
+            $('#error_file_'+test_id).text('Second document must be less than 10mb.');
+            $('#error_file_'+test_id).show()
+        }
+        else
+        {
+            file1 = (file_1 == undefined) ? "" : file_1;
+            file2 = (file_2 == undefined) ? "" : file_2;
+            form_data.append(`file_1_${test_id}`, file1);
+            form_data.append(`file_2_${test_id}`, file2);
+            form_data.append('test_lot_id',test_lot_id)
+            form_data.append('comment',comment)
+            test_files_array.push(obj);
+        }
+    });
+
+    if(test_files_array.length > 0)
+    {
+        $.ajax({
+            method: "POST",
+            url: "{% url 'upload_result_by_bidder' %}",
+            enctype: "mutipart/form_data",
+            processData: false,
+            contentType: false,
+            cache: false,
+            data:form_data,
+
+            success: function (response) {
+                if (response['status'] == "1"){
+                    swal({
+                        icon:"success",
+                        text:"Result Uploaded Succesfully",
+                        closeOnClickOutside:false
+                    }).then(function(){
+                        location.reload()
+                    })
+                }
+                else if (response['status'] == "0"){
+                    swal({
+                        icon:"error",
+                        text:"Something wennt wrong",
+                        closeOnClickOutside:false
+                    })
+                }
+            }
+        });
+    }
+}
+        
 
 
 
 
 
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+function hide_show_btn_function(div_id,btn_id){
+    if ($('#'+div_id).is(':visible') == true)
+    {
+        $('#'+div_id).hide(300);
+        $('#'+btn_id).html(`<i class="fa-solid fa-plus"></i>`);
+    }
+    else
+    {
+        $('#'+div_id).show(300);
+        $('#'+btn_id).html(`<i class="fa-solid fa-minus"></i>`);
+    }
+
+}
+
+
+function remove_error_massage(error_masage){
+
+    $("#"+error_masage).hide()
+}
+
+</script>        
