@@ -351,12 +351,18 @@
                                             {% endif %}    
                                             
                                             
-                                         
+                                          {% if i.id %}
                                             <td >
-                                              <button type="button" onclick="get_test_id_to_see_all_bids('106')" style="background-color: #7019f4;color: white;width: 100px; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
+                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: 100px; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
                                                 bids  <i class="flaticon-auction"></i>
                                               </button>
                                             </td>
+                                          {% else %}
+                                           <td >
+                                              <button type="button" disabled style="background-color: #7019f4;color: white;width: 100px; border-radius: 5px;border: none;margin-left: 33px;height: 35px;"> No bids 
+                                              </button>
+                                            </td>
+                                          {% endif %}
                                             
                                     
                                           
@@ -386,20 +392,6 @@
 
     </section>
     <!-- Button trigger modal -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
