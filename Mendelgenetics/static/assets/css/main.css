@@ -597,12 +597,12 @@ button {
     border: 1px solid #bccaea;
     outline: none;
 }
-
+/* 
 textarea {
     height: 200px;
     resize: none;
     padding: 10px;
-}
+} */
 
 input,
 button,

@@ -2,7 +2,7 @@ from django.db import models
 import datetime
 # Create your models here.
 from django.db.models.fields import CharField, DateField,  TextField
-from django_resized import ResizedImageField
+
 
 class AdminUser(models.Model):
     name = models.CharField(max_length = 50,null=True, blank=True)
@@ -105,7 +105,8 @@ class UserTest(models.Model):
 
     created_date_time = models.DateTimeField(null=True, blank=True)
     
-
+    bidder_doc_first = models.FileField(upload_to='biderdoc1/', null=True, blank=True)
+    bidder_doc_second= models.FileField(upload_to='biderdoc2/', null=True, blank=True)
 
 
 
@@ -120,10 +121,8 @@ class TestLots(models.Model):
     test_quantity = models.IntegerField(blank=True, null=True)
     lot_status = models.CharField(null=True, max_length=15, default="Published")
     created_date_time = models.DateTimeField(auto_now =True)
-    
-    bidder_doc_first = models.FileField(upload_to='biderdoc1/', null=True, blank=True)
-    bidder_doc_second = models.FileField(upload_to='biderdoc2/', null=True, blank=True)
 
+    comment = models.TextField(blank=True, null=True)
     admin_doc_first = models.FileField(upload_to='Admindoc1/', null=True, blank=True)
     admin_doc_second = models.FileField(upload_to='Admindoc2/', null=True, blank=True)
     
