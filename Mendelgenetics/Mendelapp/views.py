@@ -1071,14 +1071,13 @@ def view_all_bids_on_my_test(request):
                         for test in test_lot_obj:
                             test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
-                        print('qqqqqqqqqqqqq', test_lot_obj)
+                
                         bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending")
 
-                        print('ffffffffffffffffffffffff',bid_obj)
-
-                        approved_bid_obj = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Approved") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Approved").exists() else None
-                        # print('tttttttt', approved_bid_obj)
-        
+                        approved_bid_obj = UserBids.objects.get(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")) if UserBids.objects.filter(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")).exists() else None
+                        
+                        recent_bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled").exists() else None
+                        print('vvvvvvvvvvvvvvvvvvvvvvv', approved_bid_obj)
                     
                         bidcount = bid_obj.count()
                     
@@ -1086,7 +1085,8 @@ def view_all_bids_on_my_test(request):
                         "user_obj": user_obj,
                         "test_lot_obj": test_lot_obj,
                         "bid_obj": bid_obj,
-                        "approved_bid": approved_bid_obj
+                        "approved_bid": approved_bid_obj,
+                        "recent_bid_obj": recent_bid_obj
                     }
                     send_data = render_to_string('rts_bid_detail.html', context)
                 else:

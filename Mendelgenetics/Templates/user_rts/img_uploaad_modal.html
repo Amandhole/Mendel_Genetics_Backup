@@ -139,7 +139,7 @@
 
 function upload_result() 
 {   
-
+    
     var test_lot_id = $("#hidden_test_lot_id").val()
     console.log(test_lot_id)
 
@@ -197,6 +197,7 @@ function upload_result()
 
     if(test_files_array.length > 0)
     {
+        $("#overlayer_transparent").show()
         $.ajax({
             method: "POST",
             url: "{% url 'upload_result_by_bidder' %}",
@@ -207,7 +208,9 @@ function upload_result()
             data:form_data,
 
             success: function (response) {
+                
                 if (response['status'] == "1"){
+                    $("#overlayer_transparent").hide()
                     swal({
                         icon:"success",
                         text:"Result Uploaded Successfully",

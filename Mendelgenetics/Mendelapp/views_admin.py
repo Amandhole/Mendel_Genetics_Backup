@@ -1,3 +1,4 @@
+import ast
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_control
 from django.template.loader import get_template, render_to_string
@@ -151,15 +152,17 @@ def published_test(request):
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
             
-                published_test_obj = TestLots.objects.filter(Q(lot_status="Published") | Q(lot_status="Approved")).order_by('-id')
-                # published_test_obj = TestLots.objects.filter(lot_status="Published").order_by('-fk_user_master__name')
-               
+                published_test_obj = TestLots.objects.filter(Q(lot_status="Published") | Q(lot_status="Approved")).order_by('id')
                 
-                print('published test', published_test_obj)
+                # published_test_obj = TestLots.objects.filter(lot_status="Published").order_by('id')
+                for i in published_test_obj: 
+                    # i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).exclude(bid_status="Cancelled").count()
+                    i.bid_count = UserBids.objects.filter(fk_test_lot__id = i.id).count()
+ 
     
                 context = {
                     "user_obj": user_obj,
-                    "published_test_obj": published_test_obj
+                    "published_test_obj": published_test_obj,
                 }
                 return render(request, 'admin/show-published-test.html', context)
             else:
@@ -185,9 +188,12 @@ def uploaded_result_test(request):
 
                 for i in uploaded_result_obj:
                     if UserBids.objects.filter(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Bidder').exists():
-                        print()
+
                         bider_obj = UserBids.objects.get(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Bidder')
-                      
+                        i.bid_count = UserBids.objects.filter(fk_test_lot_id=i.id).count()
+
+                        print('ffffffffffffffffffffffffffffffffffffffffffff',i.bid_count)
+                    
 
                         bidder_name = bider_obj.fk_user_master.name if bider_obj.fk_user_master else ''
                         i.bidder_name = bidder_name
@@ -197,6 +203,7 @@ def uploaded_result_test(request):
                 context = {
                     "user_obj": user_obj,
                     "uploaded_result_obj": uploaded_result_obj,
+                    
                      }
                 return render(request, 'admin/uploaded_test.html', context)
             else:
@@ -269,20 +276,15 @@ def get_lot_of_test_from_admin(request):
                     gen_list.append(UserTest.objects.get(id=k).fk_sample_master.gens)
                     
                     UserTest.objects.filter(id=k).update(status="Active")
-                lot_id = 'AA' + str(random.randint(1000000, 9999999))  # code for genrate auction id
-                
-                # l = i['lot_tests']
-                # s = [str(integer) for integer in l]
-                # a_string = "".join(s)
-        
-                # test_id = int(a_string)
+                # lot_id = 'AA' + str(random.randint(1000000, 9999999))  # code for genrate auction id
 
-                # print(test_id)
-                # print(type(test_id))
-                TestLots.objects.create(fk_user_master_id=i['user_id'], test_lot_id=lot_id, tests_in_lot=i['lot_tests'], test_group=i['group_id'],
-
-                                        test_pathalogy=path_list,  lot_status="Published",  test_quantity=len(i['lot_tests']), test_gen=gen_list, created_date_time=datetime.now())
             
+                
+                lot_obj = TestLots.objects.create(fk_user_master_id=i['user_id'], tests_in_lot=i['lot_tests'], test_group=i['group_id'], test_pathalogy=path_list,  lot_status="Published",  test_quantity=len(i['lot_tests']), test_gen=gen_list, created_date_time=datetime.now())
+
+                lot_obj.test_lot_id = f"AA{lot_obj.id:06d}"
+                lot_obj.save()
+
             send_data = {'msg': "Lot created succesfully", 'status': "1"}
         else:
             send_data = {'msg':"Request is not post",'status':"0"}
