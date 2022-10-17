@@ -19,9 +19,9 @@
         
         <div class="">
             {% if i.bidder_doc_first %}       
-                <button class="btn-primary action-btn" onclick="window.open('{{i.bidder_doc_first.url}}')" style="background-color: #3CB371;margin-left: 70px;width: 130px;border-radius: 5px;height: 45px;border: none">Doccument1 <i class="fas fa-download"></i></button>
+                <button class="btn-primary action-btn" onclick="window.open('{{i.bidder_doc_first.url}}')" style="background-color: #3CB371;margin-top: 5px;margin-left: 70px;border: none;">Doccument1 <i class="fas fa-download"></i></button>
             {% else %}
-                <button class="btn-primary action-btn" disabled style="background-color: #7019f4;margin-left: 70px;width: 130px;height: 45px;border-radius: 5px;">No Doccument </button>
+                <button class="btn-primary action-btn" disabled style="background-color: #7019f4;;margin-top: 5px;margin-left: 70px;">No Doccument </button>
             {% endif %}
         </div>
     </div>
@@ -33,9 +33,9 @@
     <div class="col-md-4">
         <div class="">
             {% if i.bidder_doc_second %}
-                <button class="btn-primary action-btn"  onclick="window.open('{{i.bidder_doc_second.url}}')" style="background-color: #3CB371;margin-left: 70px;width: 130px;border-radius: 5px;height: 45px;border: none">Doccument2<i class="fas fa-download"></i></button>
+                <button class="btn-primary action-btn" onclick="window.open('{{i.bidder_doc_second.url}}')" style="background-color: #3CB371;margin-top: 5px;margin-left: 70px;border: none">Doccument2<i class="fas fa-download"></i></button>
             {% else %}
-                <button class="btn-primary action-btn" disabled style="background-color: #7019f4;margin-left: 70px;width: 130px;height: 45px;border-radius: 5px;">No Doccument</button>
+                <button class="btn-primary action-btn" disabled style="background-color: #7019f4;;margin-top: 5px;margin-left: 70px;">No Doccument</button>
             {% endif %}
         </div>
     </div>
@@ -121,7 +121,6 @@
 
 function upload_result() 
 {   
-
 
     var test_lot_id = $("#hidden_test_lot_id").val()
     console.log(test_lot_id)

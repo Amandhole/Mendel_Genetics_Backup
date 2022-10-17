@@ -57,5 +57,6 @@ urlpatterns = [
     path('close_support_ticket/',close_support_ticket, name="close_support_ticket"),
     path('support_ticket_filter_admin/',support_ticket_filter_admin, name="support_ticket_filter_admin"),
     path('upload_result_by_bidder', upload_result_by_bidder,name="upload_result_by_bidder"),
-    path('get_user_test_by_lot_id', get_user_test_by_lot_id,name="get_user_test_by_lot_id")
+    path('get_user_test_by_lot_id', get_user_test_by_lot_id,name="get_user_test_by_lot_id"),
+    path('get_user_test_to_admin_for_download',get_user_test_to_admin_for_download, name="get_user_test_to_admin_for_download")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

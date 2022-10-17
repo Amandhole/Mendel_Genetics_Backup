@@ -249,7 +249,7 @@
 
 
     <!--============= Dashboard Section Starts Here =============-->
-    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+    <section class="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel" id="table_section">
         <div class="container">
             <div class="row justify-content-center">
 
@@ -281,8 +281,8 @@
                                        <select id="select_test" style="height: 40px;border-radius:5px;background-color: #683df5;color: white;" onchange="window.location.href=this.value;">
                                         <option value="{% url 'published_test' %}">Published</option>  
                                         <option value="{% url 'pending_test' %}">Pending</option>
-                                        <option value="{% url 'uploaded_result_test' %}">Result Upload</option>
-                                        <option value="{% url 'completed_test' %}">Test Completed</option>
+                                        <option value="{% url 'uploaded_result_test' %}">Test Complete</option>
+                                        {% comment %} <option value="{% url 'completed_test' %}">Test Completed</option> {% endcomment %}
                                           
 
                                       </select> 
@@ -307,6 +307,7 @@
                                           <th>Group</th>
                                           <th>Quantity</th>
                                           <th>Action</th>
+                                          <th>Auction</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -358,6 +359,26 @@
                                               <i class="fas fa-trash"></i>
                                             </button> 
                                             </td>
+                                            
+                                          {% if i.bid_count %}
+                                            <td >
+                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
+                                                bids  <i class="flaticon-auction"></i>
+                                              </button>
+                                              <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{i.bid_count}}</span>
+                                            </td>
+
+                                          {% else %}
+                                            
+                                            <td >
+                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
+                                                No Bids  <i class="flaticon-auction"></i>
+                                              </button>
+                                            </td>
+                                          {% endif %}
+                                            
+                                    
+                                          
 
    
                                             {% comment %} <td>
@@ -381,6 +402,7 @@
                 </div>
             </div>
         </div>
+
     </section>
     <!-- Button trigger modal -->
 
@@ -401,6 +423,38 @@
     </div>
   </div> 
 </div>
+
+
+
+
+
+
+
+
+<section class="dashboard-section padding-bottom mt--240 mt-lg--325 pos-rel" >
+        <div class="container">
+            <div class="row justify-content-center">
+
+                {% comment %} {%  include  'sidebar.html' %} {% endcomment %}
+
+
+                <div id="rts_div" class="col-lg-12">
+
+                </div>
+
+               
+ 
+            </div>
+        </div>    
+    </section>
+
+
+
+
+
+
+
+
 
     
 
@@ -634,6 +688,31 @@
             }
         });
     });
+
+
+
+
+   function  get_test_id_to_see_all_bids(id){
+    
+    console.log(id)    
+    $.ajax({
+        method:"POST",
+        url : "{% url 'view_all_bids_on_my_test' %}",
+        contentType:"application/json",
+        data: JSON.stringify({
+            "test_id":id
+        }),
+        success:function(response){
+          console.log('rts div')
+          
+          $("#rts_div").show();
+          $("#table_section").hide()
+          $("#rts_div").html(response);
+           
+        }
+
+    })
+} 
 </script>
 
 
@@ -641,7 +720,9 @@
 
 
    
-
+  
+  {% comment %} <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span> {% endcomment %}
+      
 
    
 

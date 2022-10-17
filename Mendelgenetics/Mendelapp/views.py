@@ -614,13 +614,15 @@ def test_added_by_user_list(request):
 
                 test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')                  # Published
                 
-                Confirm_test_obj = UserBids.objects.filter(Q(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id) | Q(bid_status="Result_Upload_By_Bidder")).order_by('-id')   # Approved or Result_Upload_By_Bidder
-                
-                Completed_test_obj = UserBids.objects.filter(
-                    bid_status='Result_Upload_By_Admin', fk_test_lot__fk_user_master__id=session_id).order_by('-id')  # Result_Upload_By_Admin
+                # Confirm_test_obj = UserBids.objects.filter(Q(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id) | Q(bid_status="Result_Upload_By_Bidder")).order_by('-id')   # Approved or Result_Upload_By_Bidder
+
+                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id).order_by('-id')   # Approved or Result_Upload_By_Bidder
+
+                Completed_test_obj = UserBids.objects.filter(bid_status='Result_Upload_By_Bidder', fk_test_lot__fk_user_master__id=session_id).order_by('-id')  # Result_Upload_By_Admin
                 
                 cancelled_test_obj = UserTest.objects.filter(fk_user_id=session_id, status="Cancelled").order_by('-id')                         # Cancelled
                 
+
 
                 
 
@@ -1069,14 +1071,13 @@ def view_all_bids_on_my_test(request):
                         for test in test_lot_obj:
                             test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
-                        print('qqqqqqqqqqqqq', test_lot_obj)
-                        bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending")
+                
+                        bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending").order_by('-id')
 
-                        print('ffffffffffffffffffffffff',bid_obj)
-
-                        approved_bid_obj = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Approved") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Approved").exists() else None
-                        # print('tttttttt', approved_bid_obj)
-        
+                        approved_bid_obj = UserBids.objects.get(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")) if UserBids.objects.filter(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")).exists() else None
+                        
+                        recent_bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled").exists() else None
+                        print('vvvvvvvvvvvvvvvvvvvvvvv', approved_bid_obj)
                     
                         bidcount = bid_obj.count()
                     
@@ -1084,7 +1085,8 @@ def view_all_bids_on_my_test(request):
                         "user_obj": user_obj,
                         "test_lot_obj": test_lot_obj,
                         "bid_obj": bid_obj,
-                        "approved_bid": approved_bid_obj
+                        "approved_bid": approved_bid_obj,
+                        "recent_bid_obj": recent_bid_obj
                     }
                     send_data = render_to_string('rts_bid_detail.html', context)
                 else:
@@ -1355,13 +1357,13 @@ def get_all_test_of_lot_from_active_tab(request):
             test_list = TestLots.objects.get(id=lot_id).tests_in_lot            
             test_data =eval(test_list)
             print(test_data)
-            test_in_lot = UserTest.objects.filter(id__in=test_data)
+            user_test_obj = UserTest.objects.filter(id__in=test_data)
 
             context = {
-                "test_in_lot": test_in_lot
+                "user_test_obj": user_test_obj
                         }
             
-            print('----------', test_in_lot)
+            print('----------', user_test_obj)
     
             send_data = render_to_string('rts_accordion.html', context)
          
@@ -1383,10 +1385,15 @@ def upload_result_by_bidder(request):
                 # print(test_list[2], test_list[1], test_list) 
 
                 if test_list[1] == '1':
-                    UserTest.objects.filter(id=test_list[2]).update(bidder_doc_first=file)
+                    doc1_obj = UserTest.objects.get(id=test_list[2])
+                    doc1_obj.bidder_doc_first = file
+                    doc1_obj.save()
+
                 elif test_list[1] == '2':
-                    UserTest.objects.filter(id=test_list[2]).update(bidder_doc_second=file)
-                
+                    obj2_doc =UserTest.objects.get(id=test_list[2])
+                    obj2_doc.bidder_doc_second=file
+                    obj2_doc.save()
+
             test_lot_id = request.POST.get('test_lot_id')
             
             comment = request.POST.get('comment')
@@ -1436,10 +1443,33 @@ def get_user_test_by_lot_id(request):
            
             return HttpResponse(send_data)
         else:
-            print('in elseeeeeeeeeeeeeeeee')
             return redirect('landing_page')
     except:
         print(traceback.format_exc())
         return redirect('landing_page')
 
         
+@csrf_exempt
+def get_user_test_to_admin_for_download(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode('utf-8'))
+            lot_id = data['user_lot_id']
+            obj_lot = TestLots.objects.get(id=lot_id)
+            user_test_id = obj_lot.tests_in_lot
+            result = ast.literal_eval(user_test_id)
+            empt_list = [int(i) for i in result]  # list comprehenssion
+            user_test_obj = UserTest.objects.filter(id__in=empt_list)
+            context = {
+                "user_test_obj": user_test_obj
+            }
+
+            print(user_test_obj)
+            send_data = render_to_string('admin/download-test-admin.html', context)
+
+            return HttpResponse(send_data)
+        else:
+            return redirect('landing_page')
+    except:
+        print(traceback.format_exc())
+        return redirect('landing_page')
