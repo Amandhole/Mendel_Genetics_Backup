@@ -416,4 +416,4 @@ def delete_user_lot(request):
     except : 
         traceback.print_exc()
         return JsonResponse({'status': '0'})
- 
+ ########################
