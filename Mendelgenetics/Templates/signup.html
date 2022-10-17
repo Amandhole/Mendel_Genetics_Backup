@@ -431,7 +431,8 @@
       })
 
       function genrate_otp_for_varification() {
-        runOtpSend();  
+
+          
         window.name = $("#name").val();
         window.mobile_no = $("#mobile_no").val();
         window.passwordd = $("#password").val();
@@ -513,7 +514,9 @@
         }
       
         else {
-          $("#loading").show()
+            $("#overlayer_transparent").show()
+            
+
           $.ajax({
             method : "POST",
             url : "{% url 'send_otp_for_signup_verification' %}",
@@ -525,8 +528,8 @@
             success : function (response) {
               
               if (response ['status'] == "1"){
-
-                $("#loading").hide()
+                    runOtpSend();
+                    $("#overlayer_transparent").hide()
                 
                 
                 console.log(response)

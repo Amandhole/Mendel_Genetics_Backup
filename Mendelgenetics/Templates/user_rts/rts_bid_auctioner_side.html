@@ -1,0 +1,309 @@
+
+
+                <div class="dashboard-widget">
+                    <h5 class="title mb-15" style="margin-bottom: 20px;">Bid Details</h5>
+                    <div class="dashboard-purchasing-tabs">
+                    
+                        <div class="tab-content" style="overflow-y: scroll; max-height:580px;">
+                            <div class="tab-pane show active fade" id="current">
+                                <div class="ex chagene-box" style="max-height: 410px; margin-bottom: 20px;
+                                    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                    background: #8e67aa 0% 0% no-repeat padding-box;
+                                    border-radius: 8px;
+                                    box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                    opacity: 1;
+                                    padding: 30px; border: 1px solid #80808052;
+                                    margin-top: 0px; padding-top: 15px;">
+                                    <div class="row">
+                                        {% for test in test_lot_obj %} 
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;">
+                                                <span style="font-weight: 600;margin-left: -14px;color: white;"> Lot Id</span>
+
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                {%if test.test_lot_id %}
+                                                    
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.test_lot_id }}</h6> 
+                                                {% else %}    
+                                                
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                {% endif %}    
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;">
+                                                <span style="font-weight: 600;margin-left: -14px;color: white;">Pathalogy</span>
+
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;color: white;">
+
+                                                {%if test.temp_string %}
+                                        
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.temp_string}}</h6>
+                                                    
+                                                {% else %}    
+                                                
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                {% endif %}    
+                                            </div>
+                                            
+                                        </div> 
+
+
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
+                                                <span style="font-weight: 600;color: white;">Gen </span>
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                                                
+                                                {%if test.temp_gens %}
+                                                    
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.temp_gens}}</h6> 
+                                                {% else %}    
+                                                
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                {% endif %}    
+                                            </div>
+                                        </div> 
+
+
+
+                                        
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                <span style="font-weight: 600;color: white;">Quantity</span>
+
+                                            </div>
+                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+
+                                                {%if test.test_quantity %}
+                                                    
+                                                    <h6 style="font-size: 17px; font-weight:400;color: white;">{{test.test_quantity}}</h6> 
+                                                {% else %}    
+                                                
+                                                        <h6 style="font-size: 17px; font-weight:400;color: white;">----</h6>
+                                                {% endif %}    
+                        
+                                                
+                                            </div>
+                                        </div> 
+
+                                            
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
+                                                <span style="font-weight: 600;color: white;">Date  </span>
+                                            </div>
+
+                                            <div class="col-md-4" style="margin-top: 15px;">
+                                                <h6 style="font-size: 15px; font-weight: 400;color: white; ">{{ test.created_date_time|date:'m-d-Y'}}</h6>
+                                            </div> 
+
+                                            <div class="col-md-5" style="padding-top: 10px;">
+                                                    <button type="button" onclick="reload_page_on_back()" style="background-color: #fff;color: #000;height: 27px;width: 58px; border-radius: 5px; border: none;float: right;">
+                                                        <i class="fa fa-long-arrow-alt-left"></i>
+                                                    </button>
+                                            </div>
+                
+                                        </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div>    
+
+
+
+
+                            
+
+
+
+
+                            <h5 class="title mb-15" style="margin-bottom: 30px;margin-top: 30px;">Recent Bids</h5>
+                          
+                            
+                                    <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
+                                        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+                                        background: #ffff 0% 0% no-repeat padding-box;
+                                        border-radius: 8px;
+                                        box-shadow: inset 0px 3px 6px #4a66ad29, 0px 3px 6px #4a66ad29;
+                                        opacity: 1;
+                                        padding: 30px; border: 1px solid #80808052;
+                                        margin-top: 0px; padding-top: 15px;">
+
+                                
+                                    <div class="row">
+                                        <div class="col-md-12 row">
+                                            <div class="rate-sec col-md-4">
+                                                <span class="btn btn-info" style="padding-left: 10px;">Avg Amt @605</span>
+                                            </div>
+
+                                            
+
+                                            <div class="rate-sec col-md-5">
+                                                <span class="btn btn-info" style="padding-left: 10px;">Settled Amt @1000</span>
+                                            </div>
+
+                                            <div class="rate-sec col-md-3">
+                                                <span class="btn btn-info" style="padding-left: 10px;">bids<i class="fa fa-eye"></i></span>
+                                            </div>
+
+                                        </div>  
+
+                                        
+
+                                       
+                                      
+
+                                    
+                                        <div class="col-md-2" style="margin-top: 20px;">
+                                            <div class="profile-sec" style="display: inline-flex;">
+                                                <!-- <img style="width:30px;" src="/static/website/{%  static 'assets/images/profile-ico.png"> -->
+
+                    
+                                                <div style="padding-top: 10px;">
+                                                    {% comment %} {% for test in test_lot_obj %}  {% endcomment %}
+                                                        {% comment %} <button type="button" onclick="approve_user_bid()"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                            <i class="fas fa-thumbs-up"></i>
+                                                        </button>  {% endcomment %}
+                                                        {% comment %} </i><span class="badge badge-primary float-right" style="font-size: 15px; padding: 8px 15px 8px 15px;margin-left: 95px; background-color: #FF0000;"><i class="fas fa-thumbs-up"></i> Rejected</span> {% endcomment %}
+                                                    {% comment %} {% endfor %}  {% endcomment %}
+                                                </div>
+
+                                                <div style="padding-top: 10px;">
+                                                    {% comment %} <button type="button" onclick="reject_the_user_bid({{bid_obj.id}})" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                                        <i class="fas fa-thumbs-down"></i>
+                                                    </button>  {% endcomment %}
+                                                </div> 
+                                            </div>
+                                        </div>
+                            
+
+                                    
+                                    </div>
+                                
+                                </div>
+
+
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+
+<script>
+
+function approve_user_bid(id,bid_id){
+
+    var lot_id = id
+    var bid_id = bid_id
+
+    console.log(lot_id,bid_id)
+    
+
+    swal({
+        icon:"warning",
+        text:"Are you sure to approve bid ?",
+        buttons: ["No", "Yes"],
+        dangerMode: false,
+        closeOnClickOutside:false
+        
+                
+    }).then((willUpdate) => {
+        if(willUpdate) {
+        $.ajax({
+        method : "POST",
+        url : "{% url 'Approve_users_bid_on_test' %}",
+        contentType : "application/json",
+        data : JSON.stringify({
+                "lot_id":lot_id,
+                'bid_id':bid_id
+        }),
+        success : function(response){
+            if(response['status'] == '1'){
+                console.log(response)
+                /*swal({
+                    icon : "success",
+                    text: "Test Approved Successfully",
+                    closeOnClickOutside:false
+                }).then(function(){
+
+                })*/
+
+                location.reload()
+                
+            }
+            else if(response['status']=='0'){
+                console.log(response)
+                swal({
+                    icon:"error",
+                    text:"Something Went Wrong",
+                    closeOnClickOutside:false
+                })
+            }
+        }
+    })
+}
+
+    })
+    
+    
+}
+
+
+function reject_the_user_bid(id){
+
+swal({
+        icon:"warning",
+        text:"Are you sure to reject bid ?",
+        buttons: ["No", "Yes"],
+        dangerMode: false,
+        closeOnClickOutside:false
+        
+                
+    }).then((willDelete) => {
+        if(willDelete) {
+        $.ajax({
+        method : "POST",
+        url : "{% url 'Reject_bid_on_users_test' %}",
+        contentType : "application/json",
+        data : JSON.stringify({
+                "bid_id":id
+        }),
+        success : function(response){
+            if(response['status'] == '1'){
+                console.log(response)
+                swal({
+                    icon : "success",
+                    text: "Bid Rejected Successfully",
+                    closeOnClickOutside:false
+                }).then(function(){
+                    location.reload()
+                })
+            }
+            else if(response['status']=='0'){
+                console.log(response)
+                swal({
+                    icon:"error",
+                    text:"Something Went Wrong",
+                    closeOnClickOutside:false
+                })
+            }
+        }
+    })
+}
+
+    })
+}
+
+function reload_page_on_back(){
+location.reload()
+}
+
+</script>

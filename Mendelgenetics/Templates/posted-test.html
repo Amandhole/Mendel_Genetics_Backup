@@ -1203,7 +1203,7 @@ function  get_test_id_to_see_all_bids(id){
     console.log(id)    
     $.ajax({
         method:"POST",
-        url : "{% url 'view_all_bids_on_my_test' %}",
+        url : "{% url 'view_all_bids_on_my_test_auctioner_side' %}",
         contentType:"application/json",
         data: JSON.stringify({
             "test_id":id
