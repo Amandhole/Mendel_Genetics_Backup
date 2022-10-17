@@ -1,0 +1,35 @@
+<div>
+    {% for i in test_list %}
+        <div class="row col-md-12"> 
+            <div class="col-md-3" style="padding-top: 10px;">
+                <span style="font-weight: 600;margin-left: -14px;">{{forloop.counter}}) Pathalogy : </span>
+            </div>
+            <div class="col-md-8 text-left" style="margin-top: 15px; margin-bottom: 5px; ">
+                <h6 style="font-size: 17px; font-weight:400; " class="notranslate">
+                    {{i.pathalogy}}
+                </h6>
+            </div>
+        </div> 
+        <div class="row col-md-12"> 
+            <div class="col-md-3" style="padding-top: 10px;">
+                <span style="font-weight: 600;">Gens : </span>
+            </div>
+            <div class="col-md-8" style="margin-top: 15px; margin-bottom: 5px;">
+                <h6 style="font-size: 17px; font-weight:400;" class="notranslate">
+                    {{i.gens}}
+                </h6>
+            </div>
+        </div> 
+        <div class="row col-md-12"> 
+            <div class="col-md-3" style="padding-top: 10px;">
+                <span style="font-weight: 600;">Quantity : </span>
+            </div>
+            <div class="col-md-8" style="margin-top: 15px; margin-bottom: 5px;">
+                <h6 style="font-size: 17px; font-weight:400;">
+                    {{i.quantity}}
+                </h6>
+            </div>
+        </div> 
+        <hr>
+    {% endfor %}
+</div>

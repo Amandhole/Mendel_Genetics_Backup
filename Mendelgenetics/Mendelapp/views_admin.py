@@ -8,6 +8,8 @@ import traceback
 from .models import *
 from django.db.models import Q
 from datetime import datetime
+from .views import *
+import yaml
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -373,3 +375,44 @@ def support_chat_admin(request):
     except:
         traceback.print_exc()
     return redirect('/admin_user_login')
+
+
+######### function for delete user tests ###########
+@csrf_exempt
+def delete_user_test(request):
+    try : 
+        if request.method == "POST" :
+            user_id = request.POST.get('user_id')
+            UserTest.objects.get(id=user_id).delete()
+            return JsonResponse({'status': '1'})
+        return JsonResponse({'status': '0'})
+    except : 
+        traceback.print_exc()
+        return JsonResponse({'status': '0'})
+
+######### function for show user tests #######
+@csrf_exempt
+def show_user_test(request): 
+    if request.method == 'POST': 
+        lot_id = request.POST.get('lot_id')  
+        lot_obj = TestLots.objects.filter(id=lot_id).last()
+        test_list = get_brief_path_list(lot_obj.test_pathalogy)     
+        string  = render_to_string('admin/r_t_s_admin/r_t_s_show_user_publish_test.html',{"test_list": test_list}) 
+        return JsonResponse({"status":'1', "string": string})
+    return JsonResponse({"status":'0'}) 
+ 
+######### function for delete user lot and tests###########
+@csrf_exempt
+def delete_user_lot(request):
+    try : 
+        if request.method == "POST" :
+            lot_id = request.POST.get('lot_id')
+            lot_obj = TestLots.objects.get(id = lot_id)  
+            UserTest.objects.filter(id__in = yaml.safe_load(lot_obj.tests_in_lot)).delete()
+            lot_obj.delete() 
+            return JsonResponse({'status': '1'})
+        return JsonResponse({'status': '0'})
+    except : 
+        traceback.print_exc()
+        return JsonResponse({'status': '0'})
+ 

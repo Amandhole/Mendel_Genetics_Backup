@@ -310,9 +310,10 @@
                                           <th>Auction Id</th>
                                           <th>Date</th>
                                           <th>Name</th>
+                                          <th>Pathalogy</th>
                                           <th>Group</th>
                                           <th>Plazo</th>
-                                          {% comment %} <th>Action</th> {% endcomment %}
+                                         <th>Action</th>  
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -344,6 +345,8 @@
                                             {%else%}
                                               <td>----</td>
                                             {% endif %}    
+ 
+                                            <td> {% if i.fk_sample_master %} {{i.fk_sample_master.pathalogy}} {% else %} ----- {% endif %} </td>
 
                                             {%if i.fk_sample_master.group%}
                                               <td>{{i.fk_sample_master.group}}</td>
@@ -357,16 +360,12 @@
                                             {%else%}
                                               <td>----</td>
                                             {% endif %}   
-
-                                          
-
-                                            {% comment %} <td style="padding-top: 20px;">
-                                                <button type="button"  onclick="view_detail_of_test_by_admin()" style="background-color: #7019f4;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
-                                                    <i class="fas fa-eye"></i>
-                                                </button> 
-
-                                             
-                                            </td>  {% endcomment %}
+ 
+                                           <td style="padding-top: 20px;">
+                                                <button type="button" onclick="delete_test_by_admin( {{i.id}} )"  style="background-color: red;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>  
+                                            </td>  
                                           </tr>
                                         {% endfor %}
 
@@ -470,14 +469,50 @@
 <script>
   
 
-   function delete_test_by_admin(){
+   function delete_test_by_admin(id){
         swal({
             icon:"warning",
             text:"Are you sure to delete test?",
             buttons: ["No", "Yes"],
             dangerMode: true,
             closeOnClickOutside:false                    
-        })
+        }).then((isdelete)=>{
+          if(isdelete){
+            $.ajax({
+                method:"Post",
+                url:"{% url 'delete_user_test' %}", 
+                data: {
+                  "user_id" : id, 
+                },
+                success: function(response)
+                {
+                  if (response['status'] == '1')
+                  {
+                    swal({
+                        icon:"success",
+                        text:"Test Delete Succesfully",
+                        button: "OK", 
+                        closeOnClickOutside:false                    
+                    }).then((success)=>{
+                      if(success){
+                      location.reload() 
+                      }
+                  });
+
+                    
+                  }
+                  else if (response['status'] == '0')
+                  {
+                      swal({
+                      icon:"error",
+                      text:"Something Went Wrong",
+                      closeOnClickOutside:false                    
+                    })
+                  }
+                }
+              }); 
+          }
+        });
    } 
 
    function approve_test_by_admin()

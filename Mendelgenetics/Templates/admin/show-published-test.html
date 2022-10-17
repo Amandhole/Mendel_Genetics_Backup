@@ -306,6 +306,7 @@
                                           <th>Name</th>
                                           <th>Group</th>
                                           <th>Quantity</th>
+                                          <th>Action</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -349,10 +350,16 @@
                                               <td>----</td>
                                             {% endif %}    
                                             
-                                            
+                                            <td>
+                                              <button type="button"   onClick="showUserTest( {{i.id}} )" style="background-color: #6c0bff;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                <i class="fas fa-eye"></i>
+                                            </button>   
+                                            <button type="button" onClick="delete_test_by_admin( {{i.id}} )"  style="background-color: red;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                              <i class="fas fa-trash"></i>
+                                            </button> 
+                                            </td>
 
-                                          
-
+   
                                             {% comment %} <td>
                                                 <button type="button"  onclick="approve_test_from_user()" style="background-color: #7019f4;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
                                                     <i class="fas fa-thumbs-up"></i>
@@ -367,8 +374,7 @@
 
                                       </tbody>
                                   </table>
-                                </div>
-                            
+                                </div> 
                             </div>    
                         </div>       
                     </div>
@@ -378,6 +384,23 @@
     </section>
     <!-- Button trigger modal -->
 
+<!-- Modal -->
+<div class="modal fade" id="viewTestModal" tabindex="-1" aria-labelledby="viewTest" aria-hidden="true">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Test</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 34rem;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="lot_detail"> 
+        
+
+      </div> 
+    </div>
+  </div> 
+</div>
 
     
 
@@ -456,30 +479,71 @@
     
     })
 
-</script>
+    function showUserTest(id){
+       $.ajax({
+        method : "POST",
+        url : "{% url 'show_user_test' %}",
+        data: {
+          "lot_id" : id,
+        },
+        success: function(response){   
+          if(response.status == '1'){
+            $("#lot_detail").html(response.string ) ;
+            $("#viewTestModal").modal('show');
+          } 
+        } 
+       });
+      
+    } 
 
 
 
 </script>
 
-<script>
-    {% comment %} function approve_test_from_user(){
-        swal({
-            icon:"warning",
-            text:"Are you sure to publish test?",
-            buttons: ["No", "Yes"],
-            dangerMode: false,
-            closeOnClickOutside:false                    
-        })
-    }  {% endcomment %}
 
-   function delete_test_by_admin(){
+
+ 
+
+<script> 
+   function delete_test_by_admin(id){
         swal({
             icon:"warning",
-            text:"Are you sure to delete test?",
+            text:"Are you sure to delete Lot?",
             buttons: ["No", "Yes"],
             dangerMode: true,
             closeOnClickOutside:false                    
+        }).then((willDelete) => {
+          if(willDelete){
+            $.ajax({
+              method: "POST",
+              url : "{% url 'delete_user_lot' %}" ,
+              data : {
+                'lot_id': id,
+              },
+              success: function(response){ 
+              if (response.status == '1'){
+                swal({
+                        icon:"success",
+                        text:"Lot Delete Succesfully",
+                        button: "OK", 
+                        closeOnClickOutside:false                    
+                    }).then((success)=>{
+                      if(success){
+                      location.reload() 
+                      }
+                  });
+                 }
+                else  {
+                  swal({
+                  icon:"error",
+                  text:"Something Went Wrong",
+                  button: "OK", 
+                  closeOnClickOutside:false                    
+                })
+              }
+            }
+            })
+          }
         })
    } 
 
