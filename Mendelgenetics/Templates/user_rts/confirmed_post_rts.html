@@ -158,11 +158,11 @@
                                     {% endif %} 
                                 </div>
 
-                                <div class="col-md-6" style="margin-top: 10px;margin-left: 14px;">
+                                <div class="col-md-6" style="margin-top: 10px;padding-left: 140px;">
                                     
-                                    <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.fk_test_lot.id}})"  style="background-color: #7019f4;color: white;height: 29px;width: 58px; border-radius: 5px; border: none;  margin-left:-40px">
+                                    {% comment %} <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion({{test.fk_test_lot.id}})"  style="background-color: #7019f4;color: white;height: 29px;width: 58px; border-radius: 5px; border: none;  margin-left:-40px">
                                         <i class="fa fa-eye" ></i> 
-                                    </button> 
+                                    </button>  {% endcomment %}
 
                                     
                                     <span class="badge badge-primary" style="font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
@@ -189,7 +189,9 @@
                                         </td>
     
                                     {% endif %}   {% endcomment %}
-
+                        
+                        
+                                    {% comment %} 
 
                                     {% if not test.fk_test_lot.admin_doc_first and not test.fk_test_lot.admin_doc_second %}    
                                         <span class="badge badge-primary float-right" style="font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4; margin-right: 40px;">
@@ -197,7 +199,7 @@
                                         </span>
 
                                     {% endif %}    
-                                    
+                                     {% endcomment %}
                                    
                                    
 

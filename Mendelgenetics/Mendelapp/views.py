@@ -1072,7 +1072,7 @@ def view_all_bids_on_my_test(request):
                             test.temp_gens = joined_string = " , ".join(ast.literal_eval(test.test_gen))
 
                 
-                        bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending")
+                        bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending").order_by('-id')
 
                         approved_bid_obj = UserBids.objects.get(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")) if UserBids.objects.filter(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")).exists() else None
                         
@@ -1464,7 +1464,7 @@ def get_user_test_to_admin_for_download(request):
                 "user_test_obj": user_test_obj
             }
 
-            print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',user_test_obj)
+            print(user_test_obj)
             send_data = render_to_string('admin/download-test-admin.html', context)
 
             return HttpResponse(send_data)
