@@ -306,8 +306,8 @@
                                           <th>Name</th>
                                           <th>Group</th>
                                           <th>Quantity</th>
-                                          <th>Action</th>
-                                          <th>Auction</th>
+                                          <th align="center" style="    text-align: center;">Action</th>
+                                          {% comment %} <th>Auction</th> {% endcomment %}
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -358,24 +358,21 @@
                                             <button type="button" onClick="delete_test_by_admin( {{i.id}} )"  style="background-color: red;color: white;height: 27px;width: 45px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
                                               <i class="fas fa-trash"></i>
                                             </button> 
-                                            </td>
-                                            
-                                          {% if i.bid_count %}
-                                            <td >
-                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
+                                            {% if i.bid_count %}
+                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: auto; border-radius: 5px;border: none;height: 30px;">
                                                 bids  <i class="flaticon-auction"></i>
                                               </button>
                                               <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{i.bid_count}}</span>
-                                            </td>
+                                            
 
                                           {% else %}
-                                            
-                                            <td >
-                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">
+                                              <button type="button" onclick="get_test_id_to_see_all_bids({{i.id}})" style="background-color: #7019f4;color: white;width: auto; border-radius: 5px;border: none;height: 30px;">
                                                 No Bids  <i class="flaticon-auction"></i>
                                               </button>
-                                            </td>
                                           {% endif %}
+                                            </td>
+                                            
+                                          
                                             
                                     
                                           
