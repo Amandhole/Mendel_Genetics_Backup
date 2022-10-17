@@ -154,7 +154,7 @@ def published_test(request):
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
             
-                published_test_obj = TestLots.objects.filter(Q(lot_status="Published") | Q(lot_status="Approved")).order_by('id')
+                published_test_obj = TestLots.objects.filter(Q(lot_status="Published") | Q(lot_status="Approved")).order_by('-id')
                 
                 # published_test_obj = TestLots.objects.filter(lot_status="Published").order_by('id')
                 for i in published_test_obj: 

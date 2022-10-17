@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from html2text import pad_tables_in_text
-from numpy import append
+from numpy import append, average
 from requests import request
 from .models import *
 import json
@@ -1502,18 +1502,28 @@ def view_all_bids_on_my_test_auctioner_side(request):
                 
                         bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending").order_by('-id')
 
+                        a =0
+                        num = 0
+                        for i in bid_obj:
+                            price = i.bid_Price
+                            num +=1
+                            a = a+price
+                        
+                        ave_value = a/num
+                        print(ave_value)
                         approved_bid_obj = UserBids.objects.get(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")) if UserBids.objects.filter(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")).exists() else None
                         
                         recent_bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled").exists() else None
-                        print('vvvvvvvvvvvvvvvvvvvvvvv', approved_bid_obj)
-                    
+                        
                         bidcount = bid_obj.count()
+
                     
                     context = {
                         "user_obj": user_obj,
                         "test_lot_obj": test_lot_obj,
                         "bid_obj": bid_obj,
-                        # "approved_bid": approved_bid_obj,
+                        "ave_value": ave_value,
+                        "approved_bid": approved_bid_obj,
                         # "recent_bid_obj": recent_bid_obj
                     }
                     send_data = render_to_string(
