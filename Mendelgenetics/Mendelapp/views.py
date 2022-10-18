@@ -1,3 +1,4 @@
+from inspect import trace
 import socket
 from django.conf import settings
 
@@ -544,7 +545,7 @@ def add_test_by_user(request):
                
             user_id_len = len(user_id)
                 # f"{user.id:03d}{test.id:07d}" 
-                            
+            print('fffffffffffffffffffffffffffff',UserMaster.objects.all().count())           
             if UserMaster.objects.filter(id=user_id).exists():
                 user_obj = UserMaster.objects.get(id=user_id)
                 test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,
@@ -558,6 +559,7 @@ def add_test_by_user(request):
                 test_obj.save()
 
                 test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{test_obj.id:07d}"
+              
                 test_obj.save()
                 
 
@@ -1479,7 +1481,7 @@ def get_user_test_to_admin_for_download(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_all_bids_on_my_test_auctioner_side(request):
-    try :
+    try:
         session_id = request.session.get('user_id')
 
         if session_id:
@@ -1502,38 +1504,47 @@ def view_all_bids_on_my_test_auctioner_side(request):
                 
                         bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Pending").order_by('-id')
 
-                        a =0
+                        a = 0
                         num = 0
                         for i in bid_obj:
                             price = i.bid_Price
                             num +=1
                             a = a+price
-                        
-                        ave_value = a/num
-                        print(ave_value)
+
+                        try:
+                            ave_value = a/num
+                            print(ave_value)
+                        except ZeroDivisionError:
+                            ave_value = 0
+                   
+
                         approved_bid_obj = UserBids.objects.get(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")) if UserBids.objects.filter(Q(fk_test_lot_id=lot_id, bid_status="Approved") | Q(fk_test_lot_id=lot_id, bid_status="Result_Upload_By_Bidder")).exists() else None
                         
                         recent_bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled") if UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled").exists() else None
                         
                         bidcount = bid_obj.count()
 
+                        print('vvvvvvvvvvvvvvvvvvv', bidcount)
                     
                     context = {
                         "user_obj": user_obj,
                         "test_lot_obj": test_lot_obj,
                         "bid_obj": bid_obj,
+                        "bidcount":bidcount,
                         "ave_value": ave_value,
-                        "approved_bid": approved_bid_obj,
+                        # "approved_bid": approved_bid_obj,
                         # "recent_bid_obj": recent_bid_obj
                     }
-                    send_data = render_to_string(
-                        'user_rts/rts_bid_auctioner_side.html', context)
+        
+                    send_data = render_to_string('user_rts/rts_bid_auctioner_side.html', context)
                 else:
+           
                     send_data = {"msg": "User Not Exist"}
             else:
                 send_data = {"msg": "Request Not Post"}
         else :
             send_data= {"msg": "User Not Exist"}
     except:      
+        print(traceback.format_exc())
         send_data= {"msg": "Something Went Wrong", "staus": "0","error":traceback.format_exc()}
     return HttpResponse(send_data)    

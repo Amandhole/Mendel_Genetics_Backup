@@ -591,6 +591,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+         
+
+
+
+
+
+
 <!-- accordion modal test modal  start start here -->
 
 
@@ -628,6 +646,16 @@
 </script>
 
 <script>
+    function hide_show_bid_and_rts_page(){
+    
+        $("#reccent_bide").hide()
+        $("#show_srno_bidcount").show()
+    }
+
+    function close_table(){
+         $("#reccent_bide").show()
+        $("#show_srno_bidcount").hide()
+    }
 
      function showTextBox(text_id, check_id)
       {
@@ -1327,7 +1355,7 @@ function reload_page_on_back(){
     $(".select2-selection").css("padding","10px 0px 35px 20px")
 
   
- 
+
 </script>
    
 {% endblock %}

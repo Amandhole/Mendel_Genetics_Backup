@@ -4,7 +4,7 @@
                     <h5 class="title mb-15" style="margin-bottom: 20px;">Bid Details</h5>
                     <div class="dashboard-purchasing-tabs">
                     
-                        <div class="tab-content" style="overflow-y: scroll; max-height:580px;">
+                        <div class="tab-content" style="overflow-y: scroll; max-height:580px; overflow-x: hidden;">
                             <div class="tab-pane show active fade" id="current">
                                 <div class="ex chagene-box" style="max-height: 410px; margin-bottom: 20px;
                                     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
@@ -123,8 +123,8 @@
 
 
 
-
-                            <h5 class="title mb-15" style="margin-bottom: 30px;margin-top: 30px;">Recent Bids</h5>
+                            <div id="reccent_bide">
+                                <h5 class="title mb-15" style="margin-bottom: 30px;margin-top: 30px;" >Recent Bids</h5>
                           
                             
                                     <div class="exchagene-box" style="height: 170px; margin-bottom: 20px;
@@ -139,26 +139,30 @@
                                 
                                     <div class="row">
                                         <div class="col-md-12 row" style="padding-top: 55px;">
-                                            <div class="rate-sec col-md-8" style="padding-left: 180px;">
-                                                <span class="btn btn-info" style="padding-left: 10px;font-size: 14px;">Average Amt : {{ave_value}}</span>
+                                            <div class="col-md-1"></div>
+                                            <div class="rate-sec col-md-6" style="padding-left: 100px;">
+                                                <span class="btn btn-info" style="padding-left: 10px;font-size: 14px;">Average Amt : {{ave_value|floatformat:2}}</span>
                                             </div>
 
-
-                                            <div class="rate-sec col-md-4" style="padding-left: 0px;">
-                                                <span class="btn btn-info" style="padding-left: 10px; font-size: 15px;"><i class="fa fa-eye"></i></span>
-                                            </div>
-
-                                            {% comment %} <div class="rate-sec col-md-4">
-                                                <span class="btn btn-info" style="padding-left: 10px; font-size: 15px;">Settled Amt : {{approved_bid.bid_Price}}</span>
+{% comment %} 
+                                            <div class="rate-sec col-md-3" style="padding-left: 40px;">
+                                                <button type="button" onclick="hide_show_bid_and_rts_page()" style="background-color: #7019f4;color: white;height: 37px;width: 60px; border-radius: 5px;border: none;">
+                                                    <i class="fa fa-eye" ></i>
+                                                </button>
                                             </div> {% endcomment %}
+
+                                            <div class="rate-sec col-md-3" style="padding-left: 0px;">
+                                                    <button type="button" onclick="hide_show_bid_and_rts_page()"  style="background-color: #7019f4;color: white;height: 37px;width:60px; border-radius: 5px;border: none;">
+                                                        <i class="flaticon-auction"></i>
+                                                    </button>
+                                                    <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{bidcount}}</span>
+                                            </div> 
 
                                         </div>  
 
                                         
 
-                                       
-                                      
-
+                                
                                     
                                         <div class="col-md-2" style="margin-top: 20px;">
                                             <div class="profile-sec" style="display: inline-flex;">
@@ -187,6 +191,56 @@
                                     </div>
                                 
                                 </div>
+                            </div>    
+
+
+
+
+
+                            
+
+
+                            <div id="show_srno_bidcount" style="display: none;">
+                                <h5 class="title mb-15" style="margin-bottom: 30px;margin-top: 30px;" >Recent Bids</h5>
+                                  
+                                    <div class="row">
+                                        
+    
+                                                
+                                               <button type="button" onclick="close_table()" style="background-color: #7019f4;color:white;height: 27px;width: 58px; border-radius: 5px; border: none;float: right;margin-left: 78%;
+    margin-top: -8%;">
+                                                        <i class="fa fa-times" aria-hidden="true" style="#fff"></i>
+                                                    </button>
+                                               <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                        <th scope="col" style="padding-left: 110px;">Sr No</th>
+                                                        <th scope="col">Bid Price</th>
+
+                                                      
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for i in bid_obj %}
+                                                        <tr>
+                                                            
+                                                            <td style="padding-left: 110px;">{{forloop.counter}}</td>
+                                                            <td>{{i.bid_Price}}</td>
+                                                           
+                                                        </tr>
+                                                       {% endfor %} 
+                                                        
+                                                    </tbody>
+                                                </table>
+                                              
+                                           
+                            
+
+                                    
+                                    </div>
+                                
+                                </div>
+                            </div>   
 
 
                             
