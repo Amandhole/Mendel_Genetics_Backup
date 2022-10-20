@@ -18,6 +18,7 @@
 }
 
 </style>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <body>
     <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
@@ -245,6 +246,30 @@
         </div>    
     </section>
       
+
+
+
+
+
+<div class="modal fade" id="show_bid_price" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 490px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 400px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body" id="show_recived_bid">
+
+
+                </div>    
+
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -594,12 +619,10 @@
 
 
 
+<!-- Modal -->
 
 
-
-
-
-
+<!-- Edit test modal  start start here -->
 
 
          
@@ -623,7 +646,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
 
+
+
+
 <script>
+
+    function show_bid_price(lotid){
+        //alert(lotid)
+        $.ajax({
+            method : "POST",
+            url : "{% url 'show_recived_bids' %}",
+            contentType : "application/json",
+            data : JSON.stringify({
+                "lotid":lotid
+        }),
+        success : function(response){
+            $("#show_recived_bid").html(response)
+        }
+        
+    })
+}
+
+
+
+
+</script>
+
+
+<script>
+
+
 
     $("#closebtn").click(function(){
 
@@ -643,9 +695,19 @@
 
 
     })
+
+
+
+
+
+
+    
 </script>
 
 <script>
+
+    
+   
     function hide_show_bid_and_rts_page(){
     
         $("#reccent_bide").hide()
@@ -1355,6 +1417,9 @@ function reload_page_on_back(){
     $(".select2-selection").css("padding","10px 0px 35px 20px")
 
   
+
+
+
 
 </script>
    

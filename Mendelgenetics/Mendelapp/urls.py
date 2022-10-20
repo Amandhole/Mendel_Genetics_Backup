@@ -58,5 +58,6 @@ urlpatterns = [
     path('support_ticket_filter_admin/',support_ticket_filter_admin, name="support_ticket_filter_admin"),
     path('upload_result_by_bidder', upload_result_by_bidder,name="upload_result_by_bidder"),
     path('get_user_test_by_lot_id', get_user_test_by_lot_id,name="get_user_test_by_lot_id"),
-    path('get_user_test_to_admin_for_download',get_user_test_to_admin_for_download, name="get_user_test_to_admin_for_download")
+    path('get_user_test_to_admin_for_download',get_user_test_to_admin_for_download, name="get_user_test_to_admin_for_download"),
+    path('show_recived_bids', show_recived_bids, name="show_recived_bids")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

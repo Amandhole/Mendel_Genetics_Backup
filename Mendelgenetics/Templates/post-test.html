@@ -931,6 +931,7 @@
             
 
             else{
+              $("#overlayer_transparent").show()
               $.ajax({
                 method : "POST",
                 url : "{% url 'add_test_by_user' %}",
@@ -961,6 +962,7 @@
                 success : function (response){
                   if (response['status'] == '1'){
                     console.log(response)
+                    $("#overlayer_transparent").hide()
                     swal({
                       icon:"success",
                       text: "Test posted successfully , Auction Id is "+" " +  response['test_id'] + "\n " + "Do you want to post another post ?",
@@ -981,6 +983,7 @@
                   
                   else if (response['status'] == '0'){ 
                     console.log(response)
+                    $("#overlayer_transparent").hide()
                     swal({
                       icon:"error",
                       text:"Something Went Wrong",

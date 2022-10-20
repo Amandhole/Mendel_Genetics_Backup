@@ -18,11 +18,55 @@
                             <div class="col-md-3" style="padding-top: 10px;">
                                 <span style="font-weight: 600;margin-left: -14px;">Lot Id</span>
                             </div>
-                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                            <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;">
                                 <h6 style="font-size: 17px; font-weight:400; margin-left: -15px;">
                                     {%if test.test_lot_id %}{{test.test_lot_id }}{% else %}----{% endif %}
                                 </h6>
                             </div>
+
+
+                            <div class="col-md-4" style="padding-top: 10px;padding-left: 60px;">
+                                <span style="font-weight: 600;margin-left: -14px;">Recived Bid</span>
+                            </div>
+
+                            {% comment %} <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;padding-left: 55px;">
+                                <h6 style="font-size: 17px; font-weight:400; margin-left: -15px;">
+                                    {%if test.test_lot_id %}{{test.test_lot_id }}{% else %}----{% endif %}
+                                </h6>
+                            </div> {% endcomment %}
+
+
+                        
+                                   
+                                <div class="col-md-1" style="margin-top: 18px; margin-bottom: 5px;padding-left: 20px;">
+                                    <h6 style="font-size: 17px; font-weight:400;">{{test.bid_count}}</h6>
+                                </div>
+
+                                <div class="col-md-2" style="margin-top: 12px; margin-bottom: 5px;padding-left: 20px;">
+                                    {% comment %} <button type="button" onclick="get_test_id_to_see_all_bids('{{test.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                        <i class="fa fa-eye"></i>
+                                    </button> {% endcomment %}
+
+                                    <button type="button"  data-toggle="modal" data-target="#show_bid_price" onclick="show_bid_price({{test.id}})" style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    
+
+                            
+                                   
+                                </div>
+
+
+                                    {% comment %} <button type="button" onclick="get_test_id_to_see_all_bids('{{test.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
+                                    <i class="fa fa-eye"></i>
+                                    </button>
+                                    {% if test.bid_count %}
+                                        <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;"> {{test.bid_count}} </span>
+                                    {% endif %}
+                                    </a> {% endcomment %}
+            
+                                
+                            
                         </div> 
                         <!-- <div class="row col-md-12">
                             <div class="col-md-3" style="padding-top: 10px;margin-left: -14px; ">
@@ -44,7 +88,7 @@
                                 <span style="font-weight: 600;">Quantity</span>
 
                             </div>
-                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
+                            <div class="col-md-3" style="margin-top: 18px; margin-bottom: 5px;">
                                 <h6 style="font-size: 17px; font-weight:400;">
                                     {%if test.test_quantity %}
                                         {{test.test_quantity}} 
@@ -60,6 +104,17 @@
                                     {% endif %}    
                                 </h6>    
                             </div>
+
+                            <div class="col-md-4" style="padding-top: 10px;padding-left: 26px;">
+                                <span style="font-weight: 600;margin-left: -14px;">Average Bid Price</span>
+                            </div>
+
+                            
+                           <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;padding-left: 0px;">
+                                <h6 style="font-size: 17px; font-weight:400; margin-left: -15px;">€ {{test.average.bid_Price__avg|floatformat:2}}</h6>
+                            </div>
+
+
                         </div> 
 
                         <div id="brief_pathalogy_info{{forloop.counter}}" style="display: none;">
@@ -103,28 +158,15 @@
 
                         <div class="row col-md-12">
                             <div class="col-md-3" style="padding-top: 10px;margin-left: -13px;">
-                                <span style="font-weight: 600;">Date  </span>
+                                <span style="font-weight: 600;">Result Date  </span>
                             </div>
 
-                            <div class="col-md-4" style="margin-top: 15px;">
-                                <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'d-m-Y'}}</h6>
+                            <div class="col-md-4" style="margin-top: 15px;padding-left: 10px;">
+                                <h6 style="font-size: 15px; font-weight: 400; "> {{ test.created_date_time|date:'d-m-Y , h : i a'}} </h6>
                             </div> 
 
                         
-                            <div class="col-md-5" style="padding-left: 80px; margin-top: 10px;">
-                                    
-                                    <button type="button" onclick="get_test_id_to_see_all_bids('{{test.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px;border: none;">
-                                    <i class="flaticon-auction"></i>
-                                    </button>
-                                    {% if test.bid_count %}
-                                        <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
-                                    {% endif %}
-                                    </a>
-            
-                                    <!-- <button type="button" data-toggle="modal" data-target="#aman_model" onclick="get_id_accordion('{{test.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 5px; margin-right: 5px;">
-                                        <i class="fa fa-eye" ></i> 
-                                    </button>  -->
-                            </div>
+                         
                         </div>
                     </div>    
                 </div>
@@ -133,6 +175,4 @@
     {% else %}
         <h6 style="text-align: center;">No test available</h6>
     {% endif %}    
-</div>    
-
-
+</div>

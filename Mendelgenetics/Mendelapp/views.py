@@ -27,6 +27,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 # from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from django.db.models import Avg
 from Mendelgenetics.settings import EMAIL_HOST_USER, EMAIL_PORT, EMAIL_HOST_PASSWORD, EMAIL_HOST
 # Create your views here.
 # send message to number extends
@@ -180,7 +181,7 @@ def send_otp_for_signup_verification(request):
             email_otp = str(random.randint(100000, 999999))
             send_data = {'status': "1",'msg': "OTP Sent Successfully", 'Email_OTP': email_otp}
 
-            message = email_otp+" is your otp for varification."
+            message = email_otp+" is your otp for verification."
             subject="OTP Is" 
 
             send_mail(subject, message, EMAIL_HOST_USER,[email], fail_silently=False)
@@ -539,14 +540,12 @@ def add_test_by_user(request):
             print(test_req_id, test_requested)
             converted_date = datetime.strptime(datepicker, format_data)
             # strfdate = converted_date.strftime("%Y-%m-%d %H:%M:%S")
-
-            # random_no = str(random.randint(1000000, 9999999))  # code for genrate auction id
-         
                
             user_id_len = len(user_id)
                 # f"{user.id:03d}{test.id:07d}" 
-            print('fffffffffffffffffffffffffffff',UserMaster.objects.all().count())           
+            test_count = UserTest.objects.count()
             if UserMaster.objects.filter(id=user_id).exists():
+                user_data = UserMaster.objects.get(id=user_id)
                 user_obj = UserMaster.objects.get(id=user_id)
                 test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,
                                     patient_age = patient_age, patient_race = patient_race, 
@@ -558,10 +557,17 @@ def add_test_by_user(request):
              
                 test_obj.save()
 
-                test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{test_obj.id:07d}"
+                test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
               
                 test_obj.save()
                 
+
+                subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
+                message = " Estimado" + user_data.name + "Su prueba ha sido cargada en nuestro sistema. Este es el link de identificación de la muestra"  + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + " En breve nos pondremos en contacto con usted para que envíe la muestra a un laboratorio de referencia. Si desea modificar su prueba pinche aquí" 
+
+
+
+                send_mail(subject, message, EMAIL_HOST_USER, [user_data.email], fail_silently=False)
 
                 
                 send_data = {'status': "1", 'msg': "Test Added Succesfully", "test_id": test_obj.auction_test_id}
@@ -605,7 +611,7 @@ def get_brief_path_list(test_list):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_added_by_user_list(request):
-
+    ave_value = 0
     try:
         session_id = request.session.get('user_id')
         if session_id:
@@ -615,32 +621,39 @@ def test_added_by_user_list(request):
                 pending_test = UserTest.objects.filter( fk_user_id=session_id, status="Pending").order_by('-id')                                # Pending
 
                 test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id,lot_status="Published").order_by('-id')                  # Published
-                
-                # Confirm_test_obj = UserBids.objects.filter(Q(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id) | Q(bid_status="Result_Upload_By_Bidder")).order_by('-id')   # Approved or Result_Upload_By_Bidder
-
+    
                 Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id).order_by('-id')   # Approved or Result_Upload_By_Bidder
 
+
                 Completed_test_obj = UserBids.objects.filter(bid_status='Result_Upload_By_Bidder', fk_test_lot__fk_user_master__id=session_id).order_by('-id')  # Result_Upload_By_Admin
-                
+
                 cancelled_test_obj = UserTest.objects.filter(fk_user_id=session_id, status="Cancelled").order_by('-id')                         # Cancelled
-                
 
 
-                
 
                 for test in test_active_obj:
                     test.bid_count = UserBids.objects.filter(fk_test_lot__id = test.id).exclude(bid_status="Cancelled").count()
                     test.view_path_brief_list = get_brief_path_list(test.test_pathalogy)
+                    test.average = UserBids.objects.filter(fk_test_lot__id=test.id).aggregate(Avg('bid_Price'))
+                   
 
+            
                 for test in Completed_test_obj:
                     test.temp_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
                     test.temp_gens = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
-                    test.view_path_brief_list = get_brief_path_list(test.fk_test_lot.test_pathalogy)    
-
+                    test.view_path_brief_list = get_brief_path_list(test.fk_test_lot.test_pathalogy) 
+                    test.bid_count = UserBids.objects.filter(fk_test_lot=test.fk_test_lot.id).count()  
+                    test.average = UserBids.objects.filter(fk_test_lot__id=test.fk_test_lot.id).aggregate(Avg('bid_Price'))
+                    
+                    
                 for test in Confirm_test_obj:
                     test.temp_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
                     test.temp_gens = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
                     test.view_path_brief_list = get_brief_path_list(test.fk_test_lot.test_pathalogy)
+                    test.bid_count = UserBids.objects.filter(fk_test_lot=test.fk_test_lot.id).count()    
+                    test.average = UserBids.objects.filter(fk_test_lot=test.fk_test_lot.id).aggregate(Avg('bid_Price'))
+                    
+
 
                 if request.method == "POST":  
                     data = json.loads(request.body.decode('utf-8'))
@@ -650,6 +663,7 @@ def test_added_by_user_list(request):
                         context = {   
                             "user_obj": user_obj,
                             "test_active_obj": test_active_obj,
+                            "ave_value": ave_value
                             }
                         send_data = render_to_string('user_rts/active_post_rts.html', context)
 
@@ -675,16 +689,20 @@ def test_added_by_user_list(request):
 
 
                     elif tab_type == "Confirm_tab":
+                       
                         context = {   
                             "user_obj": user_obj,
                             "Confirm_test_obj":Confirm_test_obj,
+                            "ave_value": ave_value,
+
                             }
                         send_data = render_to_string('user_rts/confirmed_post_rts.html', context)
 
                     elif tab_type == "Complete_tab":
                         context = {
                             "user_obj": user_obj,
-                            "Completed_test_obj": Completed_test_obj
+                            "Completed_test_obj": Completed_test_obj,
+                            "ave_value": ave_value
                             }
                         send_data = render_to_string('user_rts/completed.html', context)
                         
@@ -695,8 +713,8 @@ def test_added_by_user_list(request):
                         "test_active_obj": test_active_obj,
                         "Confirm_test_obj":Confirm_test_obj,
                         "cancelled_test_obj":cancelled_test_obj,
-                        "pending_test": pending_test
-                        }
+                        "pending_test": pending_test,
+                                          }
                 return render(request, 'posted-test.html',context)
         return redirect('landing_page')
     except:
@@ -880,7 +898,7 @@ def posted_test_edit_by_user(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def All_test_list_exclude_current_user(request):
-    try:
+    try:    
         session_id = request.session.get('user_id')
         if session_id:
             print(session_id)
@@ -1548,3 +1566,32 @@ def view_all_bids_on_my_test_auctioner_side(request):
         print(traceback.format_exc())
         send_data= {"msg": "Something Went Wrong", "staus": "0","error":traceback.format_exc()}
     return HttpResponse(send_data)    
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def show_recived_bids(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode('utf-8'))
+            lotid = data['lotid']
+        
+
+            recived_bids = UserBids.objects.filter(fk_test_lot_id = lotid).order_by('-id')
+            
+            context ={
+                "recived_bids": recived_bids
+            }
+            
+            send_data = render_to_string('user_rts/recived_bid.html', context)
+            return HttpResponse(send_data)
+        else:
+            return redirect('landing_page')
+
+
+    except:
+        print(traceback.format_exc())
+        return redirect('landing_page')
+
+
+
