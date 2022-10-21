@@ -130,8 +130,7 @@ def pending_test(request):
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.get(id=session_id)
-                all_test_obj = UserTest.objects.filter(status="Pending").order_by('-fk_user__name')
-                print('/////////////////////////////////')
+                all_test_obj = UserTest.objects.filter(status="Pending").order_by('-id')
                 context = {
                     "user_obj": user_obj,
                     "all_test_obj": all_test_obj,

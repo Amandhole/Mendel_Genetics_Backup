@@ -332,6 +332,7 @@ function approve_user_bid(id,bid_id){
                     
         }).then((willUpdate) => {
             if(willUpdate) {
+            $("#overlayer_transparent").show()    
             $.ajax({
             method : "POST",
             url : "{% url 'Approve_users_bid_on_test' %}",
@@ -343,6 +344,7 @@ function approve_user_bid(id,bid_id){
             success : function(response){
                 if(response['status'] == '1'){
                     console.log(response)
+                    $("#overlayer_transparent").hide()
                     /*swal({
                         icon : "success",
                         text: "Test Approved Successfully",
@@ -356,6 +358,7 @@ function approve_user_bid(id,bid_id){
                 }
                 else if(response['status']=='0'){
                     console.log(response)
+                    $("#overlayer_transparent").hide()
                     swal({
                         icon:"error",
                         text:"Something Went Wrong",

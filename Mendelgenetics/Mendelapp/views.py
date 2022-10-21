@@ -89,6 +89,7 @@ def user_signup(request):
             # mobile_no = data['mobile_no']
             # address = data['address']
             user_type = data['user_type']
+            
             password = data['password']
 
             if UserMaster.objects.filter(email=email).exists():
@@ -105,7 +106,6 @@ def user_signup(request):
 
                 user_obj.save()
                 send_data = {'status': "1", 'msg': "Account created Successful", 'user_id': str(user_obj.id)}
-            return JsonResponse(send_data)
         else:
             return render(request, "signup.html")
     except:
@@ -558,7 +558,7 @@ def add_test_by_user(request):
                 test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
                 test_obj.save()
 
-            ############## send email ################
+            ############## send mail ################
 
                 context={
                     "user_obj":user_obj,
@@ -592,7 +592,7 @@ def add_test_by_user(request):
         return redirect('landing_page')
 
     return JsonResponse(send_data)
-    
+
 import ast
 # get test list of perticular user
 
@@ -1126,14 +1126,14 @@ def view_all_bids_on_my_test(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Approve_users_bid_on_test(request):
-    try:
+    if 1 == 1:
         if request.method =="POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
             bid_id = data['bid_id']
+
             if TestLots.objects.filter(id=lot_id):
                 test_obj = TestLots.objects.get(id=lot_id)
-                print(test_obj.id)
                 test_obj.lot_status = "Approved"
               
                 test_obj.save()
@@ -1144,15 +1144,64 @@ def Approve_users_bid_on_test(request):
 
                 UserBids.objects.filter(fk_test_lot__id=lot_id).exclude(id=bid_id).update(bid_status="Cancelled")
 
-                # print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',canclld_bid_obj)
-                
 
+               
+                auctionr_name = TestLots.objects.get(id=lot_id).fk_user_master.name
+                auctionr_email = TestLots.objects.get(id=lot_id).fk_user_master.email
+                lot_number = TestLots.objects.get(id=lot_id).test_lot_id
+                test_count = TestLots.objects.get(id=lot_id)    
+                new = test_count.tests_in_lot
+                
+                ####### auctioner send mail#########
+        
+                test_obj = TestLots.objects.get(id=lot_id).tests_in_lot            
+                test_data = eval(test_obj)
+              
+                test_obj = UserTest.objects.filter(id__in=test_data)
+
+                result = ast.literal_eval(new)
+                
+                quantity_of_lot = 0
+                for i in range(len(result)):
+                    quantity_of_lot += 1
+        
+                print(auctionr_name, quantity_of_lot, lot_number)
+                context = {
+                    "auctionr_name": auctionr_name,
+                    "quantity_of_lot": quantity_of_lot,
+                    "lot_number": lot_number,
+                    "test_obj": test_obj
+                    }
+
+                subject = "Datos de identificación y de envío de las muestras:"
+                string = render_to_string('email_rts/email_auctioner.html', context)
+                plain_message = strip_tags(string)
+                to_email = auctionr_email
+                email_status = send_email(subject, plain_message, to_email)
                 send_data = {"msg":"Bid approved successfully","status":"1" }
-            
+
+                ################# end auctinoner email#############
+
+
+                ################ send mail to bider###############
+                bidder_email = UserBids.objects.get(fk_test_lot_id=lot_id, bid_status="Approved").fk_user_master.email
+               
+                print('auctioner', auctionr_email, 'bidder', bidder_email)
+
+
+                subject = "Confirmación adjudicación del lote"  + str(lot_number)  + "que consta de "  + str(quantity_of_lot) +  "pruebas"
+                
+                string = render_to_string('email_rts/email_bidder.html', context)
+                plain_message = strip_tags(string)
+                to_email = bidder_email
+                email_status = send_email(subject, plain_message, to_email)
+                send_data = {"msg": "Bid approved successfully", "status": "1"}
+
+
         else:
             send_data = {"msg":"Request is not post","status":"0" }
 
-    except:
+    else:
         send_data = {"msg":"Something went wrong","status":"0" ,"error":traceback.format_exc()}
     return JsonResponse(send_data)
 

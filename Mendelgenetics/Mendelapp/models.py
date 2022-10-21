@@ -94,7 +94,7 @@ class UserTest(models.Model):
     test_requested_type = models.CharField(null=True, max_length=3000, blank=True)
     test_requested = models.CharField(null=True, max_length=3000, blank=True)
     background_data = models.CharField(null=True, max_length=3000, blank=True)
-    status = models.CharField(null=True, max_length=15, default ="Pending") #Pending Active Confirm Cancelled
+    status = models.CharField(null=True, max_length=15, default ="Pending") # Pending Active Confirm Cancelled
     external_reference = models.TextField(blank=True, null=True)
 
     rejected_reason = models.CharField(null=True, max_length=300)
