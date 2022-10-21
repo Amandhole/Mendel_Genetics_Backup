@@ -220,6 +220,7 @@ function upload_result()
                     })
                 }
                 else if (response['status'] == "0"){
+                    $("#overlayer_transparent").hide()
                     swal({
                         icon:"error",
                         text:"Something wennt wrong",

@@ -1450,6 +1450,7 @@ def get_all_test_of_lot_from_active_tab(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def upload_result_by_bidder(request):
+
     try:
         if request.method == "POST":
             for key, file in request.FILES.items():
@@ -1467,12 +1468,14 @@ def upload_result_by_bidder(request):
                     obj2_doc.save()
 
             test_lot_id = request.POST.get('test_lot_id')
+
+
+    
             
             comment = request.POST.get('comment')
 
       
-            TestLots.objects.filter(id=test_lot_id).update(
-                upload_date_time=datetime.now(), result_upload_status="Upload", comment=comment)
+            TestLots.objects.filter(id=test_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload", comment=comment)
 
             bid_obj = UserBids.objects.get(fk_test_lot_id=test_lot_id, bid_status="Approved")
 
@@ -1480,7 +1483,37 @@ def upload_result_by_bidder(request):
 
             bid_obj.save()
 
-          
+
+
+            auctionr_name = TestLots.objects.get(id=test_lot_id).fk_user_master.name
+            auctionr_email = TestLots.objects.get(id=test_lot_id).fk_user_master.email
+            lot_number = TestLots.objects.get(id=test_lot_id).test_lot_id
+            test_count = TestLots.objects.get(id=test_lot_id)    
+            
+            
+            ####### auctioner send mail#########
+    
+            test_obj = TestLots.objects.get(id=test_lot_id).tests_in_lot            
+            test_data = eval(test_obj)
+            test_obj = UserTest.objects.filter(id__in=test_data)
+
+            print('kkkkkkkkkkkkkkkkkkkuuuuuuuuuuuuuuuuukkkkkkkkkkkuuuuuuuu', test_obj)
+        
+            context = {
+                "test_obj": test_obj,
+                "auctionr_name":auctionr_name
+                }
+
+
+            subject = "Resultado del test " + str(lot_number) + "listos."
+            string = render_to_string('email_rts/result_upload.html', context)
+            plain_message = strip_tags(string)
+            to_email = auctionr_email
+            email_status = send_email(subject, plain_message, to_email)
+
+            send_data = {"msg":"Bid approved successfully","status":"1" }
+
+
 
             send_data = {"msg":"Request is not post","status":"1"} 
         else:
