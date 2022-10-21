@@ -28,23 +28,29 @@ from django.core.mail import send_mail
 # from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.db.models import Avg
-from Mendelgenetics.settings import EMAIL_HOST_USER, EMAIL_PORT, EMAIL_HOST_PASSWORD, EMAIL_HOST
-# Create your views here.
-# send message to number extends
+from django.utils.html import strip_tags
 
 
-#send mail 
-# send_mail(
-#     'testing email',
-#      'Hello this is just testing email',
-#      EMAIL_HOST_USER, ['dholeaman19@gmail.com'],
-#      fail_silently=False
-#     )
+from pipes import Template
+from django.core.mail import EmailMultiAlternatives
 
 
 
 
-# message = f'Menopause {type} \n\n{que_ans}'msg_body = f'Customer Email ID : {email} \n\nDear Admin, \n{message}'
+def send_email(subject, string, to_email):
+    try:
+        from_email = settings.EMAIL_HOST_USER
+        email_msg = EmailMultiAlternatives(subject, string ,from_email = from_email, to=[to_email])
+        email_msg.mixed_subtype = 'related'
+        email_msg.attach_alternative(string, "user_rts/email_rts.html")
+        email_msg.send()
+        return "success"
+    except Exception as e:
+        print(str(traceback.format_exc()))
+        return "error"
+
+
+
 
 
 def send_sms_web(mobile_no, message_body):
@@ -536,40 +542,37 @@ def add_test_by_user(request):
             # patient_test = data['patient_test']
             weight_unit = data['weight_unit']
             height_unit = data['height_unit']
+            external_reference = data['external_reference']
+            
             format_data = '%d-%m-%Y'
-            print(test_req_id, test_requested)
+         
             converted_date = datetime.strptime(datepicker, format_data)
             # strfdate = converted_date.strftime("%Y-%m-%d %H:%M:%S")
                
             user_id_len = len(user_id)
-                # f"{user.id:03d}{test.id:07d}" 
             test_count = UserTest.objects.count()
             if UserMaster.objects.filter(id=user_id).exists():
-                user_data = UserMaster.objects.get(id=user_id)
                 user_obj = UserMaster.objects.get(id=user_id)
-                test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,
-                                    patient_age = patient_age, patient_race = patient_race, 
-                                    patient_gender = gender, patient_weight = patient_weight,
-                                    patient_height=patient_height, doctor_name=dr_name, date = converted_date,
-                                    Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,
-                                    background_data=background_data,  weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=datetime.now(),
-                                    )
-             
+                test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,patient_age = patient_age, patient_race = patient_race, patient_gender = gender, patient_weight = patient_weight,patient_height=patient_height, doctor_name=dr_name, date = converted_date,Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,background_data=background_data,  weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=datetime.now(),external_reference=external_reference)
+                test_obj.save()
+                test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
                 test_obj.save()
 
-                test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
-              
-                test_obj.save()
-                
+            ############## send email ################
+
+                context={
+                    "user_obj":user_obj,
+                    "test_obj": test_obj,
+                    "auction_test_id": f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
+                    }
 
                 subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
-                message = " Estimado" + user_data.name + "Su prueba ha sido cargada en nuestro sistema. Este es el link de identificación de la muestra"  + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + " En breve nos pondremos en contacto con usted para que envíe la muestra a un laboratorio de referencia. Si desea modificar su prueba pinche aquí" 
+                string = render_to_string('email_rts/post_test.html', context)
+                plain_message = strip_tags(string)
+                to_email = user_obj.email
+                email_status = send_email(subject, plain_message, to_email)
 
 
-
-                send_mail(subject, message, EMAIL_HOST_USER, [user_data.email], fail_silently=False)
-
-                
                 send_data = {'status': "1", 'msg': "Test Added Succesfully", "test_id": test_obj.auction_test_id}
             else:
                 send_data = {'status': "0", "msg": "User Not found"}
@@ -589,7 +592,7 @@ def add_test_by_user(request):
         return redirect('landing_page')
 
     return JsonResponse(send_data)
-
+    
 import ast
 # get test list of perticular user
 
@@ -1132,7 +1135,7 @@ def Approve_users_bid_on_test(request):
                 test_obj = TestLots.objects.get(id=lot_id)
                 print(test_obj.id)
                 test_obj.lot_status = "Approved"
-                print('apppppppppppppppppppppprvvvvvvvvvvvdddddddddddd')
+              
                 test_obj.save()
 
                 bid_obj = UserBids.objects.get(id = bid_id)
@@ -1237,7 +1240,7 @@ def show_sample_test_data(request):
             data = json.loads(request.body.decode('utf-8'))
             test_req_id = data['test_req_id']
             sample_test_obj = SampleTestMaster.objects.filter(id = test_req_id)
-            print('helllllllllll',sample_test_obj)
+            
             for i in sample_test_obj:
 
                 print(i)

@@ -26,7 +26,7 @@
 
 
                             <div class="col-md-4" style="padding-top: 10px;padding-left: 60px;">
-                                <span style="font-weight: 600;margin-left: -14px;">Recived Bid</span>
+                                <span style="font-weight: 600;margin-left: -14px;">Received Bid</span>
                             </div>
 
                             {% comment %} <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;padding-left: 55px;">
@@ -109,10 +109,17 @@
                                 <span style="font-weight: 600;margin-left: -14px;">Average Bid Price</span>
                             </div>
 
+                            {% if test.average.bid_Price__avg  %}
+
+                                <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;padding-left: 0px;">
+                                    <h6 style="font-size: 17px; font-weight:400; margin-left: -15px;">€ {{test.average.bid_Price__avg|floatformat:2}}</h6>
+                                </div>
                             
-                           <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;padding-left: 0px;">
-                                <h6 style="font-size: 17px; font-weight:400; margin-left: -15px;">€ {{test.average.bid_Price__avg|floatformat:2}}</h6>
-                            </div>
+                            {% else %} 
+                                <div class="col-md-2" style="margin-top: 18px; margin-bottom: 5px;padding-left: 0px;">
+                                    <h6 style="font-size: 17px; font-weight:400; margin-left: -15px;">€ 0</h6>
+                                </div>
+                            {% endif %}
 
 
                         </div> 

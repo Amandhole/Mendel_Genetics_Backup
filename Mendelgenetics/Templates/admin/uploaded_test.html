@@ -306,12 +306,10 @@
                                         {% comment %} <td><input claas="checkbox"  type="checkbox" name="" id="select_all" style="width: 30px;margin-left: 8px;"><p style="font-weight: 600;"></p></td> {% endcomment %}
                                           <th>Sr No</th>
                                           <th>Lot Id</th>
-                                          <th>Auction Date</th>
+                                          <th> Date</th>
                                           <th>Auctioner</th>
                                           <th>Bidder</th>
                                           <th>Result date</th>
-                                          {% comment %} <th>Doc 1</th>
-                                          <th>Doc 2</th> {% endcomment %}
                                           <th>Action</th>
                                         </tr>
                                       </thead>
@@ -345,11 +343,13 @@
                                                 <td>----</td>
                                             {% endif %}   
 
-                                            {% if test.bidder_name %}
-                                                <td>{{ test.bidder_name }}</td>
-                                            {% else %}
-                                                <td>----</td>
-                                            {% endif %}       
+                                            {% for i in  test.bidder_name %}
+                                                {% if test.bidder_name %}
+                                                  <td>{{ i.fk_user_master.name }}</td>
+                                                {% else %}
+                                                  <td>----</td>
+                                                {% endif %}   
+                                            {% endfor %}    
 
                                             {% if test.upload_date_time %}
                                                 <td>{{test.upload_date_time}}</td>
@@ -379,7 +379,7 @@
 
 
 
-                                                {% if test.result_upload_status == "Upload" %}
+                                                {% comment %} {% if test.result_upload_status == "Upload" %} {% endcomment %}
                                                     <button type="submit" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.id}}')"    style="background-color: #3CB371;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">Download
                                                       <i class="fa fa-download"></i> 
                                                     </button>
@@ -388,12 +388,12 @@
                                                         bids  <i class="flaticon-auction"></i>
                                                     </button>
                                                     <span style="background-color:#ee4730;position: absolute; margin-left: -11px; margin-top: -7px;border-radius:50px; height: 15px; width: 15px;    color: white; font-size: 8px;text-align: center; line-height: 2;font-weight: 800;">{{test.bid_count}}</span>
-                                                {% else %}
+                                                {% comment %} {% else %} {% endcomment %}
 
-                                                  <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
+                                                  {% comment %} <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
                                                        Result Uploaded
-                                                  </span>
-                                                {% endif %}     
+                                                  </span> {% endcomment %}
+                                                {% comment %} {% endif %}      {% endcomment %}
                                             </td> 
                                           </tr>
                                         {% endfor %}

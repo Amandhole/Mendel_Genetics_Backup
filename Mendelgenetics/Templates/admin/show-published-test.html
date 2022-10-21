@@ -302,7 +302,7 @@
                                         {% comment %} <td><input claas="checkbox"  type="checkbox" name="" id="select_all" style="width: 30px;margin-left: 8px;"><p style="font-weight: 600;"></p></td> {% endcomment %}
                                           <th>Sr No</th>
                                           <th>Lot Id</th>
-                                          <th>Date</th>
+                                          <th> Date</th>
                                           <th>Name</th>
                                           <th>Group</th>
                                           <th>Quantity</th>
@@ -326,7 +326,7 @@
 
                                            {%if i.created_date_time%}
                                             
-                                              <td>{{i.created_date_time|date:'m-d-Y'}}</td>
+                                              <td>{{i.created_date_time|date:'m-d-Y , h:m,a'}}</td>
                                             {%else%}
                                               <td>----</td>
                                             {% endif %}    

@@ -329,6 +329,15 @@
 
                         </div>
 
+                        <div class="row">
+                          
+                           <div class="form-group  col-md-12">
+                              <textarea name="" id="external_reference" cols="1" placeholder="External Reference(Optional)" rows="5" style="height: auto;padding-left: 11px;"></textarea>
+                              <span id="backgrounddata_error" style="color: red;margin-left: 15PX;"></span>
+                            </div>
+
+                        </div>
+
 
                         
                         <div style="margin-top: 25px;">
@@ -849,7 +858,8 @@
              var test_req_disc = test_req_disc2
             }
 
-
+            var external_reference = $("#external_reference").val()
+            
             var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
 
@@ -957,7 +967,8 @@
                     "background_data":background_data,
                     //"patient_test":test,
                     "weight_unit":weight_unit,
-                    "height_unit":height_unit
+                    "height_unit":height_unit,
+                    "external_reference":external_reference
                 }),
                 success : function (response){
                   if (response['status'] == '1'){
