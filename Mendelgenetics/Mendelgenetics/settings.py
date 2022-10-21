@@ -156,15 +156,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # email integration using proton
 
-# EMAIL_HOST = 'smtp.protonmail.com'
-# EMAIL_PORT = 1234
-# EMAIL_HOST_USER = 'mendel_project@proton.me'
-# EMAIL_HOST_PASSWORD = 'l$D]Z$%olxGiP(2"aas3FcCaAf3qd,'
+
+
+
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'techquadradeveloper@gmail.com'
+# EMAIL_HOST_PASSWORD = 'sxglyooewoxnrtck'
 # EMAIL_USE_TLS = True
+
+
+# app code: rkjnolbfvmwswtkh
+# email: mailto: admin@mendelbook.eu
+# pwd: \`& Fca@y\NnoasdfZBVF~rAp
+
+# Use this gmail account to send email
+
 
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'techquadradeveloper@gmail.com'
-EMAIL_HOST_PASSWORD = 'sxglyooewoxnrtck'
+EMAIL_HOST_USER = 'admin@mendelbook.eu'
+EMAIL_HOST_PASSWORD = 'rkjnolbfvmwswtkh'
 EMAIL_USE_TLS = True
