@@ -1125,7 +1125,7 @@ def view_all_bids_on_my_test(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Approve_users_bid_on_test(request):
-    if 1 == 1:
+    try:
         if request.method =="POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
@@ -1200,7 +1200,7 @@ def Approve_users_bid_on_test(request):
         else:
             send_data = {"msg":"Request is not post","status":"0" }
 
-    else:
+    except:
         send_data = {"msg":"Something went wrong","status":"0" ,"error":traceback.format_exc()}
     return JsonResponse(send_data)
 
@@ -1468,9 +1468,6 @@ def upload_result_by_bidder(request):
 
             test_lot_id = request.POST.get('test_lot_id')
 
-
-    
-            
             comment = request.POST.get('comment')
 
       
