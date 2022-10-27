@@ -183,15 +183,14 @@ def send_otp_for_signup_verification(request):
         if UserMaster.objects.filter(email=email).exists():
             send_data = {'status': "2", 'msg': "Email Already Exists"}
         else:
-            # email_otp = '123456'
-            email_otp = str(random.randint(100000, 999999))
+            email_otp = '123456'
+            # email_otp = str(random.randint(100000, 999999))
             send_data = {'status': "1",'msg': "OTP Sent Successfully", 'Email_OTP': email_otp}
 
             message = email_otp+" is your otp for verification."
             subject="OTP Is" 
 
-            send_mail(subject, message, EMAIL_HOST_USER,[email], fail_silently=False)
-
+            # email_status = send_email(subject, plain_message, to_email)
     except:
         print(str(traceback.format_exc()))
         send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
