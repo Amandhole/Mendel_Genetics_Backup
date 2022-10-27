@@ -552,7 +552,9 @@ def add_test_by_user(request):
             test_count = UserTest.objects.count()
             if UserMaster.objects.filter(id=user_id).exists():
                 user_obj = UserMaster.objects.get(id=user_id)
-                test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,patient_age = patient_age, patient_race = patient_race, patient_gender = gender, patient_weight = patient_weight,patient_height=patient_height, doctor_name=dr_name, date = converted_date,Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,background_data=background_data,  weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=datetime.now(),external_reference=external_reference)
+                now = datetime.now()
+                print('ttttttttttttttttttttttttttttttttt',now)
+                test_obj = UserTest(fk_sample_master_id = test_req_id, fk_user_id = user_id,  patient_first_name=first_name, patient_last_name=last_name,patient_age = patient_age, patient_race = patient_race, patient_gender = gender, patient_weight = patient_weight,patient_height=patient_height, doctor_name=dr_name, date = converted_date,Centre = center ,Email = Email , other_way = other_way, test_requested = test_requested,background_data=background_data,  weight_unit=weight_unit, height_unit=height_unit, Contact_person_name=Contact_person_name, test_requested_type=test_requested_type, status="Pending", created_date_time=now,external_reference=external_reference)
                 test_obj.save()
                 test_obj.auction_test_id = f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
                 test_obj.save()
@@ -1027,7 +1029,7 @@ def User_bids_on_other_users_test(request):
             converted_date = datetime.strptime(expect_result_date, "%d-%m-%Y")
             print(user_id, lot_id, bidprice, expect_result_date, checkbox)
 
-            user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id, bid_Price=bidprice,expect_result_date=converted_date, checkbox=checkbox, bid_status="Pending")
+            user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id, bid_Price=bidprice,expect_result_date=datetime.now(), checkbox=checkbox, bid_status="Pending")
 
             user_bid.save()
 

@@ -87,7 +87,7 @@ class UserTest(models.Model):
     height_unit = models.CharField(null=True, max_length=20, blank=True)
     doctor_name = models.CharField(max_length=100, null=True)
     Contact_person_name = models.CharField(max_length=100, null=True)
-    date = models.DateField(null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
     Centre = models.CharField(null=True, max_length=500, blank=True)
     Email = models.CharField(null=True, max_length=100, blank=True)
     other_way = models.CharField(null=True, max_length=500, blank=True)
@@ -121,13 +121,13 @@ class TestLots(models.Model):
     test_gen = models.TextField(null=True, max_length=2000, default="")# Publish Approved and AdminApproved   #after upload result status will be Approved # after approve by admin result will show to auctioner
     test_quantity = models.IntegerField(blank=True, null=True)
     lot_status = models.CharField(null=True, max_length=15, default="Published")
-    created_date_time = models.DateTimeField(auto_now =True)
+    created_date_time = models.DateTimeField(null=True, blank=True)
 
     comment = models.TextField(blank=True, null=True)
     admin_doc_first = models.FileField(upload_to='Admindoc1/', null=True, blank=True)
     admin_doc_second = models.FileField(upload_to='Admindoc2/', null=True, blank=True)
     
-    upload_date_time = models.DateTimeField(auto_now=True)    # Pending , Upload , 
+    upload_date_time = models.DateTimeField(blank=True, null=True)    # Pending , Upload ,
     result_upload_status = models.CharField(null=True, max_length=15, default="Pending")
 
 
@@ -141,7 +141,7 @@ class UserBids(models.Model):
     fk_user_test = models.ForeignKey(UserTest, on_delete=models.CASCADE, null=True, blank=True)
     fk_test_lot = models.ForeignKey(TestLots, on_delete=models.CASCADE, null=True, blank=True)
     bid_Price = models.FloatField(blank=True, default='')
-    expect_result_date = models.DateField(null=True, blank=True)
+    expect_result_date = models.DateTimeField(null=True, blank=True)
     checkbox = models.CharField(max_length=50, null=True)   
     # Pending, Approved , Cancelled , Result_Upload_By_Bidder,Result_Upload_By_Admin
     bid_status = models.CharField(null=True, max_length=15, default="")
