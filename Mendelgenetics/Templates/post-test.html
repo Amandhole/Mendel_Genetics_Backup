@@ -9,6 +9,7 @@
 
 
 <style type="text/css">
+  .blue { background-color: blue }
     #menu {
   /*background: #343434;*/
   color: #eee;
@@ -374,6 +375,7 @@
                           </div>
 
                           <div class="col-md-6 notranslate" id="select_pathlogy_id">
+                          
                             <select  id="select_sample_path" class="notranslate" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
                               <option value="">Select Pathalogy</option>
                               {% for i in sampletest %}
@@ -1102,10 +1104,17 @@
     }) 
   } 
 
-  $("#select_sample_path").select2();
-  $("#select_sample_gens").select2();  
+  $select_path = $("#select_sample_path").select2({
+    // containerCssClass: "notranslate",
+    // dropdownCssClass: "notranslate",
+  });
+  $select_gens = $("#select_sample_gens").select2({});  
+  $select_path.data('select2').$dropdown.addClass('notranslate');
+  $select_gens.data('select2').$dropdown.addClass('notranslate');
 
+  
   $(".select2-selection").css("padding","10px 0px 35px 20px");
+
 
   
  
