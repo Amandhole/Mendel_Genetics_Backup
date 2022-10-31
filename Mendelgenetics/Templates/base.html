@@ -576,7 +576,7 @@
                 <div class="header-wrapper">
                     <div class="logo">
                         <a href="{% url 'landing_page' %}">
-                            <img src="{% static 'assets/images/logo/logo.png' %}" alt="logo">
+                            <img src="{% static 'assets/images/logo/mendel_logo.png' %}" style="height: 60px;width: 60px;" alt="logo"> <img src="{% static 'assets/images/logo/edit_logo.png' %}" style="margin-top: -90px;margin-left: 70px;" alt="logo"> 
                         </a>
                     </div>
                     <ul class="menu ml-auto">
@@ -590,9 +590,9 @@
                         <li>
                             <a href="">Corporate Area</a>
                         </li>
-                        <li>
+                        {% comment %} <li>
                             <a href="">Individual Area</a>
-                        </li>
+                        </li> {% endcomment %}
                      <!--    <li>
                             <a href="#0">Pages</a>
                             <ul class="submenu">
@@ -660,10 +660,12 @@
                         </li> -->
                         
                     </ul>
-                    <form class="search-form">
+
+                    {% comment %} <form class="search-form">
                         <input type="text" placeholder="Search for brand, model....">
                         <button type="submit"><i class="fas fa-search"></i></button>
-                    </form>
+                    </form> {% endcomment %}
+                    
                     <div class="search-bar d-md-none">
                         <a href="#0"><i class="fas fa-search"></i></a>
                     </div>
@@ -694,14 +696,19 @@
       <ul class='menus'>
         
         <li><a href='#' title='Dropdown 2'>About Mendel Genetics</a></li>
+        <li><a href='#' title='Dropdown 2'>Motor de subastas diseñado para integrar el ciclo de pruebas genéticas.</a></li>
         <li><a href='#' title='Dropdown 3'>Mission, Vision and Values</a></li>
         <li><a href='#' title='Dropdown 3'>Management Team</a></li>
+        <li><a href='#' title='Dropdown 3'>Carlos Villamor Castineira biólogo especialista en Genética, profesor y emprendedor Pedro de los Palotes, economista, contable y emprendedor.</a></li>
         <li><a href='#' title='Dropdown 3'>Institutional Relationships</a></li>
+        <li><a href='#' title='Dropdown 3'>Tenemos acuerdos con los mayores hospitales y laboratorios de referencia española.</a></li>
         <li><a href='#' title='Dropdown 3'>Quality</a></li>
+        <li><a href='#' title='Dropdown 3'>Contamos con todas las certificaciones.</a></li>
       </ul>
     </li>
 
-                        <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
+        
+    <li><a class='prett' href='#' title='Menu'>Diagnostic fields</a>
       <ul class='menus'>
         
         <li><a href='#' title='Dropdown 2'>Genome Sequencing</a></li>
@@ -713,12 +720,31 @@
     </li>
 
                 
-                    <li><a href="" style="color: #fff;">Precision Medicine</a></li>
-                    <li><a href="" style="color: #fff;">Genetic Counselling</a></li>
-                    <li><a href="" style="color: #fff;">Ordering a test</a></li>
-                    <li><a href="" style="color: #fff;">News and Events</a></li>
-                    <li><a href="" style="color: #fff;">Contact</a></li>
+                <li><a href="" style="color: #fff;">Precision Medicine</a>
+
+                 <ul class='menus'>
+        
+                    <li><a href='#' title='Dropdown 2'> La medicina de precisión es "un enfoque emergente para el tratamiento y la prevención de enfermedades que tiene en cuenta la variabilidad individual en los genes, el entorno y el estilo de vida de cada persona". Este enfoque permitirá a los médicos e investigadores predecir con mayor precisión qué estrategias de tratamiento y prevención para una enfermedad en particular funcionarán en qué grupos de personas. Es en contraste con un enfoque único para todos, en el que las estrategias de tratamiento y prevención de enfermedades se desarrollan para la persona promedio, con menos consideración por las diferencias entre individuos.
+                                Aunque el término "medicina de precisión" es relativamente nuevo, el concepto ha sido parte de la atención médica durante muchos años. Por ejemplo, una persona que necesita una transfusión de sangre no recibe sangre de un donante seleccionado al azar; en cambio, el tipo de sangre del donante se compara con el del receptor para reducir el riesgo de complicaciones. Aunque se pueden encontrar ejemplos en varias áreas de la medicina, el papel de la medicina de precisión en el día a día de la atención médica es relativamente limitado. Los investigadores esperan que este enfoque se amplíe a muchas áreas de la salud y el cuidado de la salud en los próximos años.                        
+                    </a></li>
+                    
                 </ul>
+                </li>
+
+                <li><a href="" style="color: #fff;">Genetic Counselling</a>
+                     <ul class='menus'>
+        
+                    <li><a href='#' title='Dropdown 2'> El asesoramiento genético le brinda información sobre cómo las condiciones genéticas podrían afectarle a usted o a su familia. El asesor genético u otro profesional de la salud recopilará su historial de salud personal y familiar. Pueden usar esta información para determinar la probabilidad de que usted o un miembro de su familia tenga una condición genética. Con base en esta información, el asesor genético puede ayudar a decidir si una prueba genética podría ser adecuada para usted o su familiar.
+                                 
+                    </a></li>
+                    
+                </ul>
+                
+                </li>
+                <li><a href="" style="color: #fff;">Ordering a test</a></li>
+                <li><a href="" style="color: #fff;">News and Events</a></li>
+                <li><a href="" style="color: #fff;">Contact</a></li>
+            </ul>
                 
                 
                 
@@ -896,14 +922,40 @@
                                 <li>
                                     <a href="#0">About Mendel Genetics</a>
                                 </li>
+
+                                <li>
+                                    <a href="#0">Motor de subastas diseñado para integrar el ciclo de pruebas genéticas.</a>
+                                </li>
+                                
+
                                 <li>
                                     <a href="#0">Mission, Vision and Values</a>
                                 </li>
+                                
                                 <li>
                                     <a href="#0">Management Team</a>
                                 </li>
+
+                                <li>
+                                    <a href="#0">Carlos Villamor Castineira biólogo especialista en Genética, profesor y emprendedor Pedro de los Palotes, economista, contable y emprendedor.</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#0">Institutional Relationships</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#0">Tenemos acuerdos con los mayores hospitales y laboratorios de referencia española.</a>
+                                </li>
+                                
+
                                 <li>
                                     <a href="#0">Quality</a>
+                                </li>
+
+
+                                  <li>
+                                    <a href="#0">Contamos con todas las certificaciones.</a>
                                 </li>
                             
                             </ul>
