@@ -140,7 +140,7 @@ class UserBids(models.Model):
     fk_user_master = models.ForeignKey(UserMaster, on_delete=models.CASCADE, null=True, blank=True)
     fk_user_test = models.ForeignKey(UserTest, on_delete=models.CASCADE, null=True, blank=True)
     fk_test_lot = models.ForeignKey(TestLots, on_delete=models.CASCADE, null=True, blank=True)
-    bid_Price = models.FloatField(blank=True, default='')
+    bid_Price = models.FloatField(blank=True, default=0.0)
     expect_result_date = models.DateTimeField(null=True, blank=True)
     checkbox = models.CharField(max_length=50, null=True)   
     # Pending, Approved , Cancelled , Result_Upload_By_Bidder,Result_Upload_By_Admin
