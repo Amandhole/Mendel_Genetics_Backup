@@ -602,8 +602,7 @@ def add_test_by_user(request):
                 # email_status = send_email(subject, plain_message, to_email)
                 # print('email sent ..... ', email_status, '.....')
 
-                send_data = {'status': "1", 'msg': "Test Added Succesfully",
-                             "test_id": test_obj.auction_test_id}
+                send_data = {'status': "1" ,  'msg': "Test Added Succesfully" , "test_id": test_obj.auction_test_id} 
             else:
                 send_data = {'status': "0", "msg": "User Not found"}
         else:
