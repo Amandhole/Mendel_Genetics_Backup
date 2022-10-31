@@ -6,6 +6,8 @@ import json, random
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render,redirect
 import traceback
+
+from requests import delete
 from .models import *
 from django.db.models import Q
 from datetime import datetime
@@ -319,6 +321,30 @@ def test_reject_by_admin(request):
         print(traceback.format_exc())
         send_data = {"msg":"something went wrong", "status":"0","error":traceback.format_exc()}
     return JsonResponse(send_data)
+
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def test_delete_by_admin(request):
+    session_id = request.session.get('admin_user_id')
+    try:
+       
+        session_id = request.session.get('user_id')
+        if request.method == "POST":
+            data = json.loads(request.body.decode('utf-8'))
+            user_id = data['user_id']
+            test_id = data['test_id']
+
+            rejected_test_obj = UserTest.objects.filter(Q(id__in=test_id) & Q(fk_user__id__in=user_id)).delete()
+
+            send_data = {"msg": "this test are rejected","status": "1"}
+        else:
+            send_data = {"msg": "Request is not post", "status": "0"}
+    except:
+        print(traceback.format_exc())
+        send_data = {"msg": "something went wrong","status": "0", "error": traceback.format_exc()}
+    return JsonResponse(send_data)
+
 
 
 @csrf_exempt

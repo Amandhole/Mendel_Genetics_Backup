@@ -270,6 +270,10 @@
 
                                 <div class="row float-right" style="padding-bottom: 20px;">
                                     <div class="col-auto" style="padding-right: 0px;">
+                                      <button class="btn-primary action-btn" style="background-color: #FF0000;" onclick="test_deleted_by_admin()">Delete <i class="fas fa-trash"></i></button>
+                                    </div>
+                                  
+                                    <div class="col-auto" style="padding-right: 0px;">
                                       <button class="btn-primary action-btn" style="background-color: #3CB371;" onclick="approve_test_by_admin()">Approve <i class="fas fa-thumbs-up"></i></button>
                                     </div>
 
@@ -346,7 +350,7 @@
                                               <td>----</td>
                                             {% endif %}    
  
-                                            <td> {% if i.fk_sample_master %} {{i.fk_sample_master.pathalogy}} {% else %} ----- {% endif %} </td>
+                                            <td class="notranslate"> {% if i.fk_sample_master %} {{i.fk_sample_master.pathalogy}} {% else %} ----- {% endif %} </td>
 
                                             {%if i.fk_sample_master.group%}
                                               <td>{{i.fk_sample_master.group}}</td>
@@ -663,6 +667,89 @@
 
     function view_detail_of_test_by_admin(){
       consol.log('hello')
+    }
+
+
+
+    
+    function test_deleted_by_admin()
+   {  
+    
+      var test_id=[]
+      var user_id = []
+
+        $("input:checkbox[name='checkbox_test']:checked").each(function(){
+              var value = $(this).prop("value");
+               
+              
+              if ( value== "yes"){
+                  console.log('');
+              }
+              else{
+                  test_id.push($(this).val());
+                  user_id.push($(this).data("id")); 
+              }
+          });
+ 
+
+      
+        if($('.checkbox:checked').length > 0)
+          {
+       
+            swal({
+                icon:"warning",
+                text:"Are you sure to delete test?",
+                buttons: ["No", "Yes"],
+                dangerMode:true,
+                closeOnClickOutside:false                    
+              }).then((willUpdate) => {
+                if(willUpdate)
+                {
+                  $.ajax({
+                  method:"Post",
+                  url:"{% url 'test_delete_by_admin' %}",
+                  contentType:"application/json",
+                  data:JSON.stringify({
+                    "test_id":test_id,
+                    "user_id":user_id
+                      }),
+                      success: function(response)
+                        {
+                          if (response['status'] == '1')
+                          {
+                   
+                              swal({
+                                  icon:"success",
+                                  text:"Test Delete Succesfully",
+                                  button: "OK", 
+                                  closeOnClickOutside:false                    
+                              }).then((success)=>{
+                                if(success){
+                                location.reload() 
+                                }
+                            });
+                          }
+                          else if (response['status'] == '0')
+                            {
+                            swal({
+                              icon:"error",
+                              text:"Something Went Wrong",
+                              closeOnClickOutside:false                    
+                              })
+                            }
+                        }
+                  })
+              }
+         })
+        }
+        else{
+              swal({
+              icon:"error",
+              text:"Please select test",
+              closeOnClickOutside:false                    
+        })
+        }
+
     }
 </script>
 
