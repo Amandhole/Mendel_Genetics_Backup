@@ -779,8 +779,7 @@ def posted_pending_test_delete_by_user(request):
             if UserTest.objects.filter(id=test_id).exists():
                 test_obj = UserTest.objects.get(id=test_id)
                 test_obj.delete()
-                pending_test = UserTest.objects.filter(
-                    fk_user_id=session_id, status="Pending").order_by('-id')
+                pending_test = UserTest.objects.filter(fk_user_id=session_id, status="Pending").order_by('-id')
                 context = {
                     "pending_test": pending_test
                 }
