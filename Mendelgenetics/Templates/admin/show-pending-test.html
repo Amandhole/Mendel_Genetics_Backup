@@ -523,13 +523,14 @@
    {
       var test_id=[]
       var lot_for_user = []
-      $("input:checkbox[name='checkbox_test']:checked").each(function(){
+      $("input:checkbox[name='checkbox_test']:checked").each(function()
+      {
           var user_id = $(this).attr("data-id"); 
           var group_id = $(this).attr("data-group_id"); 
 
           if (lot_for_user.find( lot_for_user => lot_for_user['user_id'] === user_id && lot_for_user['group_id'] === group_id))
           {
-            var array_obj = lot_for_user.find( lot_for_user => lot_for_user['user_id'] === user_id);
+            var array_obj = lot_for_user.find( lot_for_user => lot_for_user['user_id'] === user_id && lot_for_user['group_id'] === group_id);
             array_obj.lot_tests.push($(this).val());
           }
           else
@@ -537,7 +538,7 @@
             lot_for_user.push({'user_id':user_id, 'lot_tests':[$(this).val()], 'group_id':group_id})
           }
                       
-        });
+      });
 
         console.log(lot_for_user);
         //console.log('user_id',user_id)

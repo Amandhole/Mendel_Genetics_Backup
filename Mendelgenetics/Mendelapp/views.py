@@ -630,8 +630,7 @@ def get_brief_path_list(test_list):
     temp_list = []
     for path in ast.literal_eval(test_list):
         if not any(d['pathalogy'] == path for d in temp_list):
-            pathalogy_obj = SampleTestMaster.objects.filter(
-                pathalogy=path).last()
+            pathalogy_obj = SampleTestMaster.objects.filter(pathalogy=path).last()
             temp_list.append({
                 'pathalogy': path,
                 'gens': pathalogy_obj.gens,
