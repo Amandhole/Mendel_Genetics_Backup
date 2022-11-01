@@ -1027,14 +1027,14 @@ fieldnames = ['id', 'sortname', 'name', 'phonecode']
 
 def add_css_data_coutnry_state_city(request):
     print(settings.BASE_DIR)
-
+    SampleTestMaster.objects.all().delete()
     data = pd.read_excel(f'{settings.BASE_DIR}/sample.xlsx', engine='openpyxl')
 
     data = data.to_dict('records')
 
     for d in data:
-        pass
-        # SampleTestMaster.objects.create(group=d['Group'], plazo=d['Unnamed: 3'], pathalogy=d['Patology'], gens=d['Gens included'],sample_type=d['Sample type'], transport=d['transport conditions'])
+        # pass
+        SampleTestMaster.objects.create(group=d['Group'], plazo=d['Unnamed: 3'], pathalogy=d['Patology'], gens=d['Gens included'],sample_type=d['Sample type'], transport=d['transport conditions'])
     # with open(f'{settings.BASE_DIR}/sample_test_master.csv', 'r', encoding="utf8") as f:
         # csvreader = csv.reader(f)
         # header = next(csvreader)
@@ -1109,25 +1109,23 @@ def User_edit_bids_on_other_users_test(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_all_bids_on_my_test(request):
     try:
-        session_id = request.session.get('user_id')
-
+        session_id = request.session.get('admin_user_id')
         if session_id:
-
             if request.method == "POST":
                 data = json.loads(request.body.decode('utf-8'))
                 lot_id = data['test_id']
 
-                if UserMaster.objects.filter(id=session_id).exists():
-                    user_obj = UserMaster.objects.get(id=session_id)
+                if AdminUser.objects.filter(id=session_id).exists():
+                    user_obj = AdminUser.objects.get(id=session_id)
                     if TestLots.objects.filter(id=lot_id):
                         test_lot_obj = TestLots.objects.filter(id=lot_id)
 
                         for test in test_lot_obj:
-                            test.temp_string = joined_string = " , ".join(
+                            test.temp_string = " , ".join(
                                 ast.literal_eval(test.test_pathalogy))
 
                         for test in test_lot_obj:
-                            test.temp_gens = joined_string = " , ".join(
+                            test.temp_gens = " , ".join(
                                 ast.literal_eval(test.test_gen))
 
                         bid_obj = UserBids.objects.filter(
