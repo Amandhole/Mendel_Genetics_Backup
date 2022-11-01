@@ -1028,14 +1028,14 @@ fieldnames = ['id', 'sortname', 'name', 'phonecode']
 
 def add_css_data_coutnry_state_city(request):
     print(settings.BASE_DIR)
-
+    SampleTestMaster.objects.all().delete()
     data = pd.read_excel(f'{settings.BASE_DIR}/sample.xlsx', engine='openpyxl')
 
     data = data.to_dict('records')
 
     for d in data:
-        pass
-        # SampleTestMaster.objects.create(group=d['Group'], plazo=d['Unnamed: 3'], pathalogy=d['Patology'], gens=d['Gens included'],sample_type=d['Sample type'], transport=d['transport conditions'])
+        # pass
+        SampleTestMaster.objects.create(group=d['Group'], plazo=d['Unnamed: 3'], pathalogy=d['Patology'], gens=d['Gens included'],sample_type=d['Sample type'], transport=d['transport conditions'])
     # with open(f'{settings.BASE_DIR}/sample_test_master.csv', 'r', encoding="utf8") as f:
         # csvreader = csv.reader(f)
         # header = next(csvreader)
