@@ -594,13 +594,13 @@ def add_test_by_user(request):
                     "auction_test_id": f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
                 }
 
-                # print('sending email .....')
+                print('sending email .....')
                 subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
                 string = render_to_string('email_rts/post_test.html', context)
                 plain_message = strip_tags(string)
                 to_email = user_obj.email
                 email_status = send_email(subject, plain_message, to_email)
-                # print('email sent ..... ', email_status, '.....')
+                print('email sent ..... ', email_status, '.....')
 
                 send_data = {'status': "1" ,  'msg': "Test Added Succesfully" , "test_id": test_obj.auction_test_id} 
             else:
