@@ -670,24 +670,16 @@ def test_added_by_user_list(request):
                     fk_user_id=session_id, status="Cancelled").order_by('-id')                         # Cancelled
 
                 for test in test_active_obj:
-                    test.bid_count = UserBids.objects.filter(
-                        fk_test_lot__id=test.id).exclude(bid_status="Cancelled").count()
-                    test.view_path_brief_list = get_brief_path_list(
-                        test.test_pathalogy)
-                    test.average = UserBids.objects.filter(
-                        fk_test_lot__id=test.id).aggregate(Avg('bid_Price'))
+                    test.bid_count = UserBids.objects.filter(fk_test_lot__id=test.id).exclude(bid_status="Cancelled").count()
+                    test.view_path_brief_list = get_brief_path_list(test.test_pathalogy)
+                    test.average = UserBids.objects.filter(fk_test_lot__id=test.id).aggregate(Avg('bid_Price'))
 
                 for test in Completed_test_obj:
-                    test.temp_string = " , ".join(
-                        ast.literal_eval(test.fk_test_lot.test_pathalogy))
-                    test.temp_gens = " , ".join(
-                        ast.literal_eval(test.fk_test_lot.test_gen))
-                    test.view_path_brief_list = get_brief_path_list(
-                        test.fk_test_lot.test_pathalogy)
-                    test.bid_count = UserBids.objects.filter(
-                        fk_test_lot=test.fk_test_lot.id).count()
-                    test.average = UserBids.objects.filter(
-                        fk_test_lot__id=test.fk_test_lot.id).aggregate(Avg('bid_Price'))
+                    test.temp_string = " , ".join(ast.literal_eval(test.fk_test_lot.test_pathalogy))
+                    test.temp_gens = " , ".join(ast.literal_eval(test.fk_test_lot.test_gen))
+                    test.view_path_brief_list = get_brief_path_list(test.fk_test_lot.test_pathalogy)
+                    test.bid_count = UserBids.objects.filter(fk_test_lot=test.fk_test_lot.id).count()
+                    test.average = UserBids.objects.filter(fk_test_lot__id=test.fk_test_lot.id).aggregate(Avg('bid_Price'))
 
                 for test in Confirm_test_obj:
                     test.temp_string = " , ".join(
