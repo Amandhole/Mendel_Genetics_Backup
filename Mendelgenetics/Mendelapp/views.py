@@ -594,13 +594,13 @@ def add_test_by_user(request):
                     "auction_test_id": f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
                 }
 
-                # print('sending email .....')
-                # subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
-                # string = render_to_string('email_rts/post_test.html', context)
-                # plain_message = strip_tags(string)
-                # to_email = user_obj.email
-                # email_status = send_email(subject, plain_message, to_email)
-                # print('email sent ..... ', email_status, '.....')
+                print('sending email .....')
+                subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
+                string = render_to_string('email_rts/post_test.html', context)
+                plain_message = strip_tags(string)
+                to_email = user_obj.email
+                email_status = send_email(subject, plain_message, to_email)
+                print('email sent ..... ', email_status, '.....')
 
                 send_data = {'status': "1" ,  'msg': "Test Added Succesfully" , "test_id": test_obj.auction_test_id} 
             else:
@@ -630,8 +630,7 @@ def get_brief_path_list(test_list):
     temp_list = []
     for path in ast.literal_eval(test_list):
         if not any(d['pathalogy'] == path for d in temp_list):
-            pathalogy_obj = SampleTestMaster.objects.filter(
-                pathalogy=path).last()
+            pathalogy_obj = SampleTestMaster.objects.filter(pathalogy=path).last()
             temp_list.append({
                 'pathalogy': path,
                 'gens': pathalogy_obj.gens,
@@ -1204,12 +1203,12 @@ def Approve_users_bid_on_test(request):
                     "test_obj": test_obj
                 }
 
-                # subject = "Datos de identificación y de envío de las muestras:"
-                # string = render_to_string(
-                #     'email_rts/email_auctioner.html', context)
-                # plain_message = strip_tags(string)
-                # to_email = auctionr_email
-                # email_status = send_email(subject, plain_message, to_email)
+                subject = "Datos de identificación y de envío de las muestras:"
+                string = render_to_string(
+                    'email_rts/email_auctioner.html', context)
+                plain_message = strip_tags(string)
+                to_email = auctionr_email
+                email_status = send_email(subject, plain_message, to_email)
                 send_data = {"msg": "Bid approved successfully", "status": "1"}
 
                 ################# end auctinoner email#############
@@ -1220,15 +1219,15 @@ def Approve_users_bid_on_test(request):
 
                 print('auctioner', auctionr_email, 'bidder', bidder_email)
 
-                # subject = "Confirmación adjudicación del lote" + \
-                #     str(lot_number) + "que consta de " + \
-                #     str(quantity_of_lot) + "pruebas"
+                subject = "Confirmación adjudicación del lote" + \
+                    str(lot_number) + "que consta de " + \
+                    str(quantity_of_lot) + "pruebas"
 
-                # string = render_to_string(
-                #     'email_rts/email_bidder.html', context)
-                # plain_message = strip_tags(string)
-                # to_email = bidder_email
-                # email_status = send_email(subject, plain_message, to_email)
+                string = render_to_string(
+                    'email_rts/email_bidder.html', context)
+                plain_message = strip_tags(string)
+                to_email = bidder_email
+                email_status = send_email(subject, plain_message, to_email)
                 send_data = {"msg": "Bid approved successfully", "status": "1"}
 
         else:
@@ -1561,11 +1560,11 @@ def upload_result_by_bidder(request):
                 "auctionr_name": auctionr_name
             }
 
-            # subject = "Resultado del test " + str(lot_number) + "listos."
-            # string = render_to_string('email_rts/result_upload.html', context)
-            # plain_message = strip_tags(string)
-            # to_email = auctionr_email
-            # email_status = send_email(subject, plain_message, to_email)
+            subject = "Resultado del test " + str(lot_number) + "listos."
+            string = render_to_string('email_rts/result_upload.html', context)
+            plain_message = strip_tags(string)
+            to_email = auctionr_email
+            email_status = send_email(subject, plain_message, to_email)
 
             send_data = {"msg": "Bid approved successfully", "status": "1"}
 
