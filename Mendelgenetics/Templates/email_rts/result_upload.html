@@ -1,24 +1,16 @@
 {% load static %}
-
 <div>
 	<p>
-		Estimado {{auctionr_name}},
-		<br>	 
-		{% for test in test_obj %}
-		 	Los resultados de la prueba {{test.auction_test_id}} de {{test.test_requested}}  están listos para su descarga.
-		 {% endfor %}
-		 <br>
-		 Para cualquier duda no dude en llamarnos o utilizar la función de chat en directo,
+		Estimado {{auctionr_name}}, 
+			{% for test in test_obj %}
+		 		Los resultados de la prueba {{test.auction_test_id}} de {{test.test_requested}}  están listos para su descarga.
+			{% endfor %}
+				Para cualquier duda no dude en llamarnos o utilizar la función de chat en directo,
+
+		<p>Mendelbook,</p>
+		<p>Fonte dos Ranchos 20,
+		<br> Lugo 27004</p>
 	</p>
-	
-
-	<p>Mendelbook,</p>
-	<p>Fonte dos Ranchos 20,
-	<br> Lugo 27004</p>
-
-	<div style="width: 300px; border-top: 5px solid #20a7db;"></div>
-	<br>
-
 </div>
 
 

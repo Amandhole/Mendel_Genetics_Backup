@@ -1621,8 +1621,12 @@ def get_user_test_to_admin_for_download(request):
             result = ast.literal_eval(user_test_id)
             empt_list = [int(i) for i in result]  # list comprehenssion
             user_test_obj = UserTest.objects.filter(id__in=empt_list)
+
+            coment_on_lot = TestLots.objects.get(id=lot_id).comment
+            print('ffffffffffffffffffffffffffffff', coment_on_lot)
             context = {
-                "user_test_obj": user_test_obj
+                "user_test_obj": user_test_obj,
+                "coment_on_lot":coment_on_lot
             }
 
             print(user_test_obj)

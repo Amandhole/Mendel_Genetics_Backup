@@ -1,27 +1,17 @@
 {% load static %}
-
 <div>
 	<p>
 		Estimado,
-		<br>
 			En breve recibirá un lote con las muestras abajo indicadas. Tan pronto como estén los resultados, rogamos los cargue en la página pinchando en los links abajo adjuntos.
-		
-		{% for test in test_obj %}
-		 	{{test.auction_test_id}} de {{test.test_requested}} con referencia externa {{test.external_reference}}.
-		 {% endfor %}
-		 <br>
-		Para cualquier duda no dude en llamarnos o utilizar la función de chat en directo,
-
-	</p>
+			{% for test in test_obj %}
+		 		<b>{{test.auction_test_id}}</b> de <b>{{test.test_requested}}</b> con referencia externa <b>{{test.external_reference}}.</b>
+		 	{% endfor %}
+			Para cualquier duda no dude en llamarnos o utilizar la función de chat en directo,
 	
-
-	<p>Mendelbook,</p>
-	<p>Fonte dos Ranchos 20,
-	<br> Lugo 27004</p>
-
-	<div style="width: 300px; border-top: 5px solid #20a7db;"></div>
-	<br>
-
+		<p>Mendelbook,</p>
+		<p>Fonte dos Ranchos 20,
+		<br> Lugo 27004</p>
+	</p>
 </div>
 
 

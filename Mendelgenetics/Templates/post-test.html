@@ -808,7 +808,7 @@
           $("#contact_person_name_error").html("");
         });
 
-        $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' , changeMonth: true, changeYear: true, todayHighlight: true}).val();
+        $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' , changeMonth: true, changeYear: true, todayHighlight: true,minDate:'0d'}).val();
         $('#datepicker').attr('readonly', true);
 
         $('.ui-datepicker').addClass('notranslate');
