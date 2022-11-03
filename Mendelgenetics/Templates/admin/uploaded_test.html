@@ -261,7 +261,7 @@
                             <div class="dash-pro-item mb-30 dashboard-widget" style="width:1200px; max-height:1450px;">
                                 
                                 <div style="margin-top: 25px;">
-                                    <center> <h6>Result Uploaded Test</h6></center>
+                                    <center> <h6>Completed Test</h6></center>
                                     <hr>
                                 </div>
                                 {% comment %} div for pending test {% endcomment %}
@@ -281,10 +281,10 @@
                                        <select id="select_test" style="height: 40px;border-radius:5px;background-color: #683df5;color: white;" onchange="window.location.href=this.value;">
 
                                         
-                                        <option value="{% url 'uploaded_result_test' %}">Test Complete</option>
-                                        <option value="{% url 'published_test' %}">Published</option>  
-                                        <option value="{% url 'pending_test' %}">Pending</option>
-                                        {% comment %} <option value="{% url 'completed_test' %}">Test Completed</option> {% endcomment %}
+                                        <option value="{% url 'uploaded_result_test' %}">Completed Test</option>
+                                        <option value="{% url 'published_test' %}">Published Test</option>  
+                                        <option value="{% url 'pending_test' %}">Pending Test</option>
+                                        {% comment %} <option value="{% url 'completed_test' %}">Confirmed</option> {% endcomment %}
                                         
                                         
                                           
@@ -380,7 +380,7 @@
 
 
                                                 {% comment %} {% if test.result_upload_status == "Upload" %} {% endcomment %}
-                                                    <button type="submit" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.id}}')"    style="background-color: #3CB371;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">Download
+                                                    <button type="submit" data-toggle="modal" data-target="#upload_result_modal" onclick="append_lot_id('{{test.id}}')"    style="background-color: #3CB371;color: white;width: auto; border-radius: 5px;border: none;margin-left: 33px;height: 35px;">Download Result
                                                       <i class="fa fa-download"></i> 
                                                     </button>
 
@@ -481,7 +481,7 @@
                 <div class="login-form">
                 
                     <div>
-                        <h6 style="text-align: center;">Download Documents</h6><hr><br>
+                        <h6 style="text-align: center;">Uploaded Documents</h6><hr><br>
                     </div>
                 
 

@@ -51,22 +51,22 @@ def send_email(subject, string, to_email):
         return "error"
 
 
-def send_sms_web(mobile_no, message_body):
-    try:
-        account_sid = 'AC5866debd310e650176e0ebb6660a5069'
+# def send_sms_web(mobile_no, message_body):
+#     try:
+#         account_sid = 'AC5866debd310e650176e0ebb6660a5069'
 
-        auth_token = 'd9d2de0c67f3af8d26be476a7677f5b4'
-        client = Client(account_sid, auth_token)
+#         auth_token = 'd9d2de0c67f3af8d26be476a7677f5b4'
+#         client = Client(account_sid, auth_token)
 
-        message = client.messages.create(
-            from_='++12056513141',
-            body=message_body,
-            to=mobile_no)
-        print(message.sid)
-        print('sent sms on this number 9766281848')
-        return "success"
-    except Exception as e:
-        return "error"
+#         message = client.messages.create(
+#             from_='++12056513141',
+#             body=message_body,
+#             to=mobile_no)
+#         print(message.sid)
+#         print('sent sms on this number 9766281848')
+#         return "success"
+#     except Exception as e:
+#         return "error"
 
 
 @csrf_exempt
@@ -1476,7 +1476,7 @@ def close_support_ticket(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def get_all_test_of_lot_from_active_tab(request):
 
-    if 1 == 1:
+    try:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
@@ -1485,12 +1485,17 @@ def get_all_test_of_lot_from_active_tab(request):
 
             print(lot_id)
             test_list = TestLots.objects.get(id=lot_id).tests_in_lot
+            coment_on_lot = TestLots.objects.get(id=lot_id).comment
+
+            
+            
             test_data = eval(test_list)
-            print(test_data)
+        
             user_test_obj = UserTest.objects.filter(id__in=test_data)
 
             context = {
-                "user_test_obj": user_test_obj
+                "user_test_obj": user_test_obj,
+                "coment_on_lot":coment_on_lot
             }
 
             print('----------', user_test_obj)
@@ -1499,7 +1504,7 @@ def get_all_test_of_lot_from_active_tab(request):
 
         else:
             send_data = {"msg": "Request is not post", "status": "0"}
-    else:
+    except:
         send_data = {"msg": "Something went wrong",
                      "status": "0", "error": traceback.format_exc()}
         print(traceback.format_exc())

@@ -261,7 +261,7 @@
                             <div class="dash-pro-item mb-30 dashboard-widget" style="width:1200px; max-height:1450px;">
                                 
                                 <div style="margin-top: 25px;">
-                                    <center> <h6>Test</h6></center>
+                                    <center> <h6>Published Test</h6></center>
                                     <hr>
                                 </div>
                                 {% comment %} div for pending test {% endcomment %}
@@ -279,10 +279,11 @@
                                     <div class="col-auto">
                               
                                        <select id="select_test" style="height: 40px;border-radius:5px;background-color: #683df5;color: white;" onchange="window.location.href=this.value;">
-                                        <option value="{% url 'published_test' %}">Published</option>  
-                                        <option value="{% url 'pending_test' %}">Pending</option>
-                                        <option value="{% url 'uploaded_result_test' %}">Test Complete</option>
-                                        {% comment %} <option value="{% url 'completed_test' %}">Test Completed</option> {% endcomment %}
+                                        <option value="{% url 'published_test' %}">Published Test</option>  
+                                        <option value="{% url 'pending_test' %}">Pending Test</option>
+                                        {% comment %} <option value="{% url 'completed_test' %}">Confirmed</option> {% endcomment %}
+                                        <option value="{% url 'uploaded_result_test' %}">Completed Test</option>
+                                        
                                           
 
                                       </select> 

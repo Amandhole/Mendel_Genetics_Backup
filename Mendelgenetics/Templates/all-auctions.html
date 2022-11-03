@@ -558,7 +558,7 @@
                     <div class="form-group">
                         <span >Upload Result Date</span>
                         <label for="datepicker"><i class="fa fa-calendar" style="padding-left: 300px;padding-top: 30px;"></i></label>
-                        <input type="text" id="datepicker" placeholder="DD-MM-YY" readonly style="padding-left: 100px;width: 290px;">
+                        <input type="text" id="datepicker" placeholder="DD-MM-YY"  readonly style="padding-left: 100px;width: 290px;">
                         <span id="datepicker_error" style="color: red;margin-left: 15PX;"></span>
                     </div>
 
@@ -632,7 +632,7 @@
                     <div class="form-group">
                         <span >Upload Result Date</span>
                         <label for="edit_datepicker"><i class="fa fa-calendar" style="    padding-left: 300px;padding-top: 30px;"></i></label>
-                        <input type="text" id="edit_datepicker" placeholder="MM-DD-YY" readonly style="padding-left: 100px;width: 290px">
+                        <input type="text" id="edit_datepicker" placeholder="MM-DD-YY"  readonly style="padding-left: 100px;width: 290px">
                         <span id="edit_datepicker_error" style="color: red;margin-left: 15PX;"></span>
                     </div>
 
@@ -705,6 +705,8 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
 <script>
+
+    
    function get_id_accordion(id){
 
         $.ajax({
@@ -729,7 +731,11 @@
     }
 </script>
 <script>
-        $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true, changeYear: true, }).val();
+        $('#datepicker').datepicker({ 
+                                    dateFormat: 'dd-mm-yy',
+                                    changeMonth: true, 
+                                    changeYear: true ,
+                                    minDate:'0d' }).val();
         
     
     $(document).ready(function(){
@@ -907,7 +913,7 @@
         
     }
 
-$('#edit_datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true,todayHighlight:true, }).val();
+$('#edit_datepicker').datepicker({ dateFormat: 'mm-dd-yy',changeMonth: true, changeYear: true,todayHighlight:true, minDate:'0d' }).val();
 $('.ui-datepicker').addClass('notranslate');
  $('#datepicker').attr('readonly', true);
 
