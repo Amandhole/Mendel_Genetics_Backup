@@ -6,13 +6,12 @@
 			Sus muestras han sido agrupadas en <b>{{quantity_of_lot}}</b> lotes.
 			Rogamos imprima e identifique correctamente cada una de las muestras, las agrupe en lotes según abajo indicado e imprima la etiqueta de envío:
 			<b>{{lot_number}}</b> <a style="margin-top: 15px; color: blue;padding-left: 30px;" href="http://mendelbook.eu/test_added_by_user_list">http://mendelbook.eu/test_added_by_user_list</a>
-			{% for test in test_obj %}
-		 		<b>{{test.auction_test_id}}</b> de <b>{{test.test_requested}}</b> con referencia externa <b>{{test.external_reference}}</b> .
-		 	{% endfor %}
+			{% for test in test_obj %} <b>{{test.auction_test_id}}</b> de <b>{{test.test_requested}}</b> con referencia externa <b>{{test.external_reference}}</b> .{% endfor %}
+			
 			Para cualquier duda no dude en llamarnos o utilizar la función de chat en directo,
 	
 		<p>Mendelbook,</p>
-		<p>Fonte dos Ranchos 20,
-		<br> Lugo 27004</p>
+		<p>Fonte dos Ranchos 20,</p>
+		<p>Lugo 27004</p>
 	</p>
 </div>

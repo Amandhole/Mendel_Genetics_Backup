@@ -1218,9 +1218,7 @@ def Approve_users_bid_on_test(request):
 
                 print('auctioner', auctionr_email, 'bidder', bidder_email)
 
-                subject = "Confirmación adjudicación del lote" + \
-                    str(lot_number) + "que consta de " + \
-                    str(quantity_of_lot) + "pruebas"
+                subject = "Confirmación adjudicación del lote"  + ' ' + str(lot_number) + ' ' +  "que consta de " + '  ' +  str(quantity_of_lot) + ' '  +  "pruebas"
 
                 string = render_to_string(
                     'email_rts/email_bidder.html', context)
