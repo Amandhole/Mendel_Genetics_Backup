@@ -208,6 +208,7 @@ def send_otp_for_signup_verification(request):
 @ csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def forget_password_OTP(request):
+    
     session_id = request.session.get('user_id')
     try:
         if request.method == "POST":
@@ -216,22 +217,30 @@ def forget_password_OTP(request):
 
             if UserMaster.objects.filter(email=email).exists():
                 # email_otp = '123456'
-                email_otp = str(random.randint(100000, 999999))
-                message = email_otp+" is your otp for varification."
-                subject = "OTP Is"
+                user_email = UserMaster.objects.get(email=email).email
 
-                send_mail(subject, message, EMAIL_HOST_USER,
-                          [email], fail_silently=False)
-                send_data = {
-                    'status': "1", 'msg': "OTP Sent succesfully", "email_otp": email_otp}
+                email_otp = str(random.randint(100000, 999999))
+                
+                context={
+                    "email_otp":email_otp,
+                    "user_email":user_email
+                }
+
+                subject = " OTP for forgot password"
+                string = render_to_string('email_rts/forgot_password.html', context)
+                plain_message = strip_tags(string)
+                to_email = user_email
+                email_status = send_email(subject, plain_message, to_email)
+
+
+                send_data = {'status': "1", 'msg': "OTP Sent succesfully", "email_otp": email_otp}
             else:
                 send_data = {'status': "0", 'msg': "Email Not Exists"}
             return JsonResponse(send_data)
         else:
             return render(request, 'forget-pasword.html')
     except:
-        send_data = {'status': "0", 'msg': "Something Went Wrong",
-                     'error': str(traceback.format_exc())}
+        send_data = {'status': "0", 'msg': "Something Went Wrong",'error': str(traceback.format_exc())}
     return redirect('landing_page')
 
 
@@ -458,12 +467,24 @@ def change_user_email_send_otp(request):
             email = data['email']
 
             if UserMaster.objects.filter(id=user_id, email=email).exists():
-                # email_otp = str(random.randint(100000, 999999))
-                email_otp = '123456'
+                user_email = UserMaster.objects.get(id=user_id).email
+                email_otp = str(random.randint(100000, 999999))
+                # email_otp = '123456'
                 print(email_otp)
 
-                send_data = {
-                    'status': "1", 'msg': "OTP Sent To Register Email", "email_otp": email_otp}
+                context={
+                        "user_email":user_email,
+                        "email_otp": email_otp
+                    }
+
+                subject = " OTP for Change the email"
+                string = render_to_string('email_rts/change_email.html', context)
+                plain_message = strip_tags(string)
+                to_email = user_email
+                email_status = send_email(subject, plain_message, to_email)
+               
+
+                send_data = {'status': "1", 'msg': "OTP Sent To Register Email", "email_otp": email_otp}
             else:
 
                 send_data = {'status': "0", 'msg': "User Not Exists"}
@@ -1170,8 +1191,7 @@ def Approve_users_bid_on_test(request):
                 bid_obj.bid_status = "Approved"
                 bid_obj.save()
 
-                UserBids.objects.filter(fk_test_lot__id=lot_id).exclude(
-                    id=bid_id).update(bid_status="Cancelled")
+                UserBids.objects.filter(fk_test_lot__id=lot_id).exclude(id=bid_id).update(bid_status="Cancelled")
 
                 auctionr_name = TestLots.objects.get(
                     id=lot_id).fk_user_master.name
@@ -1532,11 +1552,9 @@ def upload_result_by_bidder(request):
 
             comment = request.POST.get('comment')
 
-            TestLots.objects.filter(id=test_lot_id).update(
-                upload_date_time=datetime.now(), result_upload_status="Upload", comment=comment)
+            TestLots.objects.filter(id=test_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload", lot_status="Completed", comment=comment)
 
-            bid_obj = UserBids.objects.get(
-                fk_test_lot_id=test_lot_id, bid_status="Approved")
+            bid_obj = UserBids.objects.get(fk_test_lot_id=test_lot_id, bid_status="Approved")
 
             bid_obj.bid_status = "Result_Upload_By_Bidder"
 

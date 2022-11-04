@@ -365,6 +365,9 @@
     
 
     function send_email_forget_pass(){
+        
+        $("#overlayer_transparent").show()
+
         runOtpSend();
         $("#btnotpagain").hide()
         var email = $("#email_id").val()
@@ -382,6 +385,7 @@
             $("#email_id").focus();
         }
         else{
+           
             $.ajax({
                 method : "POST",
                 url : "{% url 'forget_password' %}",
@@ -393,6 +397,8 @@
                     if (response ['status'] == "1"){
                         console.log(response)
 
+                       $("#overlayer_transparent").hide()
+
                         window.get_otp = (response ['email_otp'])
 
                     
@@ -402,6 +408,8 @@
 
                     }
                     else if (response ['status'] == '0'){
+                       
+                        $("#overlayer_transparent").hide()
                         console.log(response)
                         swal({
                             icon : "error",

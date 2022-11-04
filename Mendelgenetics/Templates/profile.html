@@ -1006,6 +1006,7 @@ function change_email_otp(){
 
 
     /* $("#cover-spin").show() */
+    $("#overlayer_transparent").show()
 
     $.ajax({
         method : "POST",
@@ -1019,11 +1020,13 @@ function change_email_otp(){
             if (Response  ['status'] == '1'){
                 
                 /*$("#cover-spin").hide() */
+                $("#overlayer_transparent").hide()
 
                 $("#send_otp_for_change_email").hide()
                 $("#enter_otp_for_change_email").show()
                 console.log(Response)
                 window.genrated_otp = (Response['email_otp'])
+
         
             }
             else if(Response ['status'] == '0'){

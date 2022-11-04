@@ -282,9 +282,10 @@
 
                                         
                                         <option value="{% url 'uploaded_result_test' %}">Completed Test</option>
+                                        <option value="{% url 'completed_test' %}">Confirmed Test</option>
                                         <option value="{% url 'published_test' %}">Published Test</option>  
                                         <option value="{% url 'pending_test' %}">Pending Test</option>
-                                        {% comment %} <option value="{% url 'completed_test' %}">Confirmed</option> {% endcomment %}
+                                        
                                         
                                         
                                           
@@ -331,7 +332,7 @@
 
 
                                             {% if test.created_date_time %}
-                                                <td>{{test.created_date_time}}</td>
+                                                <td>{{test.created_date_time |date:'d-m-Y , g:i, a'}}</td>
                                             {% else %}
                                                 <td>----</td>
                                             {% endif %}    
@@ -352,7 +353,7 @@
                                             {% endfor %}    
 
                                             {% if test.upload_date_time %}
-                                                <td>{{test.upload_date_time}}</td>
+                                                <td>{{test.upload_date_time |date:'d-m-Y , g:i, a'}}</td>
                                             {% else %}
                                                 <td>----</td>
                                             {% endif %}

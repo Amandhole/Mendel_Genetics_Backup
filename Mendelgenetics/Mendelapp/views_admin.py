@@ -179,21 +179,21 @@ def published_test(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def uploaded_result_test(request):
-    if 1 == 1:
+    
+    try:
         session_id = request.session.get('admin_user_id')
         if session_id:
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.filter(id=session_id)
 
-                uploaded_result_obj = TestLots.objects.filter(lot_status="Approved").order_by('-id')
+                uploaded_result_obj = TestLots.objects.filter(lot_status="Completed").order_by('-id')
             
-            
-
                 for test in uploaded_result_obj:
                     if UserBids.objects.filter(fk_test_lot_id=test.id).exists():
 
                         test.bid_count = UserBids.objects.filter(fk_test_lot_id=test.id).count()
-                        test.bidder_name = UserBids.objects.filter(fk_test_lot_id=test.id, bid_status="Approved")
+                        test.bidder_name = UserBids.objects.filter(
+                            fk_test_lot_id=test.id, bid_status="Result_Upload_By_Bidder")
                         
                         for i in test.bidder_name:
                             print(i.fk_user_master.name)
@@ -210,11 +210,8 @@ def uploaded_result_test(request):
                 return render(request, 'admin/uploaded_test.html', context)
         else:
             return redirect('landing_page')
-    else:
+    except:
         print(traceback.format_exc())
-
-
-
 
 
 @csrf_exempt
@@ -226,23 +223,22 @@ def completed_test(request):
             if AdminUser.objects.filter(id=session_id).exists():
                 user_obj = AdminUser.objects.filter(id=session_id)
 
-                # uploaded_result_obj = TestLots.objects.filter(Q(result_upload_status="Upload") & (Q(fk_test_lot__lot_status="Approved") | Q(fk_test_lot__lot_status="AdminApproved"))).order_by('-fk_user_master__name')
-                completed_test_obj = TestLots.objects.filter(result_upload_status="AdminUpload").order_by('-id')
-             
+                comfirmed_test_obj = TestLots.objects.filter(lot_status="Approved").order_by('-id')
+                for test in comfirmed_test_obj:
+                    if UserBids.objects.filter(fk_test_lot_id=test.id).exists():
 
-                for i in completed_test_obj:
-                    if UserBids.objects.filter(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Admin').exists():
-                        bider_obj = UserBids.objects.get(fk_test_lot_id=i.id, bid_status='Result_Upload_By_Admin')
+                        test.bid_count = UserBids.objects.filter(fk_test_lot_id=test.id).count()
+                        test.bidder_name = UserBids.objects.filter(fk_test_lot_id=test.id, bid_status="Approved")
 
-                        bidder_name = bider_obj.fk_user_master.name if bider_obj.fk_user_master else ''
-                        i.bidder_name = bidder_name
+                        for i in test.bidder_name:
+                            print(i.fk_user_master.name)
                     else:
                         pass
 
                 context = {
                     "user_obj": user_obj,
-                    "completed_test_obj": completed_test_obj,
-                
+                    "comfirmed_test_obj": comfirmed_test_obj,
+
                 }
                 return render(request, 'admin/test_completed.html', context)
             else:
