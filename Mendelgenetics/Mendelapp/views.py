@@ -1138,8 +1138,7 @@ def view_all_bids_on_my_test(request):
                         "approved_bid": approved_bid_obj,
                         "recent_bid_obj": recent_bid_obj
                     }
-                    send_data = render_to_string(
-                        'rts_bid_detail.html', context)
+                    send_data = render_to_string('rts_bid_detail.html', context)
                 else:
                     send_data = {"msg": "User Not Exist"}
             else:

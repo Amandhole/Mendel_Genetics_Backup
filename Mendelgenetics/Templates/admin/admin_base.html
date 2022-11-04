@@ -589,9 +589,9 @@
 
                     {% if user_obj %}
                         <ul class="menu ml-auto">
-                            <li>
+                            {% comment %} <li>
                                 <a href="{% url 'admin_dashboard' %}" id="id_dashboard">Dashboard</a>    
-                            </li>
+                            </li> {% endcomment %}
                             
                             <li>
                                 <a href="{% url 'pending_test' %}" class="" id="id_test">User Tests</a>
