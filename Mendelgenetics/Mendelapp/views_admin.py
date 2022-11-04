@@ -39,7 +39,7 @@ def admin_user_login(request):
         else:
             print(session_id)
             if session_id:
-                return redirect('admin_dashboard')
+                return redirect('pending_test')
             else:    
                 return render(request, 'admin/admin_login.html', {"user_obj": session_id})
     except:       
