@@ -663,16 +663,20 @@ element.style {
                                                                 {% endif %} 
                                                             </div>
 
-                                                            <div class="col-md-6 float-right" style="margin-top: 10px;margin-left: 14px;">
-                                                                <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
+                                                            <div class="col-md-6 float-right" style="margin-top: 3px;margin-left: -26px;">
+                                                                {% comment %} <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
                                                                     <i class="fas fa-thumbs-up"></i>Completed
-                                                                </span>
+                                                                </span> {% endcomment %}
 
                                                             
                                                                 {% comment %} {% if test.bid_status == "Result_Upload_By_Bidder" %} {% endcomment %}
-                                                                    <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
+                                                                    {% comment %} <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
                                                                         Result Uploaded
-                                                                    </span>    
+                                                                    </span>     {% endcomment %}
+                                                                    
+                                                                    <button class="btn-primary action-btn" data-toggle="modal" data-target="#download_uploaded_result_modal" onclick="get_id_accordion({{test.fk_test_lot.id}})" style="background-color: #3CB371;width:auto;height: 40px;border-radius: 5px;float: right;">Download Result<i class="fas fa-download"></i></button>
+
+
                                                                 {% comment %} {% else %}  {% endcomment %}
                                                                     {% comment %} <p>Wrong</p> {% endcomment %}
                                                                 {% comment %} {% endif %}   {% endcomment %}
@@ -698,6 +702,68 @@ element.style {
             </div>
         </div>        
     </section>
+
+
+
+
+
+
+    
+<div class="modal fade" id="download_uploaded_result_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!--============= Dashboard Section Starts Here =============-->
+    <div class="modal-dialog" style="max-width: 850px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                <div class="" style="justify-content:center;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="justify-content: center;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+            </div>
+
+            <input type="hidden" id="test_id">
+
+            <div class="modal-body">
+
+                                   
+                <div class="login-form">
+                
+                    <div>
+                        <h6 style="text-align: center;">Download Documents</h6><hr><br>
+                    </div>
+                
+
+                    {% comment %} <label class="flot-center" for="title">Select Files</label><br> {% endcomment %}
+                          
+                    <div class="col-md-12 row" id="download_doccument_by_auctioner">
+
+                        
+
+                        <span id="error_first_file" style="color:#ff4c4ce8;font-size: 14px;margin-left: 12rem;"></span>
+                    </div>
+                </div>
+
+                                                    
+               {% comment %} <p style="text-align: center;">(Accepted jpg , jpeg , png , pdf , Doc , Docx)</p> {% endcomment %}
+    
+                <div class="row" style="justify-content:center; margin-top: 50px;">
+        
+                    {% comment %} <div class="form-group mb-0">
+                        <button type="button" id="" onclick="upload_result_by_admin()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
+                    </div>  {% endcomment %}
+    
+                </div>                        
+            </div>
+      </div>
+
+        </div>
+    </div>
+</div>
     <!--============= Dashboard Section Ends Here =============-->
 
 
@@ -851,6 +917,25 @@ element.style {
     
 
   
+function get_id_accordion(id){
+
+      
+    $.ajax({
+        method:"POST",
+        url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
+        contentType:"application/JSON",
+        data:JSON.stringify({
+            "lot_id":id
+        }),
+        success:function(response){
+            
+            $("#download_doccument_by_auctioner").html(response)
+            
+        
+        }
+
+    })
+}
 
 
 {% comment %} javascipt code for second file {% endcomment %}

@@ -448,7 +448,7 @@ function verify_otp(){
 
             swal({
                 icon:"success",
-                text : "OTP match succesfully",
+                text : "OTP Verified Successfully",
                 closeOnClickOutside :false
             }).then(function(){
                  $("#email_send_div").hide()
@@ -511,7 +511,7 @@ function change_password(){
                 if (response ['status'] == "1"){
                     swal({
                         icon : "success",
-                        text : "Password Change Succesfully",
+                        text : "Password Changed Successfully",
                         closeOnClickOutside: false
                     }).then(function(){
                         location.href = "{% url 'login_page' %}"
