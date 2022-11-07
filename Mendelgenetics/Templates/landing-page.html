@@ -4,9 +4,9 @@
 
 {% block content %}
 <section class="banner-section bg_img" data-background="{% static 'assets/images/banner/banner-bg-1.png' %}">
-<div class="container">
+<div class="container" style="padding-left: 306px;">
             <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-xl-6">
+                <div class="col-lg-6 col-xl-6" >
                     <div class="banner-content cl-white">
                         <h5 class="cate">Next Generation Auction</h5>
                         <h1 class="title"><span class="d-xl-block">Find Your</span> Next Deal!</h1>
@@ -18,20 +18,20 @@
                 </div>
                 <div class="d-none d-lg-block col-lg-6">
                     <div class="banner-thumb-2">
-                        <img src="{% static 'assets/images/banner/banner-1.png' %}" alt="banner">
+                        {% comment %} <img src="{% static 'assets/images/banner/banner-1.png' %}" alt="banner"> {% endcomment %}
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="banner-shape d-none d-lg-block">
-            <img src="{% static 'assets/css/img/banner-shape.png' %}" alt="css">
+            {% comment %} <img src="{% static 'assets/css/img/banner-shape.png' %}" alt="css"> {% endcomment %}
         </div>
     </section>
        
     <!--============= Banner Section Ends Here =============-->
 
-
+{% comment %} 
     <div class="browse-section ash-bg">
         <!--============= Hightlight Slider Section Starts Here =============-->
         <div class="browse-slider-section mt--140">
@@ -80,7 +80,7 @@
         <!--============= Car Auction Section Starts Here =============-->
         
         <!--============= Car Auction Section Ends Here =============-->
-    </div>
+    </div> {% endcomment %}
 
 
     <!--============= Jewelry Auction Section Starts Here =============-->
@@ -116,7 +116,7 @@
 
     <!--============= How Section Starts Here =============-->
         
-    <section class="how-section padding-top">
+    {% comment %} <section class="how-section padding-top">
         <div class="container">
             <div class="how-wrapper section-bg">
                 <div class="section-header text-lg-left">
@@ -160,11 +160,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
     <!--============= How Section Ends Here =============-->
 
 
-    <!--============= Client Section Starts Here =============-->
+    {% comment %} <!--============= Client Section Starts Here =============-->
      <section class="client-section padding-top padding-bottom">
         <div class="container">
             <div class="section-header">
@@ -242,6 +242,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
 
     {% endblock %}

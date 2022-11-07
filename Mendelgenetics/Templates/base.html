@@ -850,7 +850,7 @@
     <!--============= Footer Section Starts Here =============-->
     <footer class="bg_img padding-top oh" data-background="{% static 'assets/images/footer/footer-bg.jpg' %}">
         <div class="footer-top-shape">
-            <img src="{% static 'assets/css/img/footer-top-shape.png' %}" alt="css">
+            {% comment %} <img src="{% static 'assets/css/img/footer-top-shape.png' %}" alt="css"> {% endcomment %}
         </div>
         <div class="anime-wrapper">
             <div class="anime-1 plus-anime">
@@ -872,7 +872,7 @@
                 <img src="{% static 'assets/images/footer/c4.png' %}" alt="footer">
             </div>
         </div>
-        <div class="newslater-wrapper">
+        {% comment %} <div class="newslater-wrapper">
             <div class="container">
                 <div class="newslater-area">
                     <div class="newslater-thumb">
@@ -892,7 +892,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <div class="footer-top padding-bottom padding-top">
             <div class="container">
                 <div class="row mb--60">
@@ -1026,7 +1026,7 @@
                         {% comment %} <div class="logo">
                             <a href="index.html"><img src="{% static 'assets/images/logo/footer-logo.png' %}" alt="logo"></a>
                         </div> {% endcomment %}
-                        <ul class="gateway-area">
+                        {% comment %} <ul class="gateway-area">
                             <li>
                                 <a href="#0"><img src="{% static 'assets/images/footer/paypal.png' %}" alt="footer"></a>
                             </li>
@@ -1039,7 +1039,7 @@
                             <li>
                                 <a href="#0"><img src="{% static 'assets/images/footer/mastercard.png' %}" alt="footer"></a>
                             </li>
-                        </ul>
+                        </ul> {% endcomment %}
                         <div class="copyright"><p>&copy; Copyright 2022 |  By <a href="#0">Techquadra</a></p></div>
                     </div>
                 </div>
