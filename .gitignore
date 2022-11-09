@@ -47,6 +47,11 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+*.png
+*.docx
+*.jpeg
+*.jpe
+*.gif
 
 Mendelgenetics/db.sqlite3
 *.sqlite3
