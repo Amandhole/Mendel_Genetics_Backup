@@ -1609,6 +1609,69 @@ def upload_result_by_bidder(request):
     return JsonResponse(send_data)
 
 
+################################################################# Edit uploaded result (bidder side)
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def edit_uploaded_result_bidder(request):
+
+    try:
+        if request.method == "POST":
+            for key, file in request.FILES.items():
+                # print(key, file)
+                test_list = key.split('_')             
+
+                if test_list[1] == '1':
+                    print('file...1', file)
+                    doc1_obj = UserTest.objects.get(id=test_list[2])
+                    doc1_obj.bidder_doc_first = file
+                    doc1_obj.save()
+
+                elif test_list[1] == '2':
+                    print('file...2', file)
+                    obj2_doc = UserTest.objects.get(id=test_list[2])
+                    obj2_doc.bidder_doc_second = file
+                    obj2_doc.save()
+
+            # test_lot_id = request.POST.get('test_lot_id')
+
+            # comment = request.POST.get('comment')
+
+            # TestLots.objects.filter(id=test_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload", lot_status="Completed", comment=comment)
+
+            # auctionr_name = TestLots.objects.get(
+            #     id=test_lot_id).fk_user_master.name
+            # auctionr_email = TestLots.objects.get(
+            #     id=test_lot_id).fk_user_master.email
+            # lot_number = TestLots.objects.get(id=test_lot_id).test_lot_id
+            # test_count = TestLots.objects.get(id=test_lot_id)
+
+            ####### auctioner send mail#########
+
+            # test_obj = TestLots.objects.get(id=test_lot_id).tests_in_lot
+            # test_data = eval(test_obj)
+            # test_obj = UserTest.objects.filter(id__in=test_data)
+
+            # context = {
+            #     "test_obj": test_obj,
+            #     "auctionr_name": auctionr_name
+            # }
+
+            # subject = "Resultado del test " + str(lot_number) + "listos."
+            # string = render_to_string('email_rts/result_upload.html', context)
+            # plain_message = strip_tags(string)
+            # to_email = auctionr_email
+            # email_status = send_email(subject, plain_message, to_email)
+
+            send_data = {"msg": "Documents uploaded successfully...", "status": "1"}
+        else:
+            send_data = {"msg": "Request is not post", "status": "0"}
+    except:
+        send_data = {"msg": "Something went wrong","status": "0", "error": traceback.format_exc()}
+        print(traceback.format_exc())
+    return JsonResponse(send_data)
+
+
+
 @csrf_exempt
 def get_user_test_by_lot_id(request):
     try:

@@ -1,4 +1,8 @@
 {% load static %}
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4">Document 1</div>
+    <div class="col-md-4 mb-4">Document 2</div>
 {% for  i in user_test_obj %}
     <input type="hidden" value="{{i.id}}" class="hidden_test_ids">
     <div class="col-md-4">
@@ -18,9 +22,9 @@
     <div class="col-md-4">
         
         <div class="">
-            <input accept="image/*,.pdf,.doc,.docx," class="input100" id="second_file_{{i.id}}" onchange="remove_error_massage('error_file_{{i.id}}')" required type="file" style="padding:12px 0 0 33px;"><br>
+            <input accept="image/*,.pdf,.doc,.docx," class="input100" id="first_file_{{i.id}}" onchange="remove_error_massage('error_file_{{i.id}}')" required type="file" style="padding:12px 0 0 33px;"><br>
             {% if i.bidder_doc_first %}       
-                <button class="btn-primary action-btn" onclick="window.open('{{i.bidder_doc_first.url}}')" style="background-color: #3CB371;margin-left: 70px;width: 130px;border-radius: 5px;height: 45px;border: none">Document1 <i class="fas fa-download"></i></button>
+                <span onclick="window.open('{{i.bidder_doc_first.url}}')" style="padding: 2px 5px 2px 5px; color: blue; cursor: pointer; margin-left: 0px;width: 130px;border-radius: 5px;height: 45px;border: none">view document...</span>
             {% else %}
                 <button class="btn-primary action-btn" disabled style="background-color: #7019f4;margin-left: 70px;width: 130px;height: 45px;border-radius: 5px;">No Document </button>
             {% endif %}
@@ -34,29 +38,30 @@
     <div class="col-md-4">
         <div class="">
             <input accept="image/*,.pdf,.doc,.docx," class="input100" id="second_file_{{i.id}}" onchange="remove_error_massage('error_file_{{i.id}}')" required type="file" style="padding:12px 0 0 33px;"><br>
-            {% if i.bidder_doc_second %}
+            {% if i.bidder_doc_second %}       
+                <span onclick="window.open('{{i.bidder_doc_second.url}}')" style="padding: 2px 5px 2px 5px; color: blue; cursor: pointer; margin-left: 0px;width: 130px;border-radius: 5px;height: 45px;border: none">view document...</span>
+            {% endif %}
+            <!-- {% if i.bidder_doc_second %}
                 <button class="btn-primary action-btn"  onclick="window.open('{{i.bidder_doc_second.url}}')" style="background-color: #3CB371;margin-left: 70px;width: 130px;border-radius: 5px;height: 45px;border: none">Document2<i class="fas fa-download"></i></button>
             {% else %}
                 <button class="btn-primary action-btn" disabled style="background-color: #7019f4;margin-left: 70px;width: 130px;height: 45px;border-radius: 5px;">No Document</button>
-            {% endif %}
+            {% endif %} -->
         </div>
     </div>
 
 {% endfor %}
 
+<hr style="width: 100%;">
 
-
-<div class="card">
-  <div class="card-body" style="width: 736px;">
-    {% comment %} show comment {% endcomment %}
-    <span>{{ coment_on_lot }}</span>
-    
-  </div>
+<div class="" style="min-height: 30px !important;">
+    <div class="card-body" style="width: 736px;">
+        <span><span style="font-size: 18px; font-weight:bold;">Comment : </span>{{ coment_on_lot }}</span>  
+    </div>
 </div>
+<hr style="width: 100%;">
 
-<div class="form-group mb-0">
-    <button type="button" id="" onclic
-    k="upload_result()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
+<div class="form-group mb-0 text-center mx-auto" style="justify-content: center;">
+    <button type="button" id="" onclick="upload_result()" class="custom-button"  style="font-size: 16px;width:7rem; height: 45px; padding-left: 5px;padding-right: 5px;">Upload</button>
 </div> 
 
 <script>
@@ -105,7 +110,7 @@
 	});
 
 
-{% comment %} javascipt code for second file {% endcomment %}
+
 
     $("#target_img_second").hide()
         file_size1 = 0;
@@ -138,38 +143,32 @@
 
 function upload_result() 
 {   
+    var test_lot_id = $("#hidden_test_lot_id").val();
 
-
-    var test_lot_id = $("#hidden_test_lot_id").val()
-    console.log(test_lot_id)
-
-    var comment = $("#comment_area").val()
-    
-    console.log(comment)
+    // var comment = $("#comment_area").val();
 
     var test_files_array = new Array();
 
     var form_data = new FormData();
+    
+    var document_count = 0;
 
     // {'files': [{'349':['file_1','file_2']}, {'350':['file_1','file_2']}]}
     $('.hidden_test_ids').each(function(i, obj)
     {
         var test_id = obj.value;
 
-
         var first_document = $('#first_file_'+test_id).val();
         var second_document = $('#second_file_'+test_id).val();
 
         var file_1 = $('#first_file_'+test_id)[0].files[0];
         var file_2 = $('#second_file_'+test_id)[0].files[0];
-``
+
         var file_size1 = (first_document == "") ? "" : file_1.size;
         var file_size2 = (second_document == "") ? "" : file_2.size;
 
         if ((first_document == "") && (second_document == "") ) {
 
-            $('#error_file_'+test_id).html('Please Select  atleast one file');
-            $('#error_file_'+test_id).show()
         }
         else if(file_size1 > 10000000 && file_size1 != "")
         {
@@ -190,7 +189,7 @@ function upload_result()
             form_data.append(`file_1_${test_id}`, file1);
             form_data.append(`file_2_${test_id}`, file2);
             form_data.append('test_lot_id',test_lot_id)
-            form_data.append('comment',comment)
+            // form_data.append('comment',comment)
             test_files_array.push(obj);
         }
     });
@@ -199,7 +198,7 @@ function upload_result()
     {
         $.ajax({
             method: "POST",
-            url: "{% url 'upload_result_by_bidder' %}",
+            url: "{% url 'edit_uploaded_result_bidder' %}",
             enctype: "mutipart/form_data",
             processData: false,
             contentType: false,
@@ -225,6 +224,14 @@ function upload_result()
                 }
             }
         });
+    }
+    else
+    {
+        swal({
+            icon:"warning",
+            text:"Please select files to update...",
+            closeOnClickOutside:false
+        })
     }
 }
         

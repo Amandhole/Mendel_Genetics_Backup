@@ -3,23 +3,38 @@
 {% load static %}
 
 {% block content %}
-<section class="banner-section bg_img" data-background="{% static 'assets/images/banner/banner-bg-1.png' %}">
-<div class="container" style="padding-left: 306px;">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-xl-6" >
+<style>
+    .header-top, .header-bottom{
+        background: #693ff5 !important;
+    }
+    .banner-content font{
+        color: black !important;
+    }
+</style>
+<!-- <section class="banner-section bg_img" data-background="{% static 'assets/images/banner/banner-bg-1.png' %}"> -->
+<div class="container" style=" height: auto; ">
+            <div class="row align-items-center text-center justify-content-between mx-auto landing-container" style="width: 100vh; justify-content: center !important;">
+                <div class="col-lg-12 col-xl-12 landing-sub-container"  style="margin-top: 28%; ">
                     <div class="banner-content cl-white">
-                        <h5 class="cate">Next Generation Auction</h5>
-                        <h1 class="title"><span class="d-xl-block">Find Your</span> Next Deal!</h1>
-                        <p>
+                        <!-- <h5 class="cate">Next Generation Auction</h5> -->
+                        <h4 class="title"  style="color: black;"><span class="" style="color: black; font-size: 50px;">Mendelbook.eu coming soon</h4>
+                        <!-- <p  style="color: black;">
                             Online Auction is where everyone goes to shop, sell,and give, while discovering variety and affordability.
                         </p>
-                        <a href="#0" class="custom-button yellow btn-large">Get Started</a>
+                        <a href="https://www.welovedaily.com/" target="_blank" class="custom-button yellow btn-large">Get Started</a> -->
                     </div>
                 </div>
+                
                 <div class="d-none d-lg-block col-lg-6">
                     <div class="banner-thumb-2">
                         {% comment %} <img src="{% static 'assets/images/banner/banner-1.png' %}" alt="banner"> {% endcomment %}
                     </div>
+                </div>
+            </div>
+            <hr style="border: 1px solid #693ff5; width: 190%; margin-left: -35%;">
+            <div class="row">
+                <div class="col-md-12 mb-3 youtube-player-container" style="margin-left: 5%;">
+                    <iframe class="iframe_container" width="1000" height="500" src="https://www.youtube.com/embed/ViNcBQ8cDA0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
                 </div>
             </div>
         </div>
