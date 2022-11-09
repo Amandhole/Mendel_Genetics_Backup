@@ -1528,7 +1528,7 @@ def get_all_test_of_lot_from_active_tab(request):
 
             print('----------', user_test_obj)
 
-            send_data = render_to_string('rts_accordion.html', context)
+            send_data = render_to_string('edit_uploaded_document.html', context)
 
         else:
             send_data = {"msg": "Request is not post", "status": "0"}
@@ -1612,7 +1612,9 @@ def upload_result_by_bidder(request):
 @csrf_exempt
 def get_user_test_by_lot_id(request):
     try:
+        
         if request.method == "POST":
+
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['user_lot_id']
             obj_lot = TestLots.objects.get(id=lot_id)
@@ -1624,9 +1626,7 @@ def get_user_test_by_lot_id(request):
                 "user_test_obj": user_test_obj
             }
 
-            print(user_test_obj)
-            send_data = render_to_string(
-                'user_rts/img_uploaad_modal.html', context)
+            send_data = render_to_string('user_rts/img_uploaad_modal.html', context)
 
             return HttpResponse(send_data)
         else:
