@@ -1764,6 +1764,10 @@ footer {
         position: relative;
         margin-top: 20px;
     }
+
+    .login_input{
+        width: 350px !important;
+    }
 }
 
 .mb--60 {
@@ -6097,12 +6101,28 @@ div[class*="auction"] .custom-button {
 }
 
 @media (max-width: 575px) {
+    .landing-container{
+        width: 40vh !important;
+    }
+    .landing-sub-container{
+        margin-top: 55% !important;
+    }
+    .youtube-player-container{
+        margin-left: 0% !important;
+    }
+    .iframe_container{
+        width: 100% !important;
+        height: auto !important;
+    }
+    #toggleconPassword{
+        margin-right: 0px !important;
+    }
     .login-form .form-group input {
-        padding: 0 30px 0 30px;
+        padding: 0 20px 0 40px;
     }
 
     .login-form .form-group label {
-        left: 10px;
+        left: -85px;
     }
 
     .login-form .form-group .pass-type {
@@ -6122,6 +6142,19 @@ div[class*="auction"] .custom-button {
 @media (max-width: 991px) {
     .contact-wrapper {
         padding-right: 40px;
+    }
+    .landing-container{
+        width: 40vh !important;
+    }
+    .landing-sub-container{
+        margin-top: 55% !important;
+    }
+    .youtube-player-container{
+        margin-left: 0% !important;
+    }
+    .iframe_container{
+        width: 100% !important;
+        height: auto !important;
     }
 }
 
@@ -6490,6 +6523,19 @@ div[class*="auction"] .custom-button {
 @media (max-width: 767px) {
     .faq-area .faq-wrapper {
         padding: 0 15px;
+    }
+    .landing-container{
+        width: 40vh !important;
+    }
+    .landing-sub-container{
+        margin-top: 55% !important;
+    }
+    .youtube-player-container{
+        margin-left: 0% !important;
+    }
+    .iframe_container{
+        width: 100% !important;
+        height: auto !important;
     }
 }
 
