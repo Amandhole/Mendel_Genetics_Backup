@@ -650,37 +650,42 @@ element.style {
                                                             </div>
                                                         </div>    
                                                             
-
                                                         <div class="row col-md-12">
                                                             <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
                                                                 <span style="font-weight: 600;">Result Date</span>
                                                             </div>
-                                                            <div class="col-md-3" style="margin-top: 18px; margin-bottom: 5px;">
+                                                            <div class="col-md-9" style="margin-top: 18px; margin-bottom: 5px;">
                                                                 {%if test.expect_result_date %}
                                                                     <h6 style="font-size: 17px; font-weight:400;">{{test.expect_result_date|date:'d-m-Y'}}</h6> 
                                                                 {% else %}
                                                                     <h6 style="font-size: 17px; font-weight:400;">----</h6>
                                                                 {% endif %} 
+                                                                
+                                                            </div>
+                                                        </div>   
+
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-3" style="padding-top: 10px; margin-left: -14px;">
+                                                                <span style="font-weight: 600;">Uploaded On</span>
+                                                            </div>
+                                                            <div class="col-md-4" style="margin-top: 18px; margin-bottom: 5px;">
+                                                                {%if test.fk_test_lot.upload_date_time %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.upload_date_time|date:'d-m-Y'}}</h6> 
+                                                                    <!-- <h6 style="font-size: 17px; font-weight:400;">{{test.fk_test_lot.upload_date_time|date:'d-m-Y'}} ({{test.day_diff}} days)</h6>  -->
+                                                                {% else %}
+                                                                    <h6 style="font-size: 17px; font-weight:400;">----</h6>
+                                                                {% endif %} 
                                                             </div>
 
-                                                            <div class="col-md-6 float-right" style="margin-top: 3px;margin-left: -26px;">
-                                                                {% comment %} <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #7019f4;">
-                                                                    <i class="fas fa-thumbs-up"></i>Completed
-                                                                </span> {% endcomment %}
-
-                                                            
-                                                                {% comment %} {% if test.bid_status == "Result_Upload_By_Bidder" %} {% endcomment %}
-                                                                    {% comment %} <span class="badge badge-primary" style=" font-size: 13px; padding: 8px 15px 8px 15px; background-color: #fa8128;">
-                                                                        Result Uploaded
-                                                                    </span>     {% endcomment %}
+                                                            <div class="col-md-5 float-right" style="margin-top: 3px;margin-left: -26px;">
+                                                                <!-- {%if test.fk_test_lot.upload_date_time %} -->                                                   
+                                                                    <button {%if test.day_diff > 10 %} disabled data-toggle="tooltip" data-placement="top" title="Uploaded before : {{test.day_diff}} days" {% endif %} class="btn-primary action-btn" data-toggle="modal" data-target="#download_uploaded_result_modal" onclick="get_id_accordion({{test.fk_test_lot.id}})" style="background-color: #3CB371;width:auto;height: 40px;border-radius: 5px;float: right;"> <i class="fas fa-eye"></i> View Result</button>
                                                                     
-                                                                    <button class="btn-primary action-btn" data-toggle="modal" data-target="#download_uploaded_result_modal" onclick="get_id_accordion({{test.fk_test_lot.id}})" style="background-color: #3CB371;width:auto;height: 40px;border-radius: 5px;float: right;">Download Result<i class="fas fa-download"></i></button>
-
-
-                                                                {% comment %} {% else %}  {% endcomment %}
-                                                                    {% comment %} <p>Wrong</p> {% endcomment %}
-                                                                {% comment %} {% endif %}   {% endcomment %}
+                                                                <!-- {% endif %} -->
                                                             </div> 
+                                                            <!-- <div class="col-md-12 text-right">
+                                                                Result uploaded before : {{test.day_diff}} days
+                                                            </div> -->
                                                         </div>                                       
                                                     </div>    
                                                 </div>                       

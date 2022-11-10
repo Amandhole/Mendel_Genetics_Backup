@@ -1320,10 +1320,13 @@ def my_bids_on_other_users_test(request):
                     fk_user_master__id=session_id, bid_status='Result_Upload_By_Admin')).order_by('-id')
 
                 for test in my_complete_bid:
-                    test.temp_string = joined_string = " , ".join(
+                    test.temp_string = " , ".join(
                         ast.literal_eval(test.fk_test_lot.test_pathalogy))
-                    test.test_gen = joined_string = " , ".join(
+                    test.test_gen = " , ".join(
                         ast.literal_eval(test.fk_test_lot.test_gen))
+                    
+                    day_diff = datetime.now() - test.fk_test_lot.upload_date_time
+                    test.day_diff = day_diff.days
 
                 my_cancelled_bid = UserBids.objects.filter(
                     fk_user_master__id=session_id, bid_status='Cancelled')
