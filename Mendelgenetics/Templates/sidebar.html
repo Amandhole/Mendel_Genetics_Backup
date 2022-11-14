@@ -80,8 +80,8 @@
                             {% elif user_obj.is_corporate %}
 
                             <div class="row" style="justify-content: center;">
-                                <button type="button" class="" id="change_btn_auction" style=" font-size:15px; height: 39px; margin-bottom: 1rem;width: 80px;border-bottom-right-radius: 0%;border-top-right-radius: 0%;padding-left: 9px;" >Auction</button>
-                                <button type="button" class="" id="change_btn_bidding" style="font-size:15px; height: 39px; margin-bottom: 1rem; width: 80px;border-top-left-radius: 0%;border-bottom-left-radius: 0%;padding-left: 8px;" >Bidding</button>
+                                <button type="button" class="notranslate auction_translate" id="change_btn_auction" style=" font-size:15px; height: 39px; margin-bottom: 1rem;width: 80px;border-bottom-right-radius: 0%;border-top-right-radius: 0%;padding-left: 9px;" >Auction</button>
+                                <button type="button" class="notranslate bidding_translate" id="change_btn_bidding" style="font-size:15px; height: 39px; margin-bottom: 1rem; width: 80px;border-top-left-radius: 0%;border-bottom-left-radius: 0%;padding-left: 8px;" >Bidding</button>
                             </div>
 
                                 <input type="hidden" id="auc_bid_status_id" disabled value="{{user_obj.auc_bid_status}}">
@@ -92,7 +92,7 @@
 
 
                                     <li> 
-                                        <a href="{% url 'All_test_list_exclude_current_user' %}" class="" id="all_auctions"><i class="fa-brands fa-telegram"></i>Auction Tests</a>
+                                        <a href="{% url 'All_test_list_exclude_current_user' %}" id="all_auctions"><i class="fa-brands fa-telegram"></i><span  class="notranslate auction_tests_translate" >Auction Tests</span></a>
                                     </li>
 
                                     <li> 
@@ -233,16 +233,17 @@
 
         var status = $("#auc_bid_status_id").val()
         if (status == "True"){
-            console.log('btn status true')
-            $("#change_btn_bidding").attr("class","btn btn-info")
-            $("#change_btn_auction").attr("class","btn btn-secondary")
+            $("#change_btn_bidding").attr("class","btn btn-info notranslate bidding_translate")
+            $("#change_btn_auction").attr("class","btn btn-secondary notranslate auction_translate")
         }
         if (status == "False"){
             console.log(' btn status false')
-            $("#change_btn_auction").attr("class","btn btn-info")
-            $("#change_btn_bidding").attr("class","btn btn-secondary")
+            $("#change_btn_auction").attr("class","btn btn-info notranslate auction_translate")
+            $("#change_btn_bidding").attr("class","btn btn-secondary notranslate bidding_translate")
         }
-
+        setTimeout(() => {
+            customTranslation();
+        }, 3000);
         })
 </script>
 <script>

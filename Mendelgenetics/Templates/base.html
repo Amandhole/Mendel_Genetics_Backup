@@ -1147,41 +1147,62 @@
             console.log(key + '=' + value + ';expires=' + expires.toUTCString());
             document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
         }
-        $( document ).ready(function() {
-            setTimeout(() => {
-                // $('.goog-te-combo').val('es');
-                if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
-                {
-                    $('.save_button_text').html('GUARDAR');
-                    $('.home_text').html('página principal');
-                    $('.post_test_text').html('cargar test');
-                    $('.posted_test_home_text').html('tests publicados');
-                }
-                else
-                {
-                    $('.save_button_text').html('SAVE');
-                    $('.home_text').html('Home');
-                    $('.post_test_text').html('Post Test');
-                    $('.posted_test_home_text').html('Posted Test');
-                }
-            }, 1000);
-        });
 
-        $("body").on("change", "#google_translate_element select", function (e) {
+
+        function customTranslation()
+        {
+            debugger;
+            path_drop = document.getElementById('select_sample_path');
             if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
             {
+                
+                if (path_drop)
+                {
+                    // $('#select_sample_path option:eq(0)').prop('text','Selecciona Patología');
+                    // $("#select_sample_path option:first").text('Selecciona Patología');
+                }
                 $('.save_button_text').html('GUARDAR');
                 $('.home_text').html('página principal');
                 $('.post_test_text').html('cargar test');
                 $('.posted_test_home_text').html('tests publicados');
+
+                $('.sample_type_translate').html('tipo de muestra');
+                $('.gens_translate').html('genes');
+                $('.auction_translate').html('Licitar');
+                $('.bidding_translate').html('Ofertar');
+                $('.select_pathalogy_translate').html('Selecciona Patología');
+                $('.select_gens_translate').html('selecciona genes');
+                $('.auction_tests_translate').html('Realizar Oferta');
             }
             else
             {
+                if (path_drop)
+                {
+                    // $('#select_sample_path option:eq(0)').prop('text','Selecciona Patología');
+                }
                 $('.save_button_text').html('SAVE');
                 $('.home_text').html('Home');
                 $('.post_test_text').html('Post Test');
                 $('.posted_test_home_text').html('Posted Test');
+                
+                $('.sample_type_translate').html('Sample Type');
+                $('.gens_translate').html('Gens');
+                $('.auction_translate').html('Auction');
+                $('.bidding_translate').html('Bidding');
+                $('.select_pathalogy_translate').html('Select Pathalogy');
+                $('.select_gens_translate').html('Select Gens');
+                $('.auction_tests_translate').html('Auction Tests');
             }
+        }
+
+        $( document ).ready(function() {
+            setTimeout(() => {
+                customTranslation();
+            }, 1500);
+        });
+
+        $("body").on("change", "#google_translate_element select", function (e) {
+            customTranslation();
         });
     </script>
 </body>
