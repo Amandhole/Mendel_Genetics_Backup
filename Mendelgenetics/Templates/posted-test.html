@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> {% endcomment %}
 <!-- Mirrored from pixner.net/sbidu/main/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2022 06:34:06 GMT -->
 
 <style type="text/css">
@@ -17,9 +17,16 @@
     font-weight: 500;
 }
 
+
 </style>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
 <body>
     <input type="hidden"  value="{{user_obj.id}}" name="" id="user_id">
 
@@ -417,8 +424,6 @@
                         <hr>
                     </div>
 
-
-                    
                         <div class="row" style="justify-content: center;margin-left: -54px;">
 
                           <div class="col-md-2">
@@ -445,25 +450,33 @@
                             
                           </div>
 
-                          <div class="col-md-6" id="select_pathlogy_id">
-                            <select  id="select_sample_path" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
-                              <option value="">Select Pathalogy</option>
+                          <div class="col-md-6 notranslate" id="select_pathlogy_id">
+                          
+                            <select  id="select_sample_path" class="notranslate" onchange="show_data_selected_data(value)" style="border-radius: 5px;width: 20rem;">
+                              <option value="" style="width: 20rem;">Select Pathalogy</option>
                               {% for i in sampletest %}
-                                <option value={{i.id}}>{{i.pathalogy}}</option>
+                                <option class="notranslate" style="width: 20rem;" value="{{i.id}}">{{i.pathalogy}}</option>
                               {% endfor %}
                             </select>
                           </div>
 
-                          <div class="col-md-6" id="select_gens_id">
-                            <select  id="select_sample_gens" onchange="show_data_selected_data(value)" style="border-radius: 5px;">
-                              <option value="">Select Gens</option>
+                          <div class="col-md-6 notranslate" id="select_gens_id">
+                            <select  id="select_sample_gens" class="notranslate" onchange="show_data_selected_data(value)" style="border-radius: 5px;width: 20rem;">
+                              <option value="" style="width: 20rem;">Select Gens</option>
                               {% for i in sampletest %}
-                                  <option value="{{i.id}}">{{i.gens}}</option>
+                                  <option class="notranslate" style="width: 20rem;" value="{{i.id}}">{{i.gens}}</option>
                               {% endfor %}
                             </select>
                           </div>
 
-                        </div> 
+                        </div>
+
+
+
+
+
+
+
 
                     {% comment %} <div class="form-group ">
                         <textarea name="" id="testrequested" cols="1" placeholder="" rows="5" style="height: auto;"></textarea>
@@ -618,33 +631,25 @@
 
 
 
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!-- Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+<script>
 
-
-<!-- Edit test modal  start start here -->
-
-
-         
-
-
-
-
-
-
-<!-- accordion modal test modal  start start here -->
+  $select_path = $("#select_sample_path").select2({});
+  $select_gens = $("#select_sample_gens").select2({});
+  $select_path.data('select2').$dropdown.addClass('notranslate');
+  $select_gens.data('select2').$dropdown.addClass('notranslate');
+  $(".select2-selection").css("padding","10px 0px 35px 20px"); 
+</script>
 
 
 
-    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
 
 
 
@@ -692,12 +697,7 @@
         $("#show_hide_data").hide()
         $("#select_gens_id").hide()
 
-
-
     })
-
-
-
 
 
 
@@ -844,8 +844,34 @@
 
     $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true,changeYear: true }).val();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function edit_posted_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,centre,Email,other_way,test_requested,background_data,patient_test,weight_unit,height_unit,Contact_person_name){
-        debugger     
         $("#test_id").val(id)
         $("#firstname").val(patient_first_name)
         $("#lastname").val(patient_last_name)
@@ -866,13 +892,10 @@
         $("#contact_person_name").val(Contact_person_name)
 
         
-        console.log(patientheight)
-        
         var test = patient_test
-        console.log(test)
-
         
-        if ( test == "EDTA Blood"){
+        
+        /*if ( test == "EDTA Blood"){
             $("#checkbox1").prop('checked','checked')
 
         }
@@ -889,7 +912,7 @@
 
             $("#id_text_box_show").show()
             $("#id_text_box_show").val(test)
-        }
+        } */
 
     }
 
@@ -1000,9 +1023,8 @@
 
   
     function edit_posted_test_save_button(){
-      
-        debugger   
-        
+
+        debugger
         var test_id = $("#test_id").val()
         var firstname =  $("#firstname").val()
         var lastname =  $("#lastname").val()  
@@ -1017,8 +1039,7 @@
         var email =  $("#email").val()
         var otherway =  $("#otherway").val()
       
-
-
+        
         var test_requested_type = $("input[name='testradio']:checked").val(); //type can be pathalogy or Gens
     
     
@@ -1180,6 +1201,38 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 
         
@@ -1309,10 +1362,9 @@ function  get_test_id_to_see_all_bids(id){
 }
 
 function get_id_accordion(id){
-      
         $.ajax({
             method:"POST",
-            url:"{% url 'get_all_test_of_lot_from_active_tab' %}",
+            url:"{% url 'Auctioner_completed_test' %}",
             contentType:"application/JSON",
             data:JSON.stringify({
                 "lot_id":id
@@ -1352,15 +1404,15 @@ function reload_page_on_back(){
 
 
   function show_gens_field(){
-
     $("#select_gens_id").show()
     $("#select_pathlogy_id").hide()
     $("#show_hide_data").hide()
     $("#select_sample_path").val("")
   }
-
-
-  function show_data_selected_data(value){
+  
+    
+  
+function show_data_selected_data(value){
     console.log(value)
     $("#show_hide_data").show()
     $.ajax({
@@ -1411,12 +1463,8 @@ function reload_page_on_back(){
   } 
 
 
-  
-    $("#select_sample_path").select2();
-    $("#select_sample_gens").select2();  
-    $(".select2-selection").css("padding","10px 0px 35px 20px")
 
-  
+
 
 
 

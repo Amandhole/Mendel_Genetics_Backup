@@ -147,11 +147,10 @@
 }
 
 </style>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
-
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
 <!-- Select2 CSS --> 
 
@@ -964,6 +963,7 @@
                     "other_way":other_way,
                     "contact_person":contact_person,
                     'test_req_id':test_req_id,
+                    
                     "test_requested_type":test_requested_type,
                     "test_req_disc":test_req_disc,
                     "background_data":background_data,
@@ -1104,16 +1104,11 @@
     }) 
   } 
 
-  $select_path = $("#select_sample_path").select2({
-    // containerCssClass: "notranslate",
-    // dropdownCssClass: "notranslate",
-  });
+  $select_path = $("#select_sample_path").select2({});
   $select_gens = $("#select_sample_gens").select2({});  
   $select_path.data('select2').$dropdown.addClass('notranslate');
   $select_gens.data('select2').$dropdown.addClass('notranslate');
-
-  
-  $(".select2-selection").css("padding","10px 0px 35px 20px");
+  $(".select2-selection").css("padding","10px 0px 35px 20px"); 
 
 
   

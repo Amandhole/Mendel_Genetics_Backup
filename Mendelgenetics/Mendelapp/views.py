@@ -679,26 +679,23 @@ def get_brief_path_list(test_list):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_added_by_user_list(request):
     ave_value = 0
+    print('ffffffffffffffffffftttttttttttttttttffffffffffffffff')
     try:
         session_id = request.session.get('user_id')
         if session_id:
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
 
-                pending_test = UserTest.objects.filter(fk_user_id=session_id, status="Pending").order_by(
-                    '-id')                                # Pending
+                pending_test = UserTest.objects.filter(fk_user_id=session_id, status="Pending").order_by('-id')                                # Pending
 
-                test_active_obj = TestLots.objects.filter(
-                    fk_user_master_id=session_id, lot_status="Published").order_by('-id')                  # Published
+                test_active_obj = TestLots.objects.filter(fk_user_master_id=session_id, lot_status="Published").order_by('-id')                  # Published
 
-                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id).order_by(
-                    '-id')   # Approved or Result_Upload_By_Bidder
+                Confirm_test_obj = UserBids.objects.filter(bid_status='Approved', fk_test_lot__fk_user_master__id=session_id).order_by('-id')   # Approved or Result_Upload_By_Bidder
 
                 Completed_test_obj = UserBids.objects.filter(
                     bid_status='Result_Upload_By_Bidder', fk_test_lot__fk_user_master__id=session_id).order_by('-id')  # Result_Upload_By_Admin
 
-                cancelled_test_obj = UserTest.objects.filter(
-                    fk_user_id=session_id, status="Cancelled").order_by('-id')                         # Cancelled
+                cancelled_test_obj = UserTest.objects.filter(fk_user_id=session_id, status="Cancelled").order_by('-id')                         # Cancelled
 
                 for test in test_active_obj:
                     test.bid_count = UserBids.objects.filter(fk_test_lot__id=test.id).exclude(bid_status="Cancelled").count()
@@ -734,24 +731,27 @@ def test_added_by_user_list(request):
                             "test_active_obj": test_active_obj,
                             "ave_value": ave_value
                         }
-                        send_data = render_to_string(
-                            'user_rts/active_post_rts.html', context)
+                        send_data = render_to_string( 'user_rts/active_post_rts.html', context)
 
                     elif tab_type == "Pending_tab":
+
+                        print('in pending tab........................................................')
+                        user_obj = UserMaster.objects.get(id=session_id)
+                        sampletest = SampleTestMaster.objects.all()
+                        
                         context = {
                             "user_obj": user_obj,
-                            "pending_test": pending_test
+                            "pending_test": pending_test,
+                            "sampletest": sampletest
                         }
-                        send_data = render_to_string(
-                            'user_rts/pending_post_rts.html', context)
+                        send_data = render_to_string('user_rts/pending_post_rts.html', context)
 
                     elif tab_type == "Cancelled_tab":
                         context = {
                             "user_obj": user_obj,
                             "cancelled_test_obj": cancelled_test_obj,
                         }
-                        send_data = render_to_string(
-                            'user_rts/cancelld_post_rts.html', context)
+                        send_data = render_to_string('user_rts/cancelld_post_rts.html', context)
 
                     elif tab_type == "Confirm_tab":
 
@@ -761,8 +761,7 @@ def test_added_by_user_list(request):
                             "ave_value": ave_value,
 
                         }
-                        send_data = render_to_string(
-                            'user_rts/confirmed_post_rts.html', context)
+                        send_data = render_to_string('user_rts/confirmed_post_rts.html', context)
 
                     elif tab_type == "Complete_tab":
                         context = {
@@ -770,18 +769,22 @@ def test_added_by_user_list(request):
                             "Completed_test_obj": Completed_test_obj,
                             "ave_value": ave_value
                         }
-                        send_data = render_to_string(
-                            'user_rts/completed.html', context)
+                        send_data = render_to_string('user_rts/completed.html', context)
 
                     return HttpResponse(send_data)
                 else:
+                    print('in else))))))))))))))))))))))))')
+                    sampletest = SampleTestMaster.objects.all()
+                    print(sampletest)
                     context = {
                         "user_obj": user_obj,
                         "test_active_obj": test_active_obj,
                         "Confirm_test_obj": Confirm_test_obj,
                         "cancelled_test_obj": cancelled_test_obj,
                         "pending_test": pending_test,
+                        "sampletest": sampletest
                     }
+                    
                 return render(request, 'posted-test.html', context)
         return redirect('landing_page')
     except:
@@ -860,8 +863,10 @@ def posted_cancelled_test_delete_by_user(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_test_edit_by_user(request):
+    print('function called')
     if 1 == 1:
         if request.method == "POST":
+            print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
             data = json.loads(request.body.decode('utf-8'))
             test_id = data['test_id']
             firstname = data['firstname']
@@ -880,7 +885,8 @@ def posted_test_edit_by_user(request):
             contact_pereson = data['contact_pereson']
             # patient_test = data['patienttest']
 
-            # testrequested = data['testrequested']
+            testrequested = data['testrequested']
+            test_requested_type = data['test_requested_type']
             backgrounddata = data['backgrounddata']
 
             weight_unit = data['weight_unit']
@@ -905,12 +911,14 @@ def posted_test_edit_by_user(request):
                 test_obj.Email = email
                 test_obj.other_way = otherway
                 # test_obj.patient_test = patient_test
-                # test_obj.test_requested = testrequested
+                test_obj.test_requested = testrequested
+                test_obj.test_requested_type = test_requested_type
                 test_obj.background_data = backgrounddata
                 test_obj.weight_unit = weight_unit
                 test_obj.height_unit = height_unit
 
                 test_obj.save()
+                print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiittttttttttttttttt')
                 send_data = {'status': '1', "msg": "Test Updated Succesfully"}
 
             else:
@@ -918,8 +926,7 @@ def posted_test_edit_by_user(request):
         else:
             send_data = {'status': '0', "msg": "Request Is Not Post"}
     else:
-        send_data = {'status': '0', "msg": "Something Went Wrong",
-                     "error": traceback.format_exc()}
+        send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
     return JsonResponse(send_data)
 
 
@@ -1512,13 +1519,9 @@ def get_all_test_of_lot_from_active_tab(request):
             data = json.loads(request.body.decode('utf-8'))
             lot_id = data['lot_id']
 
-            print('-----------------------', lot_id)
-
-            print(lot_id)
             test_list = TestLots.objects.get(id=lot_id).tests_in_lot
             coment_on_lot = TestLots.objects.get(id=lot_id).comment
 
-            
             
             test_data = eval(test_list)
         
@@ -1532,6 +1535,39 @@ def get_all_test_of_lot_from_active_tab(request):
             print('----------', user_test_obj)
 
             send_data = render_to_string('edit_uploaded_document.html', context)
+
+        else:
+            send_data = {"msg": "Request is not post", "status": "0"}
+    except:
+        send_data = {"msg": "Something went wrong",
+                     "status": "0", "error": traceback.format_exc()}
+        print(traceback.format_exc())
+    return HttpResponse(send_data)
+
+@csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def Auctioner_completed_test(request):
+    print('new tab for adddd/qqqqqqqqqqqqqqqq')
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode('utf-8'))
+            lot_id = data['lot_id']
+
+            test_list = TestLots.objects.get(id=lot_id).tests_in_lot
+            coment_on_lot = TestLots.objects.get(id=lot_id).comment
+
+            test_data = eval(test_list)
+
+            user_test_obj = UserTest.objects.filter(id__in=test_data)
+
+            context = {
+                "user_test_obj": user_test_obj,
+                "coment_on_lot": coment_on_lot
+            }
+
+            print('----------', user_test_obj)
+
+            send_data = render_to_string('uploaded_document.html', context)
 
         else:
             send_data = {"msg": "Request is not post", "status": "0"}
