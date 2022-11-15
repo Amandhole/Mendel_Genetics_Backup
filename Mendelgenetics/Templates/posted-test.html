@@ -219,12 +219,12 @@
                                                     </div>
 
                                                     <div class="col-md-5" style="margin-top: 15px;">
-                                                        <h6 style="font-size: 15px; font-weight: 400; "> {{ test.created_date_time|date:'d-m-Y , g:i a'}} </h6>
+                                                        <h6 style="font-size: 15px; font-weight: 400; "> {{ test.created_date_time|date:'d-m-Y , g:i,a'}} </h6>
                                                     </div> 
 
                                             
                                                     <div class="col-md-4">
-                                                        <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way|default_if_none:''}}','{{test.test_requested}}','{{test.background_data}}','{{test.patient_test}}','{{test.weight_unit}}','{{test.height_unit}}','{{test.Contact_person_name|default_if_none:''}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                        <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way}}','{{test.Contact_person_name}}','{{test.background_data}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.height_unit}}','{{test.weight_unit}}','{{test.test_requested}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
                                                             <i class="flaticon-edit" ></i> 
                                                         </button>   
 
@@ -871,8 +871,19 @@
 
 
 
-    function edit_posted_test(id,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,doctor_name,date,centre,Email,other_way,test_requested,background_data,patient_test,weight_unit,height_unit,Contact_person_name){
+    function edit_posted_test(id,doctor_name,date,centre,Email,other_way,Contact_person_name,background_data,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,height_unit,weight_unit,test_requested){
+        
+          
+        console.log(test_requested)
+
         $("#test_id").val(id)
+        $("#drname").val(doctor_name)
+        $("#datepicker").val(date)
+        $("#centre").val(centre)
+        $("#email").val(Email)
+        $("#otherway").val(other_way)
+        $("#contact_person_name").val(Contact_person_name)
+        $("#backgrounddata").val(background_data)
         $("#firstname").val(patient_first_name)
         $("#lastname").val(patient_last_name)
         $("#patientage").val(patient_age)
@@ -880,40 +891,17 @@
         $("#selectgender").val(patient_gender)
         $("#patientweight").val(patient_weight)
         $("#patientheight").val(patient_height)
-        $("#drname").val(doctor_name)
-        $("#datepicker").val(date)
-        $("#centre").val(centre)
-        $("#email").val(Email)
-        $("#otherway").val(other_way)
-        $("#testrequested").val(test_requested)
-        $("#backgrounddata").val(background_data)
         $("#weight_unit").val(weight_unit)
         $("#height_unit").val(height_unit)
-        $("#contact_person_name").val(Contact_person_name)
 
         
-        var test = patient_test
+        //$("#select_sample_path").val(test_requested)
+
         
         
-        /*if ( test == "EDTA Blood"){
-            $("#checkbox1").prop('checked','checked')
 
-        }
-        else if(test == "Swab"){
-            $("#checkbox2").prop('checked','checked')
-
-        }
-
-        else if(test == "Paraffin"){
-            $("#checkbox3").prop('checked','checked')
-        }
-        else{
-            $("#checkbox4").prop('checked','checked')
-
-            $("#id_text_box_show").show()
-            $("#id_text_box_show").val(test)
-        } */
-
+    
+        
     }
 
     $("#checkbox3").click(function(){
@@ -1023,11 +1011,11 @@
 
   
     function edit_posted_test_save_button(){
-
         debugger
         var test_id = $("#test_id").val()
         var firstname =  $("#firstname").val()
         var lastname =  $("#lastname").val()  
+
         var patientage =  $("#patientage").val()
         var patientrace =  $("#patientrace").val()
         var selectgender =  $("#selectgender").val()
@@ -1038,6 +1026,9 @@
         var centre =  $("#centre").val()  
         var email =  $("#email").val()
         var otherway =  $("#otherway").val()
+        var backgrounddata =$('#backgrounddata').val()
+
+
       
         
         var test_requested_type = $("input[name='testradio']:checked").val(); //type can be pathalogy or Gens
@@ -1049,28 +1040,32 @@
 
         var test_req_disc1 = $("#select_sample_path option:selected").text()
         var test_req_disc2 = $("#select_sample_gens option:selected").text()
-      //var patient_test = $("input[name='radiobutton']:checked").val();
-      //var other_test = $("#id_text_box_show").val()
+      
 
-      var weight_unit = $("#weight_unit").val()
-      var height_unit = $("#height_unit").val()
-      var contact_pereson =$("#contact_person_name").val()
+        var weight_unit = $("#weight_unit").val()
+        var height_unit = $("#height_unit").val()
+        var contact_pereson =$("#contact_person_name").val()
       
            
-      var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
         if (test_req_id1 != ''){
             var test_req_id = test_req_id1
             var test_req_disc = test_req_disc1
         }
 
-        else if (drname == ''){
+        else if (test_req_id2 != ''){
+            var test_req_id = test_req_id2
+            var test_req_disc = test_req_disc2
+        }
+
+        if (drname == ''){
         $("#drname").css('border','1px solid #f37777');
         $("#drname").focus();
         $("#drname_modal_error").html('Enter Doctor Name')   
       }
 
-         else if (datepicker == ''){
+        else if (datepicker == ''){
         $("#datepicker").css('border','1px solid #f37777');
         $("#datepicker").focus();
         $("#datepicker_modal_error").html('Select Date')   
@@ -1115,18 +1110,18 @@
         $("#email_error").html("Enter Valid Email  ");
     } 
 
-      else if (contact_pereson == ''){
+    else if (contact_pereson == ''){
         $("#contact_person_name").css('border','1px solid #f37777');
         $("#contact_person_name").focus();
         $("#contact_person_name_error").html('Enter Contact Person Name') 
     }
 
 
-      /* else if (testrequested == ''){
+    else if (test_req_disc == ''){
         $("#testrequested").css('border','1px solid #f37777');
         $("#testrequested").focus();
-        $("#testrequested_modal_error").html('Enter Description')   
-      } */
+        $("#testrequested_modal_error").html('Select Pathalogy')   
+    } 
 
     /*else if (backgrounddata == ''){
         $("#backgrounddata").css('border','1px solid #f37777');
@@ -1145,30 +1140,45 @@
 
 
       else {
+
       $.ajax({
           method:"POST",
           url : "{% url 'posted_test_edit_by_user' %}",
           contentType:"application/json",
           data:JSON.stringify({
+
             "test_id":test_id,
+            "drname":drname,
+            "datepicker":datepicker,
+            "centre":centre,
+            
+            "email":email,
+            "otherway":otherway,
+            "contact_pereson":contact_pereson,
+            
+            "backgrounddata":backgrounddata,
+
             "firstname":firstname,
             "lastname":lastname,
             "patientage":patientage,
+
             "patientrace":patientrace,
             "selectgender":selectgender,
             "patientweight":patientweight,
             "patientheight":patientheight,
-            "drname":drname,
-            "datepicker":datepicker,
-            "centre":centre,
-            "email":email,
-            "otherway":otherway,
-            "test_requested_type":test_requested_type,
-            "contact_pereson":contact_pereson,
-            "backgrounddata":backgrounddata,
-            //"patienttest":test,
+            
             "weight_unit":weight_unit,
-            "height_unit":height_unit
+            "height_unit":height_unit,
+        
+
+            // Pending for select2 dropdown 
+
+            'test_req_id':test_req_id,
+            "test_requested_type":test_requested_type,
+            'test_req_disc':test_req_disc
+            
+           
+           
 
           }),
          success:function(response){

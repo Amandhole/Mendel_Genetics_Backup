@@ -831,59 +831,66 @@ def posted_cancelled_test_delete_by_user(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_test_edit_by_user(request):
-    
-    try:
+
+    if 1 == 1:
         if request.method == "POST":
         
             data = json.loads(request.body.decode('utf-8'))
             test_id = data['test_id']
-            firstname = data['firstname']
-            lastname = data['lastname']
-            patientage = data['patientage']
-            patientrace = data['patientrace']
-            selectgender = data['selectgender']
-            patientweight = data['patientweight']
-
-            patientheight = data['patientheight']
             drname = data['drname']
             datepicker = data['datepicker']
             centre = data['centre']
+
             email = data['email']
             otherway = data['otherway']
             contact_pereson = data['contact_pereson']
-            # patient_test = data['patienttest']
 
-            testrequested = data['testrequested']
-            test_requested_type = data['test_requested_type']
             backgrounddata = data['backgrounddata']
+            
+            firstname = data['firstname']
+            lastname = data['lastname']
+            patientage = data['patientage']
+
+            patientrace = data['patientrace']
+            selectgender = data['selectgender']
+            patientweight = data['patientweight']
+            patientheight = data['patientheight']
 
             weight_unit = data['weight_unit']
             height_unit = data['height_unit']
+            
+        
+            #Pending for dropdown
+            
+            test_req_id = data['test_req_id']
+            test_requested_type = data['test_requested_type']
+            test_req_disc = data['test_req_disc']
+
+
+            converted_date = datetime.strptime(datepicker, "%d-%m-%Y")
 
             if UserTest.objects.filter(id=test_id).exists():
                 test_obj = UserTest.objects.get(id=test_id)
-
-                converted_date = datetime.strptime(datepicker, "%d-%m-%Y")
-
-                test_obj.patient_first_name = firstname
-                test_obj.patient_last_name = lastname
+                test_obj.doctor_name = drname
+                test_obj.date = converted_date
+                test_obj.Centre=centre
+                test_obj.Email = email
+                test_obj.other_way=otherway
+                test_obj.Contact_person_name = contact_pereson
+                test_obj.background_data=backgrounddata
+                test_obj.patient_first_name=firstname
+                test_obj.patient_last_name=lastname
                 test_obj.patient_age = patientage
                 test_obj.patient_race = patientrace
                 test_obj.patient_gender = selectgender
-                test_obj.patient_weight = patientweight
-                test_obj.Contact_person_name = contact_pereson
+                test_obj.patient_weight=patientweight
                 test_obj.patient_height = patientheight
-                test_obj.doctor_name = drname
-                test_obj.date = converted_date
-                test_obj.Centre = centre
-                test_obj.Email = email
-                test_obj.other_way = otherway
-                # test_obj.patient_test = patient_test
-                test_obj.test_requested = testrequested
-                test_obj.test_requested_type = test_requested_type
-                test_obj.background_data = backgrounddata
                 test_obj.weight_unit = weight_unit
                 test_obj.height_unit = height_unit
+
+                test_obj.fk_sample_master_id = test_req_id
+                test_obj.test_requested_type=test_requested_type
+                test_obj.test_requested=test_req_disc
 
                 test_obj.save()
                 
@@ -893,8 +900,9 @@ def posted_test_edit_by_user(request):
                 send_data = {'status': '0', "msg": "Test Not Exists"}
         else:
             send_data = {'status': '0', "msg": "Request Is Not Post"}
-    except:
+    else:
         send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
+        
     return JsonResponse(send_data)
 
 
