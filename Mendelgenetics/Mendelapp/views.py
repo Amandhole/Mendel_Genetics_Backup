@@ -43,30 +43,12 @@ def send_email(subject, string, to_email):
         email_msg = EmailMultiAlternatives(
             subject, string, from_email=from_email, to=[to_email])
         email_msg.mixed_subtype = 'related'
-        email_msg.attach_alternative(string, "user_rts/email_rts.html")
+        # email_msg.attach_alternative(string, "user_rts/email_rts.html")
         email_msg.send()
         return "success"
     except Exception as e:
         print(str(traceback.format_exc()))
         return "error"
-
-
-# def send_sms_web(mobile_no, message_body):
-#     try:
-#         account_sid = 'AC5866debd310e650176e0ebb6660a5069'
-
-#         auth_token = 'd9d2de0c67f3af8d26be476a7677f5b4'
-#         client = Client(account_sid, auth_token)
-
-#         message = client.messages.create(
-#             from_='++12056513141',
-#             body=message_body,
-#             to=mobile_no)
-#         print(message.sid)
-#         print('sent sms on this number 9766281848')
-#         return "success"
-#     except Exception as e:
-#         return "error"
 
 
 @csrf_exempt
@@ -189,9 +171,8 @@ def send_otp_for_signup_verification(request):
         if UserMaster.objects.filter(email=email).exists():
             send_data = {'status': "2", 'msg': "Email Already Exists"}
         else:
-            # email_otp = '123456'
             email_otp = str(random.randint(100000, 999999))
-            print('gggggggggggggggggggggggggg', email)
+            
 
             context = {
                     "email_otp":email_otp,
@@ -201,7 +182,6 @@ def send_otp_for_signup_verification(request):
             plain_message = strip_tags(string)
             to_email = email
             email_status = send_email(subject, plain_message, to_email)
-
 
             send_data = {'status': "1",'msg': "OTP Sent Successfully", 'Email_OTP': email_otp}
 
@@ -288,10 +268,6 @@ def user_profile_page(request):
         if session_id:
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
-
-                # print('user_obj', user_obj.user_image.url)
-                print(user_obj.name, user_obj.email, user_obj.mobile_no, user_obj.address_line1,
-                      user_obj.password, user_obj.is_individual, user_obj.is_corporate, user_obj.created_datime)
                 countru_obj = CountryMaster.objects.all()
 
                 contxt = {
@@ -325,7 +301,6 @@ def bid_auction_status_toggle(request):
 
                     obj.auc_bid_status = True
                     obj.save()
-                    print('in if oo')
 
                 elif tgl_btn_value == 0:
                     obj.auc_bid_status = False
@@ -351,7 +326,6 @@ def get_state_of_country(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         country_id = data['country_id']
-        print(country_id)
 
         if request.method == "POST":
 
@@ -374,15 +348,13 @@ def get_city_of_state(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         state_id = data['state_id']
-        print(state_id)
 
         if request.method == "POST":
 
             city_obj = CityMaster.objects.filter(state_id=state_id)
-            print(city_obj)
+    
 
-            send_data = {'status': "1", 'msg': "Got city Of State",
-                         "city_obj": list(city_obj.values())}
+            send_data = {'status': "1", 'msg': "Got city Of State","city_obj": list(city_obj.values())}
 
         else:
             send_data = {'status': "0", 'msg': "Request Is Not Post"}
@@ -405,7 +377,7 @@ def edit_user_profile_image(request):
                 user_obj.user_image = profile_pic
                 user_obj.save()
 
-                # print('ttttttttttt', user_id, profile_pic)
+                
                 send_data = {'status': '1',
                              'msg': 'Profile Picture updated successfully'}
             else:
@@ -481,7 +453,7 @@ def change_user_email_send_otp(request):
                 user_email = UserMaster.objects.get(id=user_id).email
                 email_otp = str(random.randint(100000, 999999))
                 # email_otp = '123456'
-                print(email_otp)
+                
 
                 context={
                         "user_email":user_email,
@@ -518,8 +490,7 @@ def add_users_new_email_address(request):
             old_email = data['old_email']
             new_email = data['new_email']
 
-            print(old_email)
-            print(new_email)
+          
             if UserMaster.objects.filter(email=new_email).exists():
                 send_data = {'status': "0", 'msg': "Email Already Exists", }
 
@@ -566,6 +537,7 @@ def reset_current_password(request):
         send_data = {'status': "0", 'msg': "Something Went Wrong",
                      'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
+
 
 
 #  Add test by user
@@ -626,13 +598,12 @@ def add_test_by_user(request):
                     "auction_test_id": f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
                 }
 
-                print('sending email .....')
                 subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
                 string = render_to_string('email_rts/post_test.html', context)
                 plain_message = strip_tags(string)
                 to_email = user_obj.email
                 email_status = send_email(subject, plain_message, to_email)
-                print('email sent ..... ', email_status, '.....')
+                
 
                 send_data = {'status': "1" ,  'msg': "Test Added Succesfully" , "test_id": test_obj.auction_test_id} 
             else:
@@ -679,7 +650,7 @@ def get_brief_path_list(test_list):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_added_by_user_list(request):
     ave_value = 0
-    print('ffffffffffffffffffftttttttttttttttttffffffffffffffff')
+   
     try:
         session_id = request.session.get('user_id')
         if session_id:
@@ -734,8 +705,6 @@ def test_added_by_user_list(request):
                         send_data = render_to_string( 'user_rts/active_post_rts.html', context)
 
                     elif tab_type == "Pending_tab":
-
-                        print('in pending tab........................................................')
                         user_obj = UserMaster.objects.get(id=session_id)
                         sampletest = SampleTestMaster.objects.all()
                         
@@ -773,9 +742,8 @@ def test_added_by_user_list(request):
 
                     return HttpResponse(send_data)
                 else:
-                    print('in else))))))))))))))))))))))))')
                     sampletest = SampleTestMaster.objects.all()
-                    print(sampletest)
+                    
                     context = {
                         "user_obj": user_obj,
                         "test_active_obj": test_active_obj,
@@ -863,10 +831,10 @@ def posted_cancelled_test_delete_by_user(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_test_edit_by_user(request):
-    print('function called')
-    if 1 == 1:
+    
+    try:
         if request.method == "POST":
-            print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
+        
             data = json.loads(request.body.decode('utf-8'))
             test_id = data['test_id']
             firstname = data['firstname']
@@ -918,50 +886,19 @@ def posted_test_edit_by_user(request):
                 test_obj.height_unit = height_unit
 
                 test_obj.save()
-                print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiittttttttttttttttt')
+                
                 send_data = {'status': '1', "msg": "Test Updated Succesfully"}
 
             else:
                 send_data = {'status': '0', "msg": "Test Not Exists"}
         else:
             send_data = {'status': '0', "msg": "Request Is Not Post"}
-    else:
+    except:
         send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
     return JsonResponse(send_data)
 
 
-# get test list of all user except current user
-# @csrf_exempt
-# def All_test_list_exclude_current_user(request):
 
-#     try:
-#         data = json.loads(request.body.decode('utf-8'))
-#         user_id = data['user_id']
-#         test_dict = {}
-#         test_list = []
-#         if request.method == "POST":
-#             if UserMaster.objects.filter(id = user_id).exists():
-#                 tets_obj = UserTest.objects.filter(test_status="Pending").exclude(fk_user_id = user_id)
-#                 for i in tets_obj:
-#                     test_dict['test_id'] = str(i.id) if i.id else ""
-#                     test_dict ['fk_user_id'] = str(i.fk_user_id) if i.fk_user_id else ""
-#                     test_dict['test_title'] = str(i.test_title) if i.test_title else ""
-#                     test_dict['test_detail'] =  str(i.test_detail) if i.test_detail else ""
-#                     test_dict['charges'] = str(i.charges) if i.charges else ""
-#                     test_dict['pickup_address'] = str(i.pickup_address) if i.pickup_address else ""
-#                     test_dict['created_time']= str(i.created_time) if i.created_time else ""
-#                     test_list.append(test_dict)
-#                     test_dict = {}
-#                     # print('empty dictionary',test_dict)
-#                     # print(test_list)
-#                 send_data = {'status' :'1' , 'msg' : 'Test List of All User Except Current User','test_list' : test_list}
-#             else:
-#                 send_data = {'status':'0' , 'msg' : 'User Not Found' }
-#         else:
-#             send_data = {'status':'0' , 'msg' : 'Request Not Post' }
-#     except:
-#         send_data = {'status' : '0' , 'msg' : 'Something Went Wrong' , 'error': str(traceback.format_exc())}
-#     return JsonResponse(send_data)
 
 
 @csrf_exempt
@@ -970,7 +907,7 @@ def All_test_list_exclude_current_user(request):
     try:
         session_id = request.session.get('user_id')
         if session_id:
-            print(session_id)
+            
             today = datetime.today()
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
@@ -1089,7 +1026,7 @@ def User_bids_on_other_users_test(request):
             checkbox = data['checkbox']
 
             converted_date = datetime.strptime(expect_result_date, "%d-%m-%Y")
-            print(user_id, lot_id, bidprice, expect_result_date, checkbox)
+            
 
             user_bid = UserBids(fk_user_master_id=user_id, fk_test_lot_id=lot_id, bid_Price=bidprice,
                                 expect_result_date=datetime.now(), checkbox=checkbox, bid_status="Pending")
@@ -1116,8 +1053,7 @@ def User_edit_bids_on_other_users_test(request):
             bid_price = data['bid_price']
             biexpect_result_dated = data['expect_result_date']
 
-            converted_date = datetime.strptime(
-                biexpect_result_dated, "%m-%d-%Y")
+            converted_date = datetime.strptime(biexpect_result_dated, "%d-%m-%Y")
 
             if UserBids.objects.filter(id=bid_id):
                 userbid_obj = UserBids.objects.get(id=bid_id)
@@ -1166,7 +1102,7 @@ def view_all_bids_on_my_test(request):
 
                         recent_bid_obj = UserBids.objects.filter(fk_test_lot_id=lot_id, bid_status="Cancelled") if UserBids.objects.filter(
                             fk_test_lot_id=lot_id, bid_status="Cancelled").exists() else None
-                        print('vvvvvvvvvvvvvvvvvvvvvvv', approved_bid_obj)
+                    
 
                         bidcount = bid_obj.count()
 
@@ -1232,7 +1168,6 @@ def Approve_users_bid_on_test(request):
                 for i in range(len(result)):
                     quantity_of_lot += 1
 
-                print(auctionr_name, quantity_of_lot, lot_number)
                 context = {
                     "auctionr_name": auctionr_name,
                     "quantity_of_lot": quantity_of_lot,
@@ -1254,7 +1189,7 @@ def Approve_users_bid_on_test(request):
                 bidder_email = UserBids.objects.get(
                     fk_test_lot_id=lot_id, bid_status="Approved").fk_user_master.email
 
-                print('auctioner', auctionr_email, 'bidder', bidder_email)
+                
 
                 subject = "Confirmación adjudicación del lote"  + ' ' + str(lot_number) + ' ' +  "que consta de " + '  ' +  str(quantity_of_lot) + ' '  +  "pruebas"
 
@@ -1304,7 +1239,7 @@ def my_bids_on_other_users_test(request):
             if UserMaster.objects.filter(id=session_id).exists():
                 user_obj = UserMaster.objects.get(id=session_id)
 
-                print('my session id is', session_id)
+            
 
                 my_active_bid = UserBids.objects.filter(
                     fk_user_master__id=session_id, bid_status='Pending').order_by('-id')
@@ -1343,7 +1278,7 @@ def my_bids_on_other_users_test(request):
                     test.test_gen = joined_string = " , ".join(
                         ast.literal_eval(test.fk_test_lot.test_gen))
 
-                print('my cancelled bid', my_cancelled_bid)
+                
                 context = {
                     "user_obj": user_obj,
                     'my_active_bid': my_active_bid,
@@ -1450,7 +1385,7 @@ def support_ticket_filter(request):
         user_id = request.POST.get('user_id', None)
         filter_status = request.POST.get('filter', None)
 
-        print(user_id, filter_status)
+    
         try:
             support_tickets = Support.objects.filter(
                 fk_user_id=user_id, status=filter_status).order_by('-issue_date')
@@ -1532,7 +1467,7 @@ def get_all_test_of_lot_from_active_tab(request):
                 "coment_on_lot":coment_on_lot
             }
 
-            print('----------', user_test_obj)
+    
 
             send_data = render_to_string('edit_uploaded_document.html', context)
 
@@ -1547,7 +1482,7 @@ def get_all_test_of_lot_from_active_tab(request):
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Auctioner_completed_test(request):
-    print('new tab for adddd/qqqqqqqqqqqqqqqq')
+    
     try:
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
@@ -1565,7 +1500,7 @@ def Auctioner_completed_test(request):
                 "coment_on_lot": coment_on_lot
             }
 
-            print('----------', user_test_obj)
+            
 
             send_data = render_to_string('uploaded_document.html', context)
 
@@ -1623,7 +1558,7 @@ def upload_result_by_bidder(request):
             test_data = eval(test_obj)
             test_obj = UserTest.objects.filter(id__in=test_data)
 
-            print('kkkkkkkkkkkkkkkkkkkuuuuuuuuuuuuuuuuukkkkkkkkkkkuuuuuuuu', test_obj)
+            
 
             context = {
                 "test_obj": test_obj,
@@ -1751,15 +1686,13 @@ def get_user_test_to_admin_for_download(request):
             user_test_obj = UserTest.objects.filter(id__in=empt_list)
 
             coment_on_lot = TestLots.objects.get(id=lot_id).comment
-            print('ffffffffffffffffffffffffffffff', coment_on_lot)
+            
             context = {
                 "user_test_obj": user_test_obj,
                 "coment_on_lot":coment_on_lot
             }
 
-            print(user_test_obj)
-            send_data = render_to_string(
-                'admin/download-test-admin.html', context)
+            send_data = render_to_string('admin/download-test-admin.html', context)
 
             return HttpResponse(send_data)
         else:
@@ -1818,7 +1751,6 @@ def view_all_bids_on_my_test_auctioner_side(request):
 
                         bidcount = bid_obj.count()
 
-                        print('vvvvvvvvvvvvvvvvvvv', bidcount)
 
                     context = {
                         "user_obj": user_obj,
