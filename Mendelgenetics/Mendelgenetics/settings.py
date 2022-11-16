@@ -26,7 +26,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -72,7 +71,7 @@ WSGI_APPLICATION = 'Mendelgenetics.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/   
 
 
-
+########## Used Sql lite ##########
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -159,10 +158,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # email: mailto: admin@mendelbook.eu
 # pwd: \`& Fca@y\NnoasdfZBVF~rAp
 
+
+
+
+
 # Use this gmail account to send email
-
-
-
+# Email credentials 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'admin@mendelbook.eu'

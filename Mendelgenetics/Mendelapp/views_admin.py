@@ -14,6 +14,9 @@ from datetime import datetime
 from .views import *
 import yaml
 
+
+
+############  Function Use For Admin Login ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_user_login(request):
@@ -50,6 +53,11 @@ def admin_user_login(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############  Function Use For Admin Logout ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_user_logout(request):
@@ -62,6 +70,10 @@ def admin_user_logout(request):
 
 
 
+
+
+
+############  Function Use For Render Dashboard Page ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_dashboard(request):
@@ -80,6 +92,11 @@ def admin_dashboard(request):
     return render(request, 'admin/admin-dashboard.html', context)
 
 
+
+
+
+
+############  Function Use For Show Corporate  User To Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def show_corprate_user_to_admin(request):
@@ -100,6 +117,11 @@ def show_corprate_user_to_admin(request):
     return render(request, 'admin/corporate-user.html', context)
 
 
+
+
+
+
+############  Function Use For Show Individual  User To Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def show_individual_user_to_admin(request):
@@ -124,6 +146,11 @@ def show_individual_user_to_admin(request):
     return render(request, 'admin/individual-user.html', context)
 
 
+
+
+
+
+############  Function Use To Show Pending Test To Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def pending_test(request):
@@ -147,6 +174,13 @@ def pending_test(request):
         print(traceback.format_exc()) 
 
 
+
+
+
+
+
+
+############  Function Use To Show Published Test To Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def published_test(request):
@@ -176,6 +210,11 @@ def published_test(request):
         print(traceback.format_exc())
 
 
+
+
+
+
+############  Function Use To Show Confirm Test To Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def uploaded_result_test(request):
@@ -214,6 +253,12 @@ def uploaded_result_test(request):
         print(traceback.format_exc())
 
 
+
+
+
+
+
+############  Function Use To Show Conmpleted Test To Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def completed_test(request):
@@ -253,6 +298,7 @@ def completed_test(request):
 
 
 
+############  Function Use To Create Lot By  Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def get_lot_of_test_from_admin(request):
@@ -290,6 +336,10 @@ def get_lot_of_test_from_admin(request):
     return JsonResponse(send_data)
 
 
+
+
+
+############  Function Use To Reject The Test By  Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_reject_by_admin(request):
@@ -317,6 +367,11 @@ def test_reject_by_admin(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############  Function Use To Delete The Test By  Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_delete_by_admin(request):
@@ -341,6 +396,10 @@ def test_delete_by_admin(request):
 
 
 
+
+
+
+############  Function Use To Upload Result  By  Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def upload_result_by_admin(request):
@@ -374,12 +433,16 @@ def upload_result_by_admin(request):
     return JsonResponse(send_data)
 
     
-############################################# Support Chat View
 
+
+
+
+
+############  Function Use Support Chat View By Admin ############
 def support_chat_admin(request):
     try:
         session_id = request.session.get('admin_user_id')
-        if session_id: 
+        if session_id:
             user_obj = AdminUser.objects.get(id=session_id)
             
             context = {
@@ -391,6 +454,9 @@ def support_chat_admin(request):
     except:
         traceback.print_exc()
     return redirect('/admin_user_login')
+
+
+
 
 
 ######### function for delete user tests ###########
@@ -406,6 +472,9 @@ def delete_user_test(request):
         traceback.print_exc()
         return JsonResponse({'status': '0'})
 
+
+
+
 ######### function for show user tests #######
 @csrf_exempt
 def show_user_test(request): 
@@ -417,7 +486,9 @@ def show_user_test(request):
         return JsonResponse({"status":'1', "string": string})
     return JsonResponse({"status":'0'}) 
  
-######### function for delete user lot and tests###########
+
+
+######### function for delete user lot and tests ###########
 @csrf_exempt
 def delete_user_lot(request):
     try : 

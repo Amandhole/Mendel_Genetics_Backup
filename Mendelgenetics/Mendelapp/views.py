@@ -53,12 +53,19 @@ def send_email(subject, string, to_email):
         return "error"
 
 
+
+
+
+############ Function Use for render landing page ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def landing_page(request):
     return render(request, 'landing-page.html')
 
 
+
+
+############ Function Use for User signup ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_signup(request):
@@ -101,6 +108,11 @@ def user_signup(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############ Function Use for User Login ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_login(request):
@@ -153,6 +165,12 @@ def user_login(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+
+############ Function Use for User logout ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def userlogout(request):
@@ -162,6 +180,12 @@ def userlogout(request):
         traceback.print_exc()
     return redirect('login_page')
 
+
+
+
+
+
+############ Function Use for Send OTP for varification while signup ############
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -197,6 +221,12 @@ def send_otp_for_signup_verification(request):
                      'error': str(traceback.format_exc())}
     return JsonResponse(send_data)
 
+
+
+
+
+
+############ Function Use for Send OTP for varification while Forget Password ############
 
 @ csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -237,6 +267,11 @@ def forget_password_OTP(request):
     return redirect('landing_page')
 
 
+
+
+
+
+############ Function Use for Reset Password ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def reset_password(request):
@@ -262,6 +297,10 @@ def reset_password(request):
     return JsonResponse(send_data)
 
 
+
+
+
+############ Function Use for render User Profile page ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_profile_page(request):
@@ -284,6 +323,9 @@ def user_profile_page(request):
             return redirect('landing_page')
     except:
         return redirect('landing_page')
+
+
+
 
 
 @csrf_exempt
@@ -320,8 +362,12 @@ def bid_auction_status_toggle(request):
     return JsonResponse(send_data)
 
 
-# function for get the state list of country
 
+
+
+
+
+############ Function Use for Get State List Of Country ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def get_state_of_country(request):
@@ -341,10 +387,13 @@ def get_state_of_country(request):
 
         send_data = {'status': "0", 'msg': "Something Went Wrong",
                      "error": traceback(traceback.format_exc())}
-
     return JsonResponse(send_data)
 
 
+
+
+
+############ Function Use for Get City List Of State ############
 @csrf_exempt
 def get_city_of_state(request):
     try:
@@ -366,6 +415,13 @@ def get_city_of_state(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+
+
+############ Function Use for  Edit User Profile Image ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_user_profile_image(request):
@@ -393,6 +449,11 @@ def edit_user_profile_image(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############ Function Use for  Edit User Profile ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_user_proifle_page(request):
@@ -442,6 +503,9 @@ def edit_user_proifle_page(request):
     return JsonResponse(send_data)
 
 
+
+
+############ Function Use for Send OTP To Change Email ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def change_user_email_send_otp(request):
@@ -482,6 +546,9 @@ def change_user_email_send_otp(request):
     return JsonResponse(send_data)
 
 
+
+
+############ Function Use for Add User's New Email ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def add_users_new_email_address(request):
@@ -513,6 +580,9 @@ def add_users_new_email_address(request):
     return JsonResponse(send_data)
 
 
+
+
+############ Function Use for Reset Current Password ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def reset_current_password(request):
@@ -542,7 +612,8 @@ def reset_current_password(request):
 
 
 
-#  Add test by user
+
+############ Function Use for Add Test By User ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def add_test_by_user(request):
@@ -628,8 +699,8 @@ def add_test_by_user(request):
     return JsonResponse(send_data)
 
 
-# get test list of perticular user
 
+############  Get Test List Of Perticular User ############
 
 def get_brief_path_list(test_list):
     temp_list = []
@@ -648,6 +719,10 @@ def get_brief_path_list(test_list):
     return temp_list
 
 
+
+
+
+############  Function Use For Get Pending , Active , Confirm and Complete Test List ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def test_added_by_user_list(request):
@@ -762,6 +837,13 @@ def test_added_by_user_list(request):
         return redirect('landing_page')
 
 
+
+
+
+
+
+
+############  Function Use For Delete Posted Pending Test By User ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_pending_test_delete_by_user(request):
@@ -795,6 +877,11 @@ def posted_pending_test_delete_by_user(request):
         return JsonResponse(send_data)
 
 
+
+
+
+
+############  Function use For Delete Cancelled Test By User ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_cancelled_test_delete_by_user(request):
@@ -830,11 +917,12 @@ def posted_cancelled_test_delete_by_user(request):
         return JsonResponse(send_data)
 
 
+############  Function use For Edit Pending Test By User ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def posted_test_edit_by_user(request):
 
-    if 1 == 1:
+    try:
         if request.method == "POST":
         
             data = json.loads(request.body.decode('utf-8'))
@@ -902,7 +990,7 @@ def posted_test_edit_by_user(request):
                 send_data = {'status': '0', "msg": "Test Not Exists"}
         else:
             send_data = {'status': '0', "msg": "Request Is Not Post"}
-    else:
+    except:
         send_data = {'status': '0', "msg": "Something Went Wrong","error": traceback.format_exc()}
         
     return JsonResponse(send_data)
@@ -911,6 +999,7 @@ def posted_test_edit_by_user(request):
 
 
 
+############  Function use For Get Auction Test Exclude Curent User ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def All_test_list_exclude_current_user(request):
@@ -968,6 +1057,10 @@ def All_test_list_exclude_current_user(request):
         return redirect('landing_page')
 
 
+
+
+
+############  Function use For Get States when user do Signup ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Show_state(request):
@@ -987,21 +1080,23 @@ def Show_state(request):
         return JsonResponse({'status': '0', 'msg': 'Something went wrong.'})
 
 
-# for storing data in csv file
 
+
+
+
+############  Function Use for Storing data In CSV File ############
 fieldnames = ['id', 'sortname', 'name', 'phonecode']
+'''rows = list(CityMaster.objects.all().values())
+
+with open(f'{settings.BASE_DIR}/city.csv', 'w', encoding='UTF8', newline='') as f:
+     writer = csv.DictWriter(f, fieldnames=fieldnames)
+     writer.writeheader()
+     writer.writerows(rows)'''
 
 
-# rows = list(CityMaster.objects.all().values())
-
-# with open(f'{settings.BASE_DIR}/city.csv', 'w', encoding='UTF8', newline='') as f:
-#     writer = csv.DictWriter(f, fieldnames=fieldnames)
-#     writer.writeheader()
-#     writer.writerows(rows)
 
 
-# this code for add csv data to database file
-
+############  Function Use For  Add CSV Data In Database File ############
 def add_css_data_coutnry_state_city(request):
     print(settings.BASE_DIR)
     SampleTestMaster.objects.all().delete()
@@ -1022,6 +1117,10 @@ def add_css_data_coutnry_state_city(request):
     return HttpResponse('data added succesfully')
 
 
+
+
+
+############  Function Use For Bid On Other User Test ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def User_bids_on_other_users_test(request):
@@ -1052,6 +1151,11 @@ def User_bids_on_other_users_test(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############  Function Use For Edit Bid On Test ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def User_edit_bids_on_other_users_test(request):
@@ -1081,6 +1185,10 @@ def User_edit_bids_on_other_users_test(request):
     return JsonResponse(send_data)
 
 
+
+
+
+############  Function Use For See All the Bids On Test ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_all_bids_on_my_test(request):
@@ -1136,6 +1244,10 @@ def view_all_bids_on_my_test(request):
     return HttpResponse(send_data)
 
 
+
+
+
+############  Function Use For Approve The Bid By Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Approve_users_bid_on_test(request):
@@ -1219,6 +1331,11 @@ def Approve_users_bid_on_test(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############  Function Use For Reject The Bids ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Reject_bid_on_users_test(request):
@@ -1240,6 +1357,10 @@ def Reject_bid_on_users_test(request):
     return JsonResponse(send_data)
 
 
+
+
+
+############  Function Use For  To See My Bids on Other User Test At Bidder Side   Pending , Active , Confirm , Complete, ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def my_bids_on_other_users_test(request):
@@ -1305,6 +1426,12 @@ def my_bids_on_other_users_test(request):
         return redirect('landing_page')
 
 
+
+
+
+
+
+############  Function Use For Select Pathology and and Gens  At Post Test ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def show_sample_test_data(request):
@@ -1318,8 +1445,7 @@ def show_sample_test_data(request):
 
                 print(i)
 
-            send_data = {"msg": "Data recicved succesfully",
-                         "status": "1", "obj_data": list(sample_test_obj.values())}
+            send_data = {"msg": "Data recicved succesfully","status": "1", "obj_data": list(sample_test_obj.values())}
 
         else:
             send_data = {"msg": "Request is not post", "status": "0"}
@@ -1330,8 +1456,10 @@ def show_sample_test_data(request):
     return JsonResponse(send_data)
 
 
-# Support Chat View
 
+
+
+############  Function Use For Support Chat View ############
 def support_chat(request):
     try:
         session_id = request.session.get('user_id')
@@ -1354,9 +1482,12 @@ def support_chat(request):
         traceback.print_exc()
     return redirect('/login_page')
 
-# raise_support_ticket
 
 
+
+
+
+############  Function Use For Raise_Support_Ticket ############
 @csrf_exempt
 def raise_support_ticket(request):
     try:
@@ -1385,9 +1516,13 @@ def raise_support_ticket(request):
         traceback.print_exc()
     return JsonResponse(send_data)
 
-# support_ticket_filter
 
 
+
+
+
+
+############  Function Use For User support_ticket_filter ############
 @csrf_exempt
 def support_ticket_filter(request):
     try:
@@ -1395,7 +1530,6 @@ def support_ticket_filter(request):
         user_id = request.POST.get('user_id', None)
         filter_status = request.POST.get('filter', None)
 
-    
         try:
             support_tickets = Support.objects.filter(
                 fk_user_id=user_id, status=filter_status).order_by('-issue_date')
@@ -1412,6 +1546,12 @@ def support_ticket_filter(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+
+############  Function Use For Admin support_ticket_filter ############
 @csrf_exempt
 def support_ticket_filter_admin(request):
     try:
@@ -1433,9 +1573,12 @@ def support_ticket_filter_admin(request):
         traceback.print_exc()
     return JsonResponse(send_data)
 
-# close_support_ticket
 
 
+
+
+
+############  Function Use For Close_Support_Ticket ############
 @csrf_exempt
 def close_support_ticket(request):
     try:
@@ -1455,6 +1598,11 @@ def close_support_ticket(request):
     return JsonResponse(send_data)
 
 
+
+
+
+
+############  Function Use For Get Test Lot   ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def get_all_test_of_lot_from_active_tab(request):
@@ -1477,8 +1625,6 @@ def get_all_test_of_lot_from_active_tab(request):
                 "coment_on_lot":coment_on_lot
             }
 
-    
-
             send_data = render_to_string('edit_uploaded_document.html', context)
 
         else:
@@ -1489,6 +1635,12 @@ def get_all_test_of_lot_from_active_tab(request):
         print(traceback.format_exc())
     return HttpResponse(send_data)
 
+
+
+
+
+
+############  Function Use For Render To String To view Completed Test At Bidder Side ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Auctioner_completed_test(request):
@@ -1510,8 +1662,6 @@ def Auctioner_completed_test(request):
                 "coment_on_lot": coment_on_lot
             }
 
-            
-
             send_data = render_to_string('uploaded_document.html', context)
 
         else:
@@ -1523,6 +1673,12 @@ def Auctioner_completed_test(request):
     return HttpResponse(send_data)
 
 
+
+
+
+
+
+############  Function Use For Upload The Result User At Bidder Side ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def upload_result_by_bidder(request):
@@ -1593,7 +1749,11 @@ def upload_result_by_bidder(request):
     return JsonResponse(send_data)
 
 
-################################################################# Edit uploaded result (bidder side)
+
+
+
+
+############  Function Use For Edit uploaded result At bidder side ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_uploaded_result_bidder(request):
@@ -1616,35 +1776,6 @@ def edit_uploaded_result_bidder(request):
                     obj2_doc.bidder_doc_second = file
                     obj2_doc.save()
 
-            # test_lot_id = request.POST.get('test_lot_id')
-
-            # comment = request.POST.get('comment')
-
-            # TestLots.objects.filter(id=test_lot_id).update(upload_date_time=datetime.now(), result_upload_status="Upload", lot_status="Completed", comment=comment)
-
-            # auctionr_name = TestLots.objects.get(
-            #     id=test_lot_id).fk_user_master.name
-            # auctionr_email = TestLots.objects.get(
-            #     id=test_lot_id).fk_user_master.email
-            # lot_number = TestLots.objects.get(id=test_lot_id).test_lot_id
-            # test_count = TestLots.objects.get(id=test_lot_id)
-
-            ####### auctioner send mail#########
-
-            # test_obj = TestLots.objects.get(id=test_lot_id).tests_in_lot
-            # test_data = eval(test_obj)
-            # test_obj = UserTest.objects.filter(id__in=test_data)
-
-            # context = {
-            #     "test_obj": test_obj,
-            #     "auctionr_name": auctionr_name
-            # }
-
-            # subject = "Resultado del test " + str(lot_number) + "listos."
-            # string = render_to_string('email_rts/result_upload.html', context)
-            # plain_message = strip_tags(string)
-            # to_email = auctionr_email
-            # email_status = send_email(subject, plain_message, to_email)
 
             send_data = {"msg": "Documents uploaded successfully...", "status": "1"}
         else:
@@ -1656,6 +1787,10 @@ def edit_uploaded_result_bidder(request):
 
 
 
+
+
+
+############  Function Use For Retriving Test Of Specific Lot ############
 @csrf_exempt
 def get_user_test_by_lot_id(request):
     try:
@@ -1683,6 +1818,8 @@ def get_user_test_by_lot_id(request):
         return redirect('landing_page')
 
 
+
+############  Function Use For Download Test Of Specific Lot ############
 @csrf_exempt
 def get_user_test_to_admin_for_download(request):
     try:
@@ -1712,6 +1849,11 @@ def get_user_test_to_admin_for_download(request):
         return redirect('landing_page')
 
 
+
+
+
+
+############  Function Use For Retriving All The Bids on My Test At Auctioner Side ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_all_bids_on_my_test_auctioner_side(request):
@@ -1788,6 +1930,12 @@ def view_all_bids_on_my_test_auctioner_side(request):
     return HttpResponse(send_data)
 
 
+
+
+
+
+
+############  Function Use For Show Recived Bid ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def show_recived_bids(request):
