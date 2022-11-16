@@ -37,6 +37,8 @@ from pipes import Template
 from django.core.mail import EmailMultiAlternatives
 
 
+############ Function Use for Send Email ############
+
 def send_email(subject, string, to_email):
     try:
         from_email = settings.EMAIL_HOST_USER
