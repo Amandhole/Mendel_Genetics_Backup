@@ -224,7 +224,7 @@
 
                                             
                                                     <div class="col-md-4">
-                                                        <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way}}','{{test.Contact_person_name}}','{{test.background_data}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.height_unit}}','{{test.weight_unit}}','{{test.test_requested}}','{{test.fk_sample_master.id}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
+                                                        <button type="button" data-toggle="modal" data-target="#edit_posted_test" onclick="edit_posted_test('{{test.id}}','{{test.doctor_name}}','{{test.date|date:'d-m-Y'}}','{{test.Centre}}','{{test.Email}}','{{test.other_way}}','{{test.Contact_person_name}}','{{test.background_data}}','{{test.patient_first_name}}','{{test.patient_last_name}}','{{test.patient_age}}','{{test.patient_race}}','{{test.patient_gender}}','{{test.patient_weight}}','{{test.patient_height}}','{{test.height_unit}}','{{test.weight_unit}}','{{test.test_requested}}','{{test.fk_sample_master.id}}','{{test.test_requested_type}}')"  style="background-color: #7019f4;color: white;height: 27px;width: 58px; border-radius: 5px; border: none; margin-left: 10px; margin-right: 10px;">
                                                             <i class="flaticon-edit" ></i> 
                                                         </button>   
 
@@ -831,30 +831,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function edit_posted_test(id,doctor_name,date,centre,Email,other_way,Contact_person_name,background_data,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,height_unit,weight_unit,test_requested, path_id)
+    function edit_posted_test(id,doctor_name,date,centre,Email,other_way,Contact_person_name,background_data,patient_first_name,patient_last_name,patient_age,patient_race,patient_gender,patient_weight,patient_height,height_unit,weight_unit,test_requested, path_id,test_requested_type)
     {
-        console.log(test_requested, '-------------')
-
+        
         $("#test_id").val(id)
         $("#drname").val(doctor_name)
         $("#datepicker").val(date)
@@ -874,7 +853,18 @@
         $("#height_unit").val(height_unit)
 
         
-        $select_path.select2('val',path_id);
+        //$select_path.select2('val',path_id);
+         if (test_requested_type == 'Pathalogy'){
+            $select_path.select2('val',path_id);
+        
+            
+        }
+        else if (test_requested_type == 'Gens')
+        {
+            $select_gens.select2('val',path_id);
+            $('#Gensid').click();
+        }
+
 
     }
 
@@ -1203,20 +1193,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
 
         
@@ -1381,8 +1357,18 @@ function reload_page_on_back(){
     
     $("#select_gens_id").hide()
     $("#select_pathlogy_id").show()
-    $("#show_hide_data").hide()
-    $("#select_sample_gens").val("")
+    
+    
+
+    if ($("#select_sample_path").val() != '' ){
+        
+        $("#show_hide_data").hide()
+    }
+    else
+    {
+        $("#show_hide_data").hide()
+    }
+    //$("#select_sample_gens").val("")
   
   }
 
@@ -1390,8 +1376,8 @@ function reload_page_on_back(){
   function show_gens_field(){
     $("#select_gens_id").show()
     $("#select_pathlogy_id").hide()
-    $("#show_hide_data").hide()
-    $("#select_sample_path").val("")
+    $("#show_hide_data").show()
+    //$("#select_sample_path").val("")
   }
   
     
