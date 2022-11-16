@@ -266,7 +266,7 @@
                                                     </div>
 
                                                     <div class="col-md-5" style="margin-top: 15px;">
-                                                        <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'d-m-Y , g:i, a'}}</h6>
+                                                        <h6 style="font-size: 15px; font-weight: 400; ">{{ test.created_date_time|date:'d-m-Y , g:i a'}}</h6>
                                                     </div> 
 
                                                 
@@ -919,7 +919,7 @@ $('.ui-datepicker').addClass('notranslate');
 
 
     function edit_bid_test(id,bid_Price,expect_result_date,checkbox){
-        
+       
         console.log(id,bid_Price,expect_result_date,checkbox)
         $("#bid_id").val(id)
         $('#edit_bid_price').val(bid_Price)
@@ -945,14 +945,11 @@ $("#edit_checkbox").click(function(){
      $("#edit_terms_and_conditions").html("");
 })
 function edit_bid_on_test(){
-    
+    debugger
     var bid_id = $("#bid_id").val()
     var bid_price = $("#edit_bid_price").val()
     var expect_result_date = $("#edit_datepicker").val()
 
-    console.log(bid_id)
-    console.log(bid_price)
-    console.log(expect_result_date)
 
 
     if (bid_price ==''){
@@ -991,7 +988,7 @@ function edit_bid_on_test(){
                     }) */
                 }
                 else if (response['status']=='0'){
-                    console.log(response)
+                    alert('somethning went warong  ')
                     swal({
                         icon:"error",
                         text:"Something Went Wrong",
