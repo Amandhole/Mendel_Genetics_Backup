@@ -55,7 +55,7 @@ def admin_user_login(request):
 def admin_user_logout(request):
     try:
         del request.session['admin_user_id']
-        print('deleting session')
+    
         return redirect('admin_user_login')
     except:
         return redirect('admin_user_login')
@@ -261,7 +261,6 @@ def get_lot_of_test_from_admin(request):
             data = json.loads(request.body.decode('utf-8'))
             testlot = data['testlot'] 
 
-            print(testlot)
 
             for i in testlot:
                 path_list = []
@@ -303,8 +302,7 @@ def test_reject_by_admin(request):
             test_id = data['test_id']
             
             rejected_test_obj = UserTest.objects.filter(Q(id__in=test_id) & Q(fk_user__id__in=user_id)).update(status="Cancelled",rejected_reason = "Test rejected by Admin")
-            
-            print('dddddddd',rejected_test_obj)
+        
 
             context = {
                 "rejected_test_obj": rejected_test_obj
@@ -353,7 +351,6 @@ def upload_result_by_admin(request):
             second_doccument = request.FILES.get('second_documet')
             lot_id = request.POST.get('lot_id')
 
-            print('lot id', lot_id)
 
             TestLots.objects.filter(id=lot_id).update(upload_date_time=datetime.now(), result_upload_status="AdminUpload")
 
