@@ -1067,7 +1067,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     
     <script type="text/javascript">
 
@@ -1151,15 +1151,18 @@
 
         function customTranslation()
         {
-            debugger;
             path_drop = document.getElementById('select_sample_path');
             if (($(".goog-te-combo option:selected").text() != 'Select Language') && $(".goog-te-combo option:selected").text() != 'English')
             {
                 
                 if (path_drop)
                 {
-                    // $('#select_sample_path option:eq(0)').prop('text','Selecciona Patología');
-                    // $("#select_sample_path option:first").text('Selecciona Patología');
+                    // var $select = $('#select_sample_path').select2();
+
+                    // $select.select2('destroy');          
+                    // $("#select_id").find("option:selected").text('New_Text');
+                    // $select.select2();
+                    $("#select_sample_path").select2().find(":first").addClass('select_pathalogy_translate');
                 }
                 $('.save_button_text').html('GUARDAR');
                 $('.home_text').html('página principal');
@@ -1178,7 +1181,11 @@
             {
                 if (path_drop)
                 {
-                    // $('#select_sample_path option:eq(0)').prop('text','Selecciona Patología');
+                    // var $select = $('#select_sample_path').select2();
+
+                    // $select.select2('destroy');          
+                    // $("#select_id").find("option:selected").text('New_Text');
+                    // $select.select2();
                 }
                 $('.save_button_text').html('SAVE');
                 $('.home_text').html('Home');
