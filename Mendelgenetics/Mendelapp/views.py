@@ -664,18 +664,18 @@ def add_test_by_user(request):
                 test_obj.save()
 
             ############## send mail ################
+            ################# Below code for send emai for each post ##################### 
+                # context = {
+                #     "user_obj": user_obj,
+                #     "test_obj": test_obj,
+                #     "auction_test_id": f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
+                # }
 
-                context = {
-                    "user_obj": user_obj,
-                    "test_obj": test_obj,
-                    "auction_test_id": f"{test_obj.fk_user.id:03d}{(test_count+1):07d}"
-                }
-
-                subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
-                string = render_to_string('email_rts/post_test.html', context)
-                plain_message = strip_tags(string)
-                to_email = user_obj.email
-                email_status = send_email(subject, plain_message, to_email)
+                # subject = "Notificación prueba" + '  ' + f"{test_obj.fk_user.id:03d}{(test_count+1):07d}" + '  ' "de" '  ' + test_requested
+                # string = render_to_string('email_rts/post_test.html', context)
+                # plain_message = strip_tags(string)
+                # to_email = user_obj.email
+                # email_status = send_email(subject, plain_message, to_email)
                 
 
                 send_data = {'status': "1" ,  'msg': "Test Added Succesfully" , "test_id": test_obj.auction_test_id} 

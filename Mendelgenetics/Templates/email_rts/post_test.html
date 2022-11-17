@@ -1,16 +1,23 @@
 {% load static %}
 <div>
 	<p>
-		Estimado  {{user_obj.name}},		
-			Su prueba ha sido cargada en nuestro sistema. Este es el link de identificación de la muestra   <span style="font-weight: 600;">{{auction_test_id}}</span>
-			En breve nos pondremos en contacto con usted para que envíe la muestra a un laboratorio de referencia. Si desea modificar su prueba pinche aquí
-			<a href="http://mendelbook.eu/test_added_by_user_list">http://mendelbook.eu/test_added_by_user_list</a>
+		Estimado  {{lot_obj.fk_user_master.name}},		
+			Las siguientes pruebas han sido cargadas en nuestro sistema:
+			{% for test in test_obj %}	
+ 				{{test.auction_test_id}} de {{test.fk_sample_master.pathalogy}}
+			{% endfor %}
+			En breve nos pondremos en contacto con usted para que envíe las muestra a un laboratorio de referencia.
+			Si desea modificar su prueba pinche aquí [link to the test if they want to modify it
+			{% comment %} <a href="http://mendelbook.eu/test_added_by_user_list">http://mendelbook.eu/test_added_by_user_list</a> {% endcomment %}
+		
 		
 		<p>Mendelbook,</p>
 		<p>Fonte dos Ranchos 20,</p>
 		<p>Lugo 27004</p>
 	</p>
 </div>
+
+
 
 
 

@@ -15,6 +15,20 @@ from .views import *
 import yaml
 
 
+def send_email(subject, string, to_email):
+    try:
+        from_email = settings.EMAIL_HOST_USER
+        email_msg = EmailMultiAlternatives(
+            subject, string, from_email=from_email, to=[to_email])
+        email_msg.mixed_subtype = 'related'
+        # email_msg.attach_alternative(string, "user_rts/email_rts.html")
+        email_msg.send()
+        return "success"
+    except Exception as e:
+        print(str(traceback.format_exc()))
+        return "error"
+
+
 
 ############  Function Use For Admin Login ############
 @csrf_exempt
@@ -298,7 +312,7 @@ def completed_test(request):
 
 
 
-############  Function Use To Create Lot By  Admin ############
+############  Function Use To Create Lot Approve Pending Test By Admin ############
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def get_lot_of_test_from_admin(request):
@@ -307,7 +321,7 @@ def get_lot_of_test_from_admin(request):
             data = json.loads(request.body.decode('utf-8'))
             testlot = data['testlot'] 
 
-
+            print(testlot)
             for i in testlot:
                 path_list = []
                 gen_list = []
@@ -318,13 +332,34 @@ def get_lot_of_test_from_admin(request):
                     
                     UserTest.objects.filter(id=k).update(status="Active")
                 # lot_id = 'AA' + str(random.randint(1000000, 9999999))  # code for genrate auction id
-
-            
-                
-                lot_obj = TestLots.objects.create(fk_user_master_id=i['user_id'], tests_in_lot=i['lot_tests'], test_group=i['group_id'], test_pathalogy=path_list,  lot_status="Published",  test_quantity=len(i['lot_tests']), test_gen=gen_list, created_date_time=datetime.now())
+                #     
+                lot_obj = TestLots.objects.create(fk_user_master_id= i['user_id'], tests_in_lot=i['lot_tests'], test_group=i['group_id'], test_pathalogy=path_list,  lot_status="Published",  test_quantity=len(i['lot_tests']), test_gen=gen_list, created_date_time=datetime.now())
 
                 lot_obj.test_lot_id = f"AA{lot_obj.id:06d}"
                 lot_obj.save()
+
+                print('tttttttttttttttt',lot_obj.fk_user_master.email)
+
+                tests_obj = UserTest.objects.filter(id__in=i['lot_tests'])
+                print(tests_obj, '------------------', tests_obj.count())
+
+                ################# Below code for sending email #####################
+
+                context = {
+                    "test_obj": tests_obj,
+                    "lot_obj":lot_obj
+                    # "auction_test_id": f"{i['user_id']:03d}{(tests_obj.count()):07d}"
+                }
+
+                # subject = "Notificación prueba" + '  ' + f"{tests_obj.fk_user.id:03d}{(tests_obj.count()):07d}" + '  ' "de" '  ' + test_requested
+                subject = "Notificación pruebas cargadas en el sistema"
+                string = render_to_string('email_rts/post_test.html', context)
+                plain_message = strip_tags(string)
+                to_email = lot_obj.fk_user_master.email
+                email_status = send_email(subject, plain_message, to_email)
+
+
+
 
             send_data = {'msg': "Lot created succesfully", 'status': "1"}
         else:

@@ -523,6 +523,7 @@
 
    function approve_test_by_admin()
    {
+      
       var test_id=[]
       var lot_for_user = []
       $("input:checkbox[name='checkbox_test']:checked").each(function()
@@ -555,6 +556,7 @@
           }).then((willUpdate) => {
             if(willUpdate)
             {
+              $("#overlayer_transparent").show()
               $.ajax({
                 method:"Post",
                 url:"{% url 'get_lot_of_test_from_admin' %}",
@@ -570,6 +572,7 @@
                   }
                   else if (response['status'] == '0')
                   {
+                    $("#overlayer_transparent").hide()
                       swal({
                       icon:"error",
                       text:"Something Went Wrong",
